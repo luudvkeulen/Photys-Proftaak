@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9e7452aa-d6ab-4476-a81c-98b300d8041a" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hello/Application.java" afterPath="$PROJECT_DIR$/src/main/java/shop/Application.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/hello/GreetingController.java" afterPath="$PROJECT_DIR$/src/main/java/shop/GreetingController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/hello/ApplicationTest.java" afterPath="$PROJECT_DIR$/src/test/java/shop/ApplicationTest.java" />
-    </list>
+    <list default="true" id="9e7452aa-d6ab-4476-a81c-98b300d8041a" name="Default" comment="" />
     <ignored path="lefotoboetiek.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -656,12 +652,12 @@
       <option name="presentableId" value="Default" />
       <updated>1472559822562</updated>
       <workItem from="1472559823709" duration="783000" />
-      <workItem from="1472560711243" duration="170000" />
+      <workItem from="1472560711243" duration="425000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="953000" />
+    <option name="totallyTimeSpent" value="1208000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1932" height="1048" extended-state="0" />
