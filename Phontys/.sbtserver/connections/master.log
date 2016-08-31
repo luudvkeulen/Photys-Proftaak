@@ -1,13 +1,13 @@
-New log file opened at Wed Aug 31 21:54:47 CEST 2016 by 9640@DESKTOP-i54670k
-Taking next connection to: 17605
-New client attempting to connect on port: 17606-17605
-  Address = /192.168.1.234:17605
-This client on port 17606 has uuid dc4f5a59-b5b3-4b3e-aa8c-300e16a7a6b3 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-dc4f5a59-b5b3-4b3e-aa8c-300e16a7a6b3
-Taking next connection to: 17605
-New client attempting to connect on port: 17643-17605
-  Address = /192.168.1.234:17605
-Handshake exception on socket: 17643
+New log file opened at Wed Aug 31 22:13:35 CEST 2016 by 11840@DESKTOP-i54670k
+Taking next connection to: 17877
+New client attempting to connect on port: 17878-17877
+  Address = /192.168.1.234:17877
+This client on port 17878 has uuid d19ada0c-85de-4f5d-b266-5bd3fd2e1c20 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-d19ada0c-85de-4f5d-b266-5bd3fd2e1c20
+Taking next connection to: 17877
+New client attempting to connect on port: 17911-17877
+  Address = /192.168.1.234:17877
+Handshake exception on socket: 17911
 sbt.impl.ipc.HandshakeException: Unable to perform handshake
 	at sbt.impl.ipc.Peer.handshake(IPC.scala:46)
 	at sbt.impl.ipc.MultiClientServer.<init>(IPC.scala:150)
@@ -23,9 +23,9 @@ Caused by: java.net.SocketException: Software caused connection abort: recv fail
 	at sbt.impl.ipc.Peer.receive(IPC.scala:95)
 	at sbt.impl.ipc.Peer.handshake(IPC.scala:49)
 	... 2 more
-Taking next connection to: 17605
-New client attempting to connect on port: 17644-17605
-  Address = /192.168.1.234:17605
-This client on port 17644 has uuid 1803ef7f-be1f-4594-9920-ec357b12daa1 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-1803ef7f-be1f-4594-9920-ec357b12daa1
-Taking next connection to: 17605
+Taking next connection to: 17877
+New client attempting to connect on port: 17912-17877
+  Address = /192.168.1.234:17877
+This client on port 17912 has uuid c9110d08-d55a-4089-9cd4-810902cbd644 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-c9110d08-d55a-4089-9cd4-810902cbd644
+Taking next connection to: 17877

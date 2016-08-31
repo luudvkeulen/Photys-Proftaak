@@ -8,4 +8,8 @@ public class Application extends Controller {
     public Result index() {
         return ok(testpage.render("test"));
     }
+
+    public Result nextpage() {
+        return ok(nexttestpage.render());
+    }
 }
