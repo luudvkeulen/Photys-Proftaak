@@ -1,16 +1,13 @@
-New log file opened at Wed Aug 31 21:12:08 CEST 2016 by 11328@DESKTOP-i54670k
-Taking next connection to: 16772
-New client attempting to connect on port: 16773-16772
-  Address = /192.168.1.234:16772
-This client on port 16773 has uuid 58d28167-fe7c-45b0-94fc-a3be6f9e2ed7 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-58d28167-fe7c-45b0-94fc-a3be6f9e2ed7
-Taking next connection to: 16772
-Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 16772
-New client attempting to connect on port: 16859-16772
-  Address = /192.168.1.234:16772
-Handshake exception on socket: 16859
+New log file opened at Wed Aug 31 21:54:47 CEST 2016 by 9640@DESKTOP-i54670k
+Taking next connection to: 17605
+New client attempting to connect on port: 17606-17605
+  Address = /192.168.1.234:17605
+This client on port 17606 has uuid dc4f5a59-b5b3-4b3e-aa8c-300e16a7a6b3 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-dc4f5a59-b5b3-4b3e-aa8c-300e16a7a6b3
+Taking next connection to: 17605
+New client attempting to connect on port: 17643-17605
+  Address = /192.168.1.234:17605
+Handshake exception on socket: 17643
 sbt.impl.ipc.HandshakeException: Unable to perform handshake
 	at sbt.impl.ipc.Peer.handshake(IPC.scala:46)
 	at sbt.impl.ipc.MultiClientServer.<init>(IPC.scala:150)
@@ -26,39 +23,9 @@ Caused by: java.net.SocketException: Software caused connection abort: recv fail
 	at sbt.impl.ipc.Peer.receive(IPC.scala:95)
 	at sbt.impl.ipc.Peer.handshake(IPC.scala:49)
 	... 2 more
-Taking next connection to: 16772
-New client attempting to connect on port: 16860-16772
-  Address = /192.168.1.234:16772
-This client on port 16860 has uuid 52ec1ade-98be-42e2-880c-e9f2e5bb31e8 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-58d28167-fe7c-45b0-94fc-a3be6f9e2ed7, play-fork-run-52ec1ade-98be-42e2-880c-e9f2e5bb31e8
-Taking next connection to: 16772
-New client attempting to connect on port: 16898-16772
-  Address = /192.168.1.234:16772
-Handshake exception on socket: 16898
-sbt.impl.ipc.HandshakeException: Unable to perform handshake
-	at sbt.impl.ipc.Peer.handshake(IPC.scala:46)
-	at sbt.impl.ipc.MultiClientServer.<init>(IPC.scala:150)
-	at sbt.server.SbtServerSocketHandler$$anon$1.run(SbtServerSocketHandler.scala:43)
-Caused by: java.net.SocketException: Software caused connection abort: recv failed
-	at java.net.SocketInputStream.socketRead0(Native Method)
-	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
-	at java.net.SocketInputStream.read(SocketInputStream.java:170)
-	at java.net.SocketInputStream.read(SocketInputStream.java:141)
-	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
-	at java.io.BufferedInputStream.read(BufferedInputStream.java:265)
-	at java.io.DataInputStream.readInt(DataInputStream.java:387)
-	at sbt.impl.ipc.Peer.receive(IPC.scala:95)
-	at sbt.impl.ipc.Peer.handshake(IPC.scala:49)
-	... 2 more
-Taking next connection to: 16772
-New client attempting to connect on port: 16899-16772
-  Address = /192.168.1.234:16772
-This client on port 16899 has uuid ea7cc57f-17f6-47dc-bf84-ae5e55dbd7a7 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-ea7cc57f-17f6-47dc-bf84-ae5e55dbd7a7
-Taking next connection to: 16772
-Checking to see if clients are empty...
-No non-daemon clients connected after 3 min. Shutting down.
-Server socket thread exiting.
-0 clients open, will close them...
-All client sockets have been closed.
-Closing the 11328@DESKTOP-i54670k logs at Wed Aug 31 21:21:54 CEST 2016, goodbye.
+Taking next connection to: 17605
+New client attempting to connect on port: 17644-17605
+  Address = /192.168.1.234:17605
+This client on port 17644 has uuid 1803ef7f-be1f-4594-9920-ec357b12daa1 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-1803ef7f-be1f-4594-9920-ec357b12daa1
+Taking next connection to: 17605
