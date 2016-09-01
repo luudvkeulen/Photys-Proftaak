@@ -6,7 +6,7 @@ import views.html.*;
 
 public class Application extends Controller {
     public Result index() {
-        return ok(testpage.render("test"));
+        return ok(testpage.render());
     }
 
     public Result nextpage() {
