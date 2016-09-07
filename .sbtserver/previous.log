@@ -1,4 +1,20 @@
-New log file opened at Thu Sep 01 16:27:49 CEST 2016 by 1372@DESKTOP-i54670k
+New log file opened at Wed Sep 07 21:40:14 CEST 2016 by 5656@DESKTOP-i54670k
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->mysql#mysql-connector-java;5.1.18 [compile->master]
+== resolving dependencies for play-java#play-java_2.11;1.0-SNAPSHOT [optional]
+== resolving dependencies for play-java#play-java_2.11;1.0-SNAPSHOT [provided]
+resolving dependencies for configuration 'runtime-internal'
+== resolving dependencies for play-java#play-java_2.11;1.0-SNAPSHOT [runtime-internal]
+== resolving dependencies for play-java#play-java_2.11;1.0-SNAPSHOT [runtime]
+== resolving dependencies for play-java#play-java_2.11;1.0-SNAPSHOT [compile]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->org.scala-lang#scala-library;2.11.7 [compile->default(compile)]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->org.scala-lang#scala-library;2.11.7 [compile->runtime]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->org.scala-lang#scala-library;2.11.7 [compile->compile]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->org.scala-lang#scala-library;2.11.7 [compile->master]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->com.typesafe.play#twirl-api_2.11;1.1.1 [compile->default(compile)]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->com.typesafe.play#twirl-api_2.11;1.1.1 [compile->runtime]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->com.typesafe.play#twirl-api_2.11;1.1.1 [compile->compile]
+== resolving dependencies com.typesafe.play#twirl-api_2.11;1.1.1->org.scala-lang#scala-library;2.11.6 [compile->master(compile)]
+== resolving dependencies com.typesafe.play#twirl-api_2.11;1.1.1->org.scala-lang#scala-library;2.11.7 [compile->master(compile)]
 == resolving dependencies com.typesafe.play#twirl-api_2.11;1.1.1->org.scala-lang#scala-library;2.11.6 [compile->compile(*)]
 == resolving dependencies com.typesafe.play#twirl-api_2.11;1.1.1->org.scala-lang#scala-library;2.11.7 [compile->compile(*)]
 == resolving dependencies com.typesafe.play#twirl-api_2.11;1.1.1->org.apache.commons#commons-lang3;3.4 [compile->master(compile)]
@@ -883,6 +899,10 @@ excluding dependency: com.google.code.findbugs#annotations;2.0.1 {compile=[compi
 == resolving dependencies com.typesafe.play#play-java-ws_2.11;2.5.6->oauth.signpost#signpost-commonshttp4;1.2.1.2 [runtime->runtime(*)]
 == resolving dependencies com.typesafe.play#play-java-ws_2.11;2.5.6->oauth.signpost#signpost-commonshttp4;1.2.1.2 [runtime->compile]
 == resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->com.typesafe.play#play-java-ws_2.11;2.5.6 [compile->master]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->mysql#mysql-connector-java;5.1.18 [compile->default(compile)]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->mysql#mysql-connector-java;5.1.18 [compile->runtime]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->mysql#mysql-connector-java;5.1.18 [compile->compile]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->mysql#mysql-connector-java;5.1.18 [compile->master]
 == resolving dependencies for play-java#play-java_2.11;1.0-SNAPSHOT [optional]
 resolving dependencies for configuration 'test-internal'
 == resolving dependencies for play-java#play-java_2.11;1.0-SNAPSHOT [test-internal]
@@ -1782,6 +1802,10 @@ excluding dependency: com.google.code.findbugs#annotations;2.0.1 {compile=[compi
 == resolving dependencies com.typesafe.play#play-java-ws_2.11;2.5.6->oauth.signpost#signpost-commonshttp4;1.2.1.2 [runtime->runtime(*)]
 == resolving dependencies com.typesafe.play#play-java-ws_2.11;2.5.6->oauth.signpost#signpost-commonshttp4;1.2.1.2 [runtime->compile]
 == resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->com.typesafe.play#play-java-ws_2.11;2.5.6 [compile->master]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->mysql#mysql-connector-java;5.1.18 [compile->default(compile)]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->mysql#mysql-connector-java;5.1.18 [compile->runtime]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->mysql#mysql-connector-java;5.1.18 [compile->compile]
+== resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->mysql#mysql-connector-java;5.1.18 [compile->master]
 == resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->com.typesafe.play#play-test_2.11;2.5.6 [test->default(compile)]
 == resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->com.typesafe.play#play-test_2.11;2.5.6 [test->runtime]
 == resolving dependencies play-java#play-java_2.11;1.0-SNAPSHOT->com.typesafe.play#play-test_2.11;2.5.6 [test->compile]
@@ -3293,6 +3317,7 @@ all callers are evicted for commons-logging#commons-logging;1.1.1: evicting too
 	[NOT REQUIRED] com.typesafe.play#play-java-jdbc_2.11;2.5.6!play-java-jdbc_2.11.jar
 	[NOT REQUIRED] com.typesafe.play#play-cache_2.11;2.5.6!play-cache_2.11.jar
 	[NOT REQUIRED] com.typesafe.play#play-java-ws_2.11;2.5.6!play-java-ws_2.11.jar
+	[NOT REQUIRED] mysql#mysql-connector-java;5.1.18!mysql-connector-java.jar
 	[NOT REQUIRED] org.apache.commons#commons-lang3;3.4!commons-lang3.jar
 	[NOT REQUIRED] org.scala-lang.modules#scala-xml_2.11;1.0.1!scala-xml_2.11.jar(bundle)
 	[NOT REQUIRED] com.typesafe.play#play_2.11;2.5.6!play_2.11.jar
@@ -3459,31 +3484,84 @@ all callers are evicted for commons-logging#commons-logging;1.1.1: evicting too
 	[NOT REQUIRED] com.typesafe.akka#akka-actor_2.11;2.3.8!akka-actor_2.11.jar
 	[NOT REQUIRED] com.typesafe.akka#akka-testkit_2.11;2.3.8!akka-testkit_2.11.jar
 	[NOT REQUIRED] com.typesafe#config;1.2.1!config.jar(bundle)
-:: resolution report :: resolve 3167ms :: artifacts dl 173ms
-	report for play-java#play-java_2.11;1.0-SNAPSHOT compile produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-compile.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT runtime produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-runtime.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT test produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-test.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT provided produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-provided.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT optional produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-optional.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT compile-internal produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-compile-internal.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT runtime-internal produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-runtime-internal.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT test-internal produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-test-internal.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT plugin produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-plugin.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT sources produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-sources.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT docs produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-docs.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT pom produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-pom.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT scala-tool produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-scala-tool.xml
-	report for play-java#play-java_2.11;1.0-SNAPSHOT fork-run produced in D:\luud\Documents\Intellij projects\PTS4\Phontys\target\resolution-cache\reports\play-java-play-java_2.11-fork-run.xml
-	resolve done (3167ms resolve - 173ms download)
+:: resolution report :: resolve 2323ms :: artifacts dl 76ms
+	report for play-java#play-java_2.11;1.0-SNAPSHOT compile produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-compile.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT runtime produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-runtime.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT test produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-test.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT provided produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-provided.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT optional produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-optional.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT compile-internal produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-compile-internal.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT runtime-internal produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-runtime-internal.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT test-internal produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-test-internal.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT plugin produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-plugin.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT sources produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-sources.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT docs produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-docs.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT pom produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-pom.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT scala-tool produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-scala-tool.xml
+	report for play-java#play-java_2.11;1.0-SNAPSHOT fork-run produced in D:\luud\Documents\Intellij projects\PTS4\target\resolution-cache\reports\play-java-play-java_2.11-fork-run.xml
+	resolve done (2323ms resolve - 76ms download)
 Read from stdout: Done updating.
 Done updating.
-Total time: 4 s, completed 1-sep-2016 16:27:51
+Total time: 3 s, completed 7-sep-2016 21:40:15
 > server-post-command-cleanup
 > server-handle-next-server-request
 > root/playForkNotifyStart http://localhost:9000
 Evaluating tasks: *:playForkNotifyStart
-Running task... Cancel: sbt.server.ServerTaskCancellation@6549cc63, check cycles: false
-Total time: 0 s, completed 1-sep-2016 16:27:51
+Running task... Cancel: sbt.server.ServerTaskCancellation@67c13189, check cycles: false
+Total time: 0 s, completed 7-sep-2016 21:40:16
+> server-post-command-cleanup
+> server-handle-next-server-request
+> {file:/D:/luud/Documents/Intellij%20projects/PTS4/}root/*:playForkReload
+Evaluating tasks: *:playForkReload
+Running task... Cancel: sbt.server.ServerTaskCancellation@2ab0f3ae, check cycles: false
+SLF4J: The following set of substitute loggers may have been accessed
+SLF4J: during the initialization phase. Logging calls during this
+SLF4J: phase were not honored. However, subsequent logging calls to these
+SLF4J: loggers will work as normally expected.
+SLF4J: See also http://www.slf4j.org/codes.html#substituteLogger
+SLF4J: org.webjars.CloseQuietly
+
+Initial source changes: 
+	removed:Set()
+	added: Set(D:\luud\Documents\Intellij projects\PTS4\app\business\DatabaseController.java)
+	modified: Set()
+Removed products: Set()
+External API changes: API Changes: Set()
+Modified binary dependencies: Set()
+Initial directly invalidated sources: Set(D:\luud\Documents\Intellij projects\PTS4\app\business\DatabaseController.java)
+
+Sources indirectly invalidated by:
+	product: Set()
+	binary dep: Set()
+	external source: Set()
+All initially invalidated sources: Set(D:\luud\Documents\Intellij projects\PTS4\app\business\DatabaseController.java)
+
+Read from stdout: Compiling 1 Java source to D:\luud\Documents\Intellij projects\PTS4\target\scala-2.11\classes...
+Compiling 1 Java source to D:\luud\Documents\Intellij projects\PTS4\target\scala-2.11\classes...
+Attempting to call com.sun.tools.javac.api.JavacTool@3d457c1d directly...
+Java compilation took 0.375528091 s
+Java analysis took 0.075047417 s
+Java compile + analysis took 0.462167475 s
+Invalidating D:\luud\Documents\Intellij projects\PTS4\app\business\DatabaseController.java...
+Invalidating (transitively) by inheritance from D:\luud\Documents\Intellij projects\PTS4\app\business\DatabaseController.java...
+Initial set of included nodes: Set(D:\luud\Documents\Intellij projects\PTS4\app\business\DatabaseController.java)
+Invalidated by transitive inheritance dependency: Set(D:\luud\Documents\Intellij projects\PTS4\app\business\DatabaseController.java)
+The D:\luud\Documents\Intellij projects\PTS4\app\business\DatabaseController.java source file has the following regular definitions changed:
+	notify, wait, equals, notifyAll, <init>, toString, getClass, DatabaseController, hashCode.
+All member reference dependencies will be considered within this context.
+Name hashing optimization doesn't apply to non-Scala dependency: D:\luud\Documents\Intellij projects\PTS4\app\business\DatabaseController.java
+New invalidations:
+	Set()
+Initial set of included nodes: Set()
+Previously invalidated, but (transitively) depend on new invalidations:
+	Set()
+All newly invalidated sources after taking into account (previously) recompiled sources:Set()
+Copy resource mappings: 
+	(D:\luud\Documents\Intellij projects\PTS4\conf\application.conf,D:\luud\Documents\Intellij projects\PTS4\target\scala-2.11\classes\application.conf)
+	(D:\luud\Documents\Intellij projects\PTS4\conf\logback.xml,D:\luud\Documents\Intellij projects\PTS4\target\scala-2.11\classes\logback.xml)
+	(D:\luud\Documents\Intellij projects\PTS4\conf\routes,D:\luud\Documents\Intellij projects\PTS4\target\scala-2.11\classes\routes)
+Warning: node.js detection failed, sbt will use the Rhino based Trireme JavaScript engine instead to run JavaScript assets compilation, which in some cases may be orders of magnitude slower than using node.js.
+Total time: 2 s, completed 7-sep-2016 21:40:22
 > server-post-command-cleanup
 > server-handle-next-server-request
 Done executing sbt server engine, result Right(Exit(0))
@@ -3492,4 +3570,4 @@ Waiting for socket thread
 Waiting for request processor thread
 Waiting for command engine result
 Returning control to sbt launcher with result Exit(0)
-Closing the 1372@DESKTOP-i54670k logs at Thu Sep 01 16:30:33 CEST 2016, goodbye.
+Closing the 5656@DESKTOP-i54670k logs at Wed Sep 07 21:43:01 CEST 2016, goodbye.
