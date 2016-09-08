@@ -1,7 +1,7 @@
-New log file opened at Thu Sep 08 11:26:03 CEST 2016 by 776@LLaptop
-Taking next connection to: 57247
-New client attempting to connect on port: 57248-57247
-  Address = /145.93.42.118:57247
-This client on port 57248 has uuid d3ab56fe-56fa-41ab-ace9-71f8a8b31509 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-d3ab56fe-56fa-41ab-ace9-71f8a8b31509
-Taking next connection to: 57247
+New log file opened at Thu Sep 08 20:24:37 CEST 2016 by 12176@DESKTOP-i54670k
+Taking next connection to: 16611
+New client attempting to connect on port: 16612-16611
+  Address = /192.168.1.234:16611
+This client on port 16612 has uuid f03e95c1-77ca-4346-9740-5de9c454d19a configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-f03e95c1-77ca-4346-9740-5de9c454d19a
+Taking next connection to: 16611

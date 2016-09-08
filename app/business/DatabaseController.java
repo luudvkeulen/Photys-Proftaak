@@ -1,9 +1,12 @@
 package business;
 
-import play.db.*;
+import play.db.DB;
+
+import java.sql.Connection;
 
 public class DatabaseController {
-    public java.sql.Connection getConnection() {
-        return DB.getConnection();
+    public boolean checkCredentials(String username, String encryptedPassword) {
+        Connection con = DB.getConnection();
+        return false;
     }
 }

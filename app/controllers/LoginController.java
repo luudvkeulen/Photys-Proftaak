@@ -1,6 +1,7 @@
 package controllers;
 
 import business.DatabaseController;
+import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.data.DynamicForm;
 import play.mvc.Controller;
@@ -15,15 +16,15 @@ public class LoginController extends Controller {
         return ok(login.render());
     }
 
-    private void testdb() {
-        DatabaseController dbc = new DatabaseController();
-        Connection con = dbc.getConnection();
-    }
-
     public Result login() {
         DynamicForm bindedForm = Form.form().bindFromRequest();
-        Logger.info("Username is: " + bindedForm.get("username"));
-        Logger.info("Password is: " + bindedForm.get("password"));
+        //Logger.info("Username is: " + bindedForm.get("username"));
+        //Logger.info("Password is: " + bindedForm.get("password"));
+        checkCredentials(bindedForm.get("username"),bindedForm.get("password"));
         return ok();
+    }
+
+    private void checkCredentials(String username, String password) {
+        BCrypt.checkpw(password, "");
     }
 }
