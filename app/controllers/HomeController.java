@@ -1,11 +1,8 @@
 package controllers;
 
-import business.DatabaseController;
 import play.mvc.*;
 
 import views.html.*;
-
-import java.sql.Connection;
 
 /**
  * This controller contains an action to handle HTTP requests
