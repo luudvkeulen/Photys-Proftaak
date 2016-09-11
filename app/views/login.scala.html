@@ -7,7 +7,7 @@
             <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
             <!--<link rel="icon" href="../../favicon.ico">!-->
 
-        <title>Signin Template for Bootstrap</title>
+        <title>Signin</title>
 
             <!-- Bootstrap core CSS -->
         <link href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")" rel="stylesheet">
@@ -17,6 +17,7 @@
 
             <!-- Custom styles for this template -->
         <link href="@routes.Assets.versioned("stylesheets/signin.css")" rel="stylesheet">
+        <link href="@routes.Assets.versioned("stylesheets/signin-custom.css")" rel="stylesheet">
 
             <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
             <!--[if lt IE 9]>
@@ -30,9 +31,7 @@
         <div class="container">
             <form method="POST" class="form-signin" action="@routes.LoginController.login()">
                 <h2 class="form-signin-heading">Please sign in</h2>
-                <label for="inputEmail" class="sr-only">Email address</label>
                 <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus>
-                <label for="inputPassword" class="sr-only">Password</label>
                 <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
                 <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign in"/>
             </form>
