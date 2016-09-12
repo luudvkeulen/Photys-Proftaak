@@ -5,6 +5,7 @@
 # An example controller showing a sample home page
 GET     /                           controllers.Application.index
 GET     /login                      controllers.LoginController.index
+GET     /register                   controllers.RegisterController.index
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
 # An example controller showing how to write asynchronous code
@@ -15,4 +16,5 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 POST    /                           controllers.Application.nextpage()
 
-POST  /login                        controllers.LoginController.login()
+POST    /login                      controllers.LoginController.login()
+POST    /register                   controllers.RegisterController.register()

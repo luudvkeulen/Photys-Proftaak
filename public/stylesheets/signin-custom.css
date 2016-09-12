@@ -1,4 +1,7 @@
 .form-control {
     margin-bottom: 5px;
+}
+
+.form-signin input[type="password"] {
     border-radius: 5px;
 }

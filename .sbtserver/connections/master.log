@@ -1,13 +1,19 @@
-New log file opened at Sun Sep 11 18:22:14 CEST 2016 by 6032@DESKTOP-i54670k
-Taking next connection to: 4104
-New client attempting to connect on port: 4106-4104
-  Address = /192.168.1.234:4104
-This client on port 4106 has uuid 5b427a51-1858-4f83-922d-479404762f84 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-5b427a51-1858-4f83-922d-479404762f84
-Taking next connection to: 4104
-New client attempting to connect on port: 4440-4104
-  Address = /192.168.1.234:4104
-Handshake exception on socket: 4440
+New log file opened at Mon Sep 12 19:44:59 CEST 2016 by 11388@DESKTOP-i54670k
+Taking next connection to: 51688
+New client attempting to connect on port: 51689-51688
+  Address = /192.168.1.234:51688
+This client on port 51689 has uuid f549e5b0-8246-4383-9eaf-6d90138c5411 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-f549e5b0-8246-4383-9eaf-6d90138c5411
+Taking next connection to: 51688
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 51688
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 51688
+New client attempting to connect on port: 51883-51688
+  Address = /192.168.1.234:51688
+Handshake exception on socket: 51883
 sbt.impl.ipc.HandshakeException: Unable to perform handshake
 	at sbt.impl.ipc.Peer.handshake(IPC.scala:46)
 	at sbt.impl.ipc.MultiClientServer.<init>(IPC.scala:150)
@@ -23,15 +29,39 @@ Caused by: java.net.SocketException: Software caused connection abort: recv fail
 	at sbt.impl.ipc.Peer.receive(IPC.scala:95)
 	at sbt.impl.ipc.Peer.handshake(IPC.scala:49)
 	... 2 more
-Taking next connection to: 4104
-New client attempting to connect on port: 4441-4104
-  Address = /192.168.1.234:4104
-This client on port 4441 has uuid 2fb23b75-0d18-443b-a96c-d6d972f3f1fe configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-2fb23b75-0d18-443b-a96c-d6d972f3f1fe
-Taking next connection to: 4104
+Taking next connection to: 51688
+New client attempting to connect on port: 51884-51688
+  Address = /192.168.1.234:51688
+This client on port 51884 has uuid b8d236bd-0a99-4c7b-ac91-b4b7ad396ff4 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-b8d236bd-0a99-4c7b-ac91-b4b7ad396ff4
+Taking next connection to: 51688
+New client attempting to connect on port: 51938-51688
+  Address = /192.168.1.234:51688
+Handshake exception on socket: 51938
+sbt.impl.ipc.HandshakeException: Unable to perform handshake
+	at sbt.impl.ipc.Peer.handshake(IPC.scala:46)
+	at sbt.impl.ipc.MultiClientServer.<init>(IPC.scala:150)
+	at sbt.server.SbtServerSocketHandler$$anon$1.run(SbtServerSocketHandler.scala:43)
+Caused by: java.net.SocketException: Software caused connection abort: recv failed
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:170)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:265)
+	at java.io.DataInputStream.readInt(DataInputStream.java:387)
+	at sbt.impl.ipc.Peer.receive(IPC.scala:95)
+	at sbt.impl.ipc.Peer.handshake(IPC.scala:49)
+	... 2 more
+Taking next connection to: 51688
+New client attempting to connect on port: 51939-51688
+  Address = /192.168.1.234:51688
+This client on port 51939 has uuid 9fa674d9-3581-4fee-ad3a-edc51e1590c9 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-9fa674d9-3581-4fee-ad3a-edc51e1590c9
+Taking next connection to: 51688
 Checking to see if clients are empty...
 No non-daemon clients connected after 3 min. Shutting down.
 Server socket thread exiting.
 0 clients open, will close them...
 All client sockets have been closed.
-Closing the 6032@DESKTOP-i54670k logs at Sun Sep 11 18:26:48 CEST 2016, goodbye.
+Closing the 11388@DESKTOP-i54670k logs at Mon Sep 12 19:57:50 CEST 2016, goodbye.
