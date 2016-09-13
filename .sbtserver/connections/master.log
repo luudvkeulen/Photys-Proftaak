@@ -1,13 +1,7 @@
-New log file opened at Tue Sep 13 14:36:16 CEST 2016 by 4368@LLaptop
-Taking next connection to: 54376
-New client attempting to connect on port: 54377-54376
-  Address = /192.168.225.1:54376
-This client on port 54377 has uuid ddcdbcc4-34dd-4e31-8346-2a81fda41f74 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-ddcdbcc4-34dd-4e31-8346-2a81fda41f74
-Taking next connection to: 54376
-Checking to see if clients are empty...
-No non-daemon clients connected after 3 min. Shutting down.
-Server socket thread exiting.
-0 clients open, will close them...
-All client sockets have been closed.
-Closing the 4368@LLaptop logs at Tue Sep 13 14:39:17 CEST 2016, goodbye.
+New log file opened at Tue Sep 13 14:50:57 CEST 2016 by 4512@LLaptop
+Taking next connection to: 54489
+New client attempting to connect on port: 54490-54489
+  Address = /192.168.225.1:54489
+This client on port 54490 has uuid 307b7b4a-dd14-4c7f-9b6b-0c9cdd25b272 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-307b7b4a-dd14-4c7f-9b6b-0c9cdd25b272
+Taking next connection to: 54489
