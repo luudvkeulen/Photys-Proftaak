@@ -1,52 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-            <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-            <!--<link rel="icon" href="../../favicon.ico">!-->
+@main("Register") {
 
-        <title>Register</title>
+    @*
+    * Get an `Html` object by calling the built-in Play welcome
+    * template and passing a `String` message.
+    *@
+    <div class="container">
+        <form method="POST" class="form-signin" action="@routes.LoginController.login()">
+            <h4 class="form-signin-heading">Enter your personal information here to register for an account.</h4>
+            <input type="text" id="inputFirstname" name="firstname" class="form-control" placeholder="First name" required autofocus>
+            <input type="text" id="inputLastname" name="lastname" class="form-control" placeholder="Last name" required>
+            <input type="text" id="inputEmail" name="emailadres" class="form-control" placeholder="Email adres" required>
+            <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+            <input type="text" id="inputZipcode" name="zipcode" class="form-control" placeholder="Zipcode" required>
+            <input type="text" id="inputStreet" name="street" class="form-control" placeholder="Street" required>
+            <input type="text" id="inputHousenr" name="housenr" class="form-control" placeholder="House number" required>
+            <input type="text" id="inputPhonenr" name="phonenr" class="form-control" placeholder="Phone number" required>
+            <input class="btn btn-lg btn-primary btn-block" type="submit" value="Register"/>
+        </form>
 
-            <!-- Bootstrap core CSS -->
-        <link href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")" rel="stylesheet">
-
-            <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <link href="@routes.Assets.versioned("stylesheets/ie10-viewport-bug-workaround.css")" rel="stylesheet">
-
-            <!-- Custom styles for this template -->
-        <link href="@routes.Assets.versioned("stylesheets/signin.css")" rel="stylesheet">
-        <link href="@routes.Assets.versioned("stylesheets/signin-custom.css")" rel="stylesheet">
-
-            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-            <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-            <![endif]-->
-    </head>
-
-    <body>
-
-        <div class="container">
-            <form method="POST" class="form-signin" action="@routes.RegisterController.register()">
-                <h2 class="form-signin-heading">Register</h2>
-                <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus>
-                <input type="password" name="password1" class="form-control" placeholder="Password" required>
-                <input type="password" name="password2" class="form-control" placeholder="Password again" required>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="photographer" value="true"> I am a photographer
-                    </label>
-                </div>
-
-                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Register"/>
-            </form>
-
-        </div> <!-- /container -->
-
-
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="@routes.Assets.versioned("javascripts/ie10-viewport-bug-workaround.js")"></script>
-    </body>
-</html>
+    </div> <!-- /container -->
+}
