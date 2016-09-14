@@ -5,11 +5,11 @@
     * template and passing a `String` message.
     *@
     <div class="container">
-        <form method="POST" class="form-signin" action="@routes.LoginController.login()">
+        <form method="POST" class="form-signin" action="@routes.RegisterController.register()">
             <h4 class="form-signin-heading">Enter your personal information here to register for an account.</h4>
             <input type="text" id="inputFirstname" name="firstname" class="form-control" placeholder="First name" required autofocus>
             <input type="text" id="inputLastname" name="lastname" class="form-control" placeholder="Last name" required>
-            <input type="text" id="inputEmail" name="emailadres" class="form-control" placeholder="Email adres" required>
+            <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email adres" required>
             <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
             <input type="text" id="inputZipcode" name="zipcode" class="form-control" placeholder="Zipcode" required>
             <input type="text" id="inputStreet" name="street" class="form-control" placeholder="Street" required>
