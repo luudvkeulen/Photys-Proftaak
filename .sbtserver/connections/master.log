@@ -5,3 +5,9 @@ New client attempting to connect on port: 54490-54489
 This client on port 54490 has uuid 307b7b4a-dd14-4c7f-9b6b-0c9cdd25b272 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
 Connected Clients: play-fork-run-307b7b4a-dd14-4c7f-9b6b-0c9cdd25b272
 Taking next connection to: 54489
+Checking to see if clients are empty...
+No non-daemon clients connected after 3 min. Shutting down.
+Server socket thread exiting.
+0 clients open, will close them...
+All client sockets have been closed.
+Closing the 4512@LLaptop logs at Tue Sep 13 14:54:01 CEST 2016, goodbye.
