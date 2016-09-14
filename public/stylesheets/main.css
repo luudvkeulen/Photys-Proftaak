@@ -2,10 +2,23 @@
     padding-right: 0px;
 }
 
+.nopadding-left{
+    padding-left: 0px;
+}
+
 .width100{
     width: 100%;
 }
 
 .width50px{
     width: 50px !important;
+}
+
+@media screen and (max-width: 768px)
+{
+    .pull-right
+    {
+        float: left !important;
+        width: 100%;
+    }
 }
