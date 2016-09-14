@@ -1,10 +1,14 @@
-New log file opened at Wed Sep 14 12:32:19 CEST 2016 by 6460@Bramdb
-Taking next connection to: 6503
-New client attempting to connect on port: 6504-6503
-  Address = /145.93.105.237:6503
-This client on port 6504 has uuid 182efc8a-6a22-4fb9-9ee8-f9dbd17c3887 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-182efc8a-6a22-4fb9-9ee8-f9dbd17c3887
-Taking next connection to: 6503
+New log file opened at Wed Sep 14 13:26:11 CEST 2016 by 8672@LLaptop
+Taking next connection to: 58902
+New client attempting to connect on port: 58903-58902
+  Address = /145.93.42.118:58902
+This client on port 58903 has uuid de84b6b3-59d4-45cf-bd3f-5e7014dcaaba configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-de84b6b3-59d4-45cf-bd3f-5e7014dcaaba
+Taking next connection to: 58902
 Checking to see if clients are empty...
-We have 1 non-daemon clients, continuing serving connections.
-Taking next connection to: 6503
+No non-daemon clients connected after 3 min. Shutting down.
+1 daemon clients are connected.
+Server socket thread exiting.
+1 clients open, will close them...
+All client sockets have been closed.
+Closing the 8672@LLaptop logs at Wed Sep 14 13:29:15 CEST 2016, goodbye.

@@ -17,14 +17,18 @@ public class RegisterController extends Controller {
 
     public Result register() throws SQLException {
         DynamicForm bindedForm = Form.form().bindFromRequest();
-        Logger.info("Username is: " + bindedForm.get("username"));
-        Logger.info("Password 1 is: " + bindedForm.get("password1"));
-        Logger.info("Password 2 is: " + bindedForm.get("password2"));
-        Logger.info("Photographer: " + bindedForm.get("photographer"));
-        String password1 = bindedForm.get("password1");
-        String password2 = bindedForm.get("password2");
-        String username = bindedForm.get("username");
-        if(!password1.equals(password2)) return ok();
+        String firstname = bindedForm.get("firstname");
+        String lastname = bindedForm.get("lastname");
+        String emailaddress = bindedForm.get("email");
+        String password = bindedForm.get("password");
+        String zipcode = bindedForm.get("zipcode");
+        String street = bindedForm.get("street");
+        String housenumber = bindedForm.get("housenr");
+        String phone = bindedForm.get("phonenr");
         return ok();
+    }
+
+    private void insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone) {
+
     }
 }
