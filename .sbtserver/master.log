@@ -1,4 +1,4 @@
-New log file opened at Wed Sep 14 13:26:45 CEST 2016 by 8672@LLaptop
+New log file opened at Wed Sep 14 15:09:17 CEST 2016 by 4628@LLaptop
 == resolving dependencies oauth.signpost#signpost-commonshttp4;1.2.1.2->oauth.signpost#signpost-core;1.2.1.2 [runtime->compile]
 == resolving dependencies oauth.signpost#signpost-commonshttp4;1.2.1.2->org.apache.httpcomponents#httpcore;4.0.1 [runtime->runtime(*)]
 == resolving dependencies oauth.signpost#signpost-commonshttp4;1.2.1.2->org.apache.httpcomponents#httpcore;4.0.1 [runtime->compile]
@@ -3523,7 +3523,7 @@ all callers are evicted for commons-logging#commons-logging;1.1.1: evicting too
 	[NOT REQUIRED] com.typesafe.akka#akka-actor_2.11;2.3.8!akka-actor_2.11.jar
 	[NOT REQUIRED] com.typesafe.akka#akka-testkit_2.11;2.3.8!akka-testkit_2.11.jar
 	[NOT REQUIRED] com.typesafe#config;1.2.1!config.jar(bundle)
-:: resolution report :: resolve 6371ms :: artifacts dl 262ms
+:: resolution report :: resolve 5959ms :: artifacts dl 295ms
 	report for play-java#play-java_2.11;1.0-SNAPSHOT compile produced in D:\Documents\Intellij projects\Photys\target\resolution-cache\reports\play-java-play-java_2.11-compile.xml
 	report for play-java#play-java_2.11;1.0-SNAPSHOT runtime produced in D:\Documents\Intellij projects\Photys\target\resolution-cache\reports\play-java-play-java_2.11-runtime.xml
 	report for play-java#play-java_2.11;1.0-SNAPSHOT test produced in D:\Documents\Intellij projects\Photys\target\resolution-cache\reports\play-java-play-java_2.11-test.xml
@@ -3538,316 +3538,48 @@ all callers are evicted for commons-logging#commons-logging;1.1.1: evicting too
 	report for play-java#play-java_2.11;1.0-SNAPSHOT pom produced in D:\Documents\Intellij projects\Photys\target\resolution-cache\reports\play-java-play-java_2.11-pom.xml
 	report for play-java#play-java_2.11;1.0-SNAPSHOT scala-tool produced in D:\Documents\Intellij projects\Photys\target\resolution-cache\reports\play-java-play-java_2.11-scala-tool.xml
 	report for play-java#play-java_2.11;1.0-SNAPSHOT fork-run produced in D:\Documents\Intellij projects\Photys\target\resolution-cache\reports\play-java-play-java_2.11-fork-run.xml
-	resolve done (6371ms resolve - 262ms download)
+	resolve done (5959ms resolve - 295ms download)
 Read from stdout: Done updating.
 Done updating.
-Total time: 8 s, completed 14-sep-2016 13:26:47
+Total time: 7 s, completed 14-sep-2016 15:09:19
 > server-post-command-cleanup
 > server-handle-next-server-request
 > root/playForkNotifyStart http://localhost:9000
 Evaluating tasks: *:playForkNotifyStart
-Running task... Cancel: sbt.server.ServerTaskCancellation@2b5b7e5, check cycles: false
-Total time: 0 s, completed 14-sep-2016 13:26:49
+Running task... Cancel: sbt.server.ServerTaskCancellation@3009dd01, check cycles: false
+Total time: 0 s, completed 14-sep-2016 15:09:21
 > server-post-command-cleanup
 > server-handle-next-server-request
 > {file:/D:/Documents/Intellij%20projects/Photys/}root/*:playForkReload
 Evaluating tasks: *:playForkReload
-Running task... Cancel: sbt.server.ServerTaskCancellation@8dd3da3, check cycles: false
+Running task... Cancel: sbt.server.ServerTaskCancellation@1d53a7cd, check cycles: false
 
 Initial source changes: 
 	removed:Set()
-	added: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\main.template.scala, D:\Documents\Intellij projects\Photys\app\services\AtomicCounter.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\login.template.scala, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\routes.java, D:\Documents\Intellij projects\Photys\app\controllers\AdminController.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\index.template.scala, D:\Documents\Intellij projects\Photys\app\models\UserType.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\nexttestpage.template.scala, D:\Documents\Intellij projects\Photys\app\controllers\Application.java, D:\Documents\Intellij projects\Photys\app\controllers\RegisterController.java, D:\Documents\Intellij projects\Photys\app\services\ApplicationTimer.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\javascript\JavaScriptReverseRoutes.scala, D:\Documents\Intellij projects\Photys\app\models\Login.java, D:\Documents\Intellij projects\Photys\app\controllers\AsyncController.java, D:\Documents\Intellij projects\Photys\app\services\Counter.java, D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java, D:\Documents\Intellij projects\Photys\app\models\User.java, D:\Documents\Intellij projects\Photys\app\models\Test.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\register.template.scala, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\RoutesPrefix.scala, D:\Documents\Intellij projects\Photys\app\filters\ExampleFilter.java, D:\Documents\Intellij projects\Photys\app\Module.java, D:\Documents\Intellij projects\Photys\app\controllers\CountController.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\testpage.template.scala, D:\Documents\Intellij projects\Photys\app\controllers\HomeController.java, D:\Documents\Intellij projects\Photys\app\Filters.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\ReverseRoutes.scala)
-	modified: Set()
+	added: Set()
+	modified: Set(D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java)
 Removed products: Set()
 External API changes: API Changes: Set()
 Modified binary dependencies: Set()
-Initial directly invalidated sources: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\main.template.scala, D:\Documents\Intellij projects\Photys\app\services\AtomicCounter.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\login.template.scala, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\routes.java, D:\Documents\Intellij projects\Photys\app\controllers\AdminController.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\index.template.scala, D:\Documents\Intellij projects\Photys\app\models\UserType.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\nexttestpage.template.scala, D:\Documents\Intellij projects\Photys\app\controllers\Application.java, D:\Documents\Intellij projects\Photys\app\controllers\RegisterController.java, D:\Documents\Intellij projects\Photys\app\services\ApplicationTimer.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\javascript\JavaScriptReverseRoutes.scala, D:\Documents\Intellij projects\Photys\app\models\Login.java, D:\Documents\Intellij projects\Photys\app\controllers\AsyncController.java, D:\Documents\Intellij projects\Photys\app\services\Counter.java, D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java, D:\Documents\Intellij projects\Photys\app\models\User.java, D:\Documents\Intellij projects\Photys\app\models\Test.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\register.template.scala, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\RoutesPrefix.scala, D:\Documents\Intellij projects\Photys\app\filters\ExampleFilter.java, D:\Documents\Intellij projects\Photys\app\Module.java, D:\Documents\Intellij projects\Photys\app\controllers\CountController.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\testpage.template.scala, D:\Documents\Intellij projects\Photys\app\controllers\HomeController.java, D:\Documents\Intellij projects\Photys\app\Filters.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\ReverseRoutes.scala)
+Initial directly invalidated sources: Set(D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java)
 
 Sources indirectly invalidated by:
 	product: Set()
 	binary dep: Set()
 	external source: Set()
-All initially invalidated sources: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\main.template.scala, D:\Documents\Intellij projects\Photys\app\services\AtomicCounter.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\login.template.scala, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\routes.java, D:\Documents\Intellij projects\Photys\app\controllers\AdminController.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\index.template.scala, D:\Documents\Intellij projects\Photys\app\models\UserType.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\nexttestpage.template.scala, D:\Documents\Intellij projects\Photys\app\controllers\Application.java, D:\Documents\Intellij projects\Photys\app\controllers\RegisterController.java, D:\Documents\Intellij projects\Photys\app\services\ApplicationTimer.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\javascript\JavaScriptReverseRoutes.scala, D:\Documents\Intellij projects\Photys\app\models\Login.java, D:\Documents\Intellij projects\Photys\app\controllers\AsyncController.java, D:\Documents\Intellij projects\Photys\app\services\Counter.java, D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java, D:\Documents\Intellij projects\Photys\app\models\User.java, D:\Documents\Intellij projects\Photys\app\models\Test.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\register.template.scala, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\RoutesPrefix.scala, D:\Documents\Intellij projects\Photys\app\filters\ExampleFilter.java, D:\Documents\Intellij projects\Photys\app\Module.java, D:\Documents\Intellij projects\Photys\app\controllers\CountController.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\testpage.template.scala, D:\Documents\Intellij projects\Photys\app\controllers\HomeController.java, D:\Documents\Intellij projects\Photys\app\Filters.java, D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\ReverseRoutes.scala)
+All initially invalidated sources: Set(D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java)
 
-Recompiling all 28 sources: invalidated sources (28) exceeded 50.0% of all sources
-Read from stdout: Compiling 10 Scala sources and 18 Java sources to D:\Documents\Intellij projects\Photys\target\scala-2.11\classes...
-Compiling 10 Scala sources and 18 Java sources to D:\Documents\Intellij projects\Photys\target\scala-2.11\classes...
-Getting compiler-interface from component compiler for Scala 2.11.7
-Other repositories:
-Default repositories:
-Getting compiler-interface from component compiler for Scala 2.11.7
-Other repositories:
-Default repositories:
-Running cached compiler 35b3621e, interfacing (CompilerInterface) with Scala compiler version 2.11.7
-Calling Scala compiler with arguments  (CompilerInterface):
-	-deprecation
-	-unchecked
-	-encoding
-	utf8
-	-bootclasspath
-	C:\Program Files\Java\jdk1.8.0_101\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_101\jre\classes;C:\Users\Luud\.ivy2\cache\org.scala-lang\scala-library\jars\scala-library-2.11.7.jar
-	-classpath
-	D:\Documents\Intellij projects\Photys\target\scala-2.11\classes;C:\Users\Luud\.ivy2\cache\com.typesafe.play\twirl-api_2.11\jars\twirl-api_2.11-1.1.1.jar;C:\Users\Luud\.ivy2\cache\org.apache.commons\commons-lang3\jars\commons-lang3-3.4.jar;C:\Users\Luud\.ivy2\cache\org.scala-lang.modules\scala-xml_2.11\bundles\scala-xml_2.11-1.0.1.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-enhancer\jars\play-enhancer-1.1.0.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-server_2.11\jars\play-server_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play_2.11\jars\play_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\build-link\jars\build-link-2.5.6.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-exceptions\jars\play-exceptions-2.5.6.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-iteratees_2.11\jars\play-iteratees_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\org.scala-stm\scala-stm_2.11\jars\scala-stm_2.11-0.7.jar;C:\Users\Luud\.ivy2\cache\com.typesafe\config\bundles\config-1.3.0.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-json_2.11\jars\play-json_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-functional_2.11\jars\play-functional_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-datacommons_2.11\jars\play-datacommons_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\joda-time\joda-time\jars\joda-time-2.9.4.jar;C:\Users\Luud\.ivy2\cache\org.joda\joda-convert\jars\joda-convert-1.8.1.jar;C:\Users\Luud\.ivy2\cache\org.scala-lang\scala-reflect\jars\scala-reflect-2.11.7.jar;C:\Users\Luud\.ivy2\cache\com.fasterxml.jackson.core\jackson-core\bundles\jackson-core-2.7.6.jar;C:\Users\Luud\.ivy2\cache\com.fasterxml.jackson.core\jackson-annotations\bundles\jackson-annotations-2.7.6.jar;C:\Users\Luud\.ivy2\cache\com.fasterxml.jackson.core\jackson-databind\bundles\jackson-databind-2.7.6.jar;C:\Users\Luud\.ivy2\cache\com.fasterxml.jackson.datatype\jackson-datatype-jdk8\bundles\jackson-datatype-jdk8-2.7.6.jar;C:\Users\Luud\.ivy2\cache\com.fasterxml.jackson.datatype\jackson-datatype-jsr310\bundles\jackson-datatype-jsr310-2.7.6.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-netty-utils\jars\play-netty-utils-2.5.6.jar;C:\Users\Luud\.ivy2\cache\org.slf4j\slf4j-api\jars\slf4j-api-1.7.21.jar;C:\Users\Luud\.ivy2\cache\org.slf4j\jul-to-slf4j\jars\jul-to-slf4j-1.7.21.jar;C:\Users\Luud\.ivy2\cache\org.slf4j\jcl-over-slf4j\jars\jcl-over-slf4j-1.7.21.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-streams_2.11\jars\play-streams_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\org.reactivestreams\reactive-streams\jars\reactive-streams-1.0.0.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.akka\akka-stream_2.11\jars\akka-stream_2.11-2.4.9.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.akka\akka-actor_2.11\jars\akka-actor_2.11-2.4.9.jar;C:\Users\Luud\.ivy2\cache\org.scala-lang.modules\scala-java8-compat_2.11\bundles\scala-java8-compat_2.11-0.7.0.jar;C:\Users\Luud\.ivy2\cache\com.typesafe\ssl-config-akka_2.11\bundles\ssl-config-akka_2.11-0.2.1.jar;C:\Users\Luud\.ivy2\cache\com.typesafe\ssl-config-core_2.11\bundles\ssl-config-core_2.11-0.2.1.jar;C:\Users\Luud\.ivy2\cache\org.scala-lang.modules\scala-parser-combinators_2.11\bundles\scala-parser-combinators_2.11-1.0.4.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.akka\akka-slf4j_2.11\jars\akka-slf4j_2.11-2.4.9.jar;C:\Users\Luud\.ivy2\cache\commons-codec\commons-codec\jars\commons-codec-1.10.jar;C:\Users\Luud\.ivy2\cache\xerces\xercesImpl\jars\xercesImpl-2.11.0.jar;C:\Users\Luud\.ivy2\cache\xml-apis\xml-apis\jars\xml-apis-1.4.01.jar;C:\Users\Luud\.ivy2\cache\javax.transaction\jta\jars\jta-1.1.jar;C:\Users\Luud\.ivy2\cache\com.google.inject\guice\jars\guice-4.0.jar;C:\Users\Luud\.ivy2\cache\javax.inject\javax.inject\jars\javax.inject-1.jar;C:\Users\Luud\.ivy2\cache\aopalliance\aopalliance\jars\aopalliance-1.0.jar;C:\Users\Luud\.ivy2\cache\com.google.inject.extensions\guice-assistedinject\jars\guice-assistedinject-4.0.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-java_2.11\jars\play-java_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\org.yaml\snakeyaml\bundles\snakeyaml-1.16.jar;C:\Users\Luud\.ivy2\cache\org.hibernate\hibernate-validator\jars\hibernate-validator-5.2.4.Final.jar;C:\Users\Luud\.ivy2\cache\javax.validation\validation-api\jars\validation-api-1.1.0.Final.jar;C:\Users\Luud\.ivy2\cache\org.jboss.logging\jboss-logging\jars\jboss-logging-3.2.1.Final.jar;C:\Users\Luud\.ivy2\cache\com.fasterxml\classmate\bundles\classmate-1.1.0.jar;C:\Users\Luud\.ivy2\cache\javax.el\javax.el-api\jars\javax.el-api-3.0.0.jar;C:\Users\Luud\.ivy2\cache\org.springframework\spring-context\jars\spring-context-4.2.7.RELEASE.jar;C:\Users\Luud\.ivy2\cache\org.springframework\spring-core\jars\spring-core-4.2.7.RELEASE.jar;C:\Users\Luud\.ivy2\cache\org.springframework\spring-beans\jars\spring-beans-4.2.7.RELEASE.jar;C:\Users\Luud\.ivy2\cache\org.reflections\reflections\jars\reflections-0.9.10.jar;C:\Users\Luud\.ivy2\cache\com.google.guava\guava\bundles\guava-19.0.jar;C:\Users\Luud\.ivy2\cache\net.jodah\typetools\bundles\typetools-0.4.4.jar;C:\Users\Luud\.ivy2\cache\com.google.code.findbugs\jsr305\jars\jsr305-3.0.1.jar;C:\Users\Luud\.ivy2\cache\org.apache.tomcat\tomcat-servlet-api\jars\tomcat-servlet-api-8.0.33.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-netty-server_2.11\jars\play-netty-server_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.netty\netty-reactive-streams-http\jars\netty-reactive-streams-http-1.0.7.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.netty\netty-reactive-streams\jars\netty-reactive-streams-1.0.7.jar;C:\Users\Luud\.ivy2\cache\io.netty\netty-handler\jars\netty-handler-4.0.39.Final.jar;C:\Users\Luud\.ivy2\cache\io.netty\netty-buffer\jars\netty-buffer-4.0.39.Final.jar;C:\Users\Luud\.ivy2\cache\io.netty\netty-common\jars\netty-common-4.0.39.Final.jar;C:\Users\Luud\.ivy2\cache\io.netty\netty-transport\jars\netty-transport-4.0.39.Final.jar;C:\Users\Luud\.ivy2\cache\io.netty\netty-codec\jars\netty-codec-4.0.39.Final.jar;C:\Users\Luud\.ivy2\cache\io.netty\netty-codec-http\jars\netty-codec-http-4.0.39.Final.jar;C:\Users\Luud\.ivy2\cache\io.netty\netty-transport-native-epoll\jars\netty-transport-native-epoll-4.0.39.Final-linux-x86_64.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-logback_2.11\jars\play-logback_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\ch.qos.logback\logback-classic\jars\logback-classic-1.1.7.jar;C:\Users\Luud\.ivy2\cache\ch.qos.logback\logback-core\jars\logback-core-1.1.7.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-java-jdbc_2.11\jars\play-java-jdbc_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-jdbc_2.11\jars\play-jdbc_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-jdbc-api_2.11\jars\play-jdbc-api_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\com.jolbox\bonecp\bundles\bonecp-0.8.0.RELEASE.jar;C:\Users\Luud\.ivy2\cache\com.zaxxer\HikariCP\bundles\HikariCP-2.4.7.jar;C:\Users\Luud\.ivy2\cache\com.googlecode.usc\jdbcdslog\jars\jdbcdslog-1.0.6.2.jar;C:\Users\Luud\.ivy2\cache\com.h2database\h2\jars\h2-1.4.192.jar;C:\Users\Luud\.ivy2\cache\tyrex\tyrex\jars\tyrex-1.0.1.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-cache_2.11\jars\play-cache_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\net.sf.ehcache\ehcache-core\jars\ehcache-core-2.6.11.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-java-ws_2.11\jars\play-java-ws_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\com.typesafe.play\play-ws_2.11\jars\play-ws_2.11-2.5.6.jar;C:\Users\Luud\.ivy2\cache\org.asynchttpclient\async-http-client\jars\async-http-client-2.0.11.jar;C:\Users\Luud\.ivy2\cache\org.asynchttpclient\netty-resolver-dns\jars\netty-resolver-dns-2.0.11.jar;C:\Users\Luud\.ivy2\cache\org.asynchttpclient\netty-resolver\jars\netty-resolver-2.0.11.jar;C:\Users\Luud\.ivy2\cache\org.asynchttpclient\netty-codec-dns\jars\netty-codec-dns-2.0.11.jar;C:\Users\Luud\.ivy2\cache\org.javassist\javassist\bundles\javassist-3.20.0-GA.jar;C:\Users\Luud\.ivy2\cache\oauth.signpost\signpost-core\jars\signpost-core-1.2.1.2.jar;C:\Users\Luud\.ivy2\cache\oauth.signpost\signpost-commonshttp4\jars\signpost-commonshttp4-1.2.1.2.jar;C:\Users\Luud\.ivy2\cache\org.apache.httpcomponents\httpcore\jars\httpcore-4.0.1.jar;C:\Users\Luud\.ivy2\cache\org.apache.httpcomponents\httpclient\jars\httpclient-4.0.1.jar;C:\Users\Luud\.ivy2\cache\commons-logging\commons-logging\jars\commons-logging-1.1.1.jar;C:\Users\Luud\.ivy2\cache\org.mindrot\jbcrypt\jars\jbcrypt-0.3m.jar;C:\Users\Luud\.ivy2\cache\mysql\mysql-connector-java\jars\mysql-connector-java-5.1.18.jar
-Scala compilation took 14.39429208 s
-Attempting to call com.sun.tools.javac.api.JavacTool@292f6769 directly...
-Read from stdout: D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java: Some input files use or override a deprecated API.
-D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java: Some input files use or override a deprecated API.
+Read from stdout: Compiling 1 Java source to D:\Documents\Intellij projects\Photys\target\scala-2.11\classes...
+Compiling 1 Java source to D:\Documents\Intellij projects\Photys\target\scala-2.11\classes...
+Attempting to call com.sun.tools.javac.api.JavacTool@4bfdd331 directly...
+Warning: node.js detection failed, sbt will use the Rhino based Trireme JavaScript engine instead to run JavaScript assets compilation, which in some cases may be orders of magnitude slower than using node.js.
+Read from stdout: D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java: D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java uses or overrides a deprecated API.
+D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java: D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java uses or overrides a deprecated API.
 Read from stdout: D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java: Recompile with -Xlint:deprecation for details.
 D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java: Recompile with -Xlint:deprecation for details.
-Java compilation took 1.801324674 s
-Warning: node.js detection failed, sbt will use the Rhino based Trireme JavaScript engine instead to run JavaScript assets compilation, which in some cases may be orders of magnitude slower than using node.js.
-Java analysis took 0.919032106 s
-Java compile + analysis took 2.740731631 s
-Invalidating D:\Documents\Intellij projects\Photys\app\services\AtomicCounter.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\services\AtomicCounter.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\services\AtomicCounter.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\services\AtomicCounter.java)
-The D:\Documents\Intellij projects\Photys\app\services\AtomicCounter.java source file has the following regular definitions changed:
-	notify, nextCount, wait, equals, AtomicCounter, atomicCounter, notifyAll, <init>, toString, getClass, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\services\AtomicCounter.java
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\Module.java
-Invalidating D:\Documents\Intellij projects\Photys\app\controllers\AdminController.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\controllers\AdminController.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\controllers\AdminController.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\controllers\AdminController.java)
-The D:\Documents\Intellij projects\Photys\app\controllers\AdminController.java source file has the following regular definitions changed:
-	notify, wait, AdminController, equals, ChangeUserToPhotographer, notifyAll, <init>, toString, getClass, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\AdminController.java
-Invalidating D:\Documents\Intellij projects\Photys\app\controllers\RegisterController.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\controllers\RegisterController.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\controllers\RegisterController.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\controllers\RegisterController.java)
-The D:\Documents\Intellij projects\Photys\app\controllers\RegisterController.java source file has the following regular definitions changed:
-	enumerator, notify, RegisterController, register, FROM, movedPermanently, CONTENT_LANGUAGE, CREATED, temporaryRedirect, Results$StringChunks$WhenReadyStringChunks, WARNING, CONTINUE, SET_COOKIE2, permanentRedirect, CONTENT_DISPOSITION, lambda$new$4, channel, CONTENT_TYPE, badRequest, wait, ACCESS_CONTROL_ALLOW_METHODS, USER_AGENT, ctx, HOST, CONTENT_MD5, request, X_FORWARDED_PORT, paymentRequired, BAD_REQUEST, logger, MAX_FORWARDS, X_FORWARDED_HOST, redirect, TRAILER, PROXY_AUTHENTICATE, AUTHORIZATION, CACHE_CONTROL, NOT_IMPLEMENTED, equals, PAYMENT_REQUIRED, RETRY_AFTER, PRECONDITION_FAILED, CONFLICT, ACCEPT_CHARSET, Results$ByteChunks$WhenReadyByteChunks, onReady, VIA, REQUEST_TIMEOUT, MULTIPLE_CHOICES, notFound, MOVED_PERMANENTLY, TE, CONTENT_LOCATION, PARTIAL_CONTENT, lambda$new$5, INSUFFICIENT_STORAGE, lambda$onDisconnected$6, ETAG, LENGTH_REQUIRED, UNAUTHORIZED, UNSUPPORTED_MEDIA_TYPE, REFERER, REQUEST_ENTITY_TOO_LARGE, ORIGIN, ACCEPT_LANGUAGE, NOT_MODIFIED, Results$StringChunks, HTTP_VERSION_NOT_SUPPORTED, ACCESS_CONTROL_ALLOW_ORIGIN, IF_RANGE, IF_UNMODIFIED_SINCE, SWITCHING_PROTOCOLS, callback, TEMPORARY_REDIRECT, CONTENT_LENGTH, SET_COOKIE, notifyAll, AGE, BAD_GATEWAY, EXPECTATION_FAILED, CONNECTION, FORWARDED, Results$ByteChunks, Results$Chunks$Out, OK, ACCESS_CONTROL_ALLOW_HEADERS, found, unauthorized, response, FOUND, <init>, DATE, CONTENT_RANGE, TRANSFER_ENCODING, PERMANENT_REDIRECT, TOO_MANY_REQUESTS, PROXY_AUTHORIZATION, GONE, ACCESS_CONTROL_ALLOW_CREDENTIALS, clearLang, NOT_ACCEPTABLE, status, EXPECT, LOCATION, VARY, WWW_AUTHENTICATE, TODO, forbidden, X_FORWARDED_FOR, access$000, ACCEPTED, NO_CONTENT, disconnected, INTERNAL_SERVER_ERROR, onDisconnected, UPGRADE, NOT_FOUND, session, ACCEPT_ENCODING, EXPIRES, seeOther, REQUESTED_RANGE_NOT_SATISFIABLE, UPGRADE_REQUIRED, toString, ACCEPT, changeLang, GATEWAY_TIMEOUT, whenReady, SERVER, ACCESS_CONTROL_REQUEST_METHOD, UNPROCESSABLE_ENTITY, ACCESS_CONTROL_MAX_AGE, LAST_MODIFIED, ACCESS_CONTROL_EXPOSE_HEADERS, ACCESS_CONTROL_REQUEST_HEADERS, flash, internalServerError, ok, ALLOW, COOKIE, IF_MODIFIED_SINCE, getClass, CONTENT_TRANSFER_ENCODING, lang, NON_AUTHORITATIVE_INFORMATION, close, PRAGMA, IF_MATCH, PROXY_AUTHENTICATION_REQUIRED, RESET_CONTENT, SEE_OTHER, FAILED_DEPENDENCY, CONTENT_ENCODING, RANGE, USE_PROXY, Results$Chunks, REQUEST_URI_TOO_LONG, writable, LOCKED, FORBIDDEN, METHOD_NOT_ALLOWED, write, IF_NONE_MATCH, ACCEPT_RANGES, noContent, X_REQUESTED_WITH, X_FORWARDED_PROTO, MULTI_STATUS, SERVICE_UNAVAILABLE, index, created, hashCode.
-All member reference dependencies will be considered within this context.
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala: Set(RegisterController, register, <init>, getClass, index)
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\RegisterController.java
-Invalidating D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\index.template.scala...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\index.template.scala...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\index.template.scala)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\index.template.scala)
-The D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\index.template.scala source file has the following regular definitions changed:
-	notify, format, wait, $asInstanceOf, productArity, equals, asInstanceOf, f, synchronized, _display_, $isInstanceOf, ref, canEqual, index_Scope0, productPrefix, notifyAll, readResolve, isInstanceOf, <init>, apply, ==, clone, copy, toString, !=, getClass, copy$default$1, render, ne, eq, productIterator, ##, finalize, index, productElement, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\Application.java
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\HomeController.java
-Invalidating D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java)
-The D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java source file has the following regular definitions changed:
-	enumerator, notify, FROM, movedPermanently, CONTENT_LANGUAGE, CREATED, temporaryRedirect, Results$StringChunks$WhenReadyStringChunks, WARNING, CONTINUE, SET_COOKIE2, permanentRedirect, CONTENT_DISPOSITION, lambda$new$4, channel, CONTENT_TYPE, badRequest, wait, ACCESS_CONTROL_ALLOW_METHODS, USER_AGENT, ctx, HOST, CONTENT_MD5, request, X_FORWARDED_PORT, paymentRequired, BAD_REQUEST, logger, checkCredentials, MAX_FORWARDS, X_FORWARDED_HOST, redirect, TRAILER, PROXY_AUTHENTICATE, AUTHORIZATION, CACHE_CONTROL, NOT_IMPLEMENTED, equals, PAYMENT_REQUIRED, getEncryptedPassword, RETRY_AFTER, PRECONDITION_FAILED, CONFLICT, ACCEPT_CHARSET, Results$ByteChunks$WhenReadyByteChunks, onReady, VIA, REQUEST_TIMEOUT, MULTIPLE_CHOICES, notFound, MOVED_PERMANENTLY, TE, CONTENT_LOCATION, PARTIAL_CONTENT, lambda$new$5, INSUFFICIENT_STORAGE, lambda$onDisconnected$6, ETAG, LENGTH_REQUIRED, UNAUTHORIZED, UNSUPPORTED_MEDIA_TYPE, REFERER, REQUEST_ENTITY_TOO_LARGE, ORIGIN, ACCEPT_LANGUAGE, NOT_MODIFIED, Results$StringChunks, HTTP_VERSION_NOT_SUPPORTED, ACCESS_CONTROL_ALLOW_ORIGIN, IF_RANGE, IF_UNMODIFIED_SINCE, SWITCHING_PROTOCOLS, callback, TEMPORARY_REDIRECT, CONTENT_LENGTH, SET_COOKIE, notifyAll, AGE, BAD_GATEWAY, EXPECTATION_FAILED, CONNECTION, FORWARDED, Results$ByteChunks, Results$Chunks$Out, OK, ACCESS_CONTROL_ALLOW_HEADERS, found, unauthorized, response, FOUND, <init>, DATE, CONTENT_RANGE, TRANSFER_ENCODING, PERMANENT_REDIRECT, TOO_MANY_REQUESTS, PROXY_AUTHORIZATION, GONE, LoginController, ACCESS_CONTROL_ALLOW_CREDENTIALS, clearLang, NOT_ACCEPTABLE, status, EXPECT, LOCATION, VARY, WWW_AUTHENTICATE, TODO, forbidden, X_FORWARDED_FOR, access$000, ACCEPTED, NO_CONTENT, disconnected, INTERNAL_SERVER_ERROR, onDisconnected, UPGRADE, NOT_FOUND, session, ACCEPT_ENCODING, EXPIRES, seeOther, REQUESTED_RANGE_NOT_SATISFIABLE, UPGRADE_REQUIRED, toString, ACCEPT, changeLang, GATEWAY_TIMEOUT, whenReady, SERVER, ACCESS_CONTROL_REQUEST_METHOD, UNPROCESSABLE_ENTITY, ACCESS_CONTROL_MAX_AGE, LAST_MODIFIED, ACCESS_CONTROL_EXPOSE_HEADERS, ACCESS_CONTROL_REQUEST_HEADERS, flash, internalServerError, ok, ALLOW, COOKIE, IF_MODIFIED_SINCE, getClass, CONTENT_TRANSFER_ENCODING, lang, NON_AUTHORITATIVE_INFORMATION, login, close, PRAGMA, IF_MATCH, PROXY_AUTHENTICATION_REQUIRED, RESET_CONTENT, SEE_OTHER, FAILED_DEPENDENCY, CONTENT_ENCODING, RANGE, USE_PROXY, Results$Chunks, REQUEST_URI_TOO_LONG, writable, LOCKED, FORBIDDEN, METHOD_NOT_ALLOWED, write, IF_NONE_MATCH, ACCEPT_RANGES, noContent, X_REQUESTED_WITH, X_FORWARDED_PROTO, MULTI_STATUS, SERVICE_UNAVAILABLE, index, created, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala: Set(<init>, LoginController, getClass, login, index)
-Invalidating D:\Documents\Intellij projects\Photys\app\controllers\Application.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\controllers\Application.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\controllers\Application.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\controllers\Application.java)
-The D:\Documents\Intellij projects\Photys\app\controllers\Application.java source file has the following regular definitions changed:
-	enumerator, notify, FROM, movedPermanently, CONTENT_LANGUAGE, CREATED, temporaryRedirect, Results$StringChunks$WhenReadyStringChunks, WARNING, CONTINUE, SET_COOKIE2, permanentRedirect, CONTENT_DISPOSITION, lambda$new$4, channel, CONTENT_TYPE, badRequest, wait, ACCESS_CONTROL_ALLOW_METHODS, USER_AGENT, ctx, HOST, CONTENT_MD5, request, X_FORWARDED_PORT, paymentRequired, BAD_REQUEST, logger, MAX_FORWARDS, X_FORWARDED_HOST, redirect, TRAILER, PROXY_AUTHENTICATE, AUTHORIZATION, CACHE_CONTROL, NOT_IMPLEMENTED, equals, PAYMENT_REQUIRED, RETRY_AFTER, PRECONDITION_FAILED, CONFLICT, ACCEPT_CHARSET, Results$ByteChunks$WhenReadyByteChunks, onReady, VIA, REQUEST_TIMEOUT, MULTIPLE_CHOICES, notFound, MOVED_PERMANENTLY, TE, CONTENT_LOCATION, PARTIAL_CONTENT, lambda$new$5, INSUFFICIENT_STORAGE, lambda$onDisconnected$6, ETAG, LENGTH_REQUIRED, UNAUTHORIZED, UNSUPPORTED_MEDIA_TYPE, REFERER, REQUEST_ENTITY_TOO_LARGE, ORIGIN, ACCEPT_LANGUAGE, NOT_MODIFIED, Results$StringChunks, HTTP_VERSION_NOT_SUPPORTED, ACCESS_CONTROL_ALLOW_ORIGIN, IF_RANGE, IF_UNMODIFIED_SINCE, SWITCHING_PROTOCOLS, callback, TEMPORARY_REDIRECT, CONTENT_LENGTH, SET_COOKIE, notifyAll, AGE, BAD_GATEWAY, EXPECTATION_FAILED, CONNECTION, FORWARDED, Results$ByteChunks, Results$Chunks$Out, OK, ACCESS_CONTROL_ALLOW_HEADERS, found, unauthorized, response, FOUND, <init>, DATE, CONTENT_RANGE, TRANSFER_ENCODING, PERMANENT_REDIRECT, TOO_MANY_REQUESTS, PROXY_AUTHORIZATION, GONE, ACCESS_CONTROL_ALLOW_CREDENTIALS, clearLang, NOT_ACCEPTABLE, status, EXPECT, nextpage, LOCATION, VARY, WWW_AUTHENTICATE, Application, TODO, forbidden, X_FORWARDED_FOR, access$000, ACCEPTED, NO_CONTENT, disconnected, INTERNAL_SERVER_ERROR, onDisconnected, UPGRADE, NOT_FOUND, session, ACCEPT_ENCODING, EXPIRES, seeOther, REQUESTED_RANGE_NOT_SATISFIABLE, UPGRADE_REQUIRED, toString, ACCEPT, changeLang, GATEWAY_TIMEOUT, whenReady, SERVER, ACCESS_CONTROL_REQUEST_METHOD, UNPROCESSABLE_ENTITY, ACCESS_CONTROL_MAX_AGE, LAST_MODIFIED, ACCESS_CONTROL_EXPOSE_HEADERS, ACCESS_CONTROL_REQUEST_HEADERS, flash, internalServerError, ok, ALLOW, COOKIE, IF_MODIFIED_SINCE, getClass, CONTENT_TRANSFER_ENCODING, lang, NON_AUTHORITATIVE_INFORMATION, close, PRAGMA, IF_MATCH, PROXY_AUTHENTICATION_REQUIRED, RESET_CONTENT, SEE_OTHER, FAILED_DEPENDENCY, CONTENT_ENCODING, RANGE, USE_PROXY, Results$Chunks, REQUEST_URI_TOO_LONG, writable, LOCKED, FORBIDDEN, METHOD_NOT_ALLOWED, write, IF_NONE_MATCH, ACCEPT_RANGES, noContent, X_REQUESTED_WITH, X_FORWARDED_PROTO, MULTI_STATUS, SERVICE_UNAVAILABLE, index, created, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\Application.java
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala: Set(<init>, nextpage, Application, getClass, index)
-Invalidating D:\Documents\Intellij projects\Photys\app\controllers\AsyncController.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\controllers\AsyncController.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\controllers\AsyncController.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\controllers\AsyncController.java)
-The D:\Documents\Intellij projects\Photys\app\controllers\AsyncController.java source file has the following regular definitions changed:
-	enumerator, notify, FROM, movedPermanently, CONTENT_LANGUAGE, CREATED, temporaryRedirect, Results$StringChunks$WhenReadyStringChunks, WARNING, CONTINUE, SET_COOKIE2, permanentRedirect, CONTENT_DISPOSITION, lambda$new$4, channel, CONTENT_TYPE, badRequest, wait, ACCESS_CONTROL_ALLOW_METHODS, USER_AGENT, ctx, HOST, CONTENT_MD5, request, X_FORWARDED_PORT, paymentRequired, BAD_REQUEST, logger, MAX_FORWARDS, X_FORWARDED_HOST, redirect, TRAILER, PROXY_AUTHENTICATE, AUTHORIZATION, CACHE_CONTROL, NOT_IMPLEMENTED, equals, PAYMENT_REQUIRED, RETRY_AFTER, PRECONDITION_FAILED, actorSystem, CONFLICT, ACCEPT_CHARSET, Results$ByteChunks$WhenReadyByteChunks, onReady, VIA, REQUEST_TIMEOUT, MULTIPLE_CHOICES, notFound, MOVED_PERMANENTLY, TE, CONTENT_LOCATION, PARTIAL_CONTENT, lambda$new$5, INSUFFICIENT_STORAGE, lambda$onDisconnected$6, ETAG, LENGTH_REQUIRED, UNAUTHORIZED, UNSUPPORTED_MEDIA_TYPE, REFERER, REQUEST_ENTITY_TOO_LARGE, ORIGIN, ACCEPT_LANGUAGE, NOT_MODIFIED, Results$StringChunks, HTTP_VERSION_NOT_SUPPORTED, ACCESS_CONTROL_ALLOW_ORIGIN, IF_RANGE, IF_UNMODIFIED_SINCE, SWITCHING_PROTOCOLS, callback, TEMPORARY_REDIRECT, CONTENT_LENGTH, SET_COOKIE, notifyAll, AGE, BAD_GATEWAY, EXPECTATION_FAILED, CONNECTION, FORWARDED, Results$ByteChunks, Results$Chunks$Out, OK, ACCESS_CONTROL_ALLOW_HEADERS, found, unauthorized, response, FOUND, <init>, DATE, CONTENT_RANGE, TRANSFER_ENCODING, PERMANENT_REDIRECT, TOO_MANY_REQUESTS, PROXY_AUTHORIZATION, GONE, AsyncController, ACCESS_CONTROL_ALLOW_CREDENTIALS, clearLang, NOT_ACCEPTABLE, status, EXPECT, LOCATION, VARY, WWW_AUTHENTICATE, TODO, forbidden, X_FORWARDED_FOR, access$000, ACCEPTED, NO_CONTENT, disconnected, INTERNAL_SERVER_ERROR, onDisconnected, UPGRADE, NOT_FOUND, session, ACCEPT_ENCODING, EXPIRES, seeOther, REQUESTED_RANGE_NOT_SATISFIABLE, UPGRADE_REQUIRED, message, toString, ACCEPT, changeLang, GATEWAY_TIMEOUT, whenReady, SERVER, ACCESS_CONTROL_REQUEST_METHOD, UNPROCESSABLE_ENTITY, ACCESS_CONTROL_MAX_AGE, LAST_MODIFIED, ACCESS_CONTROL_EXPOSE_HEADERS, ACCESS_CONTROL_REQUEST_HEADERS, flash, internalServerError, ok, ALLOW, COOKIE, IF_MODIFIED_SINCE, getClass, CONTENT_TRANSFER_ENCODING, lang, NON_AUTHORITATIVE_INFORMATION, close, PRAGMA, getFutureMessage, IF_MATCH, PROXY_AUTHENTICATION_REQUIRED, exec, RESET_CONTENT, SEE_OTHER, FAILED_DEPENDENCY, CONTENT_ENCODING, RANGE, USE_PROXY, Results$Chunks, REQUEST_URI_TOO_LONG, writable, LOCKED, FORBIDDEN, lambda$getFutureMessage$0, METHOD_NOT_ALLOWED, write, IF_NONE_MATCH, ACCEPT_RANGES, noContent, X_REQUESTED_WITH, X_FORWARDED_PROTO, MULTI_STATUS, SERVICE_UNAVAILABLE, created, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\AsyncController.java
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala: Set(<init>, AsyncController, message, getClass)
-Invalidating D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\RoutesPrefix.scala...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\RoutesPrefix.scala...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\RoutesPrefix.scala)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\RoutesPrefix.scala)
-The D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\RoutesPrefix.scala source file has the following regular definitions changed:
-	notify, byNamePrefix, wait, $asInstanceOf, equals, prefix, asInstanceOf, RoutesPrefix, synchronized, $isInstanceOf, _prefix, notifyAll, isInstanceOf, ==, clone, toString, !=, getClass, setPrefix, ne, eq, ##, finalize, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\routes.java
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala: Set(prefix, asInstanceOf, RoutesPrefix, isInstanceOf, getClass, setPrefix)
-Invalidating D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala)
-The D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala source file has the following regular definitions changed:
-	notify, controllers_Application_nextpage6_invoker, controllers_LoginController_login7_route, badRequest, wait, $asInstanceOf, routes, createInvoker, equals, prefix, asInstanceOf, documentation, controllers_Application_index0_invoker, controllers_CountController_count3_invoker, synchronized, $isInstanceOf, controllers_RegisterController_index2_invoker, handlerFor, controllers_LoginController_login7_invoker, notifyAll, isInstanceOf, controllers_RegisterController_register8_invoker, asJava, errorHandler, controllers_LoginController_index1_route, controllers_Assets_versioned5_invoker, <init>, ==, clone, controllers_CountController_count3_route, Routes, controllers_AsyncController_message4_invoker, toString, controllers_RegisterController_index2_route, !=, fakeValue, controllers_LoginController_index1_invoker, getClass, controllers_RegisterController_register8_route, controllers_Application_index0_route, ne, controllers_AsyncController_message4_route, withPrefix, call, eq, controllers_Assets_versioned5_route, defaultPrefix, controllers_Application_nextpage6_route, ##, finalize, hashCode.
-All member reference dependencies will be considered within this context.
-Invalidating D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\routes.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\routes.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\routes.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\routes.java)
-The D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\routes.java source file has the following regular definitions changed:
-	notify, Assets, RegisterController, wait, routes, equals, CountController, routes$javascript, notifyAll, <init>, AsyncController, LoginController, Application, toString, getClass, hashCode.
-All member reference dependencies will be considered within this context.
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\main.template.scala: Set(Assets, routes, <init>)
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\login.template.scala: Set(routes, <init>, LoginController)
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\routes.java
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\register.template.scala: Set(RegisterController, routes, <init>)
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\testpage.template.scala: Set(routes, <init>, Application)
-Invalidating D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\javascript\JavaScriptReverseRoutes.scala...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\javascript\JavaScriptReverseRoutes.scala...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\javascript\JavaScriptReverseRoutes.scala)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\javascript\JavaScriptReverseRoutes.scala)
-The D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\javascript\JavaScriptReverseRoutes.scala source file has the following regular definitions changed:
-	notify, register, count, _defaultPrefix, wait, $asInstanceOf, equals, asInstanceOf, ReverseLoginController, ReverseRegisterController, synchronized, $isInstanceOf, ReverseCountController, ReverseAssets, ReverseAsyncController, notifyAll, isInstanceOf, <init>, ==, clone, nextpage, message, toString, !=, getClass, login, ne, versioned, eq, ReverseApplication, ##, finalize, index, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\routes.java
-Invalidating D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\nexttestpage.template.scala...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\nexttestpage.template.scala...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\nexttestpage.template.scala)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\nexttestpage.template.scala)
-The D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\nexttestpage.template.scala source file has the following regular definitions changed:
-	notify, format, wait, $asInstanceOf, productArity, equals, asInstanceOf, nexttestpage, f, synchronized, _display_, $isInstanceOf, nexttestpage_Scope0, ref, canEqual, productPrefix, notifyAll, readResolve, isInstanceOf, <init>, apply, ==, clone, copy, toString, !=, getClass, copy$default$1, render, ne, eq, productIterator, ##, finalize, productElement, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\Application.java
-Invalidating D:\Documents\Intellij projects\Photys\app\controllers\HomeController.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\controllers\HomeController.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\controllers\HomeController.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\controllers\HomeController.java)
-The D:\Documents\Intellij projects\Photys\app\controllers\HomeController.java source file has the following regular definitions changed:
-	enumerator, notify, FROM, movedPermanently, CONTENT_LANGUAGE, CREATED, temporaryRedirect, Results$StringChunks$WhenReadyStringChunks, WARNING, CONTINUE, SET_COOKIE2, permanentRedirect, CONTENT_DISPOSITION, lambda$new$4, channel, CONTENT_TYPE, badRequest, wait, ACCESS_CONTROL_ALLOW_METHODS, USER_AGENT, ctx, HOST, CONTENT_MD5, request, X_FORWARDED_PORT, paymentRequired, BAD_REQUEST, logger, MAX_FORWARDS, X_FORWARDED_HOST, redirect, TRAILER, PROXY_AUTHENTICATE, AUTHORIZATION, CACHE_CONTROL, NOT_IMPLEMENTED, equals, PAYMENT_REQUIRED, RETRY_AFTER, PRECONDITION_FAILED, CONFLICT, ACCEPT_CHARSET, Results$ByteChunks$WhenReadyByteChunks, onReady, VIA, REQUEST_TIMEOUT, MULTIPLE_CHOICES, notFound, MOVED_PERMANENTLY, TE, CONTENT_LOCATION, PARTIAL_CONTENT, lambda$new$5, INSUFFICIENT_STORAGE, lambda$onDisconnected$6, ETAG, LENGTH_REQUIRED, UNAUTHORIZED, UNSUPPORTED_MEDIA_TYPE, REFERER, REQUEST_ENTITY_TOO_LARGE, ORIGIN, ACCEPT_LANGUAGE, NOT_MODIFIED, Results$StringChunks, HTTP_VERSION_NOT_SUPPORTED, ACCESS_CONTROL_ALLOW_ORIGIN, IF_RANGE, IF_UNMODIFIED_SINCE, SWITCHING_PROTOCOLS, callback, TEMPORARY_REDIRECT, CONTENT_LENGTH, SET_COOKIE, notifyAll, AGE, BAD_GATEWAY, EXPECTATION_FAILED, CONNECTION, FORWARDED, Results$ByteChunks, Results$Chunks$Out, OK, ACCESS_CONTROL_ALLOW_HEADERS, found, unauthorized, response, FOUND, <init>, DATE, CONTENT_RANGE, TRANSFER_ENCODING, PERMANENT_REDIRECT, HomeController, TOO_MANY_REQUESTS, PROXY_AUTHORIZATION, GONE, ACCESS_CONTROL_ALLOW_CREDENTIALS, clearLang, NOT_ACCEPTABLE, status, EXPECT, LOCATION, VARY, WWW_AUTHENTICATE, TODO, forbidden, X_FORWARDED_FOR, access$000, ACCEPTED, NO_CONTENT, disconnected, INTERNAL_SERVER_ERROR, onDisconnected, UPGRADE, NOT_FOUND, session, ACCEPT_ENCODING, EXPIRES, seeOther, REQUESTED_RANGE_NOT_SATISFIABLE, UPGRADE_REQUIRED, toString, ACCEPT, changeLang, GATEWAY_TIMEOUT, whenReady, SERVER, ACCESS_CONTROL_REQUEST_METHOD, UNPROCESSABLE_ENTITY, ACCESS_CONTROL_MAX_AGE, LAST_MODIFIED, ACCESS_CONTROL_EXPOSE_HEADERS, ACCESS_CONTROL_REQUEST_HEADERS, flash, internalServerError, ok, ALLOW, COOKIE, IF_MODIFIED_SINCE, getClass, CONTENT_TRANSFER_ENCODING, lang, NON_AUTHORITATIVE_INFORMATION, close, PRAGMA, IF_MATCH, PROXY_AUTHENTICATION_REQUIRED, RESET_CONTENT, SEE_OTHER, FAILED_DEPENDENCY, CONTENT_ENCODING, RANGE, USE_PROXY, Results$Chunks, REQUEST_URI_TOO_LONG, writable, LOCKED, FORBIDDEN, METHOD_NOT_ALLOWED, write, IF_NONE_MATCH, ACCEPT_RANGES, noContent, X_REQUESTED_WITH, X_FORWARDED_PROTO, MULTI_STATUS, SERVICE_UNAVAILABLE, index, created, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\HomeController.java
-Invalidating D:\Documents\Intellij projects\Photys\app\models\UserType.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\models\UserType.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\models\UserType.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\models\UserType.java)
-The D:\Documents\Intellij projects\Photys\app\models\UserType.java source file has the following regular definitions changed:
-	notify, name, Admin, wait, valueOf, equals, getDeclaringClass, $VALUES, notifyAll, compareTo, <init>, id, ordinal, requestedPhotographer, User, values, toString, getClass, getValue, Photographer, UserType, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\models\UserType.java
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\models\User.java
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\AdminController.java
-Invalidating D:\Documents\Intellij projects\Photys\app\services\ApplicationTimer.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\services\ApplicationTimer.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\services\ApplicationTimer.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\services\ApplicationTimer.java)
-The D:\Documents\Intellij projects\Photys\app\services\ApplicationTimer.java source file has the following regular definitions changed:
-	notify, lambda$new$0, wait, appLifecycle, equals, ApplicationTimer, notifyAll, <init>, clock, toString, getClass, start, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\services\ApplicationTimer.java
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\Module.java
-Invalidating D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\login.template.scala...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\login.template.scala...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\login.template.scala)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\login.template.scala)
-The D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\login.template.scala source file has the following regular definitions changed:
-	notify, format, wait, $asInstanceOf, productArity, equals, asInstanceOf, f, login_Scope0, synchronized, _display_, $isInstanceOf, ref, canEqual, productPrefix, notifyAll, readResolve, isInstanceOf, <init>, apply, ==, clone, copy, toString, !=, getClass, copy$default$1, login, render, ne, eq, productIterator, ##, finalize, productElement, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\LoginController.java
-Invalidating D:\Documents\Intellij projects\Photys\app\models\User.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\models\User.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\models\User.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\models\User.java)
-The D:\Documents\Intellij projects\Photys\app\models\User.java source file has the following regular definitions changed:
-	notify, wait, emailAdress, phoneNr, equals, zipCode, streetName, notifyAll, lastName, firstName, <init>, changeUserType, id, houseNr, User, toString, getClass, getUserType, userType, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\models\User.java
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\AdminController.java
-Invalidating D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\testpage.template.scala...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\testpage.template.scala...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\testpage.template.scala)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\testpage.template.scala)
-The D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\testpage.template.scala source file has the following regular definitions changed:
-	notify, format, wait, $asInstanceOf, testpage_Scope0, productArity, equals, asInstanceOf, f, synchronized, testpage, _display_, $isInstanceOf, ref, canEqual, productPrefix, notifyAll, readResolve, isInstanceOf, <init>, apply, ==, clone, copy, toString, !=, getClass, copy$default$1, render, ne, eq, productIterator, ##, finalize, productElement, hashCode.
-All member reference dependencies will be considered within this context.
-Invalidating D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\main.template.scala...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\main.template.scala...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\main.template.scala)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\main.template.scala)
-The D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\main.template.scala source file has the following regular definitions changed:
-	notify, format, wait, $asInstanceOf, productArity, equals, asInstanceOf, f, synchronized, _display_, $isInstanceOf, ref, canEqual, main, productPrefix, notifyAll, readResolve, isInstanceOf, <init>, apply, ==, clone, main_Scope0, copy, toString, !=, getClass, copy$default$1, render, ne, eq, productIterator, ##, finalize, productElement, hashCode.
-All member reference dependencies will be considered within this context.
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\index.template.scala: Set(format, _display_, main, <init>, apply)
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\register.template.scala: Set(format, _display_, main, <init>, apply)
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\login.template.scala: Set(format, _display_, main, <init>, apply)
-Invalidating D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\ReverseRoutes.scala...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\ReverseRoutes.scala...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\ReverseRoutes.scala)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\ReverseRoutes.scala)
-The D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\ReverseRoutes.scala source file has the following regular definitions changed:
-	notify, register, count, _defaultPrefix, wait, $asInstanceOf, equals, asInstanceOf, ReverseLoginController, ReverseRegisterController, synchronized, $isInstanceOf, ReverseCountController, ReverseAssets, ReverseAsyncController, notifyAll, isInstanceOf, <init>, ==, clone, nextpage, message, toString, !=, getClass, login, ne, versioned, eq, ReverseApplication, ##, finalize, index, hashCode.
-All member reference dependencies will be considered within this context.
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\main.template.scala: Set(<init>, versioned)
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\login.template.scala: Set(<init>, login)
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\controllers\routes.java
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\register.template.scala: Set(register, <init>)
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\testpage.template.scala: Set(<init>, nextpage)
-Invalidating D:\Documents\Intellij projects\Photys\app\Module.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\Module.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\Module.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\Module.java)
-The D:\Documents\Intellij projects\Photys\app\Module.java source file has the following regular definitions changed:
-	notify, wait, equals, configure, notifyAll, <init>, toString, getClass, Module, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\Module.java
-Invalidating D:\Documents\Intellij projects\Photys\app\models\Login.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\models\Login.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\models\Login.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\models\Login.java)
-The D:\Documents\Intellij projects\Photys\app\models\Login.java source file has the following regular definitions changed:
-	notify, wait, equals, username, getPassword, setPassword, getUsername, setUsername, notifyAll, Login, <init>, toString, getClass, hashCode, password.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\models\Login.java
-Invalidating D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\register.template.scala...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\register.template.scala...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\register.template.scala)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\register.template.scala)
-The D:\Documents\Intellij projects\Photys\target\scala-2.11\twirl\main\views\html\register.template.scala source file has the following regular definitions changed:
-	notify, register, format, wait, $asInstanceOf, productArity, equals, asInstanceOf, f, synchronized, _display_, $isInstanceOf, ref, canEqual, productPrefix, notifyAll, readResolve, isInstanceOf, <init>, apply, ==, register_Scope0, clone, copy, toString, !=, getClass, copy$default$1, render, ne, eq, productIterator, ##, finalize, productElement, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\RegisterController.java
-Invalidating D:\Documents\Intellij projects\Photys\app\filters\ExampleFilter.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\filters\ExampleFilter.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\filters\ExampleFilter.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\filters\ExampleFilter.java)
-The D:\Documents\Intellij projects\Photys\app\filters\ExampleFilter.java source file has the following regular definitions changed:
-	asScala, notify, wait, equals, ExampleFilter, lambda$apply$0, notifyAll, asJava, <init>, apply, toString, getClass, exec, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\Filters.java
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\filters\ExampleFilter.java
-Invalidating D:\Documents\Intellij projects\Photys\app\controllers\CountController.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\controllers\CountController.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\controllers\CountController.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\controllers\CountController.java)
-The D:\Documents\Intellij projects\Photys\app\controllers\CountController.java source file has the following regular definitions changed:
-	enumerator, notify, FROM, movedPermanently, CONTENT_LANGUAGE, CREATED, temporaryRedirect, Results$StringChunks$WhenReadyStringChunks, WARNING, CONTINUE, SET_COOKIE2, permanentRedirect, count, CONTENT_DISPOSITION, lambda$new$4, channel, CONTENT_TYPE, badRequest, wait, ACCESS_CONTROL_ALLOW_METHODS, USER_AGENT, ctx, HOST, CONTENT_MD5, request, X_FORWARDED_PORT, paymentRequired, BAD_REQUEST, logger, MAX_FORWARDS, X_FORWARDED_HOST, redirect, TRAILER, PROXY_AUTHENTICATE, AUTHORIZATION, CACHE_CONTROL, NOT_IMPLEMENTED, equals, PAYMENT_REQUIRED, RETRY_AFTER, PRECONDITION_FAILED, CONFLICT, ACCEPT_CHARSET, Results$ByteChunks$WhenReadyByteChunks, onReady, VIA, REQUEST_TIMEOUT, MULTIPLE_CHOICES, notFound, MOVED_PERMANENTLY, TE, CONTENT_LOCATION, PARTIAL_CONTENT, lambda$new$5, INSUFFICIENT_STORAGE, lambda$onDisconnected$6, ETAG, LENGTH_REQUIRED, UNAUTHORIZED, UNSUPPORTED_MEDIA_TYPE, REFERER, REQUEST_ENTITY_TOO_LARGE, ORIGIN, ACCEPT_LANGUAGE, NOT_MODIFIED, Results$StringChunks, CountController, HTTP_VERSION_NOT_SUPPORTED, ACCESS_CONTROL_ALLOW_ORIGIN, IF_RANGE, IF_UNMODIFIED_SINCE, SWITCHING_PROTOCOLS, callback, TEMPORARY_REDIRECT, CONTENT_LENGTH, SET_COOKIE, notifyAll, AGE, BAD_GATEWAY, EXPECTATION_FAILED, CONNECTION, FORWARDED, Results$ByteChunks, Results$Chunks$Out, OK, ACCESS_CONTROL_ALLOW_HEADERS, found, unauthorized, response, FOUND, <init>, DATE, CONTENT_RANGE, TRANSFER_ENCODING, PERMANENT_REDIRECT, TOO_MANY_REQUESTS, PROXY_AUTHORIZATION, GONE, ACCESS_CONTROL_ALLOW_CREDENTIALS, clearLang, NOT_ACCEPTABLE, status, EXPECT, LOCATION, VARY, WWW_AUTHENTICATE, TODO, forbidden, X_FORWARDED_FOR, access$000, ACCEPTED, NO_CONTENT, disconnected, INTERNAL_SERVER_ERROR, onDisconnected, UPGRADE, NOT_FOUND, session, ACCEPT_ENCODING, EXPIRES, seeOther, REQUESTED_RANGE_NOT_SATISFIABLE, UPGRADE_REQUIRED, counter, toString, ACCEPT, changeLang, GATEWAY_TIMEOUT, whenReady, SERVER, ACCESS_CONTROL_REQUEST_METHOD, UNPROCESSABLE_ENTITY, ACCESS_CONTROL_MAX_AGE, LAST_MODIFIED, ACCESS_CONTROL_EXPOSE_HEADERS, ACCESS_CONTROL_REQUEST_HEADERS, flash, internalServerError, ok, ALLOW, COOKIE, IF_MODIFIED_SINCE, getClass, CONTENT_TRANSFER_ENCODING, lang, NON_AUTHORITATIVE_INFORMATION, close, PRAGMA, IF_MATCH, PROXY_AUTHENTICATION_REQUIRED, RESET_CONTENT, SEE_OTHER, FAILED_DEPENDENCY, CONTENT_ENCODING, RANGE, USE_PROXY, Results$Chunks, REQUEST_URI_TOO_LONG, writable, LOCKED, FORBIDDEN, METHOD_NOT_ALLOWED, write, IF_NONE_MATCH, ACCEPT_RANGES, noContent, X_REQUESTED_WITH, X_FORWARDED_PROTO, MULTI_STATUS, SERVICE_UNAVAILABLE, created, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\CountController.java
-The following modified names cause invalidation of D:\Documents\Intellij projects\Photys\target\scala-2.11\routes\main\router\Routes.scala: Set(count, CountController, <init>, getClass)
-Invalidating D:\Documents\Intellij projects\Photys\app\Filters.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\Filters.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\Filters.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\Filters.java)
-The D:\Documents\Intellij projects\Photys\app\Filters.java source file has the following regular definitions changed:
-	asScala, notify, wait, exampleFilter, equals, notifyAll, <init>, filters, toString, getClass, Filters, env, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\Filters.java
-Invalidating D:\Documents\Intellij projects\Photys\app\services\Counter.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\services\Counter.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\services\Counter.java)
-Including D:\Documents\Intellij projects\Photys\app\services\AtomicCounter.java by D:\Documents\Intellij projects\Photys\app\services\Counter.java
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\services\Counter.java, D:\Documents\Intellij projects\Photys\app\services\AtomicCounter.java)
-The D:\Documents\Intellij projects\Photys\app\services\Counter.java source file has the following regular definitions changed:
-	nextCount, Counter.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\controllers\CountController.java
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\Module.java
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\services\Counter.java
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\services\AtomicCounter.java
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\Module.java
-Invalidating D:\Documents\Intellij projects\Photys\app\models\Test.java...
-Invalidating (transitively) by inheritance from D:\Documents\Intellij projects\Photys\app\models\Test.java...
-Initial set of included nodes: Set(D:\Documents\Intellij projects\Photys\app\models\Test.java)
-Invalidated by transitive inheritance dependency: Set(D:\Documents\Intellij projects\Photys\app\models\Test.java)
-The D:\Documents\Intellij projects\Photys\app\models\Test.java source file has the following regular definitions changed:
-	notify, wait, equals, notifyAll, <init>, Test, toString, getClass, hashCode.
-All member reference dependencies will be considered within this context.
-Name hashing optimization doesn't apply to non-Scala dependency: D:\Documents\Intellij projects\Photys\app\models\Test.java
+Java compilation took 0.885163828 s
+Java analysis took 0.253465729 s
+Java compile + analysis took 1.160105921 s
 New invalidations:
 	Set()
 Initial set of included nodes: Set()
@@ -3858,13 +3590,6 @@ Copy resource mappings:
 	(D:\Documents\Intellij projects\Photys\conf\application.conf,D:\Documents\Intellij projects\Photys\target\scala-2.11\classes\application.conf)
 	(D:\Documents\Intellij projects\Photys\conf\logback.xml,D:\Documents\Intellij projects\Photys\target\scala-2.11\classes\logback.xml)
 	(D:\Documents\Intellij projects\Photys\conf\routes,D:\Documents\Intellij projects\Photys\target\scala-2.11\classes\routes)
-Total time: 22 s, completed 14-sep-2016 13:28:07
+Total time: 3 s, completed 14-sep-2016 15:11:27
 > server-post-command-cleanup
 > server-handle-next-server-request
-Done executing sbt server engine, result Right(Exit(0))
-Closing listening server socket
-Waiting for socket thread
-Waiting for request processor thread
-Waiting for command engine result
-Returning control to sbt launcher with result Exit(0)
-Closing the 8672@LLaptop logs at Wed Sep 14 13:29:15 CEST 2016, goodbye.
