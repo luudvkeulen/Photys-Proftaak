@@ -40,7 +40,7 @@ public class LoginController extends Controller {
 
     private String getEncryptedPassword(String username) throws SQLException {
         Connection connection = DB.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT PASSWORD FROM USERS WHERE USERNAME=?");
+        PreparedStatement statement = connection.prepareStatement("SELECT PASSWORD FROM USER WHERE USERNAME=?");
         statement.setString(1, username);
         ResultSet result = statement.executeQuery();
 
