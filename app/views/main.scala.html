@@ -80,7 +80,36 @@
 
         @* And here's where we render the `Html` object containing
          * the page content. *@
-        @content
+
+        <script>
+                $( document ).ready(function() {
+                    console.log( "ready!" );
+                    $('.alert').delay(3000).fadeOut();
+                });
+        </script>
+        <div class="container">
+            @if(flash.contains("info")) {
+                <div class="alert alert-info">
+                    @flash.get("info")
+                </div>
+            }
+            @if(flash.contains("success")) {
+                <div class="alert alert-success">
+                    @flash.get("success")
+                </div>
+            }
+            @if(flash.contains("warning")) {
+                <div class="alert alert-warning">
+                    @flash.get("warning")
+                </div>
+            }
+            @if(flash.contains("danger")) {
+                <div class="alert alert-danger">
+                @flash.get("danger")
+                </div>
+            }
+            @content
+        </div>
 
             <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="@routes.Assets.versioned("javascripts/ie10-viewport-bug-workaround.js")"></script>

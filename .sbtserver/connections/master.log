@@ -1,13 +1,31 @@
-New log file opened at Wed Sep 21 11:39:54 CEST 2016 by 8444@LLaptop
-Taking next connection to: 52023
-New client attempting to connect on port: 52024-52023
-  Address = /192.168.225.1:52023
-This client on port 52024 has uuid f3825061-8c2f-4ce4-8f7e-6304bb3cef65 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-f3825061-8c2f-4ce4-8f7e-6304bb3cef65
-Taking next connection to: 52023
-Checking to see if clients are empty...
-No non-daemon clients connected after 3 min. Shutting down.
-Server socket thread exiting.
-0 clients open, will close them...
-All client sockets have been closed.
-Closing the 8444@LLaptop logs at Wed Sep 21 11:42:58 CEST 2016, goodbye.
+New log file opened at Wed Sep 21 13:24:40 CEST 2016 by 5684@Bramdb
+Taking next connection to: 27815
+New client attempting to connect on port: 27816-27815
+  Address = /145.93.105.98:27815
+This client on port 27816 has uuid 6a5b92d3-26eb-418a-a48d-c3d87a5cd5ae configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-6a5b92d3-26eb-418a-a48d-c3d87a5cd5ae
+Taking next connection to: 27815
+New client attempting to connect on port: 27818-27815
+  Address = /145.93.105.98:27815
+Handshake exception on socket: 27818
+sbt.impl.ipc.HandshakeException: Unable to perform handshake
+	at sbt.impl.ipc.Peer.handshake(IPC.scala:46)
+	at sbt.impl.ipc.MultiClientServer.<init>(IPC.scala:150)
+	at sbt.server.SbtServerSocketHandler$$anon$1.run(SbtServerSocketHandler.scala:43)
+Caused by: java.net.SocketException: Software caused connection abort: recv failed
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:170)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:265)
+	at java.io.DataInputStream.readInt(DataInputStream.java:387)
+	at sbt.impl.ipc.Peer.receive(IPC.scala:95)
+	at sbt.impl.ipc.Peer.handshake(IPC.scala:49)
+	... 2 more
+Taking next connection to: 27815
+New client attempting to connect on port: 27819-27815
+  Address = /145.93.105.98:27815
+This client on port 27819 has uuid dee33e06-03fb-468b-8d0e-242bd0f58e97 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-dee33e06-03fb-468b-8d0e-242bd0f58e97
+Taking next connection to: 27815

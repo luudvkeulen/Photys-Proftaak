@@ -10,17 +10,5 @@
  * argument is an `Html` object containing the body of the page.
  *@
 @main("Welcome to Photys") {
-    <script>
-        $( document ).ready(function() {
-            console.log( "ready!" );
-            $('.alert').delay(3000).fadeOut();
-        });
-    </script>
-    <div class="container">
-        @if(flash.contains("info")) {
-            <div class="alert alert-info">
-            @flash.get("info")
-            </div>
-        }
-    </div>
+
 }
