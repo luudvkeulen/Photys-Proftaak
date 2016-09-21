@@ -1,13 +1,7 @@
-New log file opened at Wed Sep 21 11:10:48 CEST 2016 by 3708@LLaptop
-Taking next connection to: 51723
-New client attempting to connect on port: 51724-51723
-  Address = /192.168.225.1:51723
-This client on port 51724 has uuid f444db56-2277-47c6-9836-1349d8e7b4e2 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-f444db56-2277-47c6-9836-1349d8e7b4e2
-Taking next connection to: 51723
-Checking to see if clients are empty...
-No non-daemon clients connected after 3 min. Shutting down.
-Server socket thread exiting.
-0 clients open, will close them...
-All client sockets have been closed.
-Closing the 3708@LLaptop logs at Wed Sep 21 11:13:48 CEST 2016, goodbye.
+New log file opened at Wed Sep 21 11:39:54 CEST 2016 by 8444@LLaptop
+Taking next connection to: 52023
+New client attempting to connect on port: 52024-52023
+  Address = /192.168.225.1:52023
+This client on port 52024 has uuid f3825061-8c2f-4ce4-8f7e-6304bb3cef65 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-f3825061-8c2f-4ce4-8f7e-6304bb3cef65
+Taking next connection to: 52023
