@@ -1,6 +1,5 @@
 package controllers;
 
-import com.sun.activation.registries.MailcapTokenizer;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.data.DynamicForm;
