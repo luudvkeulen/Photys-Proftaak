@@ -27,7 +27,10 @@ public class LoginController extends Controller {
     public Result login() throws SQLException {
         DynamicForm bindedForm = Form.form().bindFromRequest();
         if(checkCredentials(bindedForm.get("email"),bindedForm.get("password"))) {
-            return redirect("/");
+            flash("info", "You've been logged in");
+            return redirect(
+                    routes.Application.index()
+            );
         } else {
             return ok(login.render(true));
         }

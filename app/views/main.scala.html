@@ -53,14 +53,14 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
 
                 <ul class="nav navbar-nav">
-                    <li><a href="/photos">/photos</a></li>
-                    <li><a href="/albums">/albums</a></li>
-                    @if(!session.get("user")) {
-                        <li><a href="/account">/account</a></li>
-                        <li><a href="/logout">/logout</a></li>
+                    <li><a href="/photos">photos</a></li>
+                    <li><a href="/albums">albums</a></li>
+                    @if(session.get("user") != null) {
+                        <li><a href="/account">account</a></li>
+                        <li><a href="@routes.Application.logout()">logout</a></li>
                     }else{
-                        <li><a href="/login">/login</a></li>
-                        <li><a href="/register">/register</a></li>
+                        <li><a href="/login">login</a></li>
+                        <li><a href="/register">register</a></li>
                     }
                 </ul>
 
