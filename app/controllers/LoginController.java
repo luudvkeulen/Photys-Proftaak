@@ -26,6 +26,7 @@ public class LoginController extends Controller {
     }
 
     private void checkCredentials(String email, String password) throws SQLException {
+        Logger.info(BCrypt.hashpw(password, BCrypt.gensalt()));
         String hashed = getEncryptedPassword(email);
         if(hashed.isEmpty()) return;
         boolean correct = BCrypt.checkpw(password, hashed);
