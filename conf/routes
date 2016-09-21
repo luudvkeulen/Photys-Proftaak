@@ -17,6 +17,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 GET    /photos                     controllers.PhotoController.index
 GET    /albums                     controllers.AlbumsController.index
+GET    /account                     controllers.AccountController.index
 
 POST    /                           controllers.Application.nextpage()
 
