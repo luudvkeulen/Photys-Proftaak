@@ -28,3 +28,13 @@
     text-align: center;
     color: red;
 }
+
+.form-signin input[type="password"] {
+    margin-bottom: 5px;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
