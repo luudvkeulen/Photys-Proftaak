@@ -21,27 +21,27 @@ public class LoginController extends Controller {
 
     public Result login() throws SQLException {
         DynamicForm bindedForm = Form.form().bindFromRequest();
-        //Logger.info("Username is: " + bindedForm.get("username"));
-        //Logger.info("Password is: " + bindedForm.get("password"));
-        checkCredentials(bindedForm.get("username"),bindedForm.get("password"));
+        checkCredentials(bindedForm.get("email"),bindedForm.get("password"));
         return ok();
     }
 
-    private void checkCredentials(String username, String password) throws SQLException {
-        String hashed = getEncryptedPassword(username);
+    private void checkCredentials(String email, String password) throws SQLException {
+        String hashed = getEncryptedPassword(email);
         if(hashed.isEmpty()) return;
         boolean correct = BCrypt.checkpw(password, hashed);
         if(correct) {
             Logger.info("correct");
+            session("user", email);
+            Logger.info(session("user"));
         } else {
             Logger.info("false");
         }
     }
 
-    private String getEncryptedPassword(String username) throws SQLException {
+    private String getEncryptedPassword(String email) throws SQLException {
         Connection connection = DB.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT PASSWORD FROM USER WHERE USERNAME=?");
-        statement.setString(1, username);
+        PreparedStatement statement = connection.prepareStatement("SELECT PASSWORD FROM `user` WHERE emailadres=?");
+        statement.setString(1, email);
         ResultSet result = statement.executeQuery();
 
         if(result.next()) {

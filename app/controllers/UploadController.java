@@ -3,10 +3,15 @@ package controllers;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import views.html.*;
 
 import java.io.File;
 
 public class UploadController extends Controller {
+
+    public Result index() {
+        return ok(upload.render());
+    }
 
     public Result upload() {
         Http.MultipartFormData<File> body = request().body().asMultipartFormData();
