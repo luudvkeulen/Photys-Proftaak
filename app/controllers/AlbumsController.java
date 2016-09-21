@@ -2,7 +2,7 @@ package controllers;
 
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.albums;
+import views.html.*;
 
 /**
  * Created by bramd on 21-9-2016.
