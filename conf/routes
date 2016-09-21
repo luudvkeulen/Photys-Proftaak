@@ -20,3 +20,5 @@ POST    /                           controllers.Application.nextpage()
 POST    /login                      controllers.LoginController.login()
 POST    /register                   controllers.RegisterController.register()
 POST    /upload                     controllers.UploadController.upload()
+POST    /photos                     controllers.PhotoController.index
+POST    /albums                     controllers.AlbumsController.index
