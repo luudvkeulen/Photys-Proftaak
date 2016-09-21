@@ -51,17 +51,51 @@
             </div>
 
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-
                 <ul class="nav navbar-nav">
-                    <li><a href="/photos">/photos</a></li>
-                    <li><a href="/albums">/albums</a></li>
-                    @if(!session.get("user")) {
-                        <li><a href="/account">/account</a></li>
-                        <li><a href="/logout">/logout</a></li>
+                    <li><a href="/albums">albums</a></li>
+                    @if(session.get("user") != null) {
+                        <li><a href="/account">account</a></li>
+                        <li><a href="@routes.Application.logout()">logout</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> 2 - Items<span class="caret"></span></a>
+                            <ul class="dropdown-menu dropdown-cart" role="menu">
+                                <li>
+                                    <span class="item">
+                                        <span class="item-left">
+                                            <img src="http://lorempixel.com/50/50/" alt="" />
+                                            <span class="item-info">
+                                                <span>Item name</span>
+                                                <span>23$</span>
+                                            </span>
+                                        </span>
+                                        <span class="item-right">
+                                            <button class="btn btn-xs btn-danger pull-right">x</button>
+                                        </span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="item">
+                                        <span class="item-left">
+                                            <img src="http://lorempixel.com/50/50/" alt="" />
+                                            <span class="item-info">
+                                                <span>Item name</span>
+                                                <span>23$</span>
+                                            </span>
+                                        </span>
+                                        <span class="item-right">
+                                            <button class="btn btn-xs btn-danger pull-right">x</button>
+                                        </span>
+                                    </span>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a class="text-center" href="">View Cart</a></li>
+                            </ul>
+                        </li>
                     }else{
-                        <li><a href="/login">/login</a></li>
-                        <li><a href="/register">/register</a></li>
+                        <li><a href="/login">login</a></li>
+                        <li><a href="/register">register</a></li>
                     }
+
                 </ul>
 
                 <div class="col-sm-3 col-md-3 pull-right nopadding-right nopadding-left">
@@ -80,7 +114,36 @@
 
         @* And here's where we render the `Html` object containing
          * the page content. *@
-        @content
+
+        <script>
+                $( document ).ready(function() {
+                    console.log( "ready!" );
+                    $('.alert').delay(3000).fadeOut();
+                });
+        </script>
+        <div class="container">
+            @if(flash.contains("info")) {
+                <div class="alert alert-info">
+                    @flash.get("info")
+                </div>
+            }
+            @if(flash.contains("success")) {
+                <div class="alert alert-success">
+                    @flash.get("success")
+                </div>
+            }
+            @if(flash.contains("warning")) {
+                <div class="alert alert-warning">
+                    @flash.get("warning")
+                </div>
+            }
+            @if(flash.contains("danger")) {
+                <div class="alert alert-danger">
+                @flash.get("danger")
+                </div>
+            }
+            @content
+        </div>
 
             <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="@routes.Assets.versioned("javascripts/ie10-viewport-bug-workaround.js")"></script>

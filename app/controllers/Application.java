@@ -12,6 +12,14 @@ public class Application extends Controller {
     public Result nextpage() {
         return ok(nexttestpage.render());
     }
+
+    public Result logout() {
+        session().clear();
+        flash("info", "You've been logged out");
+        return redirect(
+                routes.Application.index()
+        );
+    }
 }
 
 //Commentaar

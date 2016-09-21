@@ -21,15 +21,17 @@ public class LoginController extends Controller {
 
     public Result index() {
         userForm = formFactory.form(User.class);
-        return ok(login.render(false));
+        return ok(login.render());
     }
 
     public Result login() throws SQLException {
         DynamicForm bindedForm = Form.form().bindFromRequest();
         if(checkCredentials(bindedForm.get("email"),bindedForm.get("password"))) {
-            return redirect("/");
+            flash("success", "You've been logged in");
+            return redirect(routes.Application.index());
         } else {
-            return ok(login.render(true));
+            flash("danger", "Your email address or password is wrong");
+            return ok(login.render());
         }
     }
 
