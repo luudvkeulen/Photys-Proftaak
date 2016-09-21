@@ -1,7 +1,34 @@
-New log file opened at Wed Sep 14 14:53:04 CEST 2016 by 7460@Bramdb
-Taking next connection to: 10854
-New client attempting to connect on port: 10855-10854
-  Address = /145.93.105.237:10854
-This client on port 10855 has uuid 0b504e87-2307-451c-b16a-4c06dd63bf08 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-0b504e87-2307-451c-b16a-4c06dd63bf08
-Taking next connection to: 10854
+New log file opened at Wed Sep 21 09:34:38 CEST 2016 by 5564@Bramdb
+Taking next connection to: 23607
+New client attempting to connect on port: 23608-23607
+  Address = /145.93.105.98:23607
+This client on port 23608 has uuid 30a29f92-5420-4751-8f3a-299a15422cef configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-30a29f92-5420-4751-8f3a-299a15422cef
+Taking next connection to: 23607
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 23607
+New client attempting to connect on port: 23626-23607
+  Address = /145.93.105.98:23607
+Handshake exception on socket: 23626
+sbt.impl.ipc.HandshakeException: Unable to perform handshake
+	at sbt.impl.ipc.Peer.handshake(IPC.scala:46)
+	at sbt.impl.ipc.MultiClientServer.<init>(IPC.scala:150)
+	at sbt.server.SbtServerSocketHandler$$anon$1.run(SbtServerSocketHandler.scala:43)
+Caused by: java.net.SocketException: Software caused connection abort: recv failed
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:170)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:265)
+	at java.io.DataInputStream.readInt(DataInputStream.java:387)
+	at sbt.impl.ipc.Peer.receive(IPC.scala:95)
+	at sbt.impl.ipc.Peer.handshake(IPC.scala:49)
+	... 2 more
+Taking next connection to: 23607
+New client attempting to connect on port: 23627-23607
+  Address = /145.93.105.98:23607
+This client on port 23627 has uuid 6bcae748-0499-465b-a255-43ac6a1d8922 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-30a29f92-5420-4751-8f3a-299a15422cef, play-fork-run-6bcae748-0499-465b-a255-43ac6a1d8922
+Taking next connection to: 23607
