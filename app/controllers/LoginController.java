@@ -1,5 +1,6 @@
 package controllers;
 
+import models.User;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.db.*;
@@ -15,26 +16,35 @@ import java.sql.SQLException;
 
 public class LoginController extends Controller {
 
+    private Form<User> formFactory;
+    private Form<User> userForm;
+
     public Result index() {
-        return ok(login.render());
+        userForm = formFactory.form(User.class);
+        return ok(login.render(false));
     }
 
     public Result login() throws SQLException {
         DynamicForm bindedForm = Form.form().bindFromRequest();
-        checkCredentials(bindedForm.get("email"),bindedForm.get("password"));
-        return ok();
+        if(checkCredentials(bindedForm.get("email"),bindedForm.get("password"))) {
+            return redirect("/");
+        } else {
+            return ok(login.render(true));
+        }
     }
 
-    private void checkCredentials(String email, String password) throws SQLException {
+    private boolean checkCredentials(String email, String password) throws SQLException {
         String hashed = getEncryptedPassword(email);
-        if(hashed.isEmpty()) return;
+        if(hashed.isEmpty()) return false;
         boolean correct = BCrypt.checkpw(password, hashed);
         if(correct) {
             Logger.info("correct");
             session("user", email);
             Logger.info(session("user"));
+            return true;
         } else {
             Logger.info("false");
+            return false;
         }
     }
 
