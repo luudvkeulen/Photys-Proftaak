@@ -1,5 +1,6 @@
 package controllers;
 
+import com.sun.activation.registries.MailcapTokenizer;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.data.DynamicForm;
@@ -8,6 +9,7 @@ import play.db.DB;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
+import org.apache.commons.mail.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,6 +33,18 @@ public class RegisterController extends Controller {
         String housenumber = bindedForm.get("housenr");
         String phone = bindedForm.get("phonenr");
         if(!password.equals(passwordAgain)) {
+            SimpleEmail mail = new SimpleEmail();
+            try {
+                mail.setMsg("Test");
+                mail.setFrom("noreply@photys.nl");
+                mail.addTo("luudvkeulen@gmail.com");
+                mail.setSubject("Registration successful");
+                mail.setMsg("You're registration was successfull! Welcome to Photys.");
+                mail.send();
+            } catch (EmailException e) {
+                e.printStackTrace();
+            }
+
             return badRequest(register.render());
         } else {
             String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
