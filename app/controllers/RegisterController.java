@@ -32,18 +32,7 @@ public class RegisterController extends Controller {
         String housenumber = bindedForm.get("housenr");
         String phone = bindedForm.get("phonenr");
         if(!password.equals(passwordAgain)) {
-            SimpleEmail mail = new SimpleEmail();
-            try {
-                mail.setMsg("Test");
-                mail.setFrom("noreply@photys.nl");
-                mail.addTo("luudvkeulen@gmail.com");
-                mail.setSubject("Registration successful");
-                mail.setMsg("You're registration was successfull! Welcome to Photys.");
-                mail.send();
-            } catch (EmailException e) {
-                e.printStackTrace();
-            }
-
+            sendEmail();
             return badRequest(register.render());
         } else {
             String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -67,5 +56,19 @@ public class RegisterController extends Controller {
         prepared.setString(8, phone);
         Logger.info(prepared.toString());
         return prepared.execute();
+    }
+
+    private void sendEmail() {
+        SimpleEmail mail = new SimpleEmail();
+        try {
+            mail.setMsg("Test");
+            mail.setFrom("noreply@photys.nl");
+            mail.addTo("luudvkeulen@gmail.com");
+            mail.setSubject("Registration successful");
+            mail.setMsg("You're registration was successfull! Welcome to Photys.");
+            mail.send();
+        } catch (EmailException e) {
+            Logger.error(e.getMessage());
+        }
     }
 }
