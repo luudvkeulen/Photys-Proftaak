@@ -1,7 +1,9 @@
 package controllers;
 
+import com.typesafe.config.ConfigFactory;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
+import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.DB;
@@ -32,12 +34,11 @@ public class RegisterController extends Controller {
         String housenumber = bindedForm.get("housenr");
         String phone = bindedForm.get("phonenr");
         if(!password.equals(passwordAgain)) {
-            sendEmail();
             return badRequest(register.render());
         } else {
             String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
-            Boolean success = insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone);
-            Logger.info(success.toString());
+            insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone);
+            sendEmail(emailaddress);
             return ok(index.render());
         }
     }
@@ -58,14 +59,19 @@ public class RegisterController extends Controller {
         return prepared.execute();
     }
 
-    private void sendEmail() {
+    private void sendEmail(String email) {
         SimpleEmail mail = new SimpleEmail();
         try {
+            mail.setHostName(ConfigFactory.load().getString("mail.hostname"));
+            mail.setSmtpPort(ConfigFactory.load().getInt("mail.port"));
+            mail.setAuthenticator(new DefaultAuthenticator(ConfigFactory.load().getString("mail.username"), ConfigFactory.load().getString("mail.password")));
+            mail.setDebug(true);
             mail.setMsg("Test");
-            mail.setFrom("noreply@photys.nl");
-            mail.addTo("luudvkeulen@gmail.com");
+            mail.setTLS(true);
+            mail.setFrom("photys2016@gmail.com");
+            mail.addTo(email);
             mail.setSubject("Registration successful");
-            mail.setMsg("You're registration was successfull! Welcome to Photys.");
+            mail.setMsg("You're registration was successful! Welcome to Photys.");
             mail.send();
         } catch (EmailException e) {
             Logger.error(e.getMessage());
