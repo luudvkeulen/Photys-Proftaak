@@ -10,10 +10,10 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 import org.apache.commons.mail.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class RegisterController extends Controller {
 
@@ -56,7 +56,8 @@ public class RegisterController extends Controller {
 
     private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone) throws SQLException {
         Connection connection = DB.getConnection();
-        PreparedStatement prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Customer')");
+        String uuid = UUID.randomUUID().toString();
+        PreparedStatement prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Customer', 0, ?)");
         Logger.info(prepared.toString());
         prepared.setString(1, firstname);
         prepared.setString(2, lastname);
@@ -66,6 +67,7 @@ public class RegisterController extends Controller {
         prepared.setString(6, street);
         prepared.setInt(7, Integer.parseInt(housenumber));
         prepared.setString(8, phone);
+        prepared.setString(9, uuid);
         Logger.info(prepared.toString());
         return prepared.execute();
     }
