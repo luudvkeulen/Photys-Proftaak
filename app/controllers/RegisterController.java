@@ -22,7 +22,7 @@ public class RegisterController extends Controller {
         return ok(register.render());
     }
 
-    public Result register() throws SQLException {
+    public Result register() {
         DynamicForm bindedForm = Form.form().bindFromRequest();
         String firstname = bindedForm.get("firstname");
         String lastname = bindedForm.get("lastname");
@@ -37,31 +37,35 @@ public class RegisterController extends Controller {
             return badRequest(register.render());
         } else {
             String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
-            insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone);
-            sendEmail(emailaddress);
+            String uuid = UUID.randomUUID().toString();
+            insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone, uuid);
+            sendEmail(emailaddress, uuid);
             return ok(index.render());
         }
     }
 
-    private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone) throws SQLException {
+    private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone, String uuid) {
         Connection connection = DB.getConnection();
-        String uuid = UUID.randomUUID().toString();
-        PreparedStatement prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Customer', 0, ?)");
-        Logger.info(prepared.toString());
-        prepared.setString(1, firstname);
-        prepared.setString(2, lastname);
-        prepared.setString(3, email);
-        prepared.setString(4, password);
-        prepared.setString(5, zipcode);
-        prepared.setString(6, street);
-        prepared.setInt(7, Integer.parseInt(housenumber));
-        prepared.setString(8, phone);
-        prepared.setString(9, uuid);
-        Logger.info(prepared.toString());
-        return prepared.execute();
+        PreparedStatement prepared = null;
+        try {
+            prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Customer', 0, ?)");
+            prepared.setString(1, firstname);
+            prepared.setString(2, lastname);
+            prepared.setString(3, email);
+            prepared.setString(4, password);
+            prepared.setString(5, zipcode);
+            prepared.setString(6, street);
+            prepared.setInt(7, Integer.parseInt(housenumber));
+            prepared.setString(8, phone);
+            prepared.setString(9, uuid);
+            return prepared.execute();
+        } catch (SQLException e) {
+            Logger.error(e.getMessage());
+            return false;
+        }
     }
 
-    private void sendEmail(String email) {
+    private void sendEmail(String email, String uuid) {
         SimpleEmail mail = new SimpleEmail();
         try {
             mail.setHostName(ConfigFactory.load().getString("mail.hostname"));
@@ -72,8 +76,8 @@ public class RegisterController extends Controller {
             mail.setTLS(true);
             mail.setFrom("photys2016@gmail.com");
             mail.addTo(email);
-            mail.setSubject("Registration successful");
-            mail.setMsg("You're registration was successful! Welcome to Photys.");
+            mail.setSubject("Photys - Activate your email");
+            mail.setMsg("To activate your email go to: photys.nl/activate?id=" + uuid);
             mail.send();
         } catch (EmailException e) {
             Logger.error(e.getMessage());
