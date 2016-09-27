@@ -17,7 +17,7 @@ public class Application extends Controller {
         session().clear();
         flash("info", "You've been logged out");
         return redirect(
-                routes.Application.index()
+                routes.HomeController.index()
         );
     }
 }

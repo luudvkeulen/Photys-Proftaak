@@ -28,7 +28,7 @@ public class LoginController extends Controller {
         DynamicForm bindedForm = Form.form().bindFromRequest();
         if(checkCredentials(bindedForm.get("email"),bindedForm.get("password"))) {
             flash("success", "You've been logged in");
-            return redirect(routes.Application.index());
+            return redirect(routes.HomeController.index());
         } else {
             flash("danger", "Your email address or password is wrong");
             return ok(login.render());
