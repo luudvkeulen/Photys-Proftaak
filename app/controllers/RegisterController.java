@@ -39,8 +39,7 @@ public class RegisterController extends Controller {
             String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
             String uuid = UUID.randomUUID().toString();
             insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone, uuid);
-            sendEmail(emailaddress, uuid);
-            return ok(index.render());
+            return redirect("/");
         }
     }
 

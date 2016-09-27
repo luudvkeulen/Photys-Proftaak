@@ -23,3 +23,9 @@ New client attempting to connect on port: 49200-65486
 This client on port 49200 has uuid ee559f8c-258b-4c5b-b3d6-5df76ce666e4 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
 Connected Clients: play-fork-run-ee559f8c-258b-4c5b-b3d6-5df76ce666e4
 Taking next connection to: 65486
+Checking to see if clients are empty...
+No non-daemon clients connected after 3 min. Shutting down.
+Server socket thread exiting.
+0 clients open, will close them...
+All client sockets have been closed.
+Closing the 1196@LLaptop logs at Tue Sep 27 14:09:54 CEST 2016, goodbye.
