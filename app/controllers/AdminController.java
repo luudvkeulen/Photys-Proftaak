@@ -13,13 +13,19 @@ import java.io.IOException;
 public class AdminController {
 
     private FTPClient ftpClient;
-    private static String server = "137.74.163.54";
-    private static int port = 21;
+    private static String server = getConfigString("db.default.serverip");
+    private static int port = ConfigFactory.load().getInt("db.default.serverport");
+    private static String userString = getConfigString("db.default.ftpUser");
+    private static String passwordString = getConfigString("db.default.ftpPassword");
 
     private boolean result;
 
     public AdminController()
     {
+    }
+
+    private static String getConfigString(String input){
+        return ConfigFactory.load().getString(input);
     }
 
     public boolean ChangeUserToPhotographer(User user)
@@ -33,7 +39,7 @@ public class AdminController {
             {
                 ftpClient.connect(server, port);
                 //System.out.println(ConfigFactory.load().getString("db.default.ftpPassword") + ConfigFactory.load().getString("db.default.ftpUser"));
-                ftpClient.login(ConfigFactory.load().getString("db.default.ftpUser"), ConfigFactory.load().getString("db.default.ftpPassword"));
+                ftpClient.login(userString, passwordString);
                 ftpClient.enterLocalPassiveMode();
 
                 if(ftpClient.changeWorkingDirectory("/Photographers/" + user.getEmailAdress()))
@@ -43,7 +49,15 @@ public class AdminController {
                 else
                 {
                     ftpClient.makeDirectory("/Photographers/" + user.getEmailAdress());
-                    return true;
+
+                    if (ftpClient.changeWorkingDirectory("/Photographers/" + user.getEmailAdress()))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             catch (IOException ex)
