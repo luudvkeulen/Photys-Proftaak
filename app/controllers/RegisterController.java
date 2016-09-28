@@ -72,7 +72,8 @@ public class RegisterController extends Controller {
             mail.setAuthenticator(new DefaultAuthenticator(ConfigFactory.load().getString("mail.username"), ConfigFactory.load().getString("mail.password")));
             mail.setDebug(true);
             mail.setMsg("Test");
-            mail.setTLS(true);
+            mail.setSocketConnectionTimeout(3000);
+            mail.setSocketTimeout(3000);
             mail.setFrom("photys2016@gmail.com");
             mail.addTo(email);
             mail.setSubject("Photys - Activate your email");
