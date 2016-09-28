@@ -28,12 +28,13 @@ public class HomeController extends Controller {
      */
     public Result index() throws SQLException {
         Connection connection = DB.getConnection();
-        PreparedStatement statement = connection.prepareStatement("select p.*, u.first_name, u.last_name, u.emailadres, a.name as 'album_name' from picture p left join `user` u on p.photographer_id = u.id left join album a on a.id = p.album_id where album_id in (select id from album where private = 0) order by p.date desc;");
+        PreparedStatement statement = connection.prepareStatement("select p.*, u.first_name, u.last_name, u.emailadres, a.name as album_name from picture p left join `user` u on p.photographer_id = u.id left join album a on a.id = p.album_id where album_id in (select id from album where private = 0) order by p.date desc;");
         ResultSet result = statement.executeQuery();
 
-        List<Photo> photos = new ArrayList<>();
+        ArrayList<Photo> photos = new ArrayList<>();
         while(result.next()){
-            Photo photo = new Photo(result.getInt("id"), result.getString("name"),
+            Photo photo = new Photo(result.getInt("id"),
+                    result.getString("name"),
                     new User(result.getInt("photographer_id"),
                             result.getString("first_name"),
                             result.getString("last_name"),
@@ -44,7 +45,6 @@ public class HomeController extends Controller {
                     result.getString("file_location"));
             photos.add(photo);
         }
-
         return ok(index.render(photos));
     }
 
