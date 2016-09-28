@@ -6,7 +6,7 @@ import views.html.*;
 
 public class Application extends Controller {
     public Result index() {
-        return ok(index.render());
+        return ok(index.render(null));
     }
 
     public Result nextpage() {
@@ -17,7 +17,7 @@ public class Application extends Controller {
         session().clear();
         flash("info", "You've been logged out");
         return redirect(
-                routes.Application.index()
+                routes.HomeController.index()
         );
     }
 }
