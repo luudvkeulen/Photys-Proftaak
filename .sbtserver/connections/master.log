@@ -1,31 +1,7 @@
-New log file opened at Tue Sep 27 14:05:23 CEST 2016 by 1196@LLaptop
-Taking next connection to: 65486
-New client attempting to connect on port: 65487-65486
-  Address = /145.93.40.203:65486
-This client on port 65487 has uuid 1ff14c2d-daf8-40eb-a0b6-44f81ab28fde configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-1ff14c2d-daf8-40eb-a0b6-44f81ab28fde
-Taking next connection to: 65486
-New client attempting to connect on port: 49199-65486
-  Address = /145.93.40.203:65486
-Handshake exception on socket: 49199
-sbt.impl.ipc.HandshakeException: Unable to perform handshake
-	at sbt.impl.ipc.Peer.handshake(IPC.scala:46)
-	at sbt.impl.ipc.MultiClientServer.<init>(IPC.scala:150)
-	at sbt.server.SbtServerSocketHandler$$anon$1.run(SbtServerSocketHandler.scala:43)
-Caused by: java.io.EOFException
-	at java.io.DataInputStream.readInt(DataInputStream.java:392)
-	at sbt.impl.ipc.Peer.receive(IPC.scala:95)
-	at sbt.impl.ipc.Peer.handshake(IPC.scala:49)
-	... 2 more
-Taking next connection to: 65486
-New client attempting to connect on port: 49200-65486
-  Address = /145.93.40.203:65486
-This client on port 49200 has uuid ee559f8c-258b-4c5b-b3d6-5df76ce666e4 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-ee559f8c-258b-4c5b-b3d6-5df76ce666e4
-Taking next connection to: 65486
-Checking to see if clients are empty...
-No non-daemon clients connected after 3 min. Shutting down.
-Server socket thread exiting.
-0 clients open, will close them...
-All client sockets have been closed.
-Closing the 1196@LLaptop logs at Tue Sep 27 14:09:54 CEST 2016, goodbye.
+New log file opened at Wed Sep 28 11:00:07 CEST 2016 by 10712@LLaptop
+Taking next connection to: 51458
+New client attempting to connect on port: 51459-51458
+  Address = /145.93.42.153:51458
+This client on port 51459 has uuid f96bec05-7130-421d-bbb4-dabfaa717273 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-f96bec05-7130-421d-bbb4-dabfaa717273
+Taking next connection to: 51458
