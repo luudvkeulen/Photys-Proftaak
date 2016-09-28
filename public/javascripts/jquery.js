@@ -86,4 +86,9 @@ $(document).ready(function(){
 	$(".btnAcceptPhotographer").click(function(){
 		$("#pic01").hide("slow");
 	})
+
+    $(".photographer").click(function() {
+        $(this).toggleClass("selected");
+        return false;
+    });
 });
