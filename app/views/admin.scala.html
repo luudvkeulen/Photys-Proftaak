@@ -13,7 +13,7 @@
             </div>
             <div id="acceptedPhotographers" class="panel-collapse collapse">
                 @for(user <- acceptedPhotohgraphers) {
-                    <div id="pic001" class="panel-body"><img src="http://static4.fjcdn.com/comments/Gt+liek+omg+why+did+this+get+notes+_2920236a3bc973de27a119933a63920f.png" width="100" height="100"><b>@user.getFirstName @user.getLastName</b></div>
+                    <div id="pic001" class="panel-body photographer"><img src="http://static4.fjcdn.com/comments/Gt+liek+omg+why+did+this+get+notes+_2920236a3bc973de27a119933a63920f.png" width="100" height="100"><b>@user.getFirstName @user.getLastName</b></div>
                 }
               <button type="button" class="btnPhotographer btn-primary">Check profile</button>
             </div>
@@ -34,7 +34,7 @@
             </div>
             <div id="appliedPhotographers" class="panel-collapse collapse">
                 @for(user <- pendingPhotohgraphers) {
-                    <div id="pic001" class="panel-body"><img src="http://i3.kym-cdn.com/photos/images/original/000/848/178/9f9.png" width="100" height="100"><a href="http://www.google.nl" class="pendingphotographer"></a><b>@user.getFirstName @user.getLastName</b></div>
+                    <div id="pic001" class="panel-body photographer"><img src="http://i3.kym-cdn.com/photos/images/original/000/848/178/9f9.png" width="100" height="100"><b>@user.getFirstName @user.getLastName</b></div>
                 }
               <button type="button" class="btnCheckProfile btn-primary">Check profile</button>
               <button type="button" class="btnAcceptPhotographer btn-primary" href="@routes.AdminController.accept()">Accept photographer</button>
