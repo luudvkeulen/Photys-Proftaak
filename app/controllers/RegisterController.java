@@ -33,21 +33,23 @@ public class RegisterController extends Controller {
         String street = bindedForm.get("street");
         String housenumber = bindedForm.get("housenr");
         String phone = bindedForm.get("phonenr");
+        int type = (Boolean.parseBoolean(bindedForm.get("box1"))) ? 1 : 0;
         if(!password.equals(passwordAgain)) {
             return badRequest(register.render());
         } else {
             String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
             String uuid = UUID.randomUUID().toString();
-            insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone, uuid);
+            sendEmail(emailaddress, uuid);
+            insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone, type, uuid);
             return redirect("/");
         }
     }
 
-    private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone, String uuid) {
+    private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone, int type, String uuid) {
         Connection connection = DB.getConnection();
         PreparedStatement prepared = null;
         try {
-            prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Customer', 0, ?)");
+            prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)");
             prepared.setString(1, firstname);
             prepared.setString(2, lastname);
             prepared.setString(3, email);
@@ -56,7 +58,8 @@ public class RegisterController extends Controller {
             prepared.setString(6, street);
             prepared.setInt(7, Integer.parseInt(housenumber));
             prepared.setString(8, phone);
-            prepared.setString(9, uuid);
+            prepared.setInt(9, type);
+            prepared.setString(10, uuid);
             return prepared.execute();
         } catch (SQLException e) {
             Logger.error(e.getMessage());
@@ -71,6 +74,7 @@ public class RegisterController extends Controller {
             mail.setSmtpPort(ConfigFactory.load().getInt("mail.port"));
             mail.setAuthenticator(new DefaultAuthenticator(ConfigFactory.load().getString("mail.username"), ConfigFactory.load().getString("mail.password")));
             mail.setDebug(true);
+            mail.setSSL(true);
             mail.setMsg("Test");
             mail.setSocketConnectionTimeout(3000);
             mail.setSocketTimeout(3000);
