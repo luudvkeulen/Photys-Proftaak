@@ -5,9 +5,9 @@ import play.mvc.Result;
 import views.html.*;
 
 public class Application extends Controller {
-    public Result index() {
+    /*public Result index() {
         return ok(index.render(null));
-    }
+    }*/
 
     public Result nextpage() {
         return ok(nexttestpage.render());
