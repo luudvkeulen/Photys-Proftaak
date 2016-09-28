@@ -54,6 +54,10 @@ ul.dropdown-cart li .item-right button{
     margin-top:14px;
 }
 
+.imagecontainer img{
+    max-width: 100%;
+}
+
 @media screen and (max-width: 768px)
 {
     .pull-right

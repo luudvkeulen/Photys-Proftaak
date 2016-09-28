@@ -39,6 +39,7 @@ public class RegisterController extends Controller {
         } else {
             String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
             String uuid = UUID.randomUUID().toString();
+            sendEmail(emailaddress, uuid);
             insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone, type, uuid);
             return redirect("/");
         }
@@ -73,6 +74,7 @@ public class RegisterController extends Controller {
             mail.setSmtpPort(ConfigFactory.load().getInt("mail.port"));
             mail.setAuthenticator(new DefaultAuthenticator(ConfigFactory.load().getString("mail.username"), ConfigFactory.load().getString("mail.password")));
             mail.setDebug(true);
+            mail.setSSL(true);
             mail.setMsg("Test");
             mail.setSocketConnectionTimeout(3000);
             mail.setSocketTimeout(3000);
