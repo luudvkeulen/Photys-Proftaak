@@ -2,29 +2,33 @@ package models;
 
 import org.joda.time.DateTime;
 
+import java.util.Date;
+
 /**
  * Created by bramd on 27-9-2016.
  */
 public class Photo {
-    private String id;
+    private int id;
     private String name;
     private User photographer;
     private int fileSize;
-    private DateTime date;
+    private Date date;
+    private String albumName;
+    private String fileLocation;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public DateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(DateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -52,11 +56,29 @@ public class Photo {
         this.name = name;
     }
 
-    public Photo(String id, String name, User photographer, int fileSize, DateTime date) {
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
+    }
+
+    public String getFileLocation() {
+        return fileLocation;
+    }
+
+    public void setFileLocation(String fileLocation) {
+        this.fileLocation = fileLocation;
+    }
+
+    public Photo(int id, String name, User photographer, int fileSize, Date date, String albumName, String fileLocation) {
         this.id = id;
         this.name = name;
         this.photographer = photographer;
         this.fileSize = fileSize;
         this.date = date;
+        this.albumName = albumName;
+        this.fileLocation = fileLocation;
     }
 }
