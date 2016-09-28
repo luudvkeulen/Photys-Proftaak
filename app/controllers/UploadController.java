@@ -36,38 +36,71 @@ public class UploadController extends Controller {
             String contentType = picture.getContentType();
             File file = picture.getFile();
 
-            FTPClient ftpClient = new FTPClient();
-            try
+            int index = fileName.lastIndexOf(".");
+            System.out.println(fileName.substring(index + 1));
+
+            if(file.length() > 10000000)
             {
-                ftpClient.connect(server, port);
-                //System.out.println(ConfigFactory.load().getString("db.default.ftpPassword") + ConfigFactory.load().getString("db.default.ftpUser"));
-                ftpClient.login(ConfigFactory.load().getString("db.default.ftpUser"), ConfigFactory.load().getString("db.default.ftpPassword"));
-                ftpClient.enterLocalPassiveMode();
-
-                ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-
-                ftpClient.setSoTimeout(10000);
-
-
-                System.out.println(ftpClient.getStatus());
-
-                FileInputStream fs = new FileInputStream(file);
-                result = ftpClient.storeFile(fileName, fs);
-                fs.close();
-
-            }
-            catch(IOException ex)
-            {
-                System.out.println(ex.getMessage());
-                ex.printStackTrace();
+                flash("danger", "This file is too big to upload!");
+                return ok(upload.render());
             }
 
-            return ok("File uploaded" + fileName + " " + result);
+
+            if(fileName.substring(index + 1).equals("png"))
+            {
+                return connectWithFTP(file, fileName);
+            }
+            else if(fileName.substring(index + 1).equals("jpg"))
+            {
+                return connectWithFTP(file, fileName);
+            }
+            else if(fileName.substring(index + 1).equals("JPEG"))
+            {
+                return connectWithFTP(file, fileName);
+            }
+            else
+                {
+                flash("danger", "please upload a legit file tpye");
+                return ok(upload.render());
+            }
+
+
         }
         else{
             flash("error", "Missing file");
             return badRequest();
         }
+    }
+
+    public Result connectWithFTP(File file, String fileName)
+    {
+        FTPClient ftpClient = new FTPClient();
+        try
+        {
+            ftpClient.connect(server, port);
+            //System.out.println(ConfigFactory.load().getString("db.default.ftpPassword") + ConfigFactory.load().getString("db.default.ftpUser"));
+            ftpClient.login(ConfigFactory.load().getString("db.default.ftpUser"), ConfigFactory.load().getString("db.default.ftpPassword"));
+            ftpClient.enterLocalPassiveMode();
+
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+            ftpClient.setSoTimeout(10000);
+
+
+            System.out.println(ftpClient.getStatus());
+
+            FileInputStream fs = new FileInputStream(file);
+            result = ftpClient.storeFile(fileName, fs);
+            fs.close();
+
+        }
+        catch(IOException ex)
+        {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        return ok("File uploaded" + fileName + " " + result);
     }
 
 

@@ -35,7 +35,7 @@ public class LoginController extends Controller {
         }
     }
 
-    private boolean checkCredentials(String email, String password) throws SQLException {
+    private boolean checkCredentials(String email, String password) {
         String hashed = getEncryptedPassword(email);
         if(hashed.isEmpty()) return false;
         boolean correct = BCrypt.checkpw(password, hashed);
@@ -50,15 +50,20 @@ public class LoginController extends Controller {
         }
     }
 
-    private String getEncryptedPassword(String email) throws SQLException {
+    private String getEncryptedPassword(String email) {
         Connection connection = DB.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT PASSWORD FROM `user` WHERE emailadres=?");
-        statement.setString(1, email);
-        ResultSet result = statement.executeQuery();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT PASSWORD FROM `user` WHERE emailadres=?");
+            statement.setString(1, email);
+            ResultSet result = statement.executeQuery();
 
-        if(result.next()) {
-            return result.getString(1);
-        } else {
+            if (result.next()) {
+                return result.getString(1);
+            } else {
+                return "";
+            }
+        } catch (SQLException e) {
+            Logger.error(e.getMessage());
             return "";
         }
     }

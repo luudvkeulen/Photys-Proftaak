@@ -3,7 +3,7 @@ import models.UserType;
 
 public class User {
 
-    private String id;
+    private int id;
     private String firstName;
     private String lastName;
     private String emailAddress;
@@ -13,11 +13,11 @@ public class User {
     private int houseNr;
     private int phoneNr;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -91,7 +91,7 @@ public class User {
 
     private models.UserType userType;
 
-    public User(String ID, String FirstName, String LastName, String EmailAdress, String ZipCode,String StreetName , int HouseNr, int PhoneNr, int userType)
+    public User(int ID, String FirstName, String LastName, String EmailAdress, String ZipCode,String StreetName , int HouseNr, int PhoneNr, int userType)
     {
         this.id = ID;
         this.firstName = FirstName;
@@ -102,6 +102,13 @@ public class User {
         this.houseNr = HouseNr;
         this.phoneNr = PhoneNr;
         this.userType = UserType.values()[userType];
+    }
+
+    public User(int id, String firstName, String lastName, String emailAddress) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
     }
 
     public User(String email, String password) {
