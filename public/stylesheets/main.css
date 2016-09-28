@@ -82,3 +82,9 @@ ul.dropdown-cart li .item-right button{
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+
+.pendingphotographer {
+    display:block;
+    width:250px;
+    height:250px;
+}
