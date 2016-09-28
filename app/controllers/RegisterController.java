@@ -47,7 +47,7 @@ public class RegisterController extends Controller {
         Connection connection = DB.getConnection();
         PreparedStatement prepared = null;
         try {
-            prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Customer', 0, ?)");
+            prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?)");
             prepared.setString(1, firstname);
             prepared.setString(2, lastname);
             prepared.setString(3, email);
