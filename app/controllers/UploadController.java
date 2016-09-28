@@ -1,6 +1,7 @@
 package controllers;
 
 import com.typesafe.config.ConfigFactory;
+import models.User;
 import play.api.Logger;
 import play.api.Play;
 import play.api.Play.*;
@@ -74,6 +75,8 @@ public class UploadController extends Controller {
 
     public Result connectWithFTP(File file, String fileName)
     {
+        String userEmail = session("user");
+
         FTPClient ftpClient = new FTPClient();
         try
         {
@@ -86,11 +89,20 @@ public class UploadController extends Controller {
 
             ftpClient.setSoTimeout(10000);
 
+            FileInputStream fs = new FileInputStream(file);
+
+            if(!ftpClient.changeWorkingDirectory("/Photographers/" + userEmail))
+            {
+                ftpClient.makeDirectory("/Photographers/" + userEmail);
+            }
+
+            result = ftpClient.storeFile("/Photographers/" + userEmail + "/" + fileName, fs);
+
 
             System.out.println(ftpClient.getStatus());
 
-            FileInputStream fs = new FileInputStream(file);
-            result = ftpClient.storeFile(fileName, fs);
+
+
             fs.close();
 
         }

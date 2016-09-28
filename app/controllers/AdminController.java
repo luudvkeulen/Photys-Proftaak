@@ -79,15 +79,7 @@ public class AdminController extends Controller {
                 ftpClient.login(ConfigFactory.load().getString("db.default.ftpUser"), ConfigFactory.load().getString("db.default.ftpPassword"));
                 ftpClient.enterLocalPassiveMode();
 
-                if(ftpClient.changeWorkingDirectory("/Photographers/" + user.getEmailAdress()))
-                {
-                    return true;
-                }
-                else
-                {
-                    ftpClient.makeDirectory("/Photographers/" + user.getEmailAdress());
-                    return true;
-                }
+                return true;
             }
             catch (IOException ex)
             {
