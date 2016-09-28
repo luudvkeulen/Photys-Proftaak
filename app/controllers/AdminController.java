@@ -49,6 +49,7 @@ public class AdminController {
             catch (IOException ex)
             {
                 ex.printStackTrace();
+                return false;
             }
         }
         else
