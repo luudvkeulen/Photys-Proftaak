@@ -1,14 +1,33 @@
 @*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
+* This template takes a single argument, a String containing a
+* message to display.
+*@
 @* @(message: String) *@
 
 @*
- * Call the `main` template with two arguments. The first
- * argument is a `String` with the title of the page, the second
- * argument is an `Html` object containing the body of the page.
- *@
-@main("Welcome to Photys") {
+* Call the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
+@import java.util
+@(photos: List[Photo])
 
+@main("Welcome to Photys") {
+    <div class="row">
+    @for(photo <- photos) {
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <div class="imagecontainer">
+                    <img src="https://www.cesarsway.com/sites/newcesarsway/files/styles/large_article_preview/public/Dog-bite-prevention.jpg?itok=3N2KTNkP"
+                    alt="@photo.getName">
+                </div>
+                <div class="caption">
+                    <h3>@photo.getName</h3>
+                    <p>@photo.getPhotographer.getFirstName</p>
+                    <p><a href="#" class="btn btn-primary" role="button">Order</a> <a href="#" class="btn btn-default" role="button">Edit</a></p>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
 }

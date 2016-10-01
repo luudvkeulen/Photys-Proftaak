@@ -22,7 +22,7 @@ public class RegisterController extends Controller {
         return ok(register.render());
     }
 
-    public Result register() throws SQLException {
+    public Result register() {
         DynamicForm bindedForm = Form.form().bindFromRequest();
         String firstname = bindedForm.get("firstname");
         String lastname = bindedForm.get("lastname");
@@ -33,47 +33,55 @@ public class RegisterController extends Controller {
         String street = bindedForm.get("street");
         String housenumber = bindedForm.get("housenr");
         String phone = bindedForm.get("phonenr");
+        int type = (Boolean.parseBoolean(bindedForm.get("box1"))) ? 1 : 0;
         if(!password.equals(passwordAgain)) {
             return badRequest(register.render());
         } else {
             String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
-            insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone);
-            sendEmail(emailaddress);
-            return ok(index.render());
+            String uuid = UUID.randomUUID().toString();
+            sendEmail(emailaddress, uuid);
+            insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone, type, uuid);
+            return redirect("/");
         }
     }
 
-    private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone) throws SQLException {
+    private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone, int type, String uuid) {
         Connection connection = DB.getConnection();
-        String uuid = UUID.randomUUID().toString();
-        PreparedStatement prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Customer', 0, ?)");
-        Logger.info(prepared.toString());
-        prepared.setString(1, firstname);
-        prepared.setString(2, lastname);
-        prepared.setString(3, email);
-        prepared.setString(4, password);
-        prepared.setString(5, zipcode);
-        prepared.setString(6, street);
-        prepared.setInt(7, Integer.parseInt(housenumber));
-        prepared.setString(8, phone);
-        prepared.setString(9, uuid);
-        Logger.info(prepared.toString());
-        return prepared.execute();
+        PreparedStatement prepared = null;
+        try {
+            prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)");
+            prepared.setString(1, firstname);
+            prepared.setString(2, lastname);
+            prepared.setString(3, email);
+            prepared.setString(4, password);
+            prepared.setString(5, zipcode);
+            prepared.setString(6, street);
+            prepared.setInt(7, Integer.parseInt(housenumber));
+            prepared.setString(8, phone);
+            prepared.setInt(9, type);
+            prepared.setString(10, uuid);
+            return prepared.execute();
+        } catch (SQLException e) {
+            Logger.error(e.getMessage());
+            return false;
+        }
     }
 
-    private void sendEmail(String email) {
+    private void sendEmail(String email, String uuid) {
         SimpleEmail mail = new SimpleEmail();
         try {
             mail.setHostName(ConfigFactory.load().getString("mail.hostname"));
             mail.setSmtpPort(ConfigFactory.load().getInt("mail.port"));
             mail.setAuthenticator(new DefaultAuthenticator(ConfigFactory.load().getString("mail.username"), ConfigFactory.load().getString("mail.password")));
             mail.setDebug(true);
+            mail.setSSL(true);
             mail.setMsg("Test");
-            mail.setTLS(true);
+            mail.setSocketConnectionTimeout(3000);
+            mail.setSocketTimeout(3000);
             mail.setFrom("photys2016@gmail.com");
             mail.addTo(email);
-            mail.setSubject("Registration successful");
-            mail.setMsg("You're registration was successful! Welcome to Photys.");
+            mail.setSubject("Photys - Activate your email");
+            mail.setMsg("To activate your email go to: photys.nl/activate?id=" + uuid);
             mail.send();
         } catch (EmailException e) {
             Logger.error(e.getMessage());
