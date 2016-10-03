@@ -41,9 +41,16 @@ public class AdminController extends Controller {
     public Result accept() {
         DynamicForm bindedForm = Form.form().bindFromRequest();
         String id = bindedForm.get("id");
-        System.out.println(id);
         Logger.info(id);
-        return ok();
+        Connection con = DB.getConnection();
+        try {
+            PreparedStatement prep = con.prepareStatement("UPDATE `user` SET `type`='2' WHERE `id`=?");
+            prep.setString(1, id);
+            prep.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return redirect("/admin");
     }
 
     private List<User> getPhotographers(boolean accepted) {
