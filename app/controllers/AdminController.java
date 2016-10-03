@@ -4,6 +4,9 @@ import com.typesafe.config.ConfigFactory;
 import models.User;
 import models.UserType;
 import org.apache.commons.net.ftp.FTPClient;
+import play.Logger;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.db.DB;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -36,6 +39,10 @@ public class AdminController extends Controller {
     }
 
     public Result accept() {
+        DynamicForm bindedForm = Form.form().bindFromRequest();
+        String id = bindedForm.get("id");
+        System.out.println(id);
+        Logger.info(id);
         return ok();
     }
 
