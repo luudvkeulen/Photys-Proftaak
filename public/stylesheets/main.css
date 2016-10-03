@@ -88,3 +88,7 @@ ul.dropdown-cart li .item-right button{
     width:250px;
     height:250px;
 }
+
+.selected {
+    background-color: #0087ff;
+}
