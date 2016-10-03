@@ -45,6 +45,8 @@ public class HomeController extends Controller {
                     result.getString("file_location"));
             photos.add(photo);
         }
+
+        connection.close();
         return ok(index.render(photos));
     }
 

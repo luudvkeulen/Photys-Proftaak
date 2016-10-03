@@ -47,6 +47,7 @@ public class AdminController extends Controller {
             PreparedStatement prep = con.prepareStatement("UPDATE `user` SET `type`='2' WHERE `id`=?");
             prep.setString(1, id);
             prep.execute();
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
