@@ -5,6 +5,7 @@ import models.User;
 import play.api.Logger;
 import play.api.Play;
 import play.api.Play.*;
+import play.db.DB;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -13,6 +14,11 @@ import views.html.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.apache.commons.net.ftp.*;
 
 import static play.mvc.Http.Context.current;
@@ -25,7 +31,67 @@ public class UploadController extends Controller {
 
 
     public Result index() {
+        if(!isPhotographer(session("user"))) {
+            flash("warning", "You need to be logged in to upload pictures");
+            return redirect("/");
+        }
         return ok(upload.render());
+    }
+
+    private boolean isPhotographer(String email) {
+        Boolean result = false;
+        if(email == null) return result;
+        Connection connection = DB.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
+            statement.setString(1, email);
+            ResultSet set = statement.executeQuery();
+            if(set.next()) {
+                if(set.getInt("type") >= 2) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            } else {
+                result = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;
+    }
+
+    private Integer findPhotographerId(String email) {
+        Integer result = -1;
+        if(email == null) return result;
+        Connection connection = DB.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE emailadres = ?");
+            statement.setString(1, email);
+            ResultSet set = statement.executeQuery();
+            if(set.next()) {
+                result = set.getInt("id");
+            } else {
+                result = -1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;
     }
 
     public Result upload() {
@@ -46,26 +112,16 @@ public class UploadController extends Controller {
                 return ok(upload.render());
             }
 
-
-            if(fileName.substring(index + 1).equals("png"))
+            if(fileName.substring(index + 1).equals("png") || fileName.substring(index + 1).equals("jpg") || fileName.substring(index + 1).equals("JPEG"))
             {
+                String email = session("user");
+                //Fix album id pl0x
+                insertFileDetails(fileName, findPhotographerId(email), 1, (int)(file.getTotalSpace() / 1000), email);
                 return connectWithFTP(file, fileName);
-            }
-            else if(fileName.substring(index + 1).equals("jpg"))
-            {
-                return connectWithFTP(file, fileName);
-            }
-            else if(fileName.substring(index + 1).equals("JPEG"))
-            {
-                return connectWithFTP(file, fileName);
-            }
-            else
-                {
+            } else {
                 flash("danger", "please upload a legit file tpye");
                 return ok(upload.render());
             }
-
-
         }
         else{
             flash("error", "Missing file");
@@ -98,10 +154,7 @@ public class UploadController extends Controller {
 
             result = ftpClient.storeFile("/Photographers/" + userEmail + "/" + fileName, fs);
 
-
             System.out.println(ftpClient.getStatus());
-
-
 
             fs.close();
 
@@ -115,5 +168,25 @@ public class UploadController extends Controller {
         return ok("File uploaded" + fileName + " " + result);
     }
 
-
+    private boolean insertFileDetails(String fileName,int photographerId , int albumId, int fileSize, String email)
+    {
+        Connection connection = DB.getConnection();
+        PreparedStatement prepared = null;
+        try
+        {
+            prepared = connection.prepareStatement("INSERT INTO `picture` (`name` , photographer_id, album_id, file_size, file_location) VALUES (?,?,?,?,?)");
+            prepared.setString(1, fileName);
+            prepared.setInt(2, photographerId);
+            prepared.setInt(3, albumId);
+            prepared.setInt(4, fileSize);
+            prepared.setString(5, "/Photographers/" + email + "/" + fileName);
+            Boolean result;
+            result = prepared.execute();
+            connection.close();
+            return result;
+        } catch (SQLException e) {
+            play.Logger.error(e.getMessage());
+            return false;
+        }
+    }
 }
