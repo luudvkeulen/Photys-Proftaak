@@ -52,19 +52,25 @@ public class LoginController extends Controller {
 
     private String getEncryptedPassword(String email) {
         Connection connection = DB.getConnection();
+        String resultString = "";
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT PASSWORD FROM `user` WHERE emailadres=?");
             statement.setString(1, email);
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
-                return result.getString(1);
-            } else {
-                return "";
+                resultString = result.getString(1);
             }
         } catch (SQLException e) {
             Logger.error(e.getMessage());
             return "";
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+        return resultString;
     }
 }

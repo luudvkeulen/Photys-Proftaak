@@ -92,3 +92,19 @@ ul.dropdown-cart li .item-right button{
 .selected {
     background-color: #0087ff;
 }
+
+.navbar-login {
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session {
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size {
+    font-size: 87px;
+}

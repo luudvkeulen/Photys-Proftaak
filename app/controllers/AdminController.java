@@ -4,6 +4,9 @@ import com.typesafe.config.ConfigFactory;
 import models.User;
 import models.UserType;
 import org.apache.commons.net.ftp.FTPClient;
+import play.Logger;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.db.DB;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -36,7 +39,19 @@ public class AdminController extends Controller {
     }
 
     public Result accept() {
-        return ok();
+        DynamicForm bindedForm = Form.form().bindFromRequest();
+        String id = bindedForm.get("id");
+        Logger.info(id);
+        Connection con = DB.getConnection();
+        try {
+            PreparedStatement prep = con.prepareStatement("UPDATE `user` SET `type`='2' WHERE `id`=?");
+            prep.setString(1, id);
+            prep.execute();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return redirect("/admin");
     }
 
     private List<User> getPhotographers(boolean accepted) {

@@ -60,7 +60,9 @@ public class RegisterController extends Controller {
             prepared.setString(8, phone);
             prepared.setInt(9, type);
             prepared.setString(10, uuid);
-            return prepared.execute();
+            Boolean result = prepared.execute();
+            connection.close();
+            return result;
         } catch (SQLException e) {
             Logger.error(e.getMessage());
             return false;
