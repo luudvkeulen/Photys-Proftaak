@@ -1,6 +1,7 @@
 package controllers;
 
 import com.typesafe.config.ConfigFactory;
+import logic.PhotographerLogic;
 import models.User;
 import play.api.Logger;
 import play.api.Play;
@@ -31,67 +32,11 @@ public class UploadController extends Controller {
 
 
     public Result index() {
-        if(!isPhotographer(session("user"))) {
-            flash("warning", "You need to be logged in to upload pictures");
+        if(!PhotographerLogic.isPhotographer(session("user"))) {
+            flash("warning", "You need to be logged in as a photographer to upload pictures");
             return redirect("/");
         }
         return ok(upload.render());
-    }
-
-    private boolean isPhotographer(String email) {
-        Boolean result = false;
-        if(email == null) return result;
-        Connection connection = DB.getConnection();
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
-            statement.setString(1, email);
-            ResultSet set = statement.executeQuery();
-            if(set.next()) {
-                if(set.getInt("type") >= 2) {
-                    result = true;
-                } else {
-                    result = false;
-                }
-            } else {
-                result = false;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return result;
-    }
-
-    private Integer findPhotographerId(String email) {
-        Integer result = -1;
-        if(email == null) return result;
-        Connection connection = DB.getConnection();
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE emailadres = ?");
-            statement.setString(1, email);
-            ResultSet set = statement.executeQuery();
-            if(set.next()) {
-                result = set.getInt("id");
-            } else {
-                result = -1;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return result;
     }
 
     public Result upload() {
@@ -116,7 +61,7 @@ public class UploadController extends Controller {
             {
                 String email = session("user");
                 //Fix album id pl0x
-                insertFileDetails(fileName, findPhotographerId(email), 1, (int)(file.getTotalSpace() / 1000), email);
+                insertFileDetails(fileName, PhotographerLogic.findPhotographerId(email), 1, (int)(file.getTotalSpace() / 1000), email);
                 return connectWithFTP(file, fileName);
             } else {
                 flash("danger", "please upload a legit file tpye");
