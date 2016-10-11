@@ -45,26 +45,6 @@ public class RegisterController extends Controller {
         }
     }
 
-    private boolean insertFileDetails(String fileName,int photographerId , int albumId, int fileSize)
-    {
-        Connection connection = DB.getConnection();
-        PreparedStatement prepared = null;
-        try
-        {
-            prepared = connection.prepareStatement("INSERT INTO `picture` (`name` , photographer_id, album_id, file_size) VALUES (?,?,?,?)");
-            prepared.setString(1, fileName);
-            prepared.setInt(2, photographerId);
-            prepared.setInt(3, albumId);
-            prepared.setInt(4, fileSize);
-
-            return prepared.execute();
-
-        } catch (SQLException e) {
-            Logger.error(e.getMessage());
-            return false;
-        }
-    }
-
     private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone, int type, String uuid) {
         Connection connection = DB.getConnection();
         PreparedStatement prepared = null;
