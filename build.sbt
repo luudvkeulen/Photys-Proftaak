@@ -13,7 +13,8 @@ libraryDependencies ++= Seq(
   "org.mindrot" % "jbcrypt" % "0.3m",
   "mysql" % "mysql-connector-java" % "5.1.18",
   "org.apache.commons" % "commons-email" % "1.4",
-  "commons-net" % "commons-net" % "3.5"
+  "commons-net" % "commons-net" % "3.5",
+  "org.apache.commons" % "commons-io" % "1.3.2"
 )
 
 resolvers += Resolver.url("Typesafe Ivy releases", url("https://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
