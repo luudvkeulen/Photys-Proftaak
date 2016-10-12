@@ -9,10 +9,6 @@ public class Application extends Controller {
         return ok(index.render(null));
     }*/
 
-    public Result nextpage() {
-        return ok(nexttestpage.render());
-    }
-
     public Result logout() {
         session().clear();
         flash("info", "You've been logged out");
@@ -21,5 +17,3 @@ public class Application extends Controller {
         );
     }
 }
-
-//Commentaar

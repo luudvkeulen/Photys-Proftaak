@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import org.apache.commons.net.ftp.*;
 
@@ -83,7 +84,7 @@ public class UploadController extends Controller {
         {
             ftpClient.connect(server, port);
             //System.out.println(ConfigFactory.load().getString("db.default.ftpPassword") + ConfigFactory.load().getString("db.default.ftpUser"));
-            ftpClient.login(ConfigFactory.load().getString("db.default.ftpUser"), ConfigFactory.load().getString("db.default.ftpPassword"));
+            ftpClient.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
             ftpClient.enterLocalPassiveMode();
 
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);

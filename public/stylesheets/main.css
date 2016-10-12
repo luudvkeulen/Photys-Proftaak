@@ -108,3 +108,15 @@ ul.dropdown-cart li .item-right button{
 .icon-size {
     font-size: 87px;
 }
+
+.thumbnail-click {
+    box-shadow:none;
+}
+
+.thumbnail:hover, .thumbnail:active {
+    border: 3px solid black;
+}
+
+a:focus, a:hover {
+    text-decoration: none;
+}
