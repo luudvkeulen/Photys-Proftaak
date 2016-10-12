@@ -2,7 +2,7 @@ package models;
 
 import java.util.Date;
 
-public class Photo {
+public class Photo implements java.io.Serializable{
     private int id;
     private String name;
     private User photographer;

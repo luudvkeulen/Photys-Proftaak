@@ -3,7 +3,7 @@ package models;
 /**
  * Created by bramd on 12-10-2016.
  */
-public class OderProduct {
+public class OrderProduct implements java.io.Serializable{
     private Photo photo;
     private Product product;
     private FilterType filterType;
@@ -20,9 +20,12 @@ public class OderProduct {
         return filterType;
     }
 
-    public OderProduct(FilterType filterType, Product product, Photo photo) {
+    public OrderProduct(FilterType filterType, Product product, Photo photo) {
         this.filterType = filterType;
         this.product = product;
         this.photo = photo;
+    }
+
+    public OrderProduct() {
     }
 }
