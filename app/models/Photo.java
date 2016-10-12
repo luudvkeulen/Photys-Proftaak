@@ -2,7 +2,7 @@ package models;
 
 import java.util.Date;
 
-public class Photo {
+public class Photo implements java.io.Serializable{
     private int id;
     private String name;
     private User photographer;
@@ -80,6 +80,11 @@ public class Photo {
         this.date = date;
         this.albumName = albumName;
         this.fileLocation = fileLocation;
+        this.price = price;
+    }
+
+    public Photo(String name, Double price) {
+        this.name = name;
         this.price = price;
     }
 }

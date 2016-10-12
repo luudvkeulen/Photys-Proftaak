@@ -2,6 +2,7 @@ package controllers;
 
 import com.typesafe.config.ConfigFactory;
 import logic.PhotographerLogic;
+import models.Album;
 import models.User;
 import play.api.Logger;
 import play.api.Play;
@@ -19,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.apache.commons.net.ftp.*;
@@ -37,12 +39,13 @@ public class UploadController extends Controller {
             flash("warning", "You need to be logged in as a photographer to upload pictures");
             return redirect("/");
         }
-        return ok(upload.render());
+        return ok(upload.render(GetAlbums()));
     }
 
     public Result upload() {
         Http.MultipartFormData<File> body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart<File> picture = body.getFile("picture");
+
         if(picture != null)
         {
             String fileName = picture.getFilename();
@@ -55,7 +58,7 @@ public class UploadController extends Controller {
             if(file.length() > 10000000)
             {
                 flash("danger", "This file is too big to upload!");
-                return ok(upload.render());
+                return ok(upload.render(GetAlbums()));
             }
 
             if(fileName.substring(index + 1).equals("png") || fileName.substring(index + 1).equals("jpg") || fileName.substring(index + 1).equals("JPEG"))
@@ -66,7 +69,7 @@ public class UploadController extends Controller {
                 return connectWithFTP(file, fileName);
             } else {
                 flash("danger", "please upload a legit file tpye");
-                return ok(upload.render());
+                return ok(upload.render(GetAlbums()));
             }
         }
         else{
@@ -134,5 +137,55 @@ public class UploadController extends Controller {
             play.Logger.error(e.getMessage());
             return false;
         }
+    }
+
+    private ArrayList<Album> GetAlbums()
+    {
+        Connection connection = DB.getConnection();
+        PreparedStatement statement = null;
+
+        ArrayList<Album> albums = new ArrayList<>();
+
+        try
+        {
+            statement = connection.prepareStatement("SELECT * FROM ALBUM WHERE `photographer_id` = ?");
+            statement.setInt(1, PhotographerLogic.findPhotographerId(session("user")));
+
+            ResultSet result = statement.executeQuery();
+
+            while(result.next())
+            {
+                int id = result.getInt("id");
+                String name = result.getString("name");
+                int photographer_id = result.getInt("photographer_id");
+                String description = result.getString("description");
+                Boolean available = result.getBoolean("private");
+                String url = result.getString("AlbumURL");
+
+                Album album = new Album(id,name,photographer_id,description,available,url);
+
+                albums.add(album);
+
+            }
+
+            connection.close();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return albums;
+    }
+
+    private ArrayList<String> GenerateTestList()
+    {
+        ArrayList<String> testList = new ArrayList<>();
+        testList.add("Swag 1");
+        testList.add("Swag 2");
+        testList.add("Swag 3");
+
+        return testList;
+
     }
 }
