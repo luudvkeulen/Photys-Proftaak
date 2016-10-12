@@ -9,6 +9,8 @@
 * argument is a `String` with the title of the page, the second
 * argument is an `Html` object containing the body of the page.
 *@
+
+@(Albums: List[Album])
 @main("Upload") {
     @*
     * Get an `Html` object by calling the built-in Play welcome
@@ -30,11 +32,11 @@
                     <div class="form-group">
                         <label for="sel1">Select an album to add this picture to:</label>
                         @*hieronder de options moeten worden gevuld met albums*@
-                        <select class="form-control" id="sel1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
+                        <select class="form-control" id="sel1"  >
+                            @for(test <- Albums))
+                            {
+                                <option>@t</option>
+                            }
                         </select>
                     </div>
 
