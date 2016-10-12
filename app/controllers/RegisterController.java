@@ -17,7 +17,6 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 public class RegisterController extends Controller {
-
     public Result index() {
         return ok(register.render());
     }

@@ -1,12 +1,20 @@
 package controllers;
 
+import com.typesafe.config.ConfigFactory;
 import models.Photo;
 import models.User;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 import play.db.DB;
 import play.mvc.*;
+import org.apache.commons.io.*;
 
 import views.html.*;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,7 +50,8 @@ public class HomeController extends Controller {
                     result.getInt("file_size"),
                     result.getDate("date"),
                     result.getString("album_name"),
-                    result.getString("file_location"));
+                    result.getString("file_location"),
+                    result.getDouble("price"));
             photos.add(photo);
         }
 
@@ -50,4 +59,20 @@ public class HomeController extends Controller {
         return ok(index.render(photos));
     }
 
+    public Result renderPhoto(String location) {
+        byte[] result = null;
+        FTPClient client = new FTPClient();
+        try {
+            client.connect("photys.nl", 21);
+            client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
+            client.setFileType(FTP.BINARY_FILE_TYPE);
+            InputStream stream = client.retrieveFileStream(location);
+            result = IOUtils.toByteArray(stream);
+            client.disconnect();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ok(result).as("image");
+    }
 }

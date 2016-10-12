@@ -1,4 +1,20 @@
-$(document).on('click', '#close-preview', function(){ 
+function controlSelection() {
+    if(document.getElementById('rb1').checked){
+        document.getElementById("sel1").disabled = false;
+        document.getElementById("tbDesc").disabled = true;
+        document.getElementById("tbName").disabled = true;
+    } else {
+        document.getElementById("sel1").disabled = true;
+        document.getElementById("tbDesc").disabled = false;
+        document.getElementById("tbName").disabled = false;
+    }
+}
+
+$(document).ready(function(){
+    controlSelection();
+});
+
+$(document).on('click', '#close-preview', function(){
     $('.image-preview').popover('hide');
     // Hover befor close the preview
     $('.image-preview').hover(
@@ -8,7 +24,7 @@ $(document).on('click', '#close-preview', function(){
          function () {
            $('.image-preview').popover('hide');
         }
-    );    
+    );
 });
 
 $(function() {
