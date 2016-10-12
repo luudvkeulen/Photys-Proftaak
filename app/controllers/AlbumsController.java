@@ -37,7 +37,7 @@ public class AlbumsController extends Controller {
         return albumURL;
     }
 
-    private Boolean InsertAlbumIntoDatabase(String name, String description)
+    private Boolean InsertAlbumIntoDatabase(String name, String description, int privateAlbum)
     {
 
         Connection connection = DB.getConnection();
@@ -49,7 +49,7 @@ public class AlbumsController extends Controller {
             statement.setString(1, name);
             statement.setInt(2, PhotographerLogic.findPhotographerId(session("user")));
             statement.setString(3, description);
-            statement.setInt(4, 0);
+            statement.setInt(4, privateAlbum);
             statement.setString(5, GenerateAlbumURL());
 
             Boolean result = statement.execute();
