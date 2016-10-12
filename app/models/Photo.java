@@ -1,12 +1,7 @@
 package models;
 
-import org.joda.time.DateTime;
-
 import java.util.Date;
 
-/**
- * Created by bramd on 27-9-2016.
- */
 public class Photo {
     private int id;
     private String name;
