@@ -1,7 +1,9 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import io.netty.handler.codec.base64.Base64;
 import models.OrderProduct;
+import play.api.libs.json.Json;
 import play.api.mvc.Cookie;
 import play.api.mvc.DiscardingCookie;
 import play.mvc.Http;
@@ -21,9 +23,14 @@ import static play.mvc.Controller.response;
 public class CartController {
 
     public void AddItemToCart(OrderProduct orderProduct){
-        String cookie = response().cookie("photyscart").get().value();
+        String cookie = null;
+        try{
+            cookie = response().cookie("photyscart").get().value();
+        }catch (Exception e){
+
+        }
         if(cookie != null){
-            ArrayList<OrderProduct> items = DeserializeObject(response().cookie("photyscart").get().value());
+            ArrayList<OrderProduct> items = DeserializeObject(cookie);
             if (items != null){
                 items.add(orderProduct);
                 response().setCookie("photyscart", SerializeObject(items), 9999999);
@@ -33,6 +40,14 @@ public class CartController {
             singleItem.add(orderProduct);
             response().setCookie("photyscart", SerializeObject(singleItem), 9999999);
         }
+    }
+
+    public ArrayList<OrderProduct> GetCart(){
+        String cookie = response().cookie("photyscart").get().value();
+        if(cookie != null) {
+            return DeserializeObject(cookie);
+        }
+        return null;
     }
 
     private String SerializeObject(Object object){

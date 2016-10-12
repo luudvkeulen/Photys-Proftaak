@@ -43,6 +43,7 @@ public class UploadController extends Controller {
     public Result upload() {
         Http.MultipartFormData<File> body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart<File> picture = body.getFile("picture");
+
         if(picture != null)
         {
             String fileName = picture.getFilename();

@@ -82,4 +82,9 @@ public class Photo implements java.io.Serializable{
         this.fileLocation = fileLocation;
         this.price = price;
     }
+
+    public Photo(String name, Double price) {
+        this.name = name;
+        this.price = price;
+    }
 }

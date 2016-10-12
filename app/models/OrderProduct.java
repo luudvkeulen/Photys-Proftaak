@@ -1,9 +1,15 @@
 package models;
 
+import play.api.libs.json.JsValue;
+import play.api.libs.json.Writes;
+import scala.Function1;
+
+import java.io.Serializable;
+
 /**
  * Created by bramd on 12-10-2016.
  */
-public class OrderProduct implements java.io.Serializable{
+public class OrderProduct implements Serializable{
     private Photo photo;
     private Product product;
     private FilterType filterType;
