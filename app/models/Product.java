@@ -1,7 +1,7 @@
 package models;
 
 
-public class Product {
+public class Product implements java.io.Serializable{
 
     private int ID;
     private String name;
