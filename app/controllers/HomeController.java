@@ -42,7 +42,8 @@ public class HomeController extends Controller {
                     result.getInt("file_size"),
                     result.getDate("date"),
                     result.getString("album_name"),
-                    result.getString("file_location"));
+                    result.getString("file_location"),
+                    result.getDouble("price"));
             photos.add(photo);
         }
 

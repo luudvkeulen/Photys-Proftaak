@@ -12,6 +12,7 @@ public class Photo {
     private String name;
     private User photographer;
     private int fileSize;
+    private Double price;
     private Date date;
     private String albumName;
     private String fileLocation;
@@ -72,7 +73,11 @@ public class Photo {
         this.fileLocation = fileLocation;
     }
 
-    public Photo(int id, String name, User photographer, int fileSize, Date date, String albumName, String fileLocation) {
+    public Double getPrice() {
+        return price;
+    }
+
+    public Photo(int id, String name, User photographer, int fileSize, Date date, String albumName, String fileLocation, double price) {
         this.id = id;
         this.name = name;
         this.photographer = photographer;
@@ -80,5 +85,6 @@ public class Photo {
         this.date = date;
         this.albumName = albumName;
         this.fileLocation = fileLocation;
+        this.price = price;
     }
 }
