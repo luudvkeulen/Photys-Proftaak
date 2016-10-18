@@ -39,7 +39,8 @@ public class UploadController extends Controller {
             flash("warning", "You need to be logged in as a photographer to upload pictures");
             return redirect("/");
         }
-        return ok(upload.render(GetAlbums()));
+        //return ok(upload.render(GetAlbums()));
+        return ok();
     }
 
     public Result upload() {
@@ -58,7 +59,8 @@ public class UploadController extends Controller {
             if(file.length() > 10000000)
             {
                 flash("danger", "This file is too big to upload!");
-                return ok(upload.render(GetAlbums()));
+                //return ok(upload.render(GetAlbums()));
+                return ok(upload.render());
             }
 
             if(fileName.substring(index + 1).equals("png") || fileName.substring(index + 1).equals("jpg") || fileName.substring(index + 1).equals("JPEG"))
@@ -69,7 +71,8 @@ public class UploadController extends Controller {
                 return connectWithFTP(file, fileName);
             } else {
                 flash("danger", "please upload a legit file tpye");
-                return ok(upload.render(GetAlbums()));
+                //return ok(upload.render(GetAlbums()));
+                return ok();
             }
         }
         else{
