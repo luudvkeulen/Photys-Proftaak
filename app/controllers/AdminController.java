@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminController extends Controller {
+
     public Result index() {
         if(!AdminLogic.isAdmin(session("user"))) {
             flash("error", "You are not an admin!");
