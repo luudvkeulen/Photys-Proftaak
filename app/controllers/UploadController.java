@@ -7,6 +7,8 @@ import models.User;
 import play.api.Logger;
 import play.api.Play;
 import play.api.Play.*;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.db.DB;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -39,8 +41,8 @@ public class UploadController extends Controller {
             flash("warning", "You need to be logged in as a photographer to upload pictures");
             return redirect("/");
         }
-        //return ok(upload.render(GetAlbums()));
-        return ok();
+        return ok(upload.render(GetAlbums()));
+        //return ok();
     }
 
     public Result upload() {
@@ -59,20 +61,21 @@ public class UploadController extends Controller {
             if(file.length() > 10000000)
             {
                 flash("danger", "This file is too big to upload!");
-                //return ok(upload.render(GetAlbums()));
-                return ok(upload.render());
+                return ok(upload.render(GetAlbums()));
+                //return ok(upload.render());
             }
 
             if(fileName.substring(index + 1).equals("png") || fileName.substring(index + 1).equals("jpg") || fileName.substring(index + 1).equals("JPEG"))
             {
                 String email = session("user");
-                //Fix album id pl0x
-                insertFileDetails(fileName, PhotographerLogic.findPhotographerId(email), 1, (int)(file.getTotalSpace() / 1000), email);
+                DynamicForm bindedForm = Form.form().bindFromRequest();
+                int albumid = Integer.parseInt(bindedForm.get("albumSelect"));
+                insertFileDetails(fileName, PhotographerLogic.findPhotographerId(email), albumid, (int)(file.getTotalSpace() / 1000000), email);
                 return connectWithFTP(file, fileName);
             } else {
                 flash("danger", "please upload a legit file tpye");
-                //return ok(upload.render(GetAlbums()));
-                return ok();
+                return ok(upload.render(GetAlbums()));
+                //return ok();
             }
         }
         else{
@@ -189,6 +192,5 @@ public class UploadController extends Controller {
         testList.add("Swag 3");
 
         return testList;
-
     }
 }
