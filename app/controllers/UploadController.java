@@ -145,7 +145,7 @@ public class UploadController extends Controller {
 
         try
         {
-            statement = connection.prepareStatement("SELECT * FROM ALBUM WHERE `photographer_id` = ?");
+            statement = connection.prepareStatement("SELECT * FROM `album` WHERE `photographer_id` = ?");
             statement.setInt(1, PhotographerLogic.findPhotographerId(session("user")));
 
             ResultSet result = statement.executeQuery();
@@ -171,12 +171,8 @@ public class UploadController extends Controller {
         {
             e.printStackTrace();
         }
-
-        if(albums.size() >= 1){
-            return albums;
-        } else {
-            return null;
-        }
+        System.out.println(albums.size());
+        return albums;
     }
 
     private ArrayList<String> GenerateTestList()
