@@ -9,12 +9,11 @@
     font-size: 30px;
     font-weight: bold;
     padding: 0px;
-    padding-top: 10px;
     padding-bottom: 10px;
 }
 
 .picturename .btn {
-    font-size: 30px;
+    font-size: 24px;
     font-weight: bold;
 }
 
@@ -70,4 +69,8 @@ html, body {
 
 .divwithborder {
     border-bottom: 1px solid black;
+}
+
+.panel {
+    margin-bottom: 70px;
 }
