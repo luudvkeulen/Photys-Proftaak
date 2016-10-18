@@ -8,6 +8,7 @@ import play.inject.*;
 import static play.data.Form.form;
 
 public class PreviewController extends Controller {
+
     FormFactory factory;
     public Result index(Integer id) {
 
