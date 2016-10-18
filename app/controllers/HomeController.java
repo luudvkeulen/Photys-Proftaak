@@ -66,7 +66,7 @@ public class HomeController extends Controller {
         byte[] result = null;
         FTPClient client = new FTPClient();
         try {
-            client.connect("photys.nl", 21);
+            client.connect("137.74.163.54", 21);
             client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
             client.setFileType(FTP.BINARY_FILE_TYPE);
             InputStream stream = client.retrieveFileStream(location);
