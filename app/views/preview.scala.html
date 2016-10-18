@@ -1,8 +1,8 @@
-@(prevUrl : String)
+@(prevUrl : String, name : String, album: String, location: String)
 @main("Preview") {
     <link href="@routes.Assets.versioned("stylesheets/preview.css")" rel="stylesheet">
 
-    <div class="picturename"><button class="btn btn-default">Album</button> <button class="btn btn-default">></button> <button class="btn btn-default">Picture</button></div>
+    <div class="picturename"><button class="btn btn-default">@album</button> <button class="btn btn-default">></button> <button class="btn btn-default">@name</button></div>
     <img src="http://cdn.thedailybeast.com/content/dailybeast/articles/2016/05/26/how-pepe-the-frog-became-a-nazi-trump-supporter-and-alt-right-symbol/jcr:content/image.crop.800.500.jpg/48807968.cached.jpg" class="imagepreview">
     <p class="subtext">by <a href="#">Photographer</a></p>
     <div class="panel panel-default">
