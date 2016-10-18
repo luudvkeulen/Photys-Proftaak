@@ -106,8 +106,7 @@ public class UploadController extends Controller {
         String userEmail = session("user");
 
         FTPClient ftpClient = new FTPClient();
-        try
-        {
+        try {
             ftpClient.connect(server, port);
             //System.out.println(ConfigFactory.load().getString("db.default.ftpPassword") + ConfigFactory.load().getString("db.default.ftpUser"));
             ftpClient.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
@@ -129,10 +128,9 @@ public class UploadController extends Controller {
             System.out.println(ftpClient.getStatus());
 
             fs.close();
-
+            ftpClient.disconnect();
         }
-        catch(IOException ex)
-        {
+        catch(IOException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }

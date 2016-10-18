@@ -1,36 +1,22 @@
 package controllers;
 
-import com.typesafe.config.ConfigFactory;
 import logic.PhotographerLogic;
-import models.User;
-import play.api.Logger;
-import play.api.Play;
-import play.api.Play.*;
 import play.db.DB;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-/**
- * Created by bramd on 21-9-2016.
- */
 public class AlbumsController extends Controller {
 
     public Result index() {
         return ok(albums.render());
     }
 
-    private String GenerateAlbumURL()
+    public String GenerateAlbumURL()
     {
         String albumURL = UUID.randomUUID().toString();
 
