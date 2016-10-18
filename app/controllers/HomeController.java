@@ -35,10 +35,11 @@ public class HomeController extends Controller {
      */
     public Result index() throws SQLException {
 
-        CartController c = new CartController();
-        c.AddItemToCart(new OrderProduct(FilterType.brannan,new Product(0 ,"mok", "-", 2), new Photo("fotonaam", 2.0)));
+        //CartController c = new CartController();
+        //c.AddItemToCart(new OrderProduct(FilterType.brannan,new Product(0 ,"mok", "-", 2), new Photo("fotonaam", 2.0)));
 
-        System.out.println(c.GetCart());
+        //Testing new branch
+        //System.out.println(c.GetCart());
 
         Connection connection = DB.getConnection();
         PreparedStatement statement = connection.prepareStatement("select p.*, u.first_name, u.last_name, u.emailadres, a.name as album_name from picture p left join `user` u on p.photographer_id = u.id left join album a on a.id = p.album_id where album_id in (select id from album where private = 0) order by RAND()");

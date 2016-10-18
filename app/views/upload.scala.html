@@ -10,7 +10,7 @@
 * argument is an `Html` object containing the body of the page.
 *@
 
-@(albums: List[Album])
+<!--(albums: List[models.Album])
 @main("Upload") {
     @*
     * Get an `Html` object by calling the built-in Play welcome
@@ -32,12 +32,7 @@
                     <div class="form-group">
                         <label for="sel1">Select an album to add this picture to:</label>
                         @*hieronder de options moeten worden gevuld met albums*@
-                        <select class="form-control" id="sel1"  >
-                            @for(album <- albums)
-                            {
-                                <option>@album.getName</option>
-                            }
-                        </select>
+
                     </div>
 
                     <div class="radio">
