@@ -16,7 +16,7 @@
     <div class="row">
     @for(photo <- photos) {
         <div class="col-sm-6 col-md-4">
-            <a href="#" class="thumbnail-click">
+            <a href="/preview?id=@photo.getId" class="thumbnail-click">
                 <div class="thumbnail">
                     <div class="imagecontainer">
                         <img src="@routes.HomeController.renderPhoto(photo.getFileLocation)"
