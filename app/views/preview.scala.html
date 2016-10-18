@@ -1,3 +1,33 @@
 @main("Preview") {
-
+    <link href="@routes.Assets.versioned("stylesheets/preview.css")" rel="stylesheet">
+    <div class="col-md-6 col-md-offset-3 divborder">
+        <div class="picturename"><button class="btn btn-default">Album</button> <button class="btn btn-default">></button> <button class="btn btn-default">Picture</button></div>
+        <img src="http://cdn.thedailybeast.com/content/dailybeast/articles/2016/05/26/how-pepe-the-frog-became-a-nazi-trump-supporter-and-alt-right-symbol/jcr:content/image.crop.800.500.jpg/48807968.cached.jpg" class="imagepreview">
+        <p class="subtext">by <a href="#">Photographer</a></p>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#products">
+                        Show products</a>
+                </h4>
+            </div>
+            <div id="products" class="panel-collapse collapse">
+                <div class="product panel-body divwithborder">
+                    <input class="productamount" type="number" min="0" value="0"> <p class="productname">Mok</p> <p class="productprice">&euro; 4,00</p>
+                </div>
+                <div class="product panel-body divwithborder">
+                    <input class="productamount" type="number" min="0" value="0"> <p class="productname">Muismat</p> <p class="productprice">&euro; 6,00</p>
+                </div>
+                <div class="product panel-body">
+                    <input class="productamount" type="number" min="0" value="0"> <p class="productname">Vlag</p> <p class="productprice">&euro; 12,00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer navbar-fixed-bottom">
+        <div class="footerdiv col-md-6 col-md-offset-3">
+            <button class="btn btn-default">Back</button>
+            <button class="btn btn-primary pull-right">Order</button>
+        </div>
+    </footer>
 }

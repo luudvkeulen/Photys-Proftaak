@@ -37,7 +37,7 @@ public class HomeController extends Controller {
 
         //CartController c = new CartController();
         //c.AddItemToCart(new OrderProduct(FilterType.brannan,new Product(0 ,"mok", "-", 2), new Photo("fotonaam", 2.0)));
-        
+
         //System.out.println(c.GetCart());
 
         Connection connection = DB.getConnection();
