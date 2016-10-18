@@ -3,10 +3,6 @@ package controllers;
 import com.typesafe.config.ConfigFactory;
 import logic.PhotographerLogic;
 import models.Album;
-import models.User;
-import play.api.Logger;
-import play.api.Play;
-import play.api.Play.*;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.DB;
@@ -14,7 +10,6 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,11 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.UUID;
-
 import org.apache.commons.net.ftp.*;
-
-import static play.mvc.Http.Context.current;
 
 public class UploadController extends Controller {
 
@@ -181,7 +172,11 @@ public class UploadController extends Controller {
             e.printStackTrace();
         }
 
-        return albums;
+        if(albums.size() >= 1){
+            return albums;
+        } else {
+            return null;
+        }
     }
 
     private ArrayList<String> GenerateTestList()
