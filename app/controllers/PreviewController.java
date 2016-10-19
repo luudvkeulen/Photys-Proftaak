@@ -3,14 +3,14 @@ package controllers;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.*;
-import play.inject.*;
+import views.html.*;
 
 import static play.data.Form.form;
 
 public class PreviewController extends Controller {
-    FormFactory factory;
-    public Result index(Integer id) {
 
-        return ok();
+    public Result index(Integer id) {
+        String prevUrl = request().getHeader("referer");
+        return ok(preview.render(prevUrl));
     }
 }
