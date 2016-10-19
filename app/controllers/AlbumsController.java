@@ -18,12 +18,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by bramd on 21-9-2016.
- */
 public class AlbumsController extends Controller {
 
     public Result index() {
@@ -140,32 +141,5 @@ public class AlbumsController extends Controller {
         //Get all album id's that are available for the user with user id
 
         //Make albums
-    }
-
-    private Boolean InsertAlbumIntoDatabase(String name, String description, int privateAlbum)
-    {
-
-        Connection connection = DB.getConnection();
-
-        PreparedStatement statement = null;
-        try
-        {
-            statement = connection.prepareStatement("INSERT INTO ALBUM (`name`, `photographer_id`, `description`, `private`, `AlbumURL`) VALUES (?,?,?,?,?)");
-            statement.setString(1, name);
-            statement.setInt(2, PhotographerLogic.findPhotographerId(session("user")));
-            statement.setString(3, description);
-            statement.setInt(4, privateAlbum);
-            statement.setString(5, GenerateAlbumURL());
-
-            Boolean result = statement.execute();
-            connection.close();
-            return result;
-
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();
-            return false;
-        }
     }
 }

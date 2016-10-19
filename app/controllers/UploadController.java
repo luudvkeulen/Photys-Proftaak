@@ -18,7 +18,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import org.apache.commons.net.ftp.*;
 
 public class UploadController extends Controller {
@@ -120,8 +119,9 @@ public class UploadController extends Controller {
             System.out.println(ftpClient.getStatus());
 
             fs.close();
-
-        } catch (IOException ex) {
+            ftpClient.disconnect();
+        }
+        catch(IOException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
@@ -194,8 +194,6 @@ public class UploadController extends Controller {
                 String url = result.getString("AlbumURL");
 
                 Album album = new Album(id, name, photographer_id, description, available, url);
-
-                System.out.println(album.toString());
 
                 albums.add(album);
             }
