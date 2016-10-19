@@ -1,0 +1,33 @@
+@import java.util
+@(photos: util.List[Photo])
+
+@main("MyUploads") {
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/myuploads.css")" />
+    <div class="container">
+        <form method="GET" action="@routes.UploadController.uploads()">
+            <div class="table-responsive">
+                <table class="center">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Albumname</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    @for(photo <- photos) {
+                        <tbody>
+                            <tr>
+                                <th>@photo.getName</th>
+                                <th>@photo.getAlbumName</th>
+                                <th>€ @photo.getBdPrice</th>
+                                <th>@photo.getDate</th>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            </div>
+        </form>
+    </div>
+}
+

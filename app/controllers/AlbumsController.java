@@ -1,16 +1,28 @@
 package controllers;
 
+import com.typesafe.config.ConfigFactory;
 import logic.PhotographerLogic;
 import models.Album;
+import models.User;
+import play.api.Logger;
+import play.api.Play;
+import play.api.Play.*;
 import play.db.DB;
 import play.db.Database;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 
-import javax.inject.Inject;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
