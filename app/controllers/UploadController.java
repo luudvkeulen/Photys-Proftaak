@@ -16,6 +16,7 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,6 +28,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import org.apache.commons.net.ftp.*;
 
 public class UploadController extends Controller {
@@ -116,7 +118,6 @@ public class UploadController extends Controller {
     public Result upload() {
         Http.MultipartFormData<File> body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart<File> picture = body.getFile("picture");
-        if (picture != null) {
 
         if (picture != null) {
             String fileName = picture.getFilename();
@@ -126,8 +127,7 @@ public class UploadController extends Controller {
             int index = fileName.lastIndexOf(".");
             System.out.println(fileName.substring(index + 1));
 
-            if(file.length() > 10000000)
-            {
+            if (file.length() > 10000000) {
                 flash("danger", "This file is too big to upload!");
                 return ok(upload.render(GetAlbums()));
             }
@@ -173,6 +173,7 @@ public class UploadController extends Controller {
             return badRequest();
         }
     }
+    
 
     public Result connectWithFTP(File file, String fileName) {
         String userEmail = session("user");
