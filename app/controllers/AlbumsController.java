@@ -31,62 +31,29 @@ public class AlbumsController extends Controller {
         return ok(albums.render());
     }
 
-    public String GenerateAlbumURL()
-    {
+    public String GenerateAlbumURL() {
         String albumURL = UUID.randomUUID().toString();
 
         return albumURL;
     }
 
     //Gets all albums that the user with userID is allowed to look at
-    private ArrayList<Album> GetAllAlbums(int userID)
-    {
+    private ArrayList<Album> GetAllAlbums(int userID) {
         ArrayList<Album> albums = new ArrayList<>();
-        ArrayList<Integer> availableAlbumIDs = new ArrayList<>();
 
         PreparedStatement statement = null;
         Connection connection;
 
-        //Get all album ID's that are available for the user with userID
-        try
-        {
-            connection = DB.getConnection();
-
-            statement = connection.prepareStatement("SELECT `album_id` FROM `useralbum` WHERE `user_id` = ?");
-            statement.setInt(1, userID);
-
-            ResultSet albumIDs = statement.executeQuery();
-
-
-            while(albumIDs.next())
-            {
-                int albumID = albumIDs.getInt("album_id");
-                availableAlbumIDs.add(albumID);
-            }
-
-            connection.close();
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();
-        }
-
-
-
         //Get each album with the album ID's in the availableAlbumIDs list
-        try
-        {
+        try {
             connection = DB.getConnection();
 
-            Array sqlArray = connection.createArrayOf("INT", availableAlbumIDs.toArray());
-
-            statement = connection.prepareStatement("SELECT * FROM ALBUM WHERE `id` IN ?");
-            statement.setArray(1, sqlArray);
+            statement = connection.prepareStatement("SELECT * FROM `album` WHERE `id` in (select `album_id` FROM `useralbum` WHERE `user_id` = ?)");
+            statement.setInt(1, userID);
 
             ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next())
-            {
+            while (resultSet.next()) {
 
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -103,46 +70,42 @@ public class AlbumsController extends Controller {
             connection.close();
 
             return albums;
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private int GetUserID(String email)
-    {
-        int userID;
+    private int GetUserID(String email) {
+        int userID = 0;
         Connection connection = DB.getConnection();
         PreparedStatement statement = null;
 
-        try
-        {
-            statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE `email` = ?");
+        try {
+            statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE `emailadres` = ?");
             statement.setString(1, email);
 
             ResultSet result = statement.executeQuery();
-            userID = result.getInt("id");
+            System.out.println(result.toString());
+            while (result.next()) {
+                userID = result.getInt("id");
+            }
+
             connection.close();
 
             return userID;
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         }
     }
 
-    private ArrayList<Album> GetAvailableAlbums()
-    {
-        ArrayList<Album> albums = new ArrayList<>();
+    public ArrayList<Album> GetAvailableAlbums() {
+        ArrayList<Album> albums;
         //Get the user id
         int userID = GetUserID(session("user"));
         //Get all album id's that are available for the user with user id
         albums = GetAllAlbums(userID);
-
 
         return albums;
     }
