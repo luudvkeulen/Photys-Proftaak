@@ -173,7 +173,7 @@ public class UploadController extends Controller {
             return badRequest();
         }
     }
-    
+
 
     public Result connectWithFTP(File file, String fileName) {
         String userEmail = session("user");
@@ -268,7 +268,7 @@ public class UploadController extends Controller {
                 String albumName = rs.getString("aname");
                 Date dt = rs.getDate("date");
                 BigDecimal dcm = rs.getBigDecimal("price");
-                uploads.add(new Photo(photographerId, name, dt, dcm, albumName));
+                uploads.add(new Photo(photographerId, name, dt, dcm.doubleValue(), albumName));
             }
         } catch (SQLException e) {
             e.printStackTrace();
