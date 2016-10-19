@@ -48,7 +48,7 @@ public class AlbumsController extends Controller {
     }
 
     //Gets all albums that the user with userID is allowed to look at
-    private ArrayList<Album> GetAllAlbums(int userID)
+    public ArrayList<Album> GetAllAlbums(int userID)
     {
         ArrayList<Album> albums = new ArrayList<>();
         ArrayList<Integer> availableAlbumIDs = new ArrayList<>();
@@ -142,7 +142,7 @@ public class AlbumsController extends Controller {
         }
     }
 
-    private ArrayList<Album> GetAvailableAlbums()
+    public ArrayList<Album> GetAvailableAlbums()
     {
         ArrayList<Album> albums = new ArrayList<>();
         //Get the user id
