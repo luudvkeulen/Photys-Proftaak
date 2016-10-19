@@ -14,6 +14,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
