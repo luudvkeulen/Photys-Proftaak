@@ -6,11 +6,15 @@ import play.Logger;
 import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.data.FormFactory;
 import play.db.DB;
+import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 import org.apache.commons.mail.*;
+
+import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -18,12 +22,16 @@ import java.util.UUID;
 
 public class RegisterController extends Controller {
 
+    @Inject
+    FormFactory factory;
+    private Database db;
+
     public Result index() {
         return ok(register.render());
     }
 
     public Result register() {
-        DynamicForm bindedForm = Form.form().bindFromRequest();
+        DynamicForm bindedForm = factory.form().bindFromRequest();
         String firstname = bindedForm.get("firstname");
         String lastname = bindedForm.get("lastname");
         String emailaddress = bindedForm.get("email");
@@ -46,7 +54,7 @@ public class RegisterController extends Controller {
     }
 
     private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone, int type, String uuid) {
-        Connection connection = DB.getConnection();
+        Connection connection = db.getConnection();
         PreparedStatement prepared = null;
         try {
             prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)");
@@ -76,7 +84,6 @@ public class RegisterController extends Controller {
             mail.setSmtpPort(ConfigFactory.load().getInt("mail.port"));
             mail.setAuthenticator(new DefaultAuthenticator(ConfigFactory.load().getString("mail.username"), ConfigFactory.load().getString("mail.password")));
             mail.setDebug(true);
-            mail.setSSL(true);
             mail.setMsg("Test");
             mail.setSocketConnectionTimeout(3000);
             mail.setSocketTimeout(3000);
@@ -88,5 +95,10 @@ public class RegisterController extends Controller {
         } catch (EmailException e) {
             Logger.error(e.getMessage());
         }
+    }
+
+    @Inject
+    public RegisterController(Database db) {
+        this.db = db;
     }
 }

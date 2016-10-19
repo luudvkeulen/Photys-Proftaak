@@ -14,7 +14,7 @@
                 </div>
                 <div id="acceptedPhotographers" class="panel-collapse collapse">
                     @for(user <- acceptedPhotohgraphers) {
-                        <div id="pic001" class="panel-body photographer"><img src="http://static4.fjcdn.com/comments/Gt+liek+omg+why+did+this+get+notes+_2920236a3bc973de27a119933a63920f.png" width="100" height="100"> <b>@user.getFirstName @user.getLastName</b></div>
+                        <div id="pic001" class="panel-body photographer"><img src="http://vignette3.wikia.nocookie.net/stevenuniverse-fanon/images/5/56/Placeholder.gif/revision/latest?cb=20160218035533" width="100" height="100"> <b>@user.getFirstName @user.getLastName</b></div>
                     }
                     <button type="button" class="btnPhotographer btn btn-primary">Check profile</button>
                 </div>
@@ -30,7 +30,7 @@
                 <div id="appliedPhotographers" class="panel-collapse collapse">
                     <form method="POST" action="@routes.AdminController.accept()">
                     @for(user <- pendingPhotohgraphers) {
-                        <div class="panel-body photographer"><input type="hidden" name="id" class="photographerid" disabled="disabled" value="@user.getId"/><img src="http://i3.kym-cdn.com/photos/images/original/000/848/178/9f9.png" width="100" height="100"> <b>@user.getFirstName @user.getLastName</b></div>
+                        <div class="panel-body photographer"><input type="hidden" name="id" class="photographerid" disabled="disabled" value="@user.getId"/><img src="http://vignette3.wikia.nocookie.net/stevenuniverse-fanon/images/5/56/Placeholder.gif/revision/latest?cb=20160218035533" width="100" height="100"> <b>@user.getFirstName @user.getLastName</b></div>
                     }
                     <button type="button" class="btnCheckProfile btn btn-primary">Check profile</button>
                     <input type="submit" class="btnAcceptPhotographer btn btn-primary" href="@routes.AdminController.accept()" value="Accept photographer"/>

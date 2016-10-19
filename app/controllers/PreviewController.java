@@ -2,9 +2,12 @@ package controllers;
 
 import play.Logger;
 import play.db.DB;
+import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.*;
 import views.html.*;
+
+import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,11 +15,13 @@ import java.sql.SQLException;
 
 public class PreviewController extends Controller {
 
+    Database db;
+
     public Result index(Integer id) {
         String album = "";
         String name = "";
         String location = "";
-        try(Connection connection = DB.getConnection()) {
+        try(Connection connection = db.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM picture WHERE id = ?");
             statement.setInt(1, id);
             ResultSet set = statement.executeQuery();
@@ -33,5 +38,10 @@ public class PreviewController extends Controller {
         }
         String prevUrl = request().getHeader("referer");
         return ok(preview.render(prevUrl, name, album, location));
+    }
+
+    @Inject
+    public PreviewController(Database db) {
+        this.db = db;
     }
 }
