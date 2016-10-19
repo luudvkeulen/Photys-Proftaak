@@ -39,7 +39,7 @@ public class AlbumsController extends Controller {
     }
 
     //Gets all albums that the user with userID is allowed to look at
-    public List<Album> GetAllAlbums(int userID)
+    private ArrayList<Album> GetAllAlbums(int userID)
     {
         ArrayList<Album> albums = new ArrayList<>();
         ArrayList<Integer> availableAlbumIDs = new ArrayList<>();
@@ -87,6 +87,7 @@ public class AlbumsController extends Controller {
 
             while(resultSet.next())
             {
+
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int photographer_id = resultSet.getInt("photographer_id");
@@ -134,12 +135,15 @@ public class AlbumsController extends Controller {
         }
     }
 
-    private void GetAvailableAlbums()
+    private ArrayList<Album> GetAvailableAlbums()
     {
+        ArrayList<Album> albums = new ArrayList<>();
         //Get the user id
-        GetUserID(session("user"));
+        int userID = GetUserID(session("user"));
         //Get all album id's that are available for the user with user id
+        albums = GetAllAlbums(userID);
 
-        //Make albums
+
+        return albums;
     }
 }
