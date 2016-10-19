@@ -14,14 +14,14 @@
 
 @main("Welcome to Photys") {
     <script type="text/javascript" src="@routes.Assets.versioned("javascripts/home.js")"></script>
-
+    <script src="https://npmcdn.com/imagesloaded@@4.1/imagesloaded.pkgd.min.js"></script>
     <div class="row masonry-container">
     @for(photo <- photos) {
         <div class="col-sm-6 col-md-4 item">
             <a href="/preview?id=@photo.getId" class="thumbnail-click">
                 <div class="thumbnail">
                     <div class="imagecontainer">
-                        <img src="@routes.HomeController.renderPhoto(photo.getFileLocation)"
+                        <img src="@routes.PictureController.renderPhoto(photo.getFileLocation)"
                         alt="@photo.getName">
                     </div>
                     <div class="caption">

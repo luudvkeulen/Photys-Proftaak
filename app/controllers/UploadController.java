@@ -5,7 +5,9 @@ import logic.PhotographerLogic;
 import models.Album;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.data.FormFactory;
 import play.db.DB;
+import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -63,7 +65,7 @@ public class UploadController extends Controller {
             String email = session("user");
             int photographerID = photographerLogic.findPhotographerId(email);
             DynamicForm bindedForm = factory.form().bindFromRequest();
-            String newAlbumString = bindedForm.get("rbExisting");
+            boolean newAlbum = (bindedForm.get("rbExisting") instanceof String);
             int albumid = -1;
 
             if (fileName.substring(index + 1).equals("png") || fileName.substring(index + 1).equals("jpg") || fileName.substring(index + 1).equals("JPEG")) {
@@ -73,7 +75,7 @@ public class UploadController extends Controller {
                         privateAlbum = true;
                     }
 
-                AlbumsController AC = new AlbumsController(db);
+                    AlbumsController AC = new AlbumsController(db);
 
                     albumid = insertAlbumDetails(bindedForm.get("albumName"),
                             photographerID,
@@ -85,7 +87,7 @@ public class UploadController extends Controller {
                 }
 
                 if (albumid > 0) {
-                    insertFileDetails(fileName, PhotographerLogic.findPhotographerId(email), albumid, (int) (file.getTotalSpace() / 1000000), email);
+                    insertFileDetails(fileName, photographerLogic.findPhotographerId(email), albumid, (int) (file.getTotalSpace() / 1000000), email);
                     return connectWithFTP(file, fileName);
                 } else {
                     flash("danger", "Album details not filled in correctly.");
@@ -188,7 +190,8 @@ public class UploadController extends Controller {
 
         try {
             statement = connection.prepareStatement("SELECT * FROM `album` WHERE `photographer_id` = ?");
-            statement.setInt(1, PhotographerLogic.findPhotographerId(session("user")));
+            PhotographerLogic photographerLogic = new PhotographerLogic(db);
+            statement.setInt(1, photographerLogic.findPhotographerId(session("user")));
 
             ResultSet result = statement.executeQuery();
 

@@ -1,6 +1,7 @@
 package controllers;
 
 import logic.PhotographerLogic;
+import models.Album;
 import play.db.DB;
 import play.db.Database;
 import play.mvc.Controller;
@@ -8,10 +9,8 @@ import play.mvc.Result;
 import views.html.*;
 
 import javax.inject.Inject;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +32,8 @@ public class AlbumsController extends Controller {
     @Inject
     public AlbumsController(Database db) {
         this.db = db;
+    }
+
     //Gets all albums that the user with userID is allowed to look at
     private ArrayList<Album> GetAllAlbums(int userID)
     {
@@ -80,8 +81,7 @@ public class AlbumsController extends Controller {
 
             ResultSet resultSet = statement.executeQuery();
 
-            while(resultSet.next())
-            {
+            while(resultSet.next()) {
 
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -99,8 +99,7 @@ public class AlbumsController extends Controller {
 
             return albums;
         }
-        catch(SQLException e)
-        {
+        catch(SQLException e) {
             e.printStackTrace();
             return null;
         }
