@@ -1,6 +1,5 @@
 package controllers;
 
-import models.User;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.db.*;
@@ -16,11 +15,7 @@ import java.sql.SQLException;
 
 public class LoginController extends Controller {
 
-    private Form<User> formFactory;
-    private Form<User> userForm;
-
     public Result index() {
-        userForm = formFactory.form(User.class);
         return ok(login.render());
     }
 

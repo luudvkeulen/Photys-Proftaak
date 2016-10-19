@@ -1,4 +1,56 @@
-$(document).on('click', '#close-preview', function(){ 
+function controlSelection(){
+    if(document.getElementById('rb1').checked){
+        document.getElementById("sel1").disabled = false;
+        document.getElementById("tbDesc").disabled = true;
+        document.getElementById("tbName").disabled = true;
+        document.getElementById("cb1").disabled = true;
+    } else {
+        document.getElementById("sel1").disabled = true;
+        document.getElementById("tbDesc").disabled = false;
+        document.getElementById("tbName").disabled = false;
+        document.getElementById("cb1").disabled = false;
+    }
+}
+
+$(document).ready(function(){
+    controlSelection();
+
+    $('input[type=radio]').change(function() {
+        // When any radio button on the page is selected,
+        // then deselect all other radio buttons.
+        $('input[type=radio]:checked').not(this).prop('checked', false);
+        controlSelection();
+    });
+
+    $('#tbPrice').keyup(function(e) {
+        var tbprice = document.getElementById('tbPrice');
+        var fieldLength = tbprice.value.length;
+
+        var code = (e.keyCode || e.which);
+
+        if((Math.round(parseFloat(tbprice.value)*100)/100) > 9.99){
+            tbprice.value = 9.99;
+        }
+
+        if((Math.round(parseFloat(tbprice.value)*100)/100) < 0.01){
+            tbprice.value = 0.01;
+        }
+
+        if(code == 37 || code == 38 || code == 39 || code == 40) {
+            return;
+        }
+
+        if(!fieldLength <= 3)    {
+            var str = tbprice.value;
+            str = str.substring(0, 4);
+            tbprice.value = str;
+        }
+    });
+});
+
+
+
+$(document).on('click', '#close-preview', function(){
     $('.image-preview').popover('hide');
     // Hover befor close the preview
     $('.image-preview').hover(
@@ -8,8 +60,10 @@ $(document).on('click', '#close-preview', function(){
          function () {
            $('.image-preview').popover('hide');
         }
-    );    
+    );
 });
+
+
 
 $(function() {
     // Create the close button

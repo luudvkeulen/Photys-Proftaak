@@ -8,6 +8,9 @@ public class Album {
     private int photographer_id;
     private String description;
     private boolean accessibility;
+    private String albumURL;
+
+    public String getAlbumURL(){return albumURL;}
 
     public int getPhotographer_id() {
         return photographer_id;
@@ -17,7 +20,7 @@ public class Album {
         return description;
     }
 
-    public boolean isAccessibility() {
+    public boolean isAccessible() {
         return accessibility;
     }
 
@@ -31,11 +34,21 @@ public class Album {
         return name;
     }
 
-    public Album(int ID, String name, int photographer_id, String description, boolean accessibility) {
+    @Override
+    public String toString() {
+        if (isAccessible()){
+            return name;
+        } else {
+            return name + " (Private album)";
+        }
+    }
+
+    public Album(int ID, String name, int photographer_id, String description, boolean accessibility, String albumURL) {
         this.ID = ID;
         this.name = name;
         this.photographer_id = photographer_id;
         this.description = description;
         this.accessibility = accessibility;
+        this.albumURL = albumURL;
     }
 }

@@ -5,18 +5,16 @@ import org.joda.time.DateTime;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * Created by bramd on 27-9-2016.
- */
-public class Photo {
+public class Photo implements java.io.Serializable{
     private int id;
     private String name;
     private User photographer;
     private int fileSize;
+    private Double price;
     private Date date;
     private String albumName;
     private String fileLocation;
-    private BigDecimal price;
+    private BigDecimal bdprice;
 
     public int getId() {
         return id;
@@ -74,9 +72,9 @@ public class Photo {
         this.fileLocation = fileLocation;
     }
 
-    public BigDecimal getPrice() { return this.price; }
+    public BigDecimal getBdPrice() { return this.bdprice; }
 
-    public Photo(int id, String name, User photographer, int fileSize, Date date, String albumName, String fileLocation) {
+    public Photo(int id, String name, User photographer, int fileSize, Date date, String albumName, String fileLocation, double price) {
         this.id = id;
         this.name = name;
         this.photographer = photographer;
@@ -84,13 +82,19 @@ public class Photo {
         this.date = date;
         this.albumName = albumName;
         this.fileLocation = fileLocation;
+        this.price = price;
+    }
+
+    public Photo(String name, Double price) {
+        this.name = name;
+        this.price = price;
     }
 
     public Photo(int id, String name, Date date, BigDecimal price, String albumName) {
         this.id = id;
         this.name = name;
         this.date = date;
-        this.price = price;
+        this.bdprice = price;
         this.albumName = albumName;
     }
 }
