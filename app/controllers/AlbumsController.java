@@ -135,7 +135,7 @@ public class AlbumsController extends Controller {
         }
     }
 
-    private ArrayList<Album> GetAvailableAlbums()
+    public ArrayList<Album> GetAvailableAlbums()
     {
         ArrayList<Album> albums = new ArrayList<>();
         //Get the user id
