@@ -2,6 +2,7 @@ package models;
 
 import org.joda.time.DateTime;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -15,6 +16,7 @@ public class Photo {
     private Date date;
     private String albumName;
     private String fileLocation;
+    private BigDecimal price;
 
     public int getId() {
         return id;
@@ -72,6 +74,8 @@ public class Photo {
         this.fileLocation = fileLocation;
     }
 
+    public BigDecimal getPrice() { return this.price; }
+
     public Photo(int id, String name, User photographer, int fileSize, Date date, String albumName, String fileLocation) {
         this.id = id;
         this.name = name;
@@ -80,5 +84,13 @@ public class Photo {
         this.date = date;
         this.albumName = albumName;
         this.fileLocation = fileLocation;
+    }
+
+    public Photo(int id, String name, Date date, BigDecimal price, String albumName) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+        this.price = price;
+        this.albumName = albumName;
     }
 }
