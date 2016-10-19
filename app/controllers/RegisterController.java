@@ -39,7 +39,11 @@ public class RegisterController extends Controller {
             String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
             String uuid = UUID.randomUUID().toString();
             sendEmail(emailaddress, uuid);
-            insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone, type, uuid);
+            if(insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone, type, uuid)) {
+                flash("success", "You've been registerd");
+            }else {
+                flash("danger", "Email address is already in use");
+            }
             return redirect("/");
         }
     }
@@ -59,13 +63,13 @@ public class RegisterController extends Controller {
             prepared.setString(8, phone);
             prepared.setInt(9, type);
             prepared.setString(10, uuid);
-            Boolean result = prepared.execute();
+            prepared.execute();
             connection.close();
-            return result;
         } catch (SQLException e) {
             Logger.error(e.getMessage());
             return false;
         }
+        return true;
     }
 
     private void sendEmail(String email, String uuid) {
