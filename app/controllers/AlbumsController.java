@@ -32,39 +32,23 @@ public class AlbumsController extends Controller {
         return ok(albums.render());
     }
 
-    public String GenerateAlbumURL()
-    {
+    public String GenerateAlbumURL() {
         String albumURL = UUID.randomUUID().toString();
 
         return albumURL;
     }
 
     //Gets all albums that the user with userID is allowed to look at
-    private List<Album> GetAllAlbums(int userID)
-    {
-        List<Album> albums;
-        Connection connection = DB.getConnection();
-        PreparedStatement statement = null;
-
-        try
-        {
-            statement = connection.prepareStatement("SELECT `album_id` FROM `useralbum` WHERE `user_id` = ?");
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();
-        }
-
+    private List<Album> GetAllAlbums(int userID) {
+        return null;
     }
 
-    private int GetUserID(String email)
-    {
+    private int GetUserID(String email) {
         int userID;
         Connection connection = DB.getConnection();
         PreparedStatement statement = null;
 
-        try
-        {
+        try {
             statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE `email` = ?");
             statement.setString(1, email);
 
@@ -73,16 +57,13 @@ public class AlbumsController extends Controller {
             connection.close();
 
             return userID;
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         }
     }
 
-    private void GetAvailableAlbums()
-    {
+    private void GetAvailableAlbums() {
         //Get the user id
         GetUserID(session("user"));
         //Get all album id's that are available for the user with user id
@@ -90,14 +71,12 @@ public class AlbumsController extends Controller {
         //Make albums
     }
 
-    private Boolean InsertAlbumIntoDatabase(String name, String description, int privateAlbum)
-    {
+    private Boolean InsertAlbumIntoDatabase(String name, String description, int privateAlbum) {
 
         Connection connection = DB.getConnection();
 
         PreparedStatement statement = null;
-        try
-        {
+        try {
             statement = connection.prepareStatement("INSERT INTO ALBUM (`name`, `photographer_id`, `description`, `private`, `AlbumURL`) VALUES (?,?,?,?,?)");
             statement.setString(1, name);
             statement.setInt(2, PhotographerLogic.findPhotographerId(session("user")));
@@ -109,9 +88,7 @@ public class AlbumsController extends Controller {
             connection.close();
             return result;
 
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
