@@ -13,13 +13,15 @@
 @(photos: List[Photo])
 
 @main("Welcome to Photys") {
-    <div class="row">
+    <script type="text/javascript" src="@routes.Assets.versioned("javascripts/home.js")"></script>
+
+    <div class="row masonry-container">
     @for(photo <- photos) {
-        <div class="col-sm-6 col-md-4">
+        <div class="col-sm-6 col-md-4 item">
             <a href="/preview?id=@photo.getId" class="thumbnail-click">
                 <div class="thumbnail">
                     <div class="imagecontainer">
-                        <img src="@routes.PictureController.renderPhoto(photo.getFileLocation)"
+                        <img src="@routes.HomeController.renderPhoto(photo.getFileLocation)"
                         alt="@photo.getName">
                     </div>
                     <div class="caption">

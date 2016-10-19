@@ -5,9 +5,7 @@ import logic.PhotographerLogic;
 import models.Album;
 import play.data.DynamicForm;
 import play.data.Form;
-import play.data.FormFactory;
 import play.db.DB;
-import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -49,8 +47,7 @@ public class UploadController extends Controller {
 
         PhotographerLogic photographerLogic = new PhotographerLogic(db);
 
-        if(picture != null)
-        {
+        if (picture != null) {
             String fileName = picture.getFilename();
             String contentType = picture.getContentType();
             File file = picture.getFile();
@@ -58,8 +55,7 @@ public class UploadController extends Controller {
             int index = fileName.lastIndexOf(".");
             System.out.println(fileName.substring(index + 1));
 
-            if(file.length() > 10000000)
-            {
+            if (file.length() > 10000000) {
                 flash("danger", "This file is too big to upload!");
                 return ok(upload.render(GetAlbums()));
             }
@@ -69,65 +65,59 @@ public class UploadController extends Controller {
             DynamicForm bindedForm = factory.form().bindFromRequest();
             String newAlbumString = bindedForm.get("rbExisting");
             int albumid = -1;
-            
-            if (newAlbumString == null)
-            {
-                boolean privateAlbum = false;
-                if (bindedForm.get("albumPrivate") != null){
-                    privateAlbum = true;
-                }
+
+            if (fileName.substring(index + 1).equals("png") || fileName.substring(index + 1).equals("jpg") || fileName.substring(index + 1).equals("JPEG")) {
+                if (!newAlbum) {
+                    boolean privateAlbum = false;
+                    if (bindedForm.get("albumPrivate") != null) {
+                        privateAlbum = true;
+                    }
 
                 AlbumsController AC = new AlbumsController(db);
 
-                albumid = insertAlbumDetails(bindedForm.get("albumName"),
-                        photographerID,
-                        bindedForm.get("albumDescr"),
-                        privateAlbum,
-                        AC.GenerateAlbumURL());
-            } else
-            {
-                albumid = Integer.parseInt(bindedForm.get("albumSelect"));
-            }
+                    albumid = insertAlbumDetails(bindedForm.get("albumName"),
+                            photographerID,
+                            bindedForm.get("albumDescr"),
+                            privateAlbum,
+                            AC.GenerateAlbumURL());
+                } else {
+                    albumid = Integer.parseInt(bindedForm.get("albumSelect"));
+                }
 
-            if(albumid > 0){
-                if(fileName.substring(index + 1).equals("png") || fileName.substring(index + 1).equals("jpg") || fileName.substring(index + 1).equals("JPEG"))
-                {
-                    insertFileDetails(fileName, photographerLogic.findPhotographerId(email), albumid, (int)(file.getTotalSpace() / 1000000), email);
+                if (albumid > 0) {
+                    insertFileDetails(fileName, PhotographerLogic.findPhotographerId(email), albumid, (int) (file.getTotalSpace() / 1000000), email);
                     return connectWithFTP(file, fileName);
                 } else {
-                    flash("danger", "Please upload a legit file type.");
-                    return ok(upload.render(GetAlbums()));
+                    flash("danger", "Album details not filled in correctly.");
+                    return badRequest();
                 }
-            } else
-            {
-                flash("danger", "Please fill out all the album information correctly.");
-                return badRequest();
+            } else {
+                flash("danger", "Please upload a legit file type.");
+                return ok(upload.render(GetAlbums()));
             }
-
-        }
-        else{
+        } else {
             flash("error", "Missing file.");
             return badRequest();
         }
     }
 
-    public Result connectWithFTP(File file, String fileName)
-    {
+    public Result connectWithFTP(File file, String fileName) {
         String userEmail = session("user");
 
         FTPClient ftpClient = new FTPClient();
         try {
             ftpClient.connect(server, port);
+            //System.out.println(ConfigFactory.load().getString("db.default.ftpPassword") + ConfigFactory.load().getString("db.default.ftpUser"));
             ftpClient.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
             ftpClient.enterLocalPassiveMode();
+
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
             ftpClient.setSoTimeout(10000);
 
             FileInputStream fs = new FileInputStream(file);
 
-            if(!ftpClient.changeWorkingDirectory("/Photographers/" + userEmail))
-            {
+            if (!ftpClient.changeWorkingDirectory("/Photographers/" + userEmail)) {
                 ftpClient.makeDirectory("/Photographers/" + userEmail);
             }
 
@@ -146,12 +136,10 @@ public class UploadController extends Controller {
         return ok("File uploaded" + fileName + " " + result);
     }
 
-    private int insertAlbumDetails(String name, int photographer_id, String description, boolean accessibility, String albumURL)
-    {
-        Connection connection = db.getConnection();
+    private int insertAlbumDetails(String name, int photographer_id, String description, boolean accessibility, String albumURL) {
+        Connection connection = DB.getConnection();
         PreparedStatement prepared = null;
-        try
-        {
+        try {
             prepared = connection.prepareStatement("INSERT INTO `album` (`name`, photographer_id, description, private, albumURL) VALUES (?,?,?,?,?)");
             prepared.setString(1, name);
             prepared.setInt(2, photographer_id);
@@ -172,12 +160,10 @@ public class UploadController extends Controller {
         }
     }
 
-    private boolean insertFileDetails(String fileName,int photographerId , int albumId, int fileSize, String email)
-    {
-        Connection connection = db.getConnection();
+    private boolean insertFileDetails(String fileName, int photographerId, int albumId, int fileSize, String email) {
+        Connection connection = DB.getConnection();
         PreparedStatement prepared = null;
-        try
-        {
+        try {
             prepared = connection.prepareStatement("INSERT INTO `picture` (`name` , photographer_id, album_id, file_size, file_location) VALUES (?,?,?,?,?)");
             prepared.setString(1, fileName);
             prepared.setInt(2, photographerId);
@@ -194,59 +180,37 @@ public class UploadController extends Controller {
         }
     }
 
-    private ArrayList<Album> GetAlbums()
-    {
-        Connection connection = db.getConnection();
+    private ArrayList<Album> GetAlbums() {
+        Connection connection = DB.getConnection();
         PreparedStatement statement = null;
 
         ArrayList<Album> albums = new ArrayList<>();
 
-        PhotographerLogic photographerLogic = new PhotographerLogic(db);
-
-        try
-        {
+        try {
             statement = connection.prepareStatement("SELECT * FROM `album` WHERE `photographer_id` = ?");
-            statement.setInt(1, photographerLogic.findPhotographerId(session("user")));
+            statement.setInt(1, PhotographerLogic.findPhotographerId(session("user")));
 
             ResultSet result = statement.executeQuery();
 
-            while(result.next())
-            {
+            while (result.next()) {
                 int id = result.getInt("id");
                 String name = result.getString("name");
                 int photographer_id = result.getInt("photographer_id");
                 String description = result.getString("description");
-                Boolean available = result.getBoolean("private");
+                Boolean available = (result.getInt("private") != 1);
                 String url = result.getString("AlbumURL");
 
-                Album album = new Album(id,name,photographer_id,description,available,url);
+                Album album = new Album(id, name, photographer_id, description, available, url);
 
                 albums.add(album);
 
             }
 
             connection.close();
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         System.out.println(albums.size());
         return albums;
-    }
-
-    private ArrayList<String> GenerateTestList()
-    {
-        ArrayList<String> testList = new ArrayList<>();
-        testList.add("Swag 1");
-        testList.add("Swag 2");
-        testList.add("Swag 3");
-
-        return testList;
-    }
-
-    @Inject
-    public UploadController(Database db) {
-        this.db = db;
     }
 }
