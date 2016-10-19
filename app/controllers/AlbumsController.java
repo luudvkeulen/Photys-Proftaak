@@ -30,7 +30,7 @@ public class AlbumsController extends Controller {
         return ok(albums.render());
     }
 
-    private String GenerateAlbumURL()
+    public String GenerateAlbumURL()
     {
         String albumURL = UUID.randomUUID().toString();
 

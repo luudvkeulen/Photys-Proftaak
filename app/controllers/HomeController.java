@@ -7,11 +7,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import play.db.DB;
 import play.mvc.*;
 import org.apache.commons.io.*;
-
 import views.html.*;
-
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
