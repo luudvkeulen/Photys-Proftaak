@@ -20,7 +20,7 @@ public class Album {
         return description;
     }
 
-    public boolean isAccessibility() {
+    public boolean isAccessible() {
         return accessibility;
     }
 
@@ -32,6 +32,15 @@ public class Album {
     public String getName() {
 
         return name;
+    }
+
+    @Override
+    public String toString() {
+        if (isAccessible()){
+            return name;
+        } else {
+            return name + " (Private album)";
+        }
     }
 
     public Album(int ID, String name, int photographer_id, String description, boolean accessibility, String albumURL) {

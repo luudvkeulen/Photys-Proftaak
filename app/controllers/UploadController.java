@@ -77,6 +77,7 @@ public class UploadController extends Controller {
                 } else {
                     albumid = Integer.parseInt(bindedForm.get("albumSelect"));
                 }
+
                 if (albumid > 0) {
                     insertFileDetails(fileName, PhotographerLogic.findPhotographerId(email), albumid, (int) (file.getTotalSpace() / 1000000), email);
                     return connectWithFTP(file, fileName);
