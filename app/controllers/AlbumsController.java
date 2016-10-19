@@ -47,72 +47,29 @@ public class AlbumsController extends Controller {
         this.db = db;
     }
 
-    //Gets all albums that the user with userID is allowed to look at
-    public ArrayList<Album> GetAllAlbums(int userID)
-    {
+    public ArrayList<Album> GetAllAlbums(int userID) {
         ArrayList<Album> albums = new ArrayList<>();
-        ArrayList<Integer> availableAlbumIDs = new ArrayList<>();
-
         PreparedStatement statement = null;
         Connection connection;
-
-        //Get all album ID's that are available for the user with userID
-        try
-        {
-            connection = DB.getConnection();
-
-            statement = connection.prepareStatement("SELECT `album_id` FROM `useralbum` WHERE `user_id` = ?");
-            statement.setInt(1, userID);
-
-            ResultSet albumIDs = statement.executeQuery();
-
-
-            while(albumIDs.next())
-            {
-                int albumID = albumIDs.getInt("album_id");
-                availableAlbumIDs.add(albumID);
-            }
-
-            connection.close();
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();
-        }
-
-
-
         //Get each album with the album ID's in the availableAlbumIDs list
-        try
-        {
+        try {
             connection = DB.getConnection();
-
-            Array sqlArray = connection.createArrayOf("INT", availableAlbumIDs.toArray());
-
-            statement = connection.prepareStatement("SELECT * FROM ALBUM WHERE `id` IN ?");
-            statement.setArray(1, sqlArray);
-
+            statement = connection.prepareStatement("SELECT * FROM `album` WHERE `id` in (select `album_id` FROM `useralbum` WHERE `user_id` = ?)");
+            statement.setInt(1, userID);
             ResultSet resultSet = statement.executeQuery();
-
-            while(resultSet.next()) {
-
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int photographer_id = resultSet.getInt("photographer_id");
                 String description = resultSet.getString("description");
                 Boolean available = (resultSet.getInt("private") != 1);
                 String url = resultSet.getString("AlbumURL");
-
                 Album album = new Album(id, name, photographer_id, description, available, url);
-
                 albums.add(album);
             }
-
             connection.close();
-
             return albums;
-        }
-        catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
