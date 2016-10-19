@@ -1,5 +1,8 @@
 package models;
 
+import org.joda.time.DateTime;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Photo implements java.io.Serializable{
@@ -11,6 +14,7 @@ public class Photo implements java.io.Serializable{
     private Date date;
     private String albumName;
     private String fileLocation;
+    private BigDecimal bdprice;
 
     public int getId() {
         return id;
@@ -68,9 +72,7 @@ public class Photo implements java.io.Serializable{
         this.fileLocation = fileLocation;
     }
 
-    public Double getPrice() {
-        return price;
-    }
+    public BigDecimal getBdPrice() { return this.bdprice; }
 
     public Photo(int id, String name, User photographer, int fileSize, Date date, String albumName, String fileLocation, double price) {
         this.id = id;
@@ -86,5 +88,13 @@ public class Photo implements java.io.Serializable{
     public Photo(String name, Double price) {
         this.name = name;
         this.price = price;
+    }
+
+    public Photo(int id, String name, Date date, BigDecimal price, String albumName) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+        this.bdprice = price;
+        this.albumName = albumName;
     }
 }
