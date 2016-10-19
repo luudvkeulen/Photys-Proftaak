@@ -2,6 +2,7 @@
 
 @main("Admin") {
     <script src="@routes.Assets.versioned("javascripts/jquery.js")"></script>
+    <link href="@routes.Assets.versioned("stylesheets/admin.css")" rel="stylesheet">
     <div class="myCart col-md-5 col-md-offset-2">
         <div class=panel-group" id="accordion">
             <h2>Existing photographers</h2>
@@ -16,7 +17,7 @@
                     @for(user <- acceptedPhotohgraphers) {
                         <div id="pic001" class="panel-body photographer"><img src="http://vignette3.wikia.nocookie.net/stevenuniverse-fanon/images/5/56/Placeholder.gif/revision/latest?cb=20160218035533" width="100" height="100"> <b>@user.getFirstName @user.getLastName</b></div>
                     }
-                    <button type="button" class="btnPhotographer btn btn-primary">Check profile</button>
+                    <button type="button" class="btnPhotographer btn btn-primary profilebutton">Check profile</button>
                 </div>
             </div>
             <h2>Applied photographers</h2>
@@ -32,8 +33,8 @@
                     @for(user <- pendingPhotohgraphers) {
                         <div class="panel-body photographer"><input type="hidden" name="id" class="photographerid" disabled="disabled" value="@user.getId"/><img src="http://vignette3.wikia.nocookie.net/stevenuniverse-fanon/images/5/56/Placeholder.gif/revision/latest?cb=20160218035533" width="100" height="100"> <b>@user.getFirstName @user.getLastName</b></div>
                     }
-                    <button type="button" class="btnCheckProfile btn btn-primary">Check profile</button>
-                    <input type="submit" class="btnAcceptPhotographer btn btn-primary" href="@routes.AdminController.accept()" value="Accept photographer"/>
+                    <button type="button" class="btnCheckProfile btn btn-primary profilebutton">Check profile</button>
+                    <input type="submit" class="btnAcceptPhotographer btn btn-primary acceptbutton" href="@routes.AdminController.accept()" value="Accept photographer"/>
                     </form>
                 </div>
             </div>
