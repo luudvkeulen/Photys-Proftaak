@@ -17,8 +17,6 @@ public class AlbumsController extends Controller {
 
     private Database db;
 
-    PhotographerLogic photographerLogic;
-
     public Result index() {
         return ok(albums.render());
     }
