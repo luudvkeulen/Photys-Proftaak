@@ -77,17 +77,19 @@ public class AlbumsController extends Controller {
 
     private int GetUserID(String email)
     {
-        int userID;
         Connection connection = DB.getConnection();
         PreparedStatement statement = null;
+        int userID = 0;
 
-        try
-        {
-            statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE `email` = ?");
+        try {
+            statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE `emailadres` = ?");
             statement.setString(1, email);
 
             ResultSet result = statement.executeQuery();
-            userID = result.getInt("id");
+            while (result.next()) {
+                userID = result.getInt("id");
+            }
+
             connection.close();
 
             return userID;
