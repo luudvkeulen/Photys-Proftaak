@@ -10,7 +10,8 @@
 * argument is an `Html` object containing the body of the page.
 *@
 
-@(Albums: List[Album])
+@import java.util
+@(albums: List[models.Album])
 @main("Upload") {
     @*
     * Get an `Html` object by calling the built-in Play welcome
@@ -32,9 +33,8 @@
                     <div class="form-group">
                         <label for="sel1">Select an album to add this picture to:</label>
                         <select class="form-control" id="sel1">
-                            @for(album <- albums)
-                            {
-                                album.getName();
+                            @for(album <- albums) {
+                                <option value="@album.getID()">@album.getName</option>
                             }
                         </select>
                     </div>
