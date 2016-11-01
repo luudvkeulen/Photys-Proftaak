@@ -1,19 +1,17 @@
 package controllers;
 
-import com.typesafe.config.ConfigFactory;
 import logic.AdminLogic;
 import models.User;
-import models.UserType;
-import org.apache.commons.net.ftp.FTPClient;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.data.FormFactory;
 import play.db.DB;
+import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
-
-import java.io.IOException;
+import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,8 +21,14 @@ import java.util.List;
 
 public class AdminController extends Controller {
 
+    Database db;
+
+    @Inject
+    FormFactory factory;
+
     public Result index() {
-        if(!AdminLogic.isAdmin(session("user"))) {
+        AdminLogic adminLogic = new AdminLogic(db);
+        if(!adminLogic.isAdmin(session("user"))) {
             flash("error", "You are not an admin!");
             return redirect("/");
         }
@@ -34,15 +38,12 @@ public class AdminController extends Controller {
     }
 
     public Result accept() {
-        DynamicForm bindedForm = Form.form().bindFromRequest();
-        String id = bindedForm.get("id");
-        Logger.info(id);
-        Connection con = DB.getConnection();
-        try {
+        DynamicForm dynamicForm = factory.form().bindFromRequest();
+        String id = dynamicForm.get("id");
+        try (Connection con = db.getConnection()) {
             PreparedStatement prep = con.prepareStatement("UPDATE `user` SET `type`='2' WHERE `id`=?");
             prep.setString(1, id);
             prep.execute();
-            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -51,9 +52,9 @@ public class AdminController extends Controller {
 
     private List<User> getPhotographers(boolean accepted) {
         List<User> users = new ArrayList<>();
-        Connection connection = DB.getConnection();
+
         PreparedStatement statement;
-        try {
+        try (Connection connection = db.getConnection()) {
             if(accepted) {
                 statement = connection.prepareStatement("SELECT id, first_name, last_name, emailadres FROM `user` WHERE `type`=2");
             } else {
@@ -73,5 +74,10 @@ public class AdminController extends Controller {
             e.printStackTrace();
         }
         return users;
+    }
+
+    @Inject
+    public AdminController(play.db.Database db) {
+        this.db = db;
     }
 }

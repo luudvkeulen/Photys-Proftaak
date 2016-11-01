@@ -1,6 +1,7 @@
 package logic;
 
 import play.db.DB;
+import play.db.Database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,10 +9,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AdminLogic {
-    public static boolean isAdmin(String email) {
+    Database db;
+
+    public AdminLogic(Database db) {
+        this.db = db;
+    }
+
+    public boolean isAdmin(String email) {
         Boolean result = false;
         if(email == null) return result;
-        Connection connection = DB.getConnection();
+        Connection connection = db.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
             statement.setString(1, email);

@@ -10,5 +10,3 @@ public class AccountController extends Controller {
         return ok(account.render());
     }
 }
-
-//

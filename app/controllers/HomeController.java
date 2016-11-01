@@ -8,7 +8,6 @@ import play.db.*;
 import play.mvc.*;
 import org.apache.commons.io.*;
 import views.html.*;
-
 import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,23 +58,6 @@ public class HomeController extends Controller {
 
         connection.close();
         return ok(index.render(photos));
-    }
-
-    public Result renderPhoto(String location) {
-        byte[] result = null;
-        FTPClient client = new FTPClient();
-        try {
-            client.connect("137.74.163.54", 21);
-            client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
-            client.setFileType(FTP.BINARY_FILE_TYPE);
-            InputStream stream = client.retrieveFileStream(location);
-            result = IOUtils.toByteArray(stream);
-            client.disconnect();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ok(result).as("image");
     }
 
     @Inject

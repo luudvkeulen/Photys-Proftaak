@@ -74,3 +74,10 @@ html, body {
 .panel {
     margin-bottom: 70px;
 }
+
+.h1name {
+    text-align: center;
+    margin: 0px;
+    font-size: 64px;
+    font-weight: bold;
+}

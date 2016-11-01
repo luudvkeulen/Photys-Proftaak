@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.netty.handler.codec.base64.Base64;
 import models.OrderProduct;
+import play.Logger;
 import play.api.libs.json.Json;
 import play.api.mvc.Cookie;
 import play.api.mvc.DiscardingCookie;
@@ -59,7 +60,7 @@ public class CartController {
             so.flush();
             serializedObject = bo.toString();
         } catch (Exception e) {
-            System.out.println(e);
+            Logger.info(e.getMessage());
             return null;
         }
         return serializedObject;
@@ -73,7 +74,7 @@ public class CartController {
             ObjectInputStream si = new ObjectInputStream(bi);
             arr = (ArrayList<OrderProduct>) si.readObject();
         } catch (Exception e) {
-            System.out.println(e);
+            Logger.error(e.getMessage());
             return null;
         }
         return arr;

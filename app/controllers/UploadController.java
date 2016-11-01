@@ -11,7 +11,9 @@ import logic.PhotographerLogic;
 import models.Album;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.data.FormFactory;
 import play.db.DB;
+import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -31,15 +33,21 @@ import java.util.ArrayList;
 
 import org.apache.commons.net.ftp.*;
 
+import javax.inject.Inject;
+
 public class UploadController extends Controller {
+
+    @Inject
+    FormFactory factory;
 
     private static String server = "137.74.163.54";
     private static int port = 21;
     private Boolean result;
-
+    private Database db;
 
     public Result index() {
-        if (!PhotographerLogic.isPhotographer(session("user"))) {
+        PhotographerLogic photographerLogic = new PhotographerLogic(db);
+        if(!photographerLogic.isPhotographer(session("user"))) {
             flash("warning", "You need to be logged in as a photographer to upload pictures.");
             return redirect("/");
         }
@@ -119,6 +127,8 @@ public class UploadController extends Controller {
         Http.MultipartFormData<File> body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart<File> picture = body.getFile("picture");
 
+        PhotographerLogic photographerLogic = new PhotographerLogic(db);
+
         if (picture != null) {
             String fileName = picture.getFilename();
             String contentType = picture.getContentType();
@@ -133,10 +143,9 @@ public class UploadController extends Controller {
             }
 
             String email = session("user");
-            int photographerID = PhotographerLogic.findPhotographerId(email);
-            DynamicForm bindedForm = Form.form().bindFromRequest();
+            int photographerID = photographerLogic.findPhotographerId(email);
+            DynamicForm bindedForm = factory.form().bindFromRequest();
             boolean newAlbum = (bindedForm.get("rbExisting") instanceof String);
-            System.out.println(newAlbum);
             int albumid = -1;
 
             if (fileName.substring(index + 1).equals("png") || fileName.substring(index + 1).equals("jpg") || fileName.substring(index + 1).equals("JPEG")) {
@@ -146,7 +155,7 @@ public class UploadController extends Controller {
                         privateAlbum = true;
                     }
 
-                    AlbumsController AC = new AlbumsController();
+                    AlbumsController AC = new AlbumsController(db);
 
                     albumid = insertAlbumDetails(bindedForm.get("albumName"),
                             photographerID,
@@ -158,7 +167,7 @@ public class UploadController extends Controller {
                 }
 
                 if (albumid > 0) {
-                    insertFileDetails(fileName, PhotographerLogic.findPhotographerId(email), albumid, (int) (file.getTotalSpace() / 1000000), email);
+                    insertFileDetails(fileName, photographerLogic.findPhotographerId(email), albumid, (int) (file.getTotalSpace() / 1000000), email);
                     return connectWithFTP(file, fileName);
                 } else {
                     flash("danger", "Album details not filled in correctly.");
@@ -173,7 +182,7 @@ public class UploadController extends Controller {
             return badRequest();
         }
     }
-    
+
 
     public Result connectWithFTP(File file, String fileName) {
         String userEmail = session("user");
@@ -268,7 +277,7 @@ public class UploadController extends Controller {
                 String albumName = rs.getString("aname");
                 Date dt = rs.getDate("date");
                 BigDecimal dcm = rs.getBigDecimal("price");
-                uploads.add(new Photo(photographerId, name, dt, dcm, albumName));
+                uploads.add(new Photo(photographerId, name, dt, dcm.doubleValue(), albumName));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -290,7 +299,8 @@ public class UploadController extends Controller {
 
         try {
             statement = connection.prepareStatement("SELECT * FROM `album` WHERE `photographer_id` = ?");
-            statement.setInt(1, PhotographerLogic.findPhotographerId(session("user")));
+            PhotographerLogic photographerLogic = new PhotographerLogic(db);
+            statement.setInt(1, photographerLogic.findPhotographerId(session("user")));
 
             ResultSet result = statement.executeQuery();
 
@@ -305,6 +315,7 @@ public class UploadController extends Controller {
                 Album album = new Album(id, name, photographer_id, description, available, url);
 
                 albums.add(album);
+
             }
 
             connection.close();

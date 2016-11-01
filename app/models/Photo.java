@@ -14,7 +14,6 @@ public class Photo implements java.io.Serializable{
     private Date date;
     private String albumName;
     private String fileLocation;
-    private BigDecimal bdprice;
 
     public int getId() {
         return id;
@@ -72,7 +71,7 @@ public class Photo implements java.io.Serializable{
         this.fileLocation = fileLocation;
     }
 
-    public BigDecimal getBdPrice() { return this.bdprice; }
+    public Double getPrice() { return this.price; }
 
     public Photo(int id, String name, User photographer, int fileSize, Date date, String albumName, String fileLocation, double price) {
         this.id = id;
@@ -90,11 +89,11 @@ public class Photo implements java.io.Serializable{
         this.price = price;
     }
 
-    public Photo(int id, String name, Date date, BigDecimal price, String albumName) {
+    public Photo(int id, String name, Date date, double price, String albumName) {
         this.id = id;
         this.name = name;
         this.date = date;
-        this.bdprice = price;
+        this.price = price;
         this.albumName = albumName;
     }
 }

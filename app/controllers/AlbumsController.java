@@ -9,11 +9,13 @@ import play.api.Logger;
 import play.api.Play;
 import play.api.Play.*;
 import play.db.DB;
+import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,8 +25,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.UUID;
 
 public class AlbumsController extends Controller {
+
+    private Database db;
 
     public Result index() {
         return ok(albums.render());
@@ -77,6 +83,12 @@ public class AlbumsController extends Controller {
 
     //Gets all albums that the user with userID is allowed to look at
     private ArrayList<Album> GetAllAlbums(int userID) {
+    @Inject
+    public AlbumsController(Database db) {
+        this.db = db;
+    }
+
+    public ArrayList<Album> GetAllAlbums(int userID) {
         ArrayList<Album> albums = new ArrayList<>();
 
         PreparedStatement statement = null;
@@ -119,6 +131,7 @@ public class AlbumsController extends Controller {
         int userID = 0;
         Connection connection = DB.getConnection();
         PreparedStatement statement = null;
+        int userID = 0;
 
         try {
             statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE `emailadres` = ?");
@@ -133,18 +146,22 @@ public class AlbumsController extends Controller {
             connection.close();
 
             return userID;
-        } catch (SQLException e) {
+        }
+        catch(SQLException e)
+        {
             e.printStackTrace();
             return -1;
         }
     }
 
-    public ArrayList<Album> GetAvailableAlbums() {
-        ArrayList<Album> albums;
+    public ArrayList<Album> GetAvailableAlbums()
+    {
+        ArrayList<Album> albums = new ArrayList<>();
         //Get the user id
         int userID = GetUserID(session("user"));
         //Get all album id's that are available for the user with user id
         albums = GetAllAlbums(userID);
+
 
         return albums;
     }
