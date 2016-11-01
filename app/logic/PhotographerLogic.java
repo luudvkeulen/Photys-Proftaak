@@ -1,9 +1,9 @@
 package logic;
 
+import models.User;
 import play.db.DB;
 import play.db.Database;
 
-import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +16,7 @@ public class PhotographerLogic {
     public boolean isPhotographer(String email) {
         Boolean result = false;
         if(email == null) return result;
-        Connection connection = db.getConnection();
+        Connection connection = DB.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
             statement.setString(1, email);
@@ -41,6 +41,37 @@ public class PhotographerLogic {
         }
 
         return result;
+    }
+
+    public User GetPhotographerById(Integer id)
+    {
+        User user = null;
+        PreparedStatement statement = null;
+        Connection connection;
+
+        try
+        {
+            connection = DB.getConnection();
+            statement = connection.prepareStatement("SELECT `first_name`, `last_name`, `emailadres` FROM USER WHERE ID = ?");
+            statement.setInt(1, id);
+
+            ResultSet result = statement.executeQuery();
+
+            while(result.next())
+            {
+                String firstName = result.getString("first_name");
+                String lastName = result.getString("last_name");
+                String email = result.getString("emailadres");
+
+                user = new User(id, firstName, lastName, email);
+            }
+
+            return  user;
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Integer findPhotographerId(String email) {

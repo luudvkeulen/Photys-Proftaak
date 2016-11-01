@@ -3,6 +3,7 @@ package controllers;
 import com.typesafe.config.ConfigFactory;
 import logic.PhotographerLogic;
 import models.Album;
+import models.Photo;
 import models.User;
 import play.api.Logger;
 import play.api.Play;
@@ -19,7 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,39 +36,90 @@ public class AlbumsController extends Controller {
         return ok(albums.render());
     }
 
-    public String GenerateAlbumURL()
-    {
+    //Generates a random Album URL
+    public String GenerateAlbumURL() {
         String albumURL = UUID.randomUUID().toString();
 
         return albumURL;
     }
 
-    @Inject
+    private ArrayList<Photo> GetPhotosInAlbum(int albumID)
+    {
+        ArrayList<Photo> photosInAlbum = new ArrayList<>();
+
+        PreparedStatement statement = null;
+        Connection connection;
+
+        try
+        {
+            connection = DB.getConnection();
+            statement = connection.prepareStatement("SELECT * FROM `Photo` WHERE `album_id` = ?");
+            statement.setInt(1, albumID);
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next())
+            {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int photographer_id = resultSet.getInt("photographer_id");
+                int album_id = resultSet.getInt("album_id");
+                int file_size = resultSet.getInt("file_size");
+                java.util.Date date = resultSet.getDate("date");
+                String fileLocation = resultSet.getString("file_location");
+                double price = resultSet.getDouble("price");
+
+
+
+                //Photo photo = new Photo()
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //@Inject
     public AlbumsController(Database db) {
         this.db = db;
     }
 
+
+
+    //GetPhotographerFromAlbum
+
+    //Gets all albums that the user with userID is allowed to look at
     public ArrayList<Album> GetAllAlbums(int userID) {
         ArrayList<Album> albums = new ArrayList<>();
+
         PreparedStatement statement = null;
         Connection connection;
+
         //Get each album with the album ID's in the availableAlbumIDs list
         try {
             connection = DB.getConnection();
+
             statement = connection.prepareStatement("SELECT * FROM `album` WHERE `id` in (select `album_id` FROM `useralbum` WHERE `user_id` = ?)");
             statement.setInt(1, userID);
+
             ResultSet resultSet = statement.executeQuery();
+
             while (resultSet.next()) {
+
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int photographer_id = resultSet.getInt("photographer_id");
                 String description = resultSet.getString("description");
                 Boolean available = (resultSet.getInt("private") != 1);
                 String url = resultSet.getString("AlbumURL");
+
                 Album album = new Album(id, name, photographer_id, description, available, url);
+
                 albums.add(album);
             }
+
             connection.close();
+
             return albums;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,17 +127,18 @@ public class AlbumsController extends Controller {
         }
     }
 
-    private int GetUserID(String email)
-    {
+    //Gets the userID based on the email saved in the session
+    private int GetUserID(String email) {
+        int userID = 0;
         Connection connection = DB.getConnection();
         PreparedStatement statement = null;
-        int userID = 0;
 
         try {
             statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE `emailadres` = ?");
             statement.setString(1, email);
 
             ResultSet result = statement.executeQuery();
+            System.out.println(result.toString());
             while (result.next()) {
                 userID = result.getInt("id");
             }

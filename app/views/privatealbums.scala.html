@@ -9,29 +9,29 @@
 * argument is a `String` with the title of the page, the second
 * argument is an `Html` object containing the body of the page.
 *@
-
-
 @import java.util
 @(albums: List[Album])
 
 @main("Albums") {
+    <link href="@routes.Assets.versioned("stylesheets/privatealbum.css")" rel="stylesheet">
+    <h2>All available albums will be displayed below</h2>
     <div class="row">
-        @for(album <- albums) {
-            <div class="col-sm-6 col-md-4">
-                <a href="#" class="thumbnail-click">
-                    <div class="thumbnail">
-                        <div class="imagecontainer">
-                            <img src=@routes.Assets.versioned("images/folder.png")>
-                        </div>
-                        <div class="caption">
-                            @if(album.toString != "") {
-                                <h3>@album.toString</h3>
-                            }
-                        <p>PHOTOGRAPHER NAME</p>
-                        </div>
+    @for(album <- albums) {
+        <div class="col-sm-6 col-md-4">
+            <a href="#" class="thumbnail-click">
+                <div class="thumbnail">
+                    <div class="imagecontainer">
+                        <img src="@routes.Assets.versioned("images/folder.png")" class="folderimage">
                     </div>
-                </a>
+                    <div class="caption">
+                        @if(album.toString != "") {
+                            <h3>@album.toString</h3>
+                        }
+                    <p>PHOTOGRAPHER NAME</p>
+                    </div>
+                </div>
+            </a>
         </div>
-        }
+    }
     </div>
 }
