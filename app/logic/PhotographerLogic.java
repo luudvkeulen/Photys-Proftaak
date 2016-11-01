@@ -1,5 +1,6 @@
 package logic;
 
+import models.User;
 import play.db.DB;
 
 import java.sql.Connection;
@@ -36,6 +37,11 @@ public class PhotographerLogic {
         }
 
         return result;
+    }
+
+    public static User GetPhotographerById(Integer id)
+    {
+        
     }
 
     public static Integer findPhotographerId(String email) {

@@ -3,6 +3,7 @@ package controllers;
 import com.typesafe.config.ConfigFactory;
 import logic.PhotographerLogic;
 import models.Album;
+import models.Photo;
 import models.User;
 import play.api.Logger;
 import play.api.Play;
@@ -17,13 +18,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.UUID;
 
 public class AlbumsController extends Controller {
 
@@ -31,11 +30,50 @@ public class AlbumsController extends Controller {
         return ok(albums.render());
     }
 
+    //Generates a random Album URL
     public String GenerateAlbumURL() {
         String albumURL = UUID.randomUUID().toString();
 
         return albumURL;
     }
+
+    private ArrayList<Photo> GetPhotosInAlbum(int albumID)
+    {
+        ArrayList<Photo> photosInAlbum = new ArrayList<>();
+
+        PreparedStatement statement = null;
+        Connection connection;
+
+        try
+        {
+            connection = DB.getConnection();
+            statement = connection.prepareStatement("SELECT * FROM `Photo` WHERE `album_id` = ?");
+            statement.setInt(1, albumID);
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next())
+            {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int photographer_id = resultSet.getInt("photographer_id");
+                int album_id = resultSet.getInt("album_id");
+                int file_size = resultSet.getInt("file_size");
+                java.util.Date date = resultSet.getDate("date");
+                String fileLocation = resultSet.getString("file_location");
+                double price = resultSet.getDouble("price");
+
+
+
+                //Photo photo = new Photo()
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //GetPhotographerFromAlbum
 
     //Gets all albums that the user with userID is allowed to look at
     private ArrayList<Album> GetAllAlbums(int userID) {
@@ -76,6 +114,7 @@ public class AlbumsController extends Controller {
         }
     }
 
+    //Gets the userID based on the email saved in the session
     private int GetUserID(String email) {
         int userID = 0;
         Connection connection = DB.getConnection();
