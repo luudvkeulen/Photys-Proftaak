@@ -53,7 +53,7 @@ public class AlbumsController extends Controller {
         try
         {
 
-            connection = DB.getConnection();
+            connection = db.getConnection();
             statement = connection.prepareStatement("SELECT `name` FROM `album` WHERE `id` = ?");
 
             ResultSet resultSet = statement.executeQuery();
@@ -83,7 +83,7 @@ public class AlbumsController extends Controller {
 
         try
         {
-            connection = DB.getConnection();
+            connection = db.getConnection();
             statement = connection.prepareStatement("SELECT * FROM `Photo` WHERE `album_id` = ?");
             statement.setInt(1, albumID);
 
@@ -167,7 +167,7 @@ public class AlbumsController extends Controller {
     //Gets the userID based on the email saved in the session
     private int GetUserID(String email) {
         int userID = 0;
-        Connection connection = DB.getConnection();
+        Connection connection = db.getConnection();
         PreparedStatement statement = null;
 
         try {

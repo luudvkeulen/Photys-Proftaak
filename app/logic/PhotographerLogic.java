@@ -51,7 +51,7 @@ public class PhotographerLogic {
 
         try
         {
-            connection = DB.getConnection();
+            connection = db.getConnection();
             statement = connection.prepareStatement("SELECT `first_name`, `last_name`, `emailadres` FROM USER WHERE ID = ?");
             statement.setInt(1, id);
 
