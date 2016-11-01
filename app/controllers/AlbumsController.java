@@ -1,6 +1,7 @@
 package controllers;
 
 import com.typesafe.config.ConfigFactory;
+import logic.AdminLogic;
 import logic.PhotographerLogic;
 import models.Album;
 import models.Photo;
@@ -43,8 +44,38 @@ public class AlbumsController extends Controller {
         return albumURL;
     }
 
+    private String GetAlbumNameById(int albumID)
+    {
+        PreparedStatement statement = null;
+        Connection connection;
+        String albumName = null;
+
+        try
+        {
+
+            connection = db.getConnection();
+            statement = connection.prepareStatement("SELECT `name` FROM `album` WHERE `id` = ?");
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next())
+            {
+                albumName = resultSet.getString("name");
+            }
+
+            return albumName;
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     private ArrayList<Photo> GetPhotosInAlbum(int albumID)
     {
+        PhotographerLogic photographerLogic = new PhotographerLogic(db);
+
         ArrayList<Photo> photosInAlbum = new ArrayList<>();
 
         PreparedStatement statement = null;
@@ -52,7 +83,7 @@ public class AlbumsController extends Controller {
 
         try
         {
-            connection = DB.getConnection();
+            connection = db.getConnection();
             statement = connection.prepareStatement("SELECT * FROM `Photo` WHERE `album_id` = ?");
             statement.setInt(1, albumID);
 
@@ -69,9 +100,13 @@ public class AlbumsController extends Controller {
                 double price = resultSet.getDouble("price");
 
 
-
-                //Photo photo = new Photo()
+                User user = photographerLogic.GetPhotographerById(photographer_id);
+                String albumName = GetAlbumNameById(albumID);
+                Photo photo = new Photo(id, name, user, file_size, date, albumName, fileLocation, price);
+                photosInAlbum.add(photo);
             }
+
+            return photosInAlbum;
 
         }catch (SQLException e) {
             e.printStackTrace();
@@ -80,6 +115,8 @@ public class AlbumsController extends Controller {
 
         return photosInAlbum;
     }
+
+
 
     //@Inject
     public AlbumsController(Database db) {
@@ -132,7 +169,7 @@ public class AlbumsController extends Controller {
     //Gets the userID based on the email saved in the session
     private int GetUserID(String email) {
         int userID = 0;
-        Connection connection = DB.getConnection();
+        Connection connection = db.getConnection();
         PreparedStatement statement = null;
 
         try {
