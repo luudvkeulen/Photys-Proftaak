@@ -15,7 +15,7 @@ public class JsonLogic {
             sb.append("\"amount\":").append(p.getAmount()).append("},");
         }
         sb.delete(sb.length()-1, sb.length());
-        sb.append("}");
+        sb.append("}}");
         Logger.info(sb.toString());
         return sb.toString();
     }
