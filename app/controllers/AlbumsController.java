@@ -149,14 +149,10 @@ public class AlbumsController extends Controller {
                 String description = resultSet.getString("description");
                 Boolean available = (resultSet.getInt("private") != 1);
                 String url = resultSet.getString("AlbumURL");
-
                 Album album = new Album(id, name, photographer_id, description, available, url);
-
                 albums.add(album);
             }
-
             connection.close();
-
             return albums;
         } catch (SQLException e) {
             e.printStackTrace();
