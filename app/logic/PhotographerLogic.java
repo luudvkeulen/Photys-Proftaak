@@ -1,6 +1,8 @@
 package logic;
 
+import models.User;
 import play.db.DB;
+import play.db.Database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,6 +41,37 @@ public class PhotographerLogic {
         }
 
         return result;
+    }
+
+    public User GetPhotographerById(Integer id)
+    {
+        User user = null;
+        PreparedStatement statement = null;
+        Connection connection;
+
+        try
+        {
+            connection = DB.getConnection();
+            statement = connection.prepareStatement("SELECT `first_name`, `last_name`, `emailadres` FROM USER WHERE ID = ?");
+            statement.setInt(1, id);
+
+            ResultSet result = statement.executeQuery();
+
+            while(result.next())
+            {
+                String firstName = result.getString("first_name");
+                String lastName = result.getString("last_name");
+                String email = result.getString("emailadres");
+
+                user = new User(id, firstName, lastName, email);
+            }
+
+            return  user;
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Integer findPhotographerId(String email) {

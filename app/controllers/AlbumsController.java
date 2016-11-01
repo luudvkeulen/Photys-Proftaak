@@ -79,15 +79,16 @@ public class AlbumsController extends Controller {
         }
     }
 
-    //GetPhotographerFromAlbum
-
-    //Gets all albums that the user with userID is allowed to look at
-    private ArrayList<Album> GetAllAlbums(int userID) {
-    @Inject
+    //@Inject
     public AlbumsController(Database db) {
         this.db = db;
     }
 
+
+
+    //GetPhotographerFromAlbum
+
+    //Gets all albums that the user with userID is allowed to look at
     public ArrayList<Album> GetAllAlbums(int userID) {
         ArrayList<Album> albums = new ArrayList<>();
 
@@ -131,7 +132,6 @@ public class AlbumsController extends Controller {
         int userID = 0;
         Connection connection = DB.getConnection();
         PreparedStatement statement = null;
-        int userID = 0;
 
         try {
             statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE `emailadres` = ?");
