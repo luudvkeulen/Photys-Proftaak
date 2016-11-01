@@ -45,6 +45,11 @@ public class UploadController extends Controller {
     private Boolean result;
     private Database db;
 
+    @Inject
+    public UploadController(Database db) {
+        this.db = db;
+    }
+
     public Result index() {
         PhotographerLogic photographerLogic = new PhotographerLogic(db);
         if(!photographerLogic.isPhotographer(session("user"))) {
