@@ -1,6 +1,9 @@
 package controllers;
 
+import models.Product;
 import play.Logger;
+import play.data.DynamicForm;
+import play.data.FormFactory;
 import play.db.DB;
 import play.db.Database;
 import play.mvc.Controller;
@@ -12,8 +15,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class PreviewController extends Controller {
+
+    @Inject
+    FormFactory factory;
 
     Database db;
 
@@ -37,7 +44,31 @@ public class PreviewController extends Controller {
             Logger.info(e.getMessage());
         }
         String prevUrl = request().getHeader("referer");
-        return ok(preview.render(prevUrl, name, album, location));
+        ArrayList<Product> products = new ArrayList<>();
+        try (Connection connection = db.getConnection()) {
+            ResultSet result = connection.prepareStatement("SELECT * FROM product ORDER BY id DESC").executeQuery();
+            while(result.next()) {
+                Product product = new Product(
+                        result.getInt("id"),
+                        result.getString("name"),
+                        result.getString("description"),
+                        result.getDouble("price")
+                );
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ok(preview.render(products, prevUrl, name, album, location, id));
+    }
+
+    public Result addToCart() {
+        DynamicForm dynamicForm = factory.form().bindFromRequest();
+        Logger.info(dynamicForm.get("mug"));
+        Logger.info(dynamicForm.get("mousepad"));
+        Logger.info(dynamicForm.get("flag"));
+        Logger.info(dynamicForm.get("id"));
+        return ok();
     }
 
     @Inject
