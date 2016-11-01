@@ -13,6 +13,10 @@ import scala.Int;
 import views.html.*;
 
 import javax.inject.Inject;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpCookie;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,6 +76,7 @@ public class PreviewController extends Controller {
             while(result.next()) {
                 Integer id = result.getInt("id");
                 Integer amount = Integer.valueOf(dynamicForm.get(id.toString()));
+                if(amount < 1) continue;
                 Product product = new Product(
                         id,
                         amount
@@ -81,7 +86,20 @@ public class PreviewController extends Controller {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        JsonLogic.textToJsonFormat(Integer.parseInt(dynamicForm.get("id")), products);
+
+        String jsonText;
+        if(request().cookie("cart") != null) {
+            jsonText = JsonLogic.addTextToJson(request().cookie("cart").value(), Integer.parseInt(dynamicForm.get("id")), products);
+        } else {
+            jsonText = JsonLogic.addTextToJson("", Integer.parseInt(dynamicForm.get("id")), products);
+        }
+
+        try {
+            response().setCookie(new Http.Cookie("cart", URLEncoder.encode(jsonText, "UTF-8"), null, "/", "", false, false));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         return ok();
     }
 
