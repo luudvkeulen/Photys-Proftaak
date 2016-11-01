@@ -1,5 +1,6 @@
 package controllers;
 
+import logic.JsonLogic;
 import models.Product;
 import play.Logger;
 import play.data.DynamicForm;
@@ -8,6 +9,7 @@ import play.db.DB;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.*;
+import scala.Int;
 import views.html.*;
 
 import javax.inject.Inject;
@@ -64,10 +66,22 @@ public class PreviewController extends Controller {
 
     public Result addToCart() {
         DynamicForm dynamicForm = factory.form().bindFromRequest();
-        Logger.info(dynamicForm.get("mug"));
-        Logger.info(dynamicForm.get("mousepad"));
-        Logger.info(dynamicForm.get("flag"));
-        Logger.info(dynamicForm.get("id"));
+        ArrayList<Product> products = new ArrayList<>();
+        try (Connection connection = db.getConnection()) {
+            ResultSet result = connection.prepareStatement("SELECT * FROM product").executeQuery();
+            while(result.next()) {
+                Integer id = result.getInt("id");
+                Integer amount = Integer.valueOf(dynamicForm.get(id.toString()));
+                Product product = new Product(
+                        id,
+                        amount
+                );
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        JsonLogic.textToJsonFormat(Integer.parseInt(dynamicForm.get("id")), products);
         return ok();
     }
 

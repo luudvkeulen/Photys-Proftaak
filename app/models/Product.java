@@ -7,12 +7,18 @@ public class Product {
     private String name;
     private String description;
     private Double price;
+    private Integer amount;
 
     public Product(int ID, String name, String description, double price) {
         this.ID = ID;
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public Product(int ID, Integer amount) {
+        this.ID = ID;
+        this.amount = amount;
     }
 
     public int getID() {
@@ -31,4 +37,8 @@ public class Product {
     public Double getPrice() {
         return price;
     }
+
+    public Integer getAmount() { return amount; }
+
+    public void setAmount(Integer amount) { this.amount = amount; }
 }

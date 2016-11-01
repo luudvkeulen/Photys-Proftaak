@@ -77,6 +77,8 @@ public class AlbumsController extends Controller {
             e.printStackTrace();
             return null;
         }
+
+        return photosInAlbum;
     }
 
     //@Inject
