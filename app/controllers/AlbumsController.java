@@ -116,7 +116,7 @@ public class AlbumsController extends Controller {
 
 
 
-    //@Inject
+    @Inject
     public AlbumsController(Database db) {
         this.db = db;
     }
