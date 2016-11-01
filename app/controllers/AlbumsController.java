@@ -54,7 +54,7 @@ public class AlbumsController extends Controller {
         //Get each album with the album ID's in the availableAlbumIDs list
         try {
             connection = DB.getConnection();
-            statement = connection.prepareStatement("SELECT * FROM `album` WHERE `id` in (select `album_id` FROM `useralbum` WHERE `user_id` = ?)");
+            statement = connection.prepareStatement("SELECT * FROM `album` WHERE `id` in (select `album_id` FROM `useralbum` WHERE `user_id` = ?) OR photographer_id = ?");
             statement.setInt(1, userID);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -75,8 +75,7 @@ public class AlbumsController extends Controller {
         }
     }
 
-    private int GetUserID(String email)
-    {
+    private int GetUserID(String email) {
         Connection connection = DB.getConnection();
         PreparedStatement statement = null;
         int userID = 0;
@@ -93,16 +92,13 @@ public class AlbumsController extends Controller {
             connection.close();
 
             return userID;
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         }
     }
 
-    public ArrayList<Album> GetAvailableAlbums()
-    {
+    public ArrayList<Album> GetAvailableAlbums() {
         ArrayList<Album> albums = new ArrayList<>();
         //Get the user id
         int userID = GetUserID(session("user"));
@@ -111,5 +107,10 @@ public class AlbumsController extends Controller {
 
 
         return albums;
+    }
+
+    public String GetPhotographerName() {
+        PhotographerLogic pl = new PhotographerLogic(db);
+        return "";
     }
 }
