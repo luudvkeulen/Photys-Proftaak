@@ -34,7 +34,7 @@
                     Show products</a>
             </h4>
         </div>
-        <div id="products" class="panel-collapse collapse">
+        <div id="products" class="panel-collapse">
             <form action="@routes.PreviewController.addToCart()" method="POST">
                 @for(product <- products) {
                     @if(products.last == product) {
@@ -55,7 +55,7 @@
     <footer class="footer navbar-fixed-bottom">
         <div class="footerdiv container">
             <a href="@prevUrl" class="btn btn-default">Back</a>
-            <label for="submit-form" class="btn btn-primary pull-right">Order</label>
+            <label for="submit-form" class="btn btn-primary pull-right">Add to cart</label>
         </div>
     </footer>
 }

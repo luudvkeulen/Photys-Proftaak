@@ -1,16 +1,10 @@
 package controllers;
 
-import com.typesafe.config.ConfigFactory;
 import models.*;
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
 import play.db.*;
 import play.mvc.*;
-import org.apache.commons.io.*;
 import views.html.*;
 import javax.inject.Inject;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,11 +42,12 @@ public class HomeController extends Controller {
                             result.getString("first_name"),
                             result.getString("last_name"),
                             result.getString("emailadres")),
-                    result.getInt("file_size"),
-                    result.getDate("date"),
-                    result.getString("album_name"),
-                    result.getString("file_location"),
-                    result.getDouble("price"));
+                            result.getInt("file_size"),
+                            result.getDate("date"),
+                            result.getString("album_name"),
+                            result.getString("file_location"),
+                            result.getDouble("price"),
+                            result.getString("url"));
             photos.add(photo);
         }
 

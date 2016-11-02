@@ -18,7 +18,7 @@
     <div class="row">
     @for(album <- albums) {
         <div class="col-sm-6 col-md-4">
-            <a href="#" class="thumbnail-click">
+            <a href="/album?url=@album.getAlbumURL" class="thumbnail-click">
                 <div class="thumbnail">
                     <div class="imagecontainer">
                         <img src="@routes.Assets.versioned("images/folder.png")" class="folderimage">

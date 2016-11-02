@@ -30,6 +30,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.apache.commons.net.ftp.*;
 
@@ -44,6 +45,13 @@ public class UploadController extends Controller {
     private static int port = 21;
     private Boolean result;
     private Database db;
+
+    //Generates a random Album URL
+    private String GeneratePictureURL() {
+        String albumURL = UUID.randomUUID().toString();
+
+        return albumURL;
+    }
 
     @Inject
     public UploadController(Database db) {
@@ -264,12 +272,13 @@ public class UploadController extends Controller {
         Connection connection = db.getConnection();
         PreparedStatement prepared = null;
         try {
-            prepared = connection.prepareStatement("INSERT INTO `picture` (`name` , photographer_id, album_id, file_size, file_location) VALUES (?,?,?,?,?)");
+            prepared = connection.prepareStatement("INSERT INTO `picture` (`name` , photographer_id, album_id, file_size, file_location, url) VALUES (?,?,?,?,?,?)");
             prepared.setString(1, fileName);
             prepared.setInt(2, photographerId);
             prepared.setInt(3, albumId);
             prepared.setInt(4, fileSize);
             prepared.setString(5, "/Photographers/" + email + "/" + fileName);
+            prepared.setString(6, GeneratePictureURL());
             Boolean result;
             result = prepared.execute();
             connection.close();

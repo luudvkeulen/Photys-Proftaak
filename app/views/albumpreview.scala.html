@@ -12,10 +12,12 @@
 @import java.util
 @(photos: List[Photo])
 
-    @main("Welcome to Photys") {
-        <script type="text/javascript" src="@routes.Assets.versioned("javascripts/home.js")"></script>
-        <script src="https://npmcdn.com/imagesloaded@@4.1/imagesloaded.pkgd.min.js"></script>
-        <div class="row masonry-container">
+@main("Albums") {
+    <link href="@routes.Assets.versioned("stylesheets/privatealbum.css")" rel="stylesheet">
+    <script type="text/javascript" src="@routes.Assets.versioned("javascripts/home.js")"></script>
+    <script src="https://npmcdn.com/imagesloaded@@4.1/imagesloaded.pkgd.min.js"></script>
+    <div class="row masonry-container">
+    @if(photos.size() > 0) {
         @for(photo <- photos) {
             <div class="col-sm-6 col-md-4 item">
                 <a href="/preview?id=@photo.getId" class="thumbnail-click">
@@ -28,11 +30,14 @@
                             @if(photo.getName != "") {
                                 <h3>@photo.getName</h3>
                             }
-                        <p>@photo.getPhotographer.getFirstName</p>
+                        <p>lol</p>
                         </div>
                     </div>
                 </a>
             </div>
         }
-        </div>
+    } else {
+        <h1>No pictures in this album</h1>
     }
+    </div>
+}
