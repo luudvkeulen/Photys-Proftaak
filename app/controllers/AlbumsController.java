@@ -45,6 +45,7 @@ public class AlbumsController extends Controller {
     }
 
     private String GetAlbumNameById(int albumID) {
+
         PreparedStatement statement = null;
         Connection connection;
         String albumName = null;
@@ -53,6 +54,7 @@ public class AlbumsController extends Controller {
 
             connection = db.getConnection();
             statement = connection.prepareStatement("SELECT `name` FROM `album` WHERE `id` = ?");
+            statement.setInt(1, albumID);
 
             ResultSet resultSet = statement.executeQuery();
 
