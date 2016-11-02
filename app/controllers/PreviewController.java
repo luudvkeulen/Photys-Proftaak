@@ -2,6 +2,7 @@ package controllers;
 
 import logic.JsonLogic;
 import models.Product;
+import org.apache.commons.codec.binary.Base64;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
@@ -11,7 +12,6 @@ import play.mvc.Controller;
 import play.mvc.*;
 import scala.Int;
 import views.html.*;
-
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpCookie;
@@ -95,11 +95,16 @@ public class PreviewController extends Controller {
             jsonText = JsonLogic.addTextToJson("", Integer.parseInt(dynamicForm.get("id")), products);
         }
 
+        //response().setCookie(new Http.Cookie("cart", URLEncoder.encode(jsonText, "UTF-8"), null, "/", "", false, false));
+        Base64 base = new Base64(false);
+        String jsonBytes = "";
         try {
-            response().setCookie(new Http.Cookie("cart", URLEncoder.encode(jsonText, "UTF-8"), null, "/", "", false, false));
+            jsonBytes = base.encodeToString(jsonText.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        response().setCookie(new Http.Cookie("cart", jsonBytes, null, "/", "", false, false));
+
 
         return ok();
     }
