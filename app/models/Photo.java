@@ -88,13 +88,13 @@ public class Photo implements java.io.Serializable {
         this.url = url;
     }
 
-    public Photo(int id, String name, int fileSize, Date date, String fileLocation, double price, String url) {
+    public Photo(int id, String name, int fileSize, Date date, String albumName, String fileLocation, double price, String url) {
         this.id = id;
         this.name = name;
         this.photographer = null;
         this.fileSize = fileSize;
         this.date = date;
-        this.albumName = "Unknown";
+        this.albumName = albumName;
         this.fileLocation = fileLocation;
         this.price = price;
         this.url = url;

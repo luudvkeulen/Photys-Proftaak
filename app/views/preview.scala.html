@@ -4,7 +4,6 @@
 
     <div class="picturename"><h1 class="h1name">@name</h1></div>
     <img src="@routes.PictureController.renderPhoto(location)" class="imagepreview">
-    <p class="subtext">by <a href="#">Photographer</a></p>
     <table class="table">
         <thead class="thead-default">
             <tr>
@@ -19,11 +18,11 @@
             </tr>
             <tr>
                 <td>Photographer</td>
-                <td>Peter</td>
+                <td><a href="#">Peter</a></td>
             </tr>
             <tr>
                 <td>Album</td>
-                <td>@album</td>
+                <td><a href="#">@album</a></td>
             </tr>
         </tbody>
     </table>
