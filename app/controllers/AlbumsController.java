@@ -126,10 +126,11 @@ public class AlbumsController extends Controller {
 
         //Get each album with the album ID's in the availableAlbumIDs list
         try {
-            connection = DB.getConnection();
+            connection = db.getConnection();
 
-            statement = connection.prepareStatement("SELECT * FROM `album` WHERE `id` IN (SELECT `album_id` FROM `useralbum` WHERE `user_id` = ?)");
+            statement = connection.prepareStatement("SELECT A.*, concat(U.first_name, ' ', U.last_name) as `pname` FROM `album` A, `user` U WHERE (A.`id` in (select `album_id` FROM `useralbum` WHERE `user_id` = ?) OR A.photographer_id = ?) AND A.photographer_id = U.id");
             statement.setInt(1, userID);
+            statement.setInt(2, userID);
 
             ResultSet resultSet = statement.executeQuery();
 
@@ -141,7 +142,8 @@ public class AlbumsController extends Controller {
                 String description = resultSet.getString("description");
                 Boolean available = (resultSet.getInt("private") != 1);
                 String url = resultSet.getString("AlbumURL");
-                Album album = new Album(id, name, photographer_id, description, available, url);
+                String photographer_name = resultSet.getString("pname");
+                Album album = new Album(id, name, photographer_id, photographer_name, description, available, url);
                 albums.add(album);
             }
             connection.close();
