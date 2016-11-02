@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Photo implements java.io.Serializable{
+public class Photo implements java.io.Serializable {
     private int id;
     private String name;
     private User photographer;
@@ -14,6 +14,9 @@ public class Photo implements java.io.Serializable{
     private Date date;
     private String albumName;
     private String fileLocation;
+    private String url;
+
+    public String getUrl() { return url; }
 
     public int getId() {
         return id;
@@ -73,7 +76,7 @@ public class Photo implements java.io.Serializable{
 
     public Double getPrice() { return this.price; }
 
-    public Photo(int id, String name, User photographer, int fileSize, Date date, String albumName, String fileLocation, double price) {
+    public Photo(int id, String name, User photographer, int fileSize, Date date, String albumName, String fileLocation, double price, String url) {
         this.id = id;
         this.name = name;
         this.photographer = photographer;
@@ -82,6 +85,19 @@ public class Photo implements java.io.Serializable{
         this.albumName = albumName;
         this.fileLocation = fileLocation;
         this.price = price;
+        this.url = url;
+    }
+
+    public Photo(int id, String name, int fileSize, Date date, String fileLocation, double price, String url) {
+        this.id = id;
+        this.name = name;
+        this.photographer = null;
+        this.fileSize = fileSize;
+        this.date = date;
+        this.albumName = "Unknown";
+        this.fileLocation = fileLocation;
+        this.price = price;
+        this.url = url;
     }
 
     public Photo(String name, Double price) {

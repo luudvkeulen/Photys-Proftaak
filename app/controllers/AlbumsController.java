@@ -45,14 +45,11 @@ public class AlbumsController extends Controller {
     }
 
     private String GetAlbumNameById(int albumID) {
+        try (Connection connection = db.getConnection()) {
 
-        PreparedStatement statement = null;
-        Connection connection;
-        String albumName = null;
+            PreparedStatement statement = null;
+            String albumName = null;
 
-        try {
-
-            connection = db.getConnection();
             statement = connection.prepareStatement("SELECT `name` FROM `album` WHERE `id` = ?");
             statement.setInt(1, albumID);
 
@@ -68,20 +65,39 @@ public class AlbumsController extends Controller {
             e.printStackTrace();
             return null;
         }
-
     }
 
-    private ArrayList<Photo> GetPhotosInAlbum(int albumID) {
+    public int GetAlbumIdByURL(String albumUrl) {
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement statement = null;
+            int albumId = -1;
+
+            statement = connection.prepareStatement("SELECT `id` FROM `album` WHERE `albumURL` = ?");
+            statement.setString(1, albumUrl);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                albumId = resultSet.getInt("id");
+            }
+
+            return albumId;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public ArrayList<Photo> GetPhotosInAlbum(int albumID) {
         PhotographerLogic photographerLogic = new PhotographerLogic(db);
 
         ArrayList<Photo> photosInAlbum = new ArrayList<>();
 
         PreparedStatement statement = null;
-        Connection connection;
 
-        try {
-            connection = db.getConnection();
-            statement = connection.prepareStatement("SELECT * FROM `Photo` WHERE `album_id` = ?");
+        try (Connection connection = db.getConnection()) {
+            statement = connection.prepareStatement("SELECT * FROM `picture` WHERE `album_id` = ?");
             statement.setInt(1, albumID);
 
             ResultSet resultSet = statement.executeQuery();
@@ -94,11 +110,9 @@ public class AlbumsController extends Controller {
                 java.util.Date date = resultSet.getDate("date");
                 String fileLocation = resultSet.getString("file_location");
                 double price = resultSet.getDouble("price");
+                String url = resultSet.getString("url");
 
-
-                User user = photographerLogic.GetPhotographerById(photographer_id);
-                String albumName = GetAlbumNameById(albumID);
-                Photo photo = new Photo(id, name, user, file_size, date, albumName, fileLocation, price);
+                Photo photo = new Photo(id, name, file_size, date, fileLocation, price, url);
                 photosInAlbum.add(photo);
             }
 
@@ -106,7 +120,8 @@ public class AlbumsController extends Controller {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            photosInAlbum = new ArrayList<>();
+            return photosInAlbum;
         }
     }
 
@@ -124,11 +139,9 @@ public class AlbumsController extends Controller {
         ArrayList<Album> albums = new ArrayList<>();
 
         PreparedStatement statement = null;
-        Connection connection;
 
         //Get each album with the album ID's in the availableAlbumIDs list
-        try {
-            connection = db.getConnection();
+        try (Connection connection = db.getConnection()) {
 
             statement = connection.prepareStatement("SELECT A.*, concat(U.first_name, ' ', U.last_name) as `pname` FROM `album` A, `user` U WHERE (A.`id` in (select `album_id` FROM `useralbum` WHERE `user_id` = ?) OR A.photographer_id = ?) AND A.photographer_id = U.id");
             statement.setInt(1, userID);
@@ -148,7 +161,6 @@ public class AlbumsController extends Controller {
                 Album album = new Album(id, name, photographer_id, photographer_name, description, available, url);
                 albums.add(album);
             }
-            connection.close();
             return albums;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -159,10 +171,10 @@ public class AlbumsController extends Controller {
     //Gets the userID based on the email saved in the session
     private int GetUserID(String email) {
         int userID = 0;
-        Connection connection = db.getConnection();
+
         PreparedStatement statement = null;
 
-        try {
+        try (Connection connection = db.getConnection()) {
             statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE `emailadres` = ?");
             statement.setString(1, email);
 
@@ -171,9 +183,6 @@ public class AlbumsController extends Controller {
             while (result.next()) {
                 userID = result.getInt("id");
             }
-
-            connection.close();
-
             return userID;
         } catch (SQLException e) {
             e.printStackTrace();
