@@ -86,14 +86,16 @@ public class PreviewController extends Controller {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String jsonText = JsonLogic.textToJsonFormat(Integer.parseInt(dynamicForm.get("id")), products);
+
+        String jsonText;
+        if(request().cookie("cart") != null) {
+            jsonText = JsonLogic.addTextToJson(request().cookie("cart").value(), Integer.parseInt(dynamicForm.get("id")), products);
+        } else {
+            jsonText = JsonLogic.addTextToJson("", Integer.parseInt(dynamicForm.get("id")), products);
+        }
+
         try {
             response().setCookie(new Http.Cookie("cart", URLEncoder.encode(jsonText, "UTF-8"), null, "/", "", false, false));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        try {
-            Logger.info(URLDecoder.decode(response().cookie("cart").get().value(), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

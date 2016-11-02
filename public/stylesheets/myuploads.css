@@ -8,7 +8,7 @@ table {
   	border-radius: 20px;
 }
 
-table.center {
+table.sortable {
     margin-left:auto; 
     margin-right:auto;
  }
@@ -31,10 +31,22 @@ thead {
     border-color: #101010; 
 }
 
-table tr:last-child td:first-child {
-    border-bottom-left-radius: 10px;
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: " \25B4\25BE" 
 }
 
-table tr:last-child td:last-child {
-    border-bottom-right-radius: 10px;
+thead tr:first-child th:first-child {
+    border-radius: 0.6em 0 0 0;
+}
+
+thead tr:first-child th:last-child {
+    border-radius: 0 0.6em 0 0;
+}
+
+tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 0.6em;
+}
+
+tbody tr:last-child td:last-child {
+    border-radius: 0 0 0.6em 0;
 }

@@ -1,16 +1,22 @@
 package models;
 
 
+import logic.PhotographerLogic;
+
 public class Album {
 
     private int ID;
     private String name;
     private int photographer_id;
+    private String photographer_name;
     private String description;
     private boolean accessibility;
     private String albumURL;
 
-    public String getAlbumURL(){return albumURL;}
+
+    public String getPhotographer_name() { return photographer_name; }
+
+    public String getAlbumURL() { return albumURL; }
 
     public int getPhotographer_id() {
         return photographer_id;
@@ -41,6 +47,16 @@ public class Album {
         } else {
             return name + " (Private album)";
         }
+    }
+
+    public Album(int ID, String name, int photographer_id, String photographer_name, String description, boolean accessibility, String albumURL) {
+        this.ID = ID;
+        this.name = name;
+        this.photographer_id = photographer_id;
+        this.photographer_name = photographer_name;
+        this.description = description;
+        this.accessibility = accessibility;
+        this.albumURL = albumURL;
     }
 
     public Album(int ID, String name, int photographer_id, String description, boolean accessibility, String albumURL) {

@@ -176,7 +176,7 @@ public class UploadController extends Controller {
                     return connectWithFTP(file, fileName);
                 } else {
                     flash("danger", "Album details not filled in correctly.");
-                    return badRequest();
+                    return ok(upload.render(GetAlbums()));
                 }
             } else {
                 flash("danger", "Please upload a legit file type.");
@@ -224,9 +224,9 @@ public class UploadController extends Controller {
     }
 
     private int insertAlbumDetails(String name, int photographer_id, String description, boolean accessibility, String albumURL) {
-        Connection connection = DB.getConnection();
+
         PreparedStatement prepared = null;
-        try {
+        try (Connection connection = db.getConnection()) {
             prepared = connection.prepareStatement("INSERT INTO `album` (`name`, photographer_id, description, private, albumURL) VALUES (?,?,?,?,?)");
             prepared.setString(1, name);
             prepared.setInt(2, photographer_id);
@@ -236,11 +236,24 @@ public class UploadController extends Controller {
             Boolean result;
             result = prepared.execute();
 
+            prepared = null;
+
+            if (!accessibility) {
+                System.out.println("if statement");
+                prepared = connection.prepareStatement("INSERT INTO `useralbum` (album_id, user_id) VALUES ((SELECT id FROM `album` ORDER BY id DESC LIMIT 1),?)");
+                prepared.setInt(1, photographer_id);
+                result = prepared.execute();
+            }
+
             prepared = connection.prepareStatement("SELECT id FROM `album` ORDER BY id DESC LIMIT 1");
-            ResultSet result2 = prepared.executeQuery();
-            int albumID = result2.getInt("id");
-            connection.close();
-            return albumID;
+            ResultSet resultSet = prepared.executeQuery();
+            int albumid = -1;
+
+            while (resultSet.next()) {
+                albumid = resultSet.getInt("id");
+            }
+
+            return albumid;
         } catch (SQLException e) {
             play.Logger.error(e.getMessage());
             return -1;
@@ -248,7 +261,7 @@ public class UploadController extends Controller {
     }
 
     private boolean insertFileDetails(String fileName, int photographerId, int albumId, int fileSize, String email) {
-        Connection connection = DB.getConnection();
+        Connection connection = db.getConnection();
         PreparedStatement prepared = null;
         try {
             prepared = connection.prepareStatement("INSERT INTO `picture` (`name` , photographer_id, album_id, file_size, file_location) VALUES (?,?,?,?,?)");
@@ -269,7 +282,7 @@ public class UploadController extends Controller {
 
     public ArrayList<Photo> retrieveUploadHistory() {
         ArrayList<Photo> uploads = null;
-        Connection connection = DB.getConnection();
+        Connection connection = db.getConnection();
         PreparedStatement prepared = null;
         try {
             uploads = new ArrayList<>();
@@ -297,7 +310,7 @@ public class UploadController extends Controller {
     }
 
     private ArrayList<Album> GetAlbums() {
-        Connection connection = DB.getConnection();
+        Connection connection = db.getConnection();
         PreparedStatement statement = null;
 
         ArrayList<Album> albums = new ArrayList<>();

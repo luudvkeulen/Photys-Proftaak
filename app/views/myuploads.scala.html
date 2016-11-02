@@ -2,11 +2,12 @@
 @(photos: util.List[Photo])
 
 @main("MyUploads") {
+    <script src=@routes.Assets.versioned("javascripts/sorttable.js")></script>
     <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/myuploads.css")" />
     <div class="container">
         <form method="GET" action="@routes.UploadController.uploads()">
             <div class="table-responsive">
-                <table class="center">
+                <table class="sortable">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -15,16 +16,16 @@
                             <th>Date</th>
                         </tr>
                     </thead>
+                    <tbody>
                     @for(photo <- photos) {
-                        <tbody>
                             <tr>
-                                <th>@photo.getName</th>
-                                <th>@photo.getAlbumName</th>
-                                <th>€ @photo.getPrice</th>
-                                <th>@photo.getDate</th>
+                                <td>@photo.getName</td>
+                                <td>@photo.getAlbumName</td>
+                                <td>€ @photo.getPrice</td>
+                                <td>@photo.getDate</td>
                             </tr>
-                        </tbody>
                     }
+                    </tbody>
                 </table>
             </div>
         </form>
