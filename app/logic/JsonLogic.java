@@ -2,9 +2,9 @@ package logic;
 
 import models.Product;
 import play.Logger;
-import play.mvc.Http;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JsonLogic {
@@ -34,5 +34,11 @@ public class JsonLogic {
             e.printStackTrace();
         }
         return "test";
+    }
+
+    public static List<Product> jsonToProductList(String json) {
+        List<Product> products = new ArrayList();
+        Logger.info(json);
+        return products;
     }
 }

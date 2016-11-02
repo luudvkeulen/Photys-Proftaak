@@ -90,6 +90,7 @@ public class PreviewController extends Controller {
         String jsonText;
         if(request().cookie("cart") != null) {
             jsonText = JsonLogic.addTextToJson(request().cookie("cart").value(), Integer.parseInt(dynamicForm.get("id")), products);
+            JsonLogic.jsonToProductList(request().cookie("cart").value());
         } else {
             jsonText = JsonLogic.addTextToJson("", Integer.parseInt(dynamicForm.get("id")), products);
         }
