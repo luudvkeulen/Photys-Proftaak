@@ -9,7 +9,6 @@
 * argument is a `String` with the title of the page, the second
 * argument is an `Html` object containing the body of the page.
 *@
-
 @import java.util
 @(albums: List[models.Album])
 @main("Upload") {
@@ -21,24 +20,28 @@
     <script type="text/javascript" src="@routes.Assets.versioned("javascripts/upload.js")"></script>
 
     <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                <h2>Upload your picture here:</h2>
-                <form method="POST" action="@routes.UploadController.upload()" enctype="multipart/form-data">
-
+        <div class="row" align="center">
+            <h2 align="center">Upload your picture here:</h2>
+            <br>
+            <form method="POST" action="@routes.UploadController.upload()" enctype="multipart/form-data">
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
                     <div class="radio">
-                        <label><input type="radio" checked="true" name="rbExisting" id="rb1">Add this photo to an existing album.</label>
+                        <label><input type="radio" checked="true" name="rbExisting" id="rb1">
+                            Add this photo to an existing album.</label>
                     </div>
 
                     <div class="form-group">
                         <label for="sel1">Select an album to add this picture to:</label>
                         <select class="form-control" id="sel1" name="albumSelect">
-                            @for(album <- albums) {
-                                <option value="@album.getID()">@album.toString()</option>
-                            }
+                        @for(album <- albums) {
+                            <option value="@album.getID()">@album.toString()</option>
+                        }
                         </select>
                     </div>
+                </div>
 
+                <div class="col-md-3">
                     <div class="radio">
                         <label><input type="radio" name="rbNew" id="rb2">Create new album to add this photo to.</label>
                     </div>
@@ -49,16 +52,18 @@
                     </div>
                     <div class="form-group">
                         <label for="pwd">Description:</label>
-                        <input type="text" class="form-control" id="tbDesc" name="albumDescr">
+                        <textarea class="form-control" id="tbDesc" name="albumDescr" rows="5"></textarea>
                     </div>
                     <div class="checkbox">
                         <label><input type="checkbox" value="" id="cb1" name="albumPrivate">Private album</label>
                     </div>
-
+                </div>
+                <div class="col-md-3"></div>
+                <br>
+                <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                     <br>
-
                     <label>Price of this picture.    €</label>
-                    <input id="tbPrice" type="number" value="1.99" pattern="^\d+(\.|\,)\d{2}$" step="0.01"/>
+                    <input id="tbPrice" type="number" max="9.99" min="0.01" value="1.99" step="0.01"/>
 
                     <br>
                     <br>
@@ -80,9 +85,8 @@
                             </button>
                         </span>
                     </div>
-
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 }
