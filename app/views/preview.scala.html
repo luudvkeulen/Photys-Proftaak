@@ -1,4 +1,4 @@
-@(products : List[Product], prevUrl : String, name : String, album: String, location: String, id : Integer)
+@(products : List[Product], prevUrl : String, name: String, album: String, albumUrl: String, photographerName: String, price: Double, location: String, id : Integer)
 @main("Preview") {
     <link href="@routes.Assets.versioned("stylesheets/preview.css")" rel="stylesheet">
 
@@ -18,11 +18,15 @@
             </tr>
             <tr>
                 <td>Photographer</td>
-                <td><a href="#">Peter</a></td>
+                <td><a href="#">@photographerName</a></td>
             </tr>
             <tr>
                 <td>Album</td>
-                <td><a href="#">@album</a></td>
+                <td><a href="/album?url=@albumUrl">@album</a></td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td>€ @price</td>
             </tr>
         </tbody>
     </table>

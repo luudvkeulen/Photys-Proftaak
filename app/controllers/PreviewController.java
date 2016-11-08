@@ -36,8 +36,11 @@ public class PreviewController extends Controller {
         int albumId = -1;
         String name = "";
         String location = "";
+        String albumURL = "";
+        double price = 0.00;
+        String photographerName = "";
         try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT p.*, a.name as album_name FROM picture p join album a on p.album_id = a.id WHERE p.url = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT p.*, a.name as album_name, a.albumURL as album_url, u.first_name, u.last_name FROM picture p join album a on p.album_id = a.id join `user` u on u.id = p.photographer_id WHERE p.url = ?");
             statement.setString(1, url);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
@@ -46,6 +49,11 @@ public class PreviewController extends Controller {
                 name = set.getString("name");
                 location = set.getString("file_location");
                 album = set.getString("album_name");
+                albumURL = set.getString("album_url");
+                price = set.getDouble("price");
+                photographerName = set.getString("first_name");
+                photographerName += " ";
+                photographerName += set.getString("last_name");
             } else {
                 flash("error", "this photo does not exist");
                 return redirect("/");
@@ -69,7 +77,7 @@ public class PreviewController extends Controller {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return ok(preview.render(products, prevUrl, name, album, location, id));
+        return ok(preview.render(products, prevUrl, name, album, albumURL, photographerName, price, location, id));
     }
 
     public Result addToCart() {
