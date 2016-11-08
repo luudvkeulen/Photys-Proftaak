@@ -21,6 +21,10 @@ public class PrijsController extends Controller {
         this.db = db;
     }
 
+    //Constructor for Unit testing.
+    public PrijsController()
+    {}
+
     public double CalcTotalPrice(ArrayList<Product> productsInCart)
     {
 
