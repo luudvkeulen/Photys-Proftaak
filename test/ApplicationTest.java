@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import controllers.AdminController;
+import controllers.PrijsController;
+import models.Product;
 import models.User;
 import org.junit.*;
 
@@ -29,6 +31,46 @@ import static org.junit.Assert.*;
  *
  */
 public class ApplicationTest {
+
+    @Test
+    public void testCalcPrice()
+    {
+        PrijsController prijsController = new PrijsController();
+
+        ArrayList<Product> products = new ArrayList<>();
+        Product product1 = new Product(1, "Product1", "-", 2.50);
+        products.add(product1);
+        Product product2 = new Product(2, "Product2", "-", 2.70);
+        products.add(product2);
+        Product product3 = new Product(3, "Product3", "-", 0.50);
+        products.add(product3);
+        Product product4 = new Product(4, "Product4", "-", 12.25);
+        products.add(product4);
+
+        double actual = prijsController.CalcTotalPrice(products);
+
+        assertEquals(17.95, actual, 0);
+    }
+
+    @Test
+    public void testCalcPriceWithNullPrice()
+    {
+        PrijsController prijsController = new PrijsController();
+
+        ArrayList<Product> products = new ArrayList<>();
+        Product product1 = new Product(1, "Product1", "-", 0);
+        products.add(product1);
+        Product product2 = new Product(2, "Product2", "-", 2.70);
+        products.add(product2);
+        Product product3 = new Product(3, "Product3", "-", 0.50);
+        products.add(product3);
+        Product product4 = new Product(4, "Product4", "-", 12.25);
+        products.add(product4);
+
+        double actual = prijsController.CalcTotalPrice(products);
+
+        assertEquals(15.45, actual, 0);
+    }
 
     @Test
     public void changeUserTest()

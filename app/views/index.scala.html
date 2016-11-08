@@ -13,6 +13,7 @@
 @(photos: List[Photo])
 
     @main("Welcome to Photys") {
+        <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
         <script type="text/javascript" src="@routes.Assets.versioned("javascripts/home.js")"></script>
         <script src="https://npmcdn.com/imagesloaded@@4.1/imagesloaded.pkgd.min.js"></script>
         <div class="row masonry-container">
