@@ -1,6 +1,7 @@
-@(products : List[Product], prevUrl : String, name: String, album: String, albumUrl: String, photographerName: String, price: Double, location: String, id : Integer)
+@(products: List[Product], prevUrl: String, name: String, album: String, albumUrl: String, photographerName: String, price: Double, location: String, id: Integer)
 @main("Preview") {
     <link href="@routes.Assets.versioned("stylesheets/preview.css")" rel="stylesheet">
+    <script type="text/javascript" src="@routes.Assets.versioned("javascripts/preview.js")"></script>
 
     <div class="picturename"><h1 class="h1name">@name</h1></div>
     <img src="@routes.PictureController.renderPhoto(location)" class="imagepreview">
@@ -18,7 +19,7 @@
             </tr>
             <tr>
                 <td>Photographer</td>
-                <td><a href="#">@photographerName</a></td>
+                <td>@photographerName</td>
             </tr>
             <tr>
                 <td>Album</td>
@@ -30,14 +31,16 @@
             </tr>
         </tbody>
     </table>
-    <div class="panel panel-default">
+
+    <div class="panel panel-default" id="collapsable">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" href="#products">
-                    Show products</a>
+                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#collapsable" href="#products">
+                    Order picture
+                </a><i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
             </h4>
         </div>
-        <div id="products" class="panel-collapse">
+        <div id="products" class="panel-collapse collapse">
             <form action="@routes.PreviewController.addToCart()" method="POST">
                 @for(product <- products) {
                     @if(products.last == product) {
@@ -53,12 +56,9 @@
                 <input type="text" class="hidden" name="id" value="@id"/>
                 <input type="submit" id="submit-form" class="hidden" />
             </form>
+
+            <label for="submit-form" class="btn btn-primary pull-right addtocartbutton">Add to cart</label>
+
         </div>
     </div>
-    <footer class="footer navbar-fixed-bottom">
-        <div class="footerdiv container">
-            <a href="@prevUrl" class="btn btn-default">Back</a>
-            <label for="submit-form" class="btn btn-primary pull-right">Add to cart</label>
-        </div>
-    </footer>
 }
