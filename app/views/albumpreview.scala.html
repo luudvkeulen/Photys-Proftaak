@@ -16,28 +16,28 @@
     <link href="@routes.Assets.versioned("stylesheets/privatealbum.css")" rel="stylesheet">
     <script type="text/javascript" src="@routes.Assets.versioned("javascripts/home.js")"></script>
     <script src="https://npmcdn.com/imagesloaded@@4.1/imagesloaded.pkgd.min.js"></script>
-    <div class="row masonry-container">
     @if(photos.size() > 0) {
+        <h1 align="center">@photos.get(0).getAlbumName</h1>
+        <div class="row masonry-container">
         @for(photo <- photos) {
             <div class="col-sm-6 col-md-4 item">
-                <a href="/preview?id=@photo.getId" class="thumbnail-click">
+                <a href="/preview?url=@photo.getUrl" class="thumbnail-click">
                     <div class="thumbnail">
                         <div class="imagecontainer">
                             <img src="@routes.PictureController.renderPhoto(photo.getFileLocation)"
                             alt="@photo.getName">
                         </div>
                         <div class="caption">
-                            @if(photo.getName != "") {
-                                <h3>@photo.getName</h3>
-                            }
-                        <p>lol</p>
+                        @if(photo.getName != "") {
+                            <h3>@photo.getName</h3>
+                        }
                         </div>
                     </div>
                 </a>
             </div>
         }
     } else {
-        <h1>No pictures in this album</h1>
+        <h1 align="center">No pictures in this album</h1>
     }
     </div>
 }

@@ -30,30 +30,34 @@ public class PreviewController extends Controller {
 
     Database db;
 
-    public Result index(Integer id) {
+    public Result index(String url) {
+        int id = -1;
         String album = "";
+        int albumId = -1;
         String name = "";
         String location = "";
-        try(Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM picture WHERE id = ?");
-            statement.setInt(1, id);
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT p.*, a.name as album_name FROM picture p join album a on p.album_id = a.id WHERE p.url = ?");
+            statement.setString(1, url);
             ResultSet set = statement.executeQuery();
-            if(set.next()) {
-                album = set.getString("album_id");
+            if (set.next()) {
+                id = set.getInt("id");
+                albumId = set.getInt("album_id");
                 name = set.getString("name");
                 location = set.getString("file_location");
+                album = set.getString("album_name");
             } else {
                 flash("error", "this photo does not exist");
                 return redirect("/");
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             Logger.info(e.getMessage());
         }
         String prevUrl = request().getHeader("referer");
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = db.getConnection()) {
             ResultSet result = connection.prepareStatement("SELECT * FROM product ORDER BY id DESC").executeQuery();
-            while(result.next()) {
+            while (result.next()) {
                 Product product = new Product(
                         result.getInt("id"),
                         result.getString("name"),
@@ -73,10 +77,10 @@ public class PreviewController extends Controller {
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = db.getConnection()) {
             ResultSet result = connection.prepareStatement("SELECT * FROM product").executeQuery();
-            while(result.next()) {
+            while (result.next()) {
                 Integer id = result.getInt("id");
                 Integer amount = Integer.valueOf(dynamicForm.get(id.toString()));
-                if(amount < 1) continue;
+                if (amount < 1) continue;
                 Product product = new Product(
                         id,
                         amount
@@ -88,7 +92,7 @@ public class PreviewController extends Controller {
         }
 
         String jsonText;
-        if(request().cookie("cart") != null) {
+        if (request().cookie("cart") != null) {
             jsonText = JsonLogic.addTextToJson(request().cookie("cart").value(), Integer.parseInt(dynamicForm.get("id")), products);
             JsonLogic.jsonToProductList(request().cookie("cart").value());
         } else {

@@ -97,7 +97,7 @@ public class AlbumsController extends Controller {
         PreparedStatement statement = null;
 
         try (Connection connection = db.getConnection()) {
-            statement = connection.prepareStatement("SELECT * FROM `picture` WHERE `album_id` = ?");
+            statement = connection.prepareStatement("SELECT p.*, a.name as `album_name` FROM `picture` p join `album` a on p.album_id = a.id WHERE `album_id` = ?");
             statement.setInt(1, albumID);
 
             ResultSet resultSet = statement.executeQuery();
@@ -111,8 +111,9 @@ public class AlbumsController extends Controller {
                 String fileLocation = resultSet.getString("file_location");
                 double price = resultSet.getDouble("price");
                 String url = resultSet.getString("url");
+                String albumname = resultSet.getString("album_name");
 
-                Photo photo = new Photo(id, name, file_size, date, fileLocation, price, url);
+                Photo photo = new Photo(id, name, file_size, date, albumname, fileLocation, price, url);
                 photosInAlbum.add(photo);
             }
 
