@@ -132,9 +132,6 @@ public class AlbumsController extends Controller {
         this.db = db;
     }
 
-
-    //GetPhotographerFromAlbum
-
     //Gets all albums that the user with userID is allowed to look at
     public ArrayList<Album> GetAllAlbums(int userID) {
         ArrayList<Album> albums = new ArrayList<>();
