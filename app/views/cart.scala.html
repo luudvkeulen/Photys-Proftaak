@@ -1,177 +1,168 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="@routes.Assets.versioned("javascripts/cart.js")"></script>
-    </head>
-    <body>
-        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+@main("Cart") {
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
 
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" rel="home" href="/" title="Phontys">Photys</a>
-            </div>
-
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/albums">albums</a></li>
-                        <li><a href="/account">account</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span id="glyphicon glyphicon-shopping-cart"></span><span class="caret"></span></a>
-                            <ul class="dropdown-menu dropdown-cart" role="menu">
-                                <li>
-                                    <span id="item">
-                                        <span class="item-left">
-                                            <img src="https://www.yellowoctopus.com.au/media/catalog/product/cache/1/image/500x500/9df78eab33525d08d6e5fb8d27136e95/y/e/yellow-octopus-mugshot-mug.jpg" alt="" width="20" height="20" />
-                                            <span class="item-info">
-                                                <span id="item1">Item name</span>
-                                                <span>23$</span>
-                                            </span>
-                                        </span>
-                                        <span class="item-right">
-                                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                                        </span>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span class="item">
-                                        <span class="item-left">
-                                            <img src="https://image.spreadshirtmedia.com/image-server/v1/products/103429871/views/1,width=800,height=800,appearanceId=2,version=1440417743/do-you-even-lift-bro-t-shirts-men-s-t-shirt.jpg" alt="" width="20" height="20" />
-                                            <span class="item-info">
-                                                <span id="item2">Item name</span>
-                                                <span>23$</span>
-                                            </span>
-                                        </span>
-                                        <span class="item-right">
-                                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                                        </span>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span class="item">
-                                        <span class="item-left">
-                                            <img src="http://www.bajiroo.com/wp-content/uploads/2016/01/weird-unusual-haircuts-pics-pictures-images-photos-1-600x692.png" alt="" width="20" height="20" />
-                                            <span class="item-info">
-                                                <span id="item3">Item name</span>
-                                                <span>23$</span>
-                                            </span>
-                                        </span>
-                                        <span class="item-right">
-                                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                                        </span>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span class="item">
-                                        <span class="item-left">
-                                            <img src="http://meme.loqi.me/img/most_interesting.jpg" alt="" width="20" height="20" />
-                                            <span class="item-info">
-                                                <span id="item4">Item name</span>
-                                                <span>23$</span>
-                                            </span>
-                                        </span>
-                                        <span class="item-right">
-                                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                                        </span>
-                                    </span>
-                                </li>
-                                <li class="divider"></li>
-                                <li><a class="text-center" href="">View Cart</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span> 
-                                <strong>User</strong>
-                                <span class="glyphicon glyphicon-chevron-down"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <div class="navbar-login">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <p class="text-center">
-                                                    <span class="glyphicon glyphicon-user icon-size"></span>
-                                                </p>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <p class="text-left"><strong>Firstname lastname</strong></p>
-                                                <p class="text-left small">@session.get("user")</p>
-                                                <p class="text-left">
-                                                    <a href="#" class="btn btn-primary btn-block btn-sm">Settings</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <div class="navbar-login navbar-login-session">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <p>
-                                                    <a href="@routes.Application.logout()" class="btn btn-danger btn-block">Logout</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-
-                </ul>
-
-                <div class="col-sm-3 col-md-3 pull-right nopadding-right nopadding-left">
-                    <form class="navbar-form" role="search">
-                        <div class="input-group width100">
-                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-                            <div class="input-group-btn width50px">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" rel="home" href="/" title="Phontys">Photys</a>
         </div>
 
-        <script>
-                $( document ).ready(function() {
-                    console.log( "ready!" );
-                    $('.alert').delay(3000).fadeOut();
-                });
-        </script>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/albums">albums</a></li>
+                <li><a href="/account">account</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span id="glyphicon glyphicon-shopping-cart"></span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-cart" role="menu">
+                        <li>
+                            <span id="item">
+                                <span class="item-left">
+                                    <img src="https://www.yellowoctopus.com.au/media/catalog/product/cache/1/image/500x500/9df78eab33525d08d6e5fb8d27136e95/y/e/yellow-octopus-mugshot-mug.jpg" alt="" width="20" height="20" />
+                                    <span class="item-info">
+                                        <span id="item1">Item name</span>
+                                        <span>23$</span>
+                                    </span>
+                                </span>
+                                <span class="item-right">
+                                    <button class="btn btn-xs btn-danger pull-right">x</button>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="item">
+                                <span class="item-left">
+                                    <img src="https://image.spreadshirtmedia.com/image-server/v1/products/103429871/views/1,width=800,height=800,appearanceId=2,version=1440417743/do-you-even-lift-bro-t-shirts-men-s-t-shirt.jpg" alt="" width="20" height="20" />
+                                    <span class="item-info">
+                                        <span id="item2">Item name</span>
+                                        <span>23$</span>
+                                    </span>
+                                </span>
+                                <span class="item-right">
+                                    <button class="btn btn-xs btn-danger pull-right">x</button>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="item">
+                                <span class="item-left">
+                                    <img src="http://www.bajiroo.com/wp-content/uploads/2016/01/weird-unusual-haircuts-pics-pictures-images-photos-1-600x692.png" alt="" width="20" height="20" />
+                                    <span class="item-info">
+                                        <span id="item3">Item name</span>
+                                        <span>23$</span>
+                                    </span>
+                                </span>
+                                <span class="item-right">
+                                    <button class="btn btn-xs btn-danger pull-right">x</button>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="item">
+                                <span class="item-left">
+                                    <img src="http://meme.loqi.me/img/most_interesting.jpg" alt="" width="20" height="20" />
+                                    <span class="item-info">
+                                        <span id="item4">Item name</span>
+                                        <span>23$</span>
+                                    </span>
+                                </span>
+                                <span class="item-right">
+                                    <button class="btn btn-xs btn-danger pull-right">x</button>
+                                </span>
+                            </span>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a class="text-center" href="">View Cart</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span> 
+                        <strong>User</strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p class="text-left"><strong>Firstname lastname</strong></p>
+                                        <p class="text-left small">@session.get("user")</p>
+                                        <p class="text-left">
+                                            <a href="#" class="btn btn-primary btn-block btn-sm">Settings</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                            <a href="@routes.Application.logout()" class="btn btn-danger btn-block">
+                                                Logout</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+
+            <div class="col-sm-3 col-md-3 pull-right nopadding-right nopadding-left">
+                <form class="navbar-form" role="search">
+                    <div class="input-group width100">
+                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                        <div class="input-group-btn width50px">
+                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+            $(document).ready(function () {
+                console.log("ready!");
+                $('.alert').delay(3000).fadeOut();
+            });
+    </script>
 
 
         <!--CART INFORMATION-->
-        <div class="cartContainer col-md-3"> 
-          <h2>Cart</h2>
-          <div class="panel-group">
+    <div class="cartContainer col-md-3">
+        <h2>Cart</h2>
+        <div class="panel-group">
             <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" href="#collapse1">SHOW CART</a>
-                </h4>
-              </div>
-              <div id="collapse1" class="panel-collapse collapse">      
-              </div>
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse1">SHOW CART</a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                </div>
             </div>
-          </div>
-          <div id="costs">
-          </div>
-          <button type="button" class="btn btn-primary btn-lg btn-block" onclick="addItems()">order now</button>
         </div>
+        <div id="costs">
+        </div>
+        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="addItems()">order now</button>
+    </div>
 
-            <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="@routes.Assets.versioned("javascripts/ie10-viewport-bug-workaround.js")"></script>
-    </body>
-</html>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="@routes.Assets.versioned("javascripts/ie10-viewport-bug-workaround.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.versioned("javascripts/cart.js")"></script>
+}

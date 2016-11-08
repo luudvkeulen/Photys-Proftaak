@@ -24,7 +24,7 @@ GET     /image/:location            controllers.PictureController.renderPhoto(lo
 GET     /preview                    controllers.PreviewController.index(url)
 GET     /privatealbums              controllers.PrivateAlbumsController.index
 GET     /album                      controllers.PrivateAlbumsController.RenderAlbum(url)
-GET     /cart                       controllers.CartController
+GET     /cart                       controllers.CartController.index
 
 
 # Map static resources from the /public folder to the /assets URL path
