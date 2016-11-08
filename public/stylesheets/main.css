@@ -120,3 +120,47 @@ ul.dropdown-cart li .item-right button{
 a:focus, a:hover {
     text-decoration: none;
 }
+
+
+
+
+
+
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #263238;  /*Sets the text hover color on navbar*/
+}
+
+.navbar-custom {
+    color: white; /*BACKGROUND color for active*/
+    background-color: #263238;
+}
+
+.navbar-default {
+    background-color: #263238;
+    border-color: #263238;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    color: #263238;
+    text-decoration: none;
+    background-color: #66CCFF;  /*change color of links in drop down here*/
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+    text-decoration: none;
+    background-color: silver; /*Change rollover cell color here*/
+}
+
+
+.navbar-default .navbar-nav > li > a {
+    color: white; /*Change active text color here*/
+}
+
+.navbar-inverse {
+    background-color: #212121;
+    border-color: #212121;
+    color: white;
+}
