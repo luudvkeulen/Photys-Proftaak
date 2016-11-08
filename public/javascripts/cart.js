@@ -20,7 +20,7 @@ var labelTotalPriceShow = document.createElement("label");
 
 document.addEventListener("DOMContentLoaded", function(event) { 
 	setupInformation();
-  	document.getElementById("glyphicon glyphicon-shopping-cart").innerHTML=" 0 - items";
+  	document.getElementById("itemAmount").innerHTML = " 0 - items";
 
   	// GUI componenten inladen voor het berekenen van de prijs
   	createGuiPriceComponents();
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   	var size = items.length;
   	if(size > 0){
-  		document.getElementById("glyphicon glyphicon-shopping-cart").innerHTML= size + " - items";
+  		document.getElementById("itemAmount").innerHTML= size + " - items";
   	}
 });
 
@@ -101,7 +101,7 @@ function removeItems(ele){
 function getItems(){
   var size = items.length;
   if(size > 0){
-  	document.getElementById("glyphicon glyphicon-shopping-cart").innerHTML= size + " - items";
+  	document.getElementById("itemAmount").innerHTML= size + " - items";
   }
 }
 
