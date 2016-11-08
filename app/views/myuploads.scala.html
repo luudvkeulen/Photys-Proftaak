@@ -2,6 +2,7 @@
 @(photos: util.List[Photo])
 
 @main("MyUploads") {
+    <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
     <script src=@routes.Assets.versioned("javascripts/sorttable.js")></script>
     <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/myuploads.css")" />
     <div class="container">

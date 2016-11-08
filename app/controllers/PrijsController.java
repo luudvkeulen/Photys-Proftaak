@@ -7,9 +7,7 @@ import play.db.Database;
 import javax.inject.Inject;
 import java.util.ArrayList;
 
-/**
- * Created by Thijs on 8-11-2016.
- */
+
 public class PrijsController extends Controller {
 
     private  Database db;
@@ -31,8 +29,9 @@ public class PrijsController extends Controller {
         double totalPrice = 0;
 
         for(Product p : productsInCart) {
-
-            totalPrice += p.getPrice();
+            if(p.getPrice() != null) {
+                totalPrice += p.getPrice();
+            }
         }
 
         return totalPrice;

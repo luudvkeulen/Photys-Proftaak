@@ -1,5 +1,6 @@
 @(products: List[Product], prevUrl: String, name: String, album: String, albumUrl: String, photographerName: String, price: Double, location: String, id: Integer)
 @main("Preview") {
+    <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
     <link href="@routes.Assets.versioned("stylesheets/preview.css")" rel="stylesheet">
     <script type="text/javascript" src="@routes.Assets.versioned("javascripts/preview.js")"></script>
 

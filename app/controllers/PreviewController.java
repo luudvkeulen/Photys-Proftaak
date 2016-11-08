@@ -1,27 +1,22 @@
 package controllers;
 
-import logic.JsonLogic;
+import logic.BinaryLogic;
+import models.CartItem;
 import models.Product;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
-import play.db.DB;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.*;
-import scala.Int;
 import views.html.*;
-
 import javax.inject.Inject;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpCookie;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PreviewController extends Controller {
 
@@ -85,10 +80,10 @@ public class PreviewController extends Controller {
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = db.getConnection()) {
             ResultSet result = connection.prepareStatement("SELECT * FROM product").executeQuery();
-            while (result.next()) {
+            while(result.next()) {
                 Integer id = result.getInt("id");
                 Integer amount = Integer.valueOf(dynamicForm.get(id.toString()));
-                if (amount < 1) continue;
+                if(amount < 1) continue;
                 Product product = new Product(
                         id,
                         amount
@@ -99,19 +94,17 @@ public class PreviewController extends Controller {
             e.printStackTrace();
         }
 
-        String jsonText;
+        CartItem cartItem = new CartItem(Integer.parseInt(dynamicForm.get("id")), products);
+        List<CartItem> cartItems = new ArrayList<>();
+        cartItems.add(cartItem);
+        String cookieText;
         if (request().cookie("cart") != null) {
-            jsonText = JsonLogic.addTextToJson(request().cookie("cart").value(), Integer.parseInt(dynamicForm.get("id")), products);
-            JsonLogic.jsonToProductList(request().cookie("cart").value());
+            cookieText = BinaryLogic.addToExisting(request().cookie("cart").value(), cartItems);
         } else {
-            jsonText = JsonLogic.addTextToJson("", Integer.parseInt(dynamicForm.get("id")), products);
+            cookieText = BinaryLogic.objectsToBinary(cartItems);
         }
 
-        try {
-            response().setCookie(new Http.Cookie("cart", URLEncoder.encode(jsonText, "UTF-8"), null, "/", "", false, false));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        response().setCookie(new Http.Cookie("cart", cookieText, null, "/", "", false, false));
 
         return ok();
     }
