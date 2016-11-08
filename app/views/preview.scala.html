@@ -1,10 +1,9 @@
-@(products : List[Product], prevUrl : String, name : String, album: String, location: String, id : Integer)
+@(products : List[Product], prevUrl : String, name: String, album: String, albumUrl: String, photographerName: String, price: Double, location: String, id : Integer)
 @main("Preview") {
     <link href="@routes.Assets.versioned("stylesheets/preview.css")" rel="stylesheet">
 
     <div class="picturename"><h1 class="h1name">@name</h1></div>
     <img src="@routes.PictureController.renderPhoto(location)" class="imagepreview">
-    <p class="subtext">by <a href="#">Photographer</a></p>
     <table class="table">
         <thead class="thead-default">
             <tr>
@@ -19,11 +18,15 @@
             </tr>
             <tr>
                 <td>Photographer</td>
-                <td>Peter</td>
+                <td><a href="#">@photographerName</a></td>
             </tr>
             <tr>
                 <td>Album</td>
-                <td>@album</td>
+                <td><a href="/album?url=@albumUrl">@album</a></td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td>€ @price</td>
             </tr>
         </tbody>
     </table>
@@ -34,7 +37,7 @@
                     Show products</a>
             </h4>
         </div>
-        <div id="products" class="panel-collapse collapse">
+        <div id="products" class="panel-collapse">
             <form action="@routes.PreviewController.addToCart()" method="POST">
                 @for(product <- products) {
                     @if(products.last == product) {
@@ -55,7 +58,7 @@
     <footer class="footer navbar-fixed-bottom">
         <div class="footerdiv container">
             <a href="@prevUrl" class="btn btn-default">Back</a>
-            <label for="submit-form" class="btn btn-primary pull-right">Order</label>
+            <label for="submit-form" class="btn btn-primary pull-right">Add to cart</label>
         </div>
     </footer>
 }

@@ -14,24 +14,32 @@
 
 @main("Albums") {
     <link href="@routes.Assets.versioned("stylesheets/privatealbum.css")" rel="stylesheet">
-    <h2>All available albums will be displayed below</h2>
+    <h2 align="center">Available albums will be displayed below</h2>
     <div class="row">
-    @for(album <- albums) {
-        <div class="col-sm-6 col-md-4">
-            <a href="#" class="thumbnail-click">
-                <div class="thumbnail">
-                    <div class="imagecontainer">
-                        <img src="@routes.Assets.versioned("images/folder.png")" class="folderimage">
-                    </div>
-                    <div class="caption">
-                        @if(album.toString != "") {
-                            <h3>@album.toString</h3>
-                        }
-                    <p>@album.getPhotographer_name</p>
-                    </div>
+        @if(albums.size > 0) {
+            @for(album <- albums) {
+                <div class="col-sm-6 col-md-4">
+                    <a href="/album?url=@album.getAlbumURL" class="thumbnail-click">
+                        <div class="thumbnail">
+                            <div class="imagecontainer">
+                            @if(album.isAccessible) {
+                                <img src="@routes.Assets.versioned("images/folder.png")" class="folderimage">
+                            } else {
+                                <img src="@routes.Assets.versioned("images/folder_private.png")" class="folderimage">
+                                }
+                            </div>
+                            <div class="caption">
+                                @if(album.toString != "") {
+                                    <h3>@album.toString</h3>
+                                }
+                            <p>by @album.getPhotographer_name</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
-        </div>
-    }
+            }
+        } else {
+        <h1 align="center">No pictures in this album</h1>
+        }
     </div>
 }

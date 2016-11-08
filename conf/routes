@@ -21,8 +21,10 @@ GET     /account                    controllers.AccountController.index
 GET     /logout                     controllers.Application.logout
 GET     /admin                      controllers.AdminController.index
 GET     /image/:location            controllers.PictureController.renderPhoto(location)
-GET     /preview                    controllers.PreviewController.index(id : Integer)
+GET     /preview                    controllers.PreviewController.index(url)
 GET     /privatealbums              controllers.PrivateAlbumsController.index
+GET     /album                      controllers.PrivateAlbumsController.RenderAlbum(url)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

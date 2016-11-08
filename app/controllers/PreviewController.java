@@ -1,26 +1,27 @@
 package controllers;
 
-import logic.BinaryLogic;
-import models.CartItem;
+import logic.JsonLogic;
 import models.Product;
-import org.apache.commons.codec.binary.Base64;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
+import play.db.DB;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.*;
+import scala.Int;
 import views.html.*;
+
 import javax.inject.Inject;
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpCookie;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PreviewController extends Controller {
 
@@ -93,10 +94,14 @@ public class PreviewController extends Controller {
         if (request().cookie("cart") != null) {
             cookieText = BinaryLogic.addToExisting(request().cookie("cart").value(), cartItems);
         } else {
-            cookieText = BinaryLogic.objectsToBinary(cartItems);
+            jsonText = JsonLogic.addTextToJson("", Integer.parseInt(dynamicForm.get("id")), products);
         }
 
-        response().setCookie(new Http.Cookie("cart", cookieText, null, "/", "", false, false));
+        try {
+            response().setCookie(new Http.Cookie("cart", URLEncoder.encode(jsonText, "UTF-8"), null, "/", "", false, false));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         return ok();
     }
