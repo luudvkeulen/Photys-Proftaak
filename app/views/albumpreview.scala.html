@@ -19,6 +19,7 @@
     <script src="https://npmcdn.com/imagesloaded@@4.1/imagesloaded.pkgd.min.js"></script>
     @if(photos.size() > 0) {
         <h1 align="center">@photos.get(0).getAlbumName</h1>
+        <h3 align="center">@photos.get(0).getAlbumDescription</h3>
         <div class="row masonry-container">
         @for(photo <- photos) {
             <div class="col-sm-6 col-md-4 item">
