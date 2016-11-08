@@ -181,7 +181,9 @@ public class UploadController extends Controller {
 
                 if (albumid > 0) {
                     insertFileDetails(fileName, photographerLogic.findPhotographerId(email), albumid, (int) (file.getTotalSpace() / 1000000), email);
-                    return connectWithFTP(file, fileName);
+                    connectWithFTP(file, fileName);
+                    flash("success", "File has been uploaded succesfullly.");
+                    return ok(upload.render(GetAlbums()));
                 } else {
                     flash("danger", "Album details not filled in correctly.");
                     return ok(upload.render(GetAlbums()));
