@@ -5,7 +5,6 @@
 table {
   	width: 50%;
   	border-spacing: 0;
-  	border-radius: 20px;
 }
 
 table.sortable {
@@ -33,20 +32,4 @@ thead {
 
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
     content: " \25B4\25BE" 
-}
-
-thead tr:first-child th:first-child {
-    border-radius: 0.6em 0 0 0;
-}
-
-thead tr:first-child th:last-child {
-    border-radius: 0 0.6em 0 0;
-}
-
-tbody tr:last-child td:first-child {
-    border-radius: 0 0 0 0.6em;
-}
-
-tbody tr:last-child td:last-child {
-    border-radius: 0 0 0.6em 0;
 }

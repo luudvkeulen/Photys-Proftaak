@@ -13,6 +13,7 @@
 @(albums: List[Album])
 
 @main("Albums") {
+    <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
     <link href="@routes.Assets.versioned("stylesheets/privatealbum.css")" rel="stylesheet">
     <h2 align="center">Available albums will be displayed below</h2>
     <div class="row">

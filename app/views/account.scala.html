@@ -1,92 +1,113 @@
 @main("Account") {
-
-  @*
-  * Get an `Html` object by calling the built-in Play welcome
-  * template and passing a `String` message.
-  *@
-  <div class="container">
-    <form method="POST" class="" action="@routes.RegisterController.register()">
-      <div class="pre-scrollable">
-        <div class="profilePicture .col-md-6">
-          <img src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-128.png" class="img-rounded" alt="Profile picture" width="120" height="120">
-          <h1>xX-FrederickPhotographer-Xx</h1>
-        </div>
-
-        <div class="cartContainer col-md-3">
-          <h2>Cart</h2>
-          <div class="panel-group">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" href="#collapse1">show cart</a>
-                </h4>
-              </div>
-              <div id="collapse1" class="panel-collapse collapse">
-                <div class="panel-body">Mug with picture 'mugshot'</div>
-                <div class="panel-body">T-shirt 'do you even picture bro!'</div>
-                <div class="panel-body">Canvas school photo 200 x 300</div>
-                <div class="panel-body">Pocket size pictures 20 x 30</div>
-                  <!--CREATE BUTTON HERE... ORDER NOW-->
-                <button type="button" class="btn btn-primary">order now</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="orderContainer col-md-3">
-          <h2>Orders</h2>
-          <div class="panel-group">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" href="#collapseOrder">show orders</a>
-                </h4>
-              </div>
-              <div id="collapseOrder" class="panel-collapse collapse">
-                <div class="orderContainer#1">
-                  <div class="panel-group">
-                    <div class="panel panel-default">
-                      <div class="panel-heading">
-                        <h4 class="panel-title">
-                          <a data-toggle="collapse" href="#collapseOrder1">Order# 71238</a>
-                        </h4>
-                      </div>
-                      <div id="collapseOrder1" class="panel-collapse collapse">
-                        <div class="panel-body">Mug with picture 'mugshot'</div>
-                        <div class="panel-body">T-shirt 'do you even picture bro!'</div>
-                        <div class="panel-body">Canvas school photo 200 x 300</div>
-                        <div class="panel-body">Pocket size pictures 20 x 30</div>
-                      </div>
-                    </div>
-                  </div>
+    @*
+    * Get an `Html` object by calling the built-in Play welcome
+    * template and passing a `String` message.
+    *@
+    <div class="container">
+        <form method="POST" class="" action="@routes.RegisterController.register()">
+            <div>
+                <div class="profilePicture .col-md-6">
+                    <img src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-128.png" class="img-rounded" alt="Profile picture" width="120" height="120">
+                    <h1>xX-FrederickPhotographer-Xx</h1>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="personalDetailsContainer col-md-3">
-          <h2>Personal details</h2>
-            
-          <div class="panel-group">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" href="#collapsePersonalDetails">show personal details</a>
-                </h4>
-              </div>
-              <div id="collapsePersonalDetails" class="panel-collapse collapse">
-                <div class="panel-body">Change username</div>
-                <div class="panel-body">Change date of birth</div>
-                <div class="panel-body">Change email-address</div>
-                <div class="panel-body">Change payment method</div>
-                  <!--CREATE BUTTON.. SAVE DETAILS-->
-                <button type="button" class="btn btn-primary">save changes</button>
-              </div>
+                <div class="cartContainer col-md-3">
+                    <h2>Cart</h2>
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" href="#collapse1">show cart</a>
+                                </h4>
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse">
+                                <div class="panel-body">Mug with picture 'mugshot'</div>
+                                <div class="panel-body">T-shirt 'do you even picture bro!'</div>
+                                <div class="panel-body">Canvas school photo 200 x 300</div>
+                                <div class="panel-body">Pocket size pictures 20 x 30</div>
+                                    <!--CREATE BUTTON HERE... ORDER NOW-->
+                                <button type="button" class="btn btn-primary">order now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="orderContainer col-md-3">
+                    <h2>Orders</h2>
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" href="#collapseOrder">show orders</a>
+                                </h4>
+                            </div>
+                            <div id="collapseOrder" class="panel-collapse collapse">
+                                <div class="orderContainer#1">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" href="#collapseOrder1">Order# 71238</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOrder1" class="panel-collapse collapse">
+                                                <div class="panel-body">Mug with picture 'mugshot'</div>
+                                                <div class="panel-body">T-shirt 'do you even picture bro!'</div>
+                                                <div class="panel-body">Canvas school photo 200 x 300</div>
+                                                <div class="panel-body">Pocket size pictures 20 x 30</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="personalDetailsContainer col-md-3">
+                    <h2>Personal details</h2>
+
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" href="#collapsePersonalDetails">show personal details</a>
+                                </h4>
+                            </div>
+                            <div id="collapsePersonalDetails" class="panel-collapse collapse">
+                                <div class="panel-body">Change username</div>
+                                <div class="panel-body">Change date of birth</div>
+                                <div class="panel-body">Change email-address</div>
+                                <div class="panel-body">Change payment method</div>
+                                    <!--CREATE BUTTON.. SAVE DETAILS-->
+                                <button type="button" class="btn btn-primary">save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div> <!-- /container -->
+
+        </form>
+
+        <form>
+            <div class="uploadContainer col-md-3">
+                <h2>Uploads</h2>
+
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapseUploadDetails">show upload details</a>
+                            </h4>
+                        </div>
+                        <div id="collapseUploadDetails" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <a href="@routes.UploadController.uploads()">view upload history</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 }
