@@ -1,4 +1,6 @@
 @main("Account") {
+
+    <link href="@routes.Assets.versioned("stylesheets/account.css")" rel="stylesheet">
     @*
     * Get an `Html` object by calling the built-in Play welcome
     * template and passing a `String` message.
@@ -17,7 +19,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse1">show cart</a>
+                                    <a data-toggle="collapse" href="#collapse1">Show cart</a>
                                 </h4>
                             </div>
                             <div id="collapse1" class="panel-collapse collapse">
@@ -25,8 +27,7 @@
                                 <div class="panel-body">T-shirt 'do you even picture bro!'</div>
                                 <div class="panel-body">Canvas school photo 200 x 300</div>
                                 <div class="panel-body">Pocket size pictures 20 x 30</div>
-                                    <!--CREATE BUTTON HERE... ORDER NOW-->
-                                <button type="button" class="btn btn-primary">order now</button>
+                                <button type="button" class="btn btn-primary btnaccount">Order now</button>
                             </div>
                         </div>
                     </div>
@@ -38,7 +39,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapseOrder">show orders</a>
+                                    <a data-toggle="collapse" href="#collapseOrder">Show orders</a>
                                 </h4>
                             </div>
                             <div id="collapseOrder" class="panel-collapse collapse">
@@ -71,7 +72,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapsePersonalDetails">show personal details</a>
+                                    <a data-toggle="collapse" href="#collapsePersonalDetails">Show personal details</a>
                                 </h4>
                             </div>
                             <div id="collapsePersonalDetails" class="panel-collapse collapse">
@@ -80,7 +81,7 @@
                                 <div class="panel-body">Change email-address</div>
                                 <div class="panel-body">Change payment method</div>
                                     <!--CREATE BUTTON.. SAVE DETAILS-->
-                                <button type="button" class="btn btn-primary">save changes</button>
+                                <button type="button" class="btn btn-primary btnaccount">Save changes</button>
                             </div>
                         </div>
                     </div>
@@ -97,12 +98,12 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapseUploadDetails">show upload details</a>
+                                <a data-toggle="collapse" href="#collapseUploadDetails">Show upload details</a>
                             </h4>
                         </div>
                         <div id="collapseUploadDetails" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <a href="@routes.UploadController.uploads()">view upload history</a>
+                                <a href="@routes.UploadController.uploads()">View upload history</a>
                             </div>
                         </div>
                     </div>
