@@ -43,14 +43,14 @@ function addItems(ele){
     // ID geven en ophogen per aangemaakte item
     countID += 1;
     node.id = countID;
-	img.src = 'http://www.bajiroo.com/wp-content/uploads/2016/01/weird-unusual-haircuts-pics-pictures-images-photos-1-600x692.png';
-	img.style.height = "20px";
-	img.style.width = "20px";
-    node.appendChild(img);
-    node.appendChild(textnode);
-    node.appendChild(pricenode);
-    document.getElementById("item").appendChild(node);
-    document.getElementById("item").appendChild(lineBreak);
+	//img.src = 'http://www.bajiroo.com/wp-content/uploads/2016/01/weird-unusual-haircuts-pics-pictures-images-photos-1-600x692.png';
+	//img.style.height = "20px";
+	//img.style.width = "20px";
+    //node.appendChild(img);
+    //node.appendChild(textnode);
+    //node.appendChild(pricenode);
+    //document.getElementById("item").appendChild(node);
+    //document.getElementById("item").appendChild(lineBreak);
 
     // Ophogen van een item in de quantity label.
     for(var i = 0; i < items.length; i++){

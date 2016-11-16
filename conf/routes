@@ -14,17 +14,17 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 GET    /albums                      controllers.AlbumsController.index
 GET    /account                     controllers.AccountController.index
-GET    /logout                      controllers.Application.logout()
+GET    /logout                      controllers.LoginController.logout
 GET    /admin                       controllers.AdminController.index
 GET     /albums                     controllers.AlbumsController.index
 GET     /account                    controllers.AccountController.index
-GET     /logout                     controllers.Application.logout
 GET     /admin                      controllers.AdminController.index
 GET     /image/:location            controllers.PictureController.renderPhoto(location)
 GET     /preview                    controllers.PreviewController.index(url)
 GET     /privatealbums              controllers.PrivateAlbumsController.index
 GET     /album                      controllers.PrivateAlbumsController.RenderAlbum(url)
 GET     /cart                       controllers.CartController.index
+GET     /myalbums                   controllers.AlbumsController.albums
 
 
 # Map static resources from the /public folder to the /assets URL path
