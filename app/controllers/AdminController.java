@@ -50,6 +50,11 @@ public class AdminController extends Controller {
         return redirect("/admin");
     }
 
+    @Inject
+    public AdminController(play.db.Database db) {
+        this.db = db;
+    }
+
     private List<User> getPhotographers(boolean accepted) {
         List<User> users = new ArrayList<>();
 
@@ -76,8 +81,10 @@ public class AdminController extends Controller {
         return users;
     }
 
-    @Inject
-    public AdminController(play.db.Database db) {
-        this.db = db;
+    private void ChangeUserBannedStatus(User user, boolean value)
+    {
+        user.ChangeUserBan(value);
     }
+
+
 }
