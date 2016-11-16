@@ -1,0 +1,35 @@
+@import java.util
+@(albums: util.List[Album])
+
+@main("MyAlbums") {
+    <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
+    <script src=@routes.Assets.versioned("javascripts/sorttable.js")></script>
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/myuploads.css")" />
+    <div class="container">
+        <form method="GET" action="@routes.AlbumsController.albums()">
+            <div class="table-responsive">
+                <table id="t01" class="sortable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Accessibility</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for(album <- albums) {
+                            <tr>
+                                <td>@album.getName</td>
+                                <td>@if(album.isAccessible == true) {
+                                        public
+                                    } else {
+                                        private
+                                }</td>
+                            </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+}
+

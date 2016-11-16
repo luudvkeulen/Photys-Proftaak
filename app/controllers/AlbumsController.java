@@ -24,11 +24,49 @@ public class AlbumsController extends Controller {
         return ok(albums.render());
     }
 
+    public Result albums() {
+        ArrayList<Album> albums;
+        if (!isPhotographer(session("user"))) {
+            flash("warning", "You need to be logged in as a photographer to view album history");
+            return redirect("/");
+        }
+        albums = GetAvailableAlbums();
+        if (albums.size() < 1) {
+            flash("You haven't created any albums yet.");
+        }
+        return ok(myalbums.render(albums));
+    }
+
     //Generates a random Album URL
     public String GenerateAlbumURL() {
         String albumURL = UUID.randomUUID().toString();
 
         return albumURL;
+    }
+
+
+    private boolean isPhotographer(String email) {
+        Boolean result = false;
+        if (email == null) return result;
+
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
+            statement.setString(1, email);
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                if (set.getInt("type") >= 2) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            } else {
+                result = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     private String GetAlbumNameById(int albumID) {

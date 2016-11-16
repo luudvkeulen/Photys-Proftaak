@@ -66,7 +66,7 @@ public class UploadController extends Controller {
             return redirect("/");
         }
         photos = retrieveUploadHistory();
-        if (photos.size() != 0) {
+        if (photos.size() < 1) {
             flash("You haven't uploaded any files yet.");
         }
         return ok(myuploads.render(photos));
@@ -141,7 +141,7 @@ public class UploadController extends Controller {
             boolean newAlbum = (bindedForm.get("rbExisting") instanceof String);
             int albumid = -1;
 
-            if (fileName.substring(index + 1).equals("png") || fileName.substring(index + 1).equals("jpg") || fileName.substring(index + 1).equals("JPEG")) {
+            if (fileName.substring(index + 1).toLowerCase().equals("png") || fileName.substring(index + 1).toLowerCase().equals("jpg") || fileName.substring(index + 1).toLowerCase().equals("JPEG")) {
                 if (!newAlbum) {
                     boolean privateAlbum = false;
                     if (bindedForm.get("albumPrivate") != null) {
@@ -299,7 +299,7 @@ public class UploadController extends Controller {
             prepared.setString(5, "/Photographers/" + email + "/" + fileName);
             prepared.setString(6, GeneratePictureURL());
             Boolean result = prepared.execute();
-            connection.close();
+
             return result;
         } catch (SQLException e) {
             play.Logger.error(e.getMessage());
@@ -356,8 +356,6 @@ public class UploadController extends Controller {
                 albums.add(album);
 
             }
-
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

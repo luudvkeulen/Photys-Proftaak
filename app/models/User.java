@@ -1,5 +1,4 @@
 package models;
-
 import models.UserType;
 
 public class User {
@@ -13,6 +12,8 @@ public class User {
     private String password;
     private String houseNr;
     private String phoneNr;
+    private boolean isBanned;
+
 
     public int getId() {
         return id;
@@ -86,13 +87,15 @@ public class User {
         this.phoneNr = phoneNr;
     }
 
+    public boolean GetIsBanned(){return isBanned;}
+
     public void setUserType(UserType userType) {
-        this.userType = userType;
-    }
+        this.userType = userType;}
 
     private models.UserType userType;
 
-    public User(int ID, String FirstName, String LastName, String EmailAdress, String ZipCode, String StreetName, String HouseNr, String PhoneNr, int userType) {
+    public User(int ID, String FirstName, String LastName, String EmailAdress, String ZipCode,String StreetName , String HouseNr, String PhoneNr, int userType, int isBanned)
+    {
         this.id = ID;
         this.firstName = FirstName;
         this.lastName = LastName;
@@ -102,6 +105,7 @@ public class User {
         this.houseNr = HouseNr;
         this.phoneNr = PhoneNr;
         this.userType = UserType.values()[userType];
+        this.isBanned = (isBanned != 0);
     }
 
     public User(int id, String firstName, String lastName, String emailAddress) {
@@ -136,6 +140,11 @@ public class User {
 
     public void changeUserType(UserType type) {
         this.userType = type;
+    }
+
+    public void ChangeUserBan(boolean value)
+    {
+        this.isBanned = value;
     }
 }
 
