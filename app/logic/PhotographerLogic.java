@@ -16,7 +16,7 @@ public class PhotographerLogic {
     public boolean isPhotographer(String email) {
         Boolean result = false;
         if (email == null) return result;
-        Connection connection = DB.getConnection();
+        Connection connection = db.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
             statement.setString(1, email);
