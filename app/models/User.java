@@ -10,11 +10,10 @@ public class User {
     private String zipCode;
     private String streetName;
     private String password;
-    private int houseNr;
-    private int phoneNr;
-    private boolean isBanned;
     private String houseNr;
     private String phoneNr;
+    private boolean isBanned;
+
 
     public int getId() {
         return id;
@@ -95,7 +94,7 @@ public class User {
 
     private models.UserType userType;
 
-    public User(int ID, String FirstName, String LastName, String EmailAdress, String ZipCode,String StreetName , int HouseNr, int PhoneNr, int userType, int isBanned)
+    public User(int ID, String FirstName, String LastName, String EmailAdress, String ZipCode,String StreetName , String HouseNr, String PhoneNr, int userType, int isBanned)
     {
         this.id = ID;
         this.firstName = FirstName;

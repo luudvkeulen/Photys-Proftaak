@@ -40,8 +40,8 @@ public class UserLogic {
                 String emailAdress = email;
                 String zipCode = resultSet.getString("zipcode");
                 String street = resultSet.getString("street");
-                int houseNr = resultSet.getInt("housenr");
-                int phoneNr = resultSet.getInt("phonenr");
+                String houseNr = resultSet.getString("housenr");
+                String phoneNr = resultSet.getString("phonenr");
                 int userType = resultSet.getInt("type");
                 int isBanned = resultSet.getInt("isBanned");
 
