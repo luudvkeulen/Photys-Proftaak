@@ -28,6 +28,7 @@
         <link href="@routes.Assets.versioned("stylesheets/main.css")" rel="stylesheet">
 
         <script src="@routes.Assets.versioned("javascripts/jquery.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/cart.js")"></script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
@@ -52,7 +53,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" rel="home" href="/" title="Phontys">Photys</a>
+                <a class="navbar-brand" rel="home" href="/" title="Phontys" onclick="getItems()">Photys</a>
             </div>
 
             <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -62,70 +63,12 @@
                         <li><a href="/privatealbums">Albums</a></li>
                         <li><a href="/upload">Upload</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="/cart" class="dropdown-toggle" role="button" aria-expanded="false">
                                 <span class="glyphicon glyphicon-shopping-cart"></span>
-                                <span id="itemAmount">2 - Items</span>
+                                <span id="itemAmount">0 - Items</span>
                                 <span class="caret"></span></a>
-                            <ul class="dropdown-menu dropdown-cart" role="menu">
-                                <li>
-                                    <span id="item">
-                                        <span class="item-left">
-                                            <img src="https://www.yellowoctopus.com.au/media/catalog/product/cache/1/image/500x500/9df78eab33525d08d6e5fb8d27136e95/y/e/yellow-octopus-mugshot-mug.jpg" alt="" width="20" height="20" />
-                                            <span class="item-info">
-                                                <span id="item1">Item name</span>
-                                                <span>23$</span>
-                                            </span>
-                                        </span>
-                                        <span class="item-right">
-                                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                                        </span>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span class="item">
-                                        <span class="item-left">
-                                            <img src="https://image.spreadshirtmedia.com/image-server/v1/products/103429871/views/1,width=800,height=800,appearanceId=2,version=1440417743/do-you-even-lift-bro-t-shirts-men-s-t-shirt.jpg" alt="" width="20" height="20" />
-                                            <span class="item-info">
-                                                <span id="item2">Item name</span>
-                                                <span>23$</span>
-                                            </span>
-                                        </span>
-                                        <span class="item-right">
-                                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                                        </span>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span class="item">
-                                        <span class="item-left">
-                                            <img src="http://www.bajiroo.com/wp-content/uploads/2016/01/weird-unusual-haircuts-pics-pictures-images-photos-1-600x692.png" alt="" width="20" height="20" />
-                                            <span class="item-info">
-                                                <span id="item3">Item name</span>
-                                                <span>23$</span>
-                                            </span>
-                                        </span>
-                                        <span class="item-right">
-                                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                                        </span>
-                                    </span>
-                                </li>
-                                <li>
-                                    <span class="item">
-                                        <span class="item-left">
-                                            <img src="http://meme.loqi.me/img/most_interesting.jpg" alt="" width="20" height="20" />
-                                            <span class="item-info">
-                                                <span id="item4">Item name</span>
-                                                <span>23$</span>
-                                            </span>
-                                        </span>
-                                        <span class="item-right">
-                                            <button class="btn btn-xs btn-danger pull-right">x</button>
-                                        </span>
-                                    </span>
-                                </li>
-                                <li class="divider"></li>
-                                <li><a class="text-center" href="">View Cart</a></li>
-                            </ul>
+                            <span id="item">
+                            </span>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
