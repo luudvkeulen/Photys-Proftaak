@@ -74,7 +74,7 @@ public class UploadController extends Controller {
             return redirect("/");
         }
         photos = retrieveUploadHistory();
-        if (photos.size() != 0) {
+        if (photos.size() < 1) {
             flash("You haven't uploaded any files yet.");
         }
         return ok(myuploads.render(photos));
