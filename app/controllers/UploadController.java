@@ -2,15 +2,9 @@ package controllers;
 
 import com.typesafe.config.ConfigFactory;
 import models.Photo;
-import models.User;
-import org.joda.time.DateTime;
-import play.api.Logger;
-import play.api.Play;
-import play.api.Play.*;
 import logic.PhotographerLogic;
 import models.Album;
 import play.data.DynamicForm;
-import play.data.Form;
 import play.data.FormFactory;
 import play.db.DB;
 import play.db.Database;
@@ -29,7 +23,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.net.ftp.*;
@@ -48,9 +42,7 @@ public class UploadController extends Controller {
 
     //Generates a random Album URL
     private String GeneratePictureURL() {
-        String albumURL = UUID.randomUUID().toString();
-
-        return albumURL;
+        return UUID.randomUUID().toString();
     }
 
     @Inject
@@ -60,7 +52,7 @@ public class UploadController extends Controller {
 
     public Result index() {
         PhotographerLogic photographerLogic = new PhotographerLogic(db);
-        if(!photographerLogic.isPhotographer(session("user"))) {
+        if (!photographerLogic.isPhotographer(session("user"))) {
             flash("warning", "You need to be logged in as a photographer to upload pictures.");
             return redirect("/");
         }
@@ -83,8 +75,8 @@ public class UploadController extends Controller {
     private boolean isPhotographer(String email) {
         Boolean result = false;
         if (email == null) return result;
-        Connection connection = DB.getConnection();
-        try {
+
+        try (Connection connection = db.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
             statement.setString(1, email);
             ResultSet set = statement.executeQuery();
@@ -99,12 +91,6 @@ public class UploadController extends Controller {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
         return result;
@@ -113,8 +99,8 @@ public class UploadController extends Controller {
     private Integer findPhotographerId(String email) {
         Integer result = -1;
         if (email == null) return result;
-        Connection connection = DB.getConnection();
-        try {
+
+        try (Connection connection = db.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE emailadres = ?");
             statement.setString(1, email);
             ResultSet set = statement.executeQuery();
@@ -125,12 +111,6 @@ public class UploadController extends Controller {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
         return result;
@@ -270,10 +250,47 @@ public class UploadController extends Controller {
         }
     }
 
-    private boolean insertFileDetails(String fileName, int photographerId, int albumId, int fileSize, String email) {
-        Connection connection = db.getConnection();
+    private boolean insertAddUsersToPrivateAlbum(int albumid, String[] userEmails) {
         PreparedStatement prepared = null;
-        try {
+        List<Integer> userIds = new ArrayList<>();
+        int userId = -1;
+
+        try (Connection connection = db.getConnection()) {
+
+            for (String userEmail : userEmails) {
+                prepared = connection.prepareStatement("select id from user where emailadres = ?");
+                prepared.setString(1, userEmail);
+                ResultSet result = prepared.executeQuery();
+
+                while (result.next()) {
+                    userId = result.getInt("id");
+                }
+
+                if (userId > 0) {
+                    userIds.add(userId);
+                    userId = -1;
+                }
+            }
+
+            for (int userid : userIds) {
+                prepared = connection.prepareStatement("INSERT INTO useralbum (album_id, user_id) VALUES (?, ?)");
+                prepared.setInt(1, albumid);
+                prepared.setInt(2, userid);
+                prepared.executeUpdate();
+            }
+
+            return true;
+
+        } catch (SQLException ex) {
+            play.Logger.error(ex.getMessage());
+            return false;
+        }
+    }
+
+    private boolean insertFileDetails(String fileName, int photographerId, int albumId, int fileSize, String email) {
+        PreparedStatement prepared = null;
+
+        try (Connection connection = db.getConnection()) {
             prepared = connection.prepareStatement("INSERT INTO `picture` (`name` , photographer_id, album_id, file_size, file_location, url) VALUES (?,?,?,?,?,?)");
             prepared.setString(1, fileName);
             prepared.setInt(2, photographerId);
@@ -281,8 +298,7 @@ public class UploadController extends Controller {
             prepared.setInt(4, fileSize);
             prepared.setString(5, "/Photographers/" + email + "/" + fileName);
             prepared.setString(6, GeneratePictureURL());
-            Boolean result;
-            result = prepared.execute();
+            Boolean result = prepared.execute();
             connection.close();
             return result;
         } catch (SQLException e) {
@@ -293,9 +309,9 @@ public class UploadController extends Controller {
 
     public ArrayList<Photo> retrieveUploadHistory() {
         ArrayList<Photo> uploads = null;
-        Connection connection = db.getConnection();
+
         PreparedStatement prepared = null;
-        try {
+        try (Connection connection = db.getConnection()) {
             uploads = new ArrayList<>();
             int photographerId = findPhotographerId(session("user"));
             prepared = connection.prepareStatement("SELECT picture.name as pname, album.name as aname, picture.date, picture.price FROM `picture`, `album` WHERE picture.photographer_id = ? AND album.id = picture.album_id");
@@ -310,23 +326,17 @@ public class UploadController extends Controller {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+
         return uploads;
     }
 
     private ArrayList<Album> GetAlbums() {
-        Connection connection = db.getConnection();
         PreparedStatement statement = null;
 
         ArrayList<Album> albums = new ArrayList<>();
 
-        try {
+        try (Connection connection = db.getConnection()) {
             statement = connection.prepareStatement("SELECT * FROM `album` WHERE `photographer_id` = ?");
             PhotographerLogic photographerLogic = new PhotographerLogic(db);
             statement.setInt(1, photographerLogic.findPhotographerId(session("user")));

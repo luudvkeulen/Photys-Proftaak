@@ -13,6 +13,8 @@ public class User {
     private int houseNr;
     private int phoneNr;
     private boolean isBanned;
+    private String houseNr;
+    private String phoneNr;
 
     public int getId() {
         return id;
@@ -70,19 +72,19 @@ public class User {
         this.password = password;
     }
 
-    public int getHouseNr() {
+    public String getHouseNr() {
         return houseNr;
     }
 
-    public void setHouseNr(int houseNr) {
+    public void setHouseNr(String houseNr) {
         this.houseNr = houseNr;
     }
 
-    public int getPhoneNr() {
+    public String getPhoneNr() {
         return phoneNr;
     }
 
-    public void setPhoneNr(int phoneNr) {
+    public void setPhoneNr(String phoneNr) {
         this.phoneNr = phoneNr;
     }
 
@@ -119,15 +121,25 @@ public class User {
         this.password = password;
     }
 
-    public User() {}
+    public User(String email, String firstName, String lastName, String zipcode, String street, String housenr, String phonenr, int type) {
+        this.emailAddress = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.zipCode = zipcode;
+        this.streetName = street;
+        this.houseNr = housenr;
+        this.phoneNr = phonenr;
+        this.userType = UserType.values()[type];
+    }
 
-    public UserType getUserType()
-    {
+    public User() {
+    }
+
+    public UserType getUserType() {
         return this.userType;
     }
 
-    public void changeUserType(UserType type)
-    {
+    public void changeUserType(UserType type) {
         this.userType = type;
     }
 
