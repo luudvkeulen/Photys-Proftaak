@@ -10,8 +10,10 @@ public class User {
     private String zipCode;
     private String streetName;
     private String password;
-    private int houseNr;
-    private int phoneNr;
+    private String houseNr;
+    private String phoneNr;
+    private boolean isBanned;
+
 
     public int getId() {
         return id;
@@ -69,29 +71,30 @@ public class User {
         this.password = password;
     }
 
-    public int getHouseNr() {
+    public String getHouseNr() {
         return houseNr;
     }
 
-    public void setHouseNr(int houseNr) {
+    public void setHouseNr(String houseNr) {
         this.houseNr = houseNr;
     }
 
-    public int getPhoneNr() {
+    public String getPhoneNr() {
         return phoneNr;
     }
 
-    public void setPhoneNr(int phoneNr) {
+    public void setPhoneNr(String phoneNr) {
         this.phoneNr = phoneNr;
     }
 
+    public boolean GetIsBanned(){return isBanned;}
+
     public void setUserType(UserType userType) {
-        this.userType = userType;
-    }
+        this.userType = userType;}
 
     private models.UserType userType;
 
-    public User(int ID, String FirstName, String LastName, String EmailAdress, String ZipCode,String StreetName , int HouseNr, int PhoneNr, int userType)
+    public User(int ID, String FirstName, String LastName, String EmailAdress, String ZipCode,String StreetName , String HouseNr, String PhoneNr, int userType, int isBanned)
     {
         this.id = ID;
         this.firstName = FirstName;
@@ -102,6 +105,7 @@ public class User {
         this.houseNr = HouseNr;
         this.phoneNr = PhoneNr;
         this.userType = UserType.values()[userType];
+        this.isBanned = (isBanned != 0);
     }
 
     public User(int id, String firstName, String lastName, String emailAddress) {
@@ -116,16 +120,31 @@ public class User {
         this.password = password;
     }
 
-    public User() {}
+    public User(String email, String firstName, String lastName, String zipcode, String street, String housenr, String phonenr, int type) {
+        this.emailAddress = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.zipCode = zipcode;
+        this.streetName = street;
+        this.houseNr = housenr;
+        this.phoneNr = phonenr;
+        this.userType = UserType.values()[type];
+    }
 
-    public UserType getUserType()
-    {
+    public User() {
+    }
+
+    public UserType getUserType() {
         return this.userType;
     }
 
-    public void changeUserType(UserType type)
-    {
+    public void changeUserType(UserType type) {
         this.userType = type;
+    }
+
+    public void ChangeUserBan(boolean value)
+    {
+        this.isBanned = value;
     }
 }
 
