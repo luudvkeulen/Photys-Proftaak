@@ -18,7 +18,9 @@ public class AdminLogic {
     public boolean isAdmin(String email) {
         Boolean result = false;
         if(email == null) return result;
-        Connection connection = db.getConnection();
+
+        Connection connection;
+        connection = db.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
             statement.setString(1, email);

@@ -1,5 +1,7 @@
 package controllers;
 
+import logic.AdminLogic;
+import logic.UserLogic;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.data.FormFactory;
@@ -27,14 +29,25 @@ public class LoginController extends Controller {
     }
 
     public Result login() throws SQLException {
+        UserLogic ul = new UserLogic(db);
         DynamicForm dynamicForm = factory.form().bindFromRequest();
         if(checkCredentials(dynamicForm.get("email"),dynamicForm.get("password"))) {
+            //Check if the user is banned
+            ul.CheckBanStatus(dynamicForm.get("email"));
             flash("success", "You've been logged in");
             return redirect(routes.HomeController.index());
         } else {
             flash("danger", "Your email address or password is wrong");
             return ok(login.render());
         }
+    }
+
+    public Result logout() {
+        session().clear();
+        flash("info", "You've been logged out");
+        return redirect(
+                routes.HomeController.index()
+        );
     }
 
     private boolean checkCredentials(String email, String password) {

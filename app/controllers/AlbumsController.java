@@ -1,32 +1,19 @@
 package controllers;
 
-import com.typesafe.config.ConfigFactory;
-import logic.AdminLogic;
 import logic.PhotographerLogic;
 import models.Album;
 import models.Photo;
-import models.User;
-import play.api.Logger;
-import play.api.Play;
-import play.api.Play.*;
-import play.db.DB;
 import play.db.Database;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 
 import javax.inject.Inject;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.sql.*;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.UUID;
 
 public class AlbumsController extends Controller {
@@ -92,7 +79,7 @@ public class AlbumsController extends Controller {
     private String GetAlbumNameById(int albumID) {
         try (Connection connection = db.getConnection()) {
 
-            PreparedStatement statement = null;
+            PreparedStatement statement;
             String albumName = null;
 
             statement = connection.prepareStatement("SELECT `name` FROM `album` WHERE `id` = ?");
@@ -187,7 +174,7 @@ public class AlbumsController extends Controller {
         //Get each album with the album ID's in the availableAlbumIDs list
         try (Connection connection = db.getConnection()) {
 
-            statement = connection.prepareStatement("SELECT A.*, concat(U.first_name, ' ', U.last_name) as `pname` FROM `album` A, `user` U WHERE (A.`id` in (select `album_id` FROM `useralbum` WHERE `user_id` = ?) OR A.photographer_id = ?) AND A.photographer_id = U.id");
+            statement = connection.prepareStatement("SELECT A.*, concat(U.first_name, ' ', U.last_name) as `pname` FROM `album` A, `user` U WHERE (A.`id` in (select `album_id` FROM `useralbum` WHERE `user_id` = ?) OR A.photographer_id = ? OR A.private = 0) AND A.photographer_id = U.id");
             statement.setInt(1, userID);
             statement.setInt(2, userID);
 

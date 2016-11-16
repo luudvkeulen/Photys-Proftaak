@@ -14,11 +14,10 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 GET    /albums                      controllers.AlbumsController.index
 GET    /account                     controllers.AccountController.index
-GET    /logout                      controllers.Application.logout()
+GET    /logout                      controllers.LoginController.logout
 GET    /admin                       controllers.AdminController.index
 GET     /albums                     controllers.AlbumsController.index
 GET     /account                    controllers.AccountController.index
-GET     /logout                     controllers.Application.logout
 GET     /admin                      controllers.AdminController.index
 GET     /image/:location            controllers.PictureController.renderPhoto(location)
 GET     /preview                    controllers.PreviewController.index(url)
