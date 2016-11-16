@@ -66,7 +66,7 @@ public class AdminController extends Controller {
         String id = dynamicForm.get("id");
 
         try (Connection connection = db.getConnection()) {
-            PreparedStatement prepared = connection.prepareStatement("UPDATE `user` SET `type`='9' WHERE `id`=?");
+            PreparedStatement prepared = connection.prepareStatement("UPDATE `user` SET `type`='-1' WHERE `id`=?");
             prepared.setString(1, id);
             prepared.executeUpdate();
         } catch (SQLException e) {

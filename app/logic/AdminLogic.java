@@ -19,9 +19,8 @@ public class AdminLogic {
         Boolean result = false;
         if(email == null) return result;
 
-        Connection connection;
-        connection = db.getConnection();
-        try {
+
+        try (Connection connection = db.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
             statement.setString(1, email);
             ResultSet set = statement.executeQuery();
@@ -30,12 +29,6 @@ public class AdminLogic {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
         return result;
