@@ -276,14 +276,10 @@ public class UploadController extends Controller {
                 prepared = connection.prepareStatement("INSERT INTO useralbum (album_id, user_id) VALUES (?, ?)");
                 prepared.setInt(1, albumid);
                 prepared.setInt(2, userid);
-                Boolean result = prepared.execute();
-
-                if (!result) {
-                    break;
-                }
+                prepared.executeUpdate();
             }
 
-            return result;
+            return true;
 
         } catch (SQLException ex) {
             play.Logger.error(ex.getMessage());
@@ -336,7 +332,6 @@ public class UploadController extends Controller {
     }
 
     private ArrayList<Album> GetAlbums() {
-
         PreparedStatement statement = null;
 
         ArrayList<Album> albums = new ArrayList<>();
