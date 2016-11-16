@@ -37,6 +37,14 @@ public class LoginController extends Controller {
         }
     }
 
+    public Result logout() {
+        session().clear();
+        flash("info", "You've been logged out");
+        return redirect(
+                routes.HomeController.index()
+        );
+    }
+
     private boolean checkCredentials(String email, String password) {
         String hashed = getEncryptedPassword(email);
         if(hashed.isEmpty()) return false;
