@@ -2,15 +2,9 @@ package controllers;
 
 import com.typesafe.config.ConfigFactory;
 import models.Photo;
-import models.User;
-import org.joda.time.DateTime;
-import play.api.Logger;
-import play.api.Play;
-import play.api.Play.*;
 import logic.PhotographerLogic;
 import models.Album;
 import play.data.DynamicForm;
-import play.data.Form;
 import play.data.FormFactory;
 import play.db.DB;
 import play.db.Database;
@@ -29,7 +23,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.UUID;
 
 import org.apache.commons.net.ftp.*;
@@ -60,7 +53,7 @@ public class UploadController extends Controller {
 
     public Result index() {
         PhotographerLogic photographerLogic = new PhotographerLogic(db);
-        if(!photographerLogic.isPhotographer(session("user"))) {
+        if (!photographerLogic.isPhotographer(session("user"))) {
             flash("warning", "You need to be logged in as a photographer to upload pictures.");
             return redirect("/");
         }
