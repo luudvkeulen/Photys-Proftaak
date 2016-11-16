@@ -42,9 +42,7 @@ public class UploadController extends Controller {
 
     //Generates a random Album URL
     private String GeneratePictureURL() {
-        String albumURL = UUID.randomUUID().toString();
-
-        return albumURL;
+        return UUID.randomUUID().toString();
     }
 
     @Inject
@@ -259,7 +257,7 @@ public class UploadController extends Controller {
 
         try (Connection connection = db.getConnection()) {
 
-            for (String userEmail: userEmails) {
+            for (String userEmail : userEmails) {
                 prepared = connection.prepareStatement("select id from user where emailadres = ?");
                 prepared.setString(1, userEmail);
                 ResultSet result = prepared.executeQuery();
@@ -276,11 +274,13 @@ public class UploadController extends Controller {
 
             for (int userid : userIds) {
                 prepared = connection.prepareStatement("INSERT INTO useralbum (album_id, user_id) VALUES (?, ?)");
-                prepared.setInt(1, albumid); //ALBUM ID
-                prepared.setInt(2, userid); //USER ID
+                prepared.setInt(1, albumid);
+                prepared.setInt(2, userid);
                 Boolean result = prepared.execute();
 
-                if (!result) { break; }
+                if (!result) {
+                    break;
+                }
             }
 
             return result;
