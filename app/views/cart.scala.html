@@ -1,6 +1,5 @@
 @main("Cart") {
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
             $(document).ready(function () {
@@ -11,7 +10,7 @@
 
 
         <!--CART INFORMATION-->
-    <div class="cartContainer col-md-3">
+    <div class="cartContainer col-md-4">
         <h2>Cart</h2>
         <div class="panel-group">
             <div class="panel panel-default">
@@ -26,10 +25,10 @@
         </div>
         <div id="costs">
         </div>
-        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="addItems()">order now</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block">order now</button>
     </div>
 
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="@routes.Assets.versioned("javascripts/ie10-viewport-bug-workaround.js")"></script>
-    <script type="text/javascript" src="@routes.Assets.versioned("javascripts/cart.js")"></script>
+
 }
