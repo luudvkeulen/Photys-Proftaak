@@ -81,7 +81,7 @@ public class UploadController extends Controller {
             statement.setString(1, email);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
-                if (set.getInt("type") >= 2) {
+                if (set.getInt("type") == 2) {
                     result = true;
                 } else {
                     result = false;

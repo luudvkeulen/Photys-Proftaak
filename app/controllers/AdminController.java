@@ -13,7 +13,9 @@ import play.db.DB;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.reflect.internal.Trees;
 import views.html.*;
+
 import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +35,7 @@ public class AdminController extends Controller {
 
     public Result index() {
         AdminLogic adminLogic = new AdminLogic(db);
-        if(!adminLogic.isAdmin(session("user"))) {
+        if (!adminLogic.isAdmin(session("user"))) {
             flash("error", "You are not an admin!");
             return redirect("/");
         }
@@ -47,13 +49,30 @@ public class AdminController extends Controller {
     public Result accept() {
         DynamicForm dynamicForm = factory.form().bindFromRequest();
         String id = dynamicForm.get("id");
-        try (Connection con = db.getConnection()) {
-            PreparedStatement prep = con.prepareStatement("UPDATE `user` SET `type`='2' WHERE `id`=?");
-            prep.setString(1, id);
-            prep.execute();
+
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement prepared = connection.prepareStatement("UPDATE `user` SET `type`='2' WHERE `id`=?");
+            prepared.setString(1, id);
+            prepared.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return redirect("/admin");
+    }
+
+    public Result suspend() {
+        DynamicForm dynamicForm = factory.form().bindFromRequest();
+        String id = dynamicForm.get("id");
+
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement prepared = connection.prepareStatement("UPDATE `user` SET `type`='9' WHERE `id`=?");
+            prepared.setString(1, id);
+            prepared.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return redirect("/admin");
     }
 
