@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PhotographerLogic {
 
@@ -95,6 +97,57 @@ public class PhotographerLogic {
         }
 
         return result;
+    }
+
+    public List<User> getAllPhotographers(boolean accepted) {
+        List<User> users = new ArrayList<>();
+
+        PreparedStatement statement;
+        try (Connection connection = db.getConnection()) {
+            if(accepted) {
+                statement = connection.prepareStatement("SELECT id, first_name, last_name, emailadres FROM `user` WHERE `type`=2");
+            } else {
+                statement = connection.prepareStatement("SELECT id, first_name, last_name, emailadres FROM `user` WHERE `type`=1");
+            }
+            ResultSet result = statement.executeQuery();
+
+            users = resultSetToList(result, users);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public List<User> getAllCustomers() {
+        List<User> users = new ArrayList<>();
+
+        PreparedStatement statement;
+        try (Connection connection = db.getConnection()) {
+            statement = connection.prepareStatement("SELECT id, first_name, last_name, emailadres FROM `user` WHERE `type`=0");
+            ResultSet result = statement.executeQuery();
+
+            users = resultSetToList(result, users);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    private List<User> resultSetToList(ResultSet set, List<User> users) {
+        try {
+            while(set.next()) {
+                User tempUser = new User();
+                tempUser.setId(set.getInt(1));
+                tempUser.setFirstName(set.getString(2));
+                tempUser.setLastName(set.getString(3));
+                tempUser.setEmailAdress(set.getString(4));
+                users.add(tempUser);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
     }
 
     public PhotographerLogic(Database db) {

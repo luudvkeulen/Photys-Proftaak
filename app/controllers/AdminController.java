@@ -1,6 +1,9 @@
 package controllers;
 
 import logic.AdminLogic;
+import logic.PhotographerLogic;
+import logic.ProductLogic;
+import models.Product;
 import models.User;
 import play.Logger;
 import play.data.DynamicForm;
@@ -21,6 +24,8 @@ import java.util.List;
 
 public class AdminController extends Controller {
 
+    PhotographerLogic pl;
+    ProductLogic prl;
     Database db;
 
     @Inject
@@ -32,9 +37,11 @@ public class AdminController extends Controller {
             flash("error", "You are not an admin!");
             return redirect("/");
         }
-        List<User> acceptedUsers = getPhotographers(true);
-        List<User> pendingUsers = getPhotographers(false);
-        return ok(admin.render(acceptedUsers, pendingUsers));
+        List<User> acceptedUsers = pl.getAllPhotographers(true);
+        List<User> pendingUsers = pl.getAllPhotographers(false);
+        List<User> customers = pl.getAllCustomers();
+        List<Product> products = prl.getAllProducts();
+        return ok(admin.render(acceptedUsers, pendingUsers, customers, products));
     }
 
     public Result accept() {
@@ -50,34 +57,10 @@ public class AdminController extends Controller {
         return redirect("/admin");
     }
 
-    private List<User> getPhotographers(boolean accepted) {
-        List<User> users = new ArrayList<>();
-
-        PreparedStatement statement;
-        try (Connection connection = db.getConnection()) {
-            if(accepted) {
-                statement = connection.prepareStatement("SELECT id, first_name, last_name, emailadres FROM `user` WHERE `type`=2");
-            } else {
-                statement = connection.prepareStatement("SELECT id, first_name, last_name, emailadres FROM `user` WHERE `type`=1");
-            }
-            ResultSet result = statement.executeQuery();
-
-            while(result.next()) {
-                User tempUser = new User();
-                tempUser.setId(result.getInt(1));
-                tempUser.setFirstName(result.getString(2));
-                tempUser.setLastName(result.getString(3));
-                tempUser.setEmailAdress(result.getString(4));
-                users.add(tempUser);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return users;
-    }
-
     @Inject
     public AdminController(play.db.Database db) {
+        this.pl = new PhotographerLogic(db);
+        this.prl = new ProductLogic(db);
         this.db = db;
     }
 }
