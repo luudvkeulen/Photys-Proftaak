@@ -1,5 +1,6 @@
 package controllers;
 
+import logic.AlbumLogic;
 import logic.PhotographerLogic;
 import models.Album;
 import models.Photo;
@@ -19,6 +20,8 @@ import java.util.UUID;
 public class AlbumsController extends Controller {
 
     private Database db;
+    private PhotographerLogic pgL;
+    private AlbumLogic aL;
 
     public Result index() {
         return ok(albums.render());
@@ -26,6 +29,9 @@ public class AlbumsController extends Controller {
 
     public Result albums() {
         ArrayList<Album> albums;
+        pgL = new PhotographerLogic(db);
+        aL = new AlbumLogic(db);
+
         if (!isPhotographer(session("user"))) {
             flash("warning", "You need to be logged in as a photographer to view album history");
             return redirect("/");
@@ -46,95 +52,13 @@ public class AlbumsController extends Controller {
 
 
     private boolean isPhotographer(String email) {
-        Boolean result = false;
-        if (email == null) return result;
-
-        try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
-            statement.setString(1, email);
-            ResultSet set = statement.executeQuery();
-            if (set.next()) {
-                if (set.getInt("type") >= 2) {
-                    result = true;
-                } else {
-                    result = false;
-                }
-            } else {
-                result = false;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return result;
+        return  pgL.isPhotographer(email);
     }
 
-    private String GetAlbumNameById(int albumID) {
-        try (Connection connection = db.getConnection()) {
 
-            PreparedStatement statement;
-            String albumName = null;
-
-            statement = connection.prepareStatement("SELECT `name` FROM `album` WHERE `id` = ?");
-            statement.setInt(1, albumID);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                albumName = resultSet.getString("name");
-            }
-
-            return albumName;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     public int GetAlbumIdByURL(String albumUrl, String userEmail) {
-        try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = null;
-            int albumId = -1;
-            int privateAlbum = -1;
-
-            statement = connection.prepareStatement("SELECT `id`, private FROM `album` WHERE `albumURL` = ?");
-            statement.setString(1, albumUrl);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                albumId = resultSet.getInt("id");
-                privateAlbum = resultSet.getInt("private");
-            }
-
-            if (privateAlbum == 1) {
-                statement = connection.prepareStatement("SELECT a.*, u.emailadres FROM useralbum a join `user` u on u.id = a.user_id WHERE album_id = ?");
-                statement.setInt(1, albumId);
-
-                resultSet = statement.executeQuery();
-
-                int results = 0;
-                while (resultSet.next()) {
-                    if (resultSet.getString("emailadres").equals(userEmail)) {
-                        return albumId;
-                    }
-                    results++;
-                }
-
-                if (results == 0) {
-                    return albumId;
-                } else {
-                    return -1;
-                }
-            }
-            //flash message toevoegen wanneer toegang gewijgerd wordt.
-            return albumId;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        }
+       return aL.GetAlbumIdByURL(albumUrl, userEmail);
     }
 
     public ArrayList<Photo> GetPhotosInAlbum(int albumID) {
