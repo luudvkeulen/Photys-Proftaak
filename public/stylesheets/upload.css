@@ -32,3 +32,10 @@
 .browsebutton {
 	border-radius: 0px;
 }
+.ui-helper-hidden-accessible{
+	display: none;
+}
+
+.tagit{
+	background-color: white !important;
+}

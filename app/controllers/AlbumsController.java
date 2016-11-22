@@ -92,20 +92,43 @@ public class AlbumsController extends Controller {
         }
     }
 
-    public int GetAlbumIdByURL(String albumUrl) {
+    public int GetAlbumIdByURL(String albumUrl, String userEmail) {
         try (Connection connection = db.getConnection()) {
             PreparedStatement statement = null;
             int albumId = -1;
+            int privateAlbum = -1;
 
-            statement = connection.prepareStatement("SELECT `id` FROM `album` WHERE `albumURL` = ?");
+            statement = connection.prepareStatement("SELECT `id`, private FROM `album` WHERE `albumURL` = ?");
             statement.setString(1, albumUrl);
 
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 albumId = resultSet.getInt("id");
+                privateAlbum = resultSet.getInt("private");
             }
 
+            if (privateAlbum == 1) {
+                statement = connection.prepareStatement("SELECT a.*, u.emailadres FROM useralbum a join `user` u on u.id = a.user_id WHERE album_id = ?");
+                statement.setInt(1, albumId);
+
+                resultSet = statement.executeQuery();
+
+                int results = 0;
+                while (resultSet.next()) {
+                    if (resultSet.getString("emailadres").equals(userEmail)) {
+                        return albumId;
+                    }
+                    results++;
+                }
+
+                if (results == 0) {
+                    return albumId;
+                } else {
+                    return -1;
+                }
+            }
+            //flash message toevoegen wanneer toegang gewijgerd wordt.
             return albumId;
 
         } catch (SQLException e) {
