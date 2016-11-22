@@ -1,6 +1,7 @@
 package controllers;
 
 import logic.PhotographerLogic;
+import models.User;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -29,7 +30,28 @@ public class AccountController extends Controller {
     }
 
     public Result index() {
-        return ok(account.render());
+        User user = new User();
+
+        String email = session("user");
+
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement statement;
+            statement = connection.prepareStatement("SELECT first_name, last_name, zipcode, street, housenr, phonenr FROM `user` where emailadres = ?");
+
+            statement.setString(1, email);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                user.setEmailAdress(email);
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ok(account.render(user));
     }
 
     public String GetAccountInfo(String email) {
