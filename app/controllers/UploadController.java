@@ -141,6 +141,8 @@ public class UploadController extends Controller {
             boolean newAlbum = (bindedForm.get("rbExisting") instanceof String);
             int albumid = -1;
 
+            System.out.print(bindedForm.get("emails"));
+
             if (fileName.substring(index + 1).toLowerCase().equals("png") || fileName.substring(index + 1).toLowerCase().equals("jpg") || fileName.substring(index + 1).toLowerCase().equals("JPEG")) {
                 if (!newAlbum) {
                     boolean privateAlbum = false;
@@ -154,7 +156,15 @@ public class UploadController extends Controller {
                             photographerID,
                             bindedForm.get("albumDescr"),
                             privateAlbum,
-                            AC.GenerateAlbumURL());
+                    AC.GenerateAlbumURL());
+
+                    String emails = bindedForm.get("emails");
+                    if (!emails.isEmpty()){
+                        emails.substring(0,emails.length()-1);
+                        String[] arr = emails.split(",");
+                        System.out.print(arr);
+                        insertAddUsersToPrivateAlbum(albumid,arr);
+                    }
                 } else {
                     albumid = Integer.parseInt(bindedForm.get("albumSelect"));
                 }
