@@ -76,6 +76,7 @@ public class PreviewController extends Controller {
     }
 
     public Result addToCart() {
+        Logger.info("addtocart");
         DynamicForm dynamicForm = factory.form().bindFromRequest();
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = db.getConnection()) {
@@ -103,6 +104,8 @@ public class PreviewController extends Controller {
         } else {
             cookieText = BinaryLogic.objectsToBinary(cartItems);
         }
+
+        Logger.info(cookieText);
 
         response().setCookie(new Http.Cookie("cart", cookieText, null, "/", "", false, false));
 
