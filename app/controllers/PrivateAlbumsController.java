@@ -4,6 +4,7 @@ import models.Album;
 import models.Photo;
 import play.db.Database;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 
@@ -21,7 +22,7 @@ public class PrivateAlbumsController extends Controller {
 
     public Result RenderAlbum(String albumUrl) {
         AlbumsController ac = new AlbumsController(db);
-        int albumId = ac.GetAlbumIdByURL(albumUrl);
+        int albumId = ac.GetAlbumIdByURL(albumUrl, session("user"));
         List<Photo> pictures = ac.GetPhotosInAlbum(albumId);
         return ok(albumpreview.render(pictures));
     }
