@@ -6,7 +6,6 @@
     <script src=@routes.Assets.versioned("javascripts/sorttable.js")></script>
     <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/myuploads.css")" />
     <div class="container">
-        <form method="GET" action="@routes.UploadController.uploads()">
             <div class="table-responsive">
                 <table class="sortable">
                     <thead>
@@ -24,12 +23,12 @@
                                 <td>@photo.getAlbumName</td>
                                 <td>€ @photo.getPrice</td>
                                 <td>@photo.getDate</td>
+                                <td><a href="#" class="btn btn-default">Remove</a></td>
                             </tr>
                     }
                     </tbody>
                 </table>
             </div>
-        </form>
     </div>
 }
 
