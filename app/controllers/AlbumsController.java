@@ -1,5 +1,6 @@
 package controllers;
 
+import logic.AdminLogic;
 import logic.PhotographerLogic;
 import models.Album;
 import models.Photo;
@@ -109,7 +110,14 @@ public class AlbumsController extends Controller {
             }
 
             if (privateAlbum == 1) {
-                statement = connection.prepareStatement("SELECT a.*, u.emailadres FROM useralbum a join `user` u on u.id = a.user_id WHERE album_id = ?");
+
+                AdminLogic adminLogic = new AdminLogic(db);
+
+                if (adminLogic.isAdmin(session("user"))) {
+                    return albumId;
+                }
+
+                statement = connection.prepareStatement("SELECT a.*, u.emailadres FROM useralbum a join `user` u on u.emailadres = a.user_email WHERE album_id = ?");
                 statement.setInt(1, albumId);
 
                 resultSet = statement.executeQuery();
@@ -128,7 +136,6 @@ public class AlbumsController extends Controller {
                     return -1;
                 }
             }
-            //flash message toevoegen wanneer toegang gewijgerd wordt.
             return albumId;
 
         } catch (SQLException e) {
@@ -190,8 +197,8 @@ public class AlbumsController extends Controller {
         //Get each album with the album ID's in the availableAlbumIDs list
         try (Connection connection = db.getConnection()) {
 
-            statement = connection.prepareStatement("SELECT A.*, concat(U.first_name, ' ', U.last_name) as `pname` FROM `album` A, `user` U WHERE (A.`id` in (select `album_id` FROM `useralbum` WHERE `user_id` = ?) OR A.photographer_id = ? OR A.private = 0) AND A.photographer_id = U.id");
-            statement.setInt(1, userID);
+            statement = connection.prepareStatement("SELECT A.*, concat(U.first_name, ' ', U.last_name) as `pname` FROM `album` A, `user` U WHERE (A.`id` in (select `album_id` FROM `useralbum` WHERE `user_email` = ?) OR A.photographer_id = ? OR A.private = 0) AND A.photographer_id = U.id");
+            statement.setString(1, session("user"));
             statement.setInt(2, userID);
 
             ResultSet resultSet = statement.executeQuery();
