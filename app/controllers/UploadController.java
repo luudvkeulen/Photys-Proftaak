@@ -240,8 +240,8 @@ public class UploadController extends Controller {
 
             if (!accessibility) {
                 System.out.println("if statement");
-                prepared = connection.prepareStatement("INSERT INTO `useralbum` (album_id, user_id) VALUES ((SELECT id FROM `album` ORDER BY id DESC LIMIT 1),?)");
-                prepared.setInt(1, photographer_id);
+                prepared = connection.prepareStatement("INSERT INTO `useralbum` (album_id, user_email) VALUES ((SELECT id FROM `album` ORDER BY id DESC LIMIT 1),?)");
+                prepared.setString(1, session("user"));
                 result = prepared.execute();
             }
 
@@ -262,32 +262,21 @@ public class UploadController extends Controller {
 
     private boolean insertAddUsersToPrivateAlbum(int albumid, String[] userEmails) {
         PreparedStatement prepared = null;
-        List<Integer> userIds = new ArrayList<>();
-        int userId = -1;
 
         try (Connection connection = db.getConnection()) {
 
             for (String userEmail : userEmails) {
-                prepared = connection.prepareStatement("select id from user where emailadres = ?");
-                prepared.setString(1, userEmail);
-                ResultSet result = prepared.executeQuery();
 
-                while (result.next()) {
-                    userId = result.getInt("id");
-                }
-
-                if (userId > 0) {
-                    userIds.add(userId);
-                    userId = -1;
-                }
-            }
-
-            for (int userid : userIds) {
-                prepared = connection.prepareStatement("INSERT INTO useralbum (album_id, user_id) VALUES (?, ?)");
+                prepared = connection.prepareStatement("INSERT INTO useralbum (album_id, user_email) VALUES (?, ?)");
                 prepared.setInt(1, albumid);
-                prepared.setInt(2, userid);
+                prepared.setString(2, userEmail);
                 prepared.executeUpdate();
             }
+
+            prepared = connection.prepareStatement("INSERT INTO useralbum (album_id, user_email) VALUES (?, ?)");
+            prepared.setInt(1, albumid);
+            prepared.setString(2, session("user"));
+            prepared.executeUpdate();
 
             return true;
 

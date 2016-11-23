@@ -14,6 +14,7 @@ import java.util.List;
 public class PrivateAlbumsController extends Controller {
 
     Database db;
+
     public Result index() {
         AlbumsController ac = new AlbumsController(db);
         List<Album> albums = ac.GetAvailableAlbums();
@@ -23,8 +24,13 @@ public class PrivateAlbumsController extends Controller {
     public Result RenderAlbum(String albumUrl) {
         AlbumsController ac = new AlbumsController(db);
         int albumId = ac.GetAlbumIdByURL(albumUrl, session("user"));
-        List<Photo> pictures = ac.GetPhotosInAlbum(albumId);
-        return ok(albumpreview.render(pictures));
+        if (albumId > 0) {
+            List<Photo> pictures = ac.GetPhotosInAlbum(albumId);
+            return ok(albumpreview.render(pictures));
+        } else {
+            flash("danger", "You do not have permission to access this album as it is set to private.");
+            return index();
+        }
     }
 
     @Inject
