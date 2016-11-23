@@ -1,6 +1,6 @@
 package logic;
 
-import com.
+import com.paypal.*;
 
 public class PaypalLogic {
 }
