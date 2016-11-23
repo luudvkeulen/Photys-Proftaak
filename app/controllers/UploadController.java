@@ -141,8 +141,6 @@ public class UploadController extends Controller {
             boolean newAlbum = (bindedForm.get("rbExisting") instanceof String);
             int albumid = -1;
 
-            System.out.print(bindedForm.get("emails"));
-
             if (fileName.substring(index + 1).toLowerCase().equals("png") || fileName.substring(index + 1).toLowerCase().equals("jpg") || fileName.substring(index + 1).toLowerCase().equals("JPEG")) {
                 if (!newAlbum) {
                     boolean privateAlbum = false;
@@ -170,7 +168,7 @@ public class UploadController extends Controller {
                 }
 
                 if (albumid > 0) {
-                    insertFileDetails(fileName, photographerLogic.findPhotographerId(email), albumid, (int) (file.getTotalSpace() / 1000000), email);
+                    insertFileDetails(fileName, bindedForm.get("tbName"), photographerLogic.findPhotographerId(email), albumid, (int) (file.getTotalSpace() / 1000000), email);
                     connectWithFTP(file, fileName);
                     flash("success", "File has been uploaded succesfullly.");
                     return ok(upload.render(GetAlbums()));
@@ -195,7 +193,6 @@ public class UploadController extends Controller {
         FTPClient ftpClient = new FTPClient();
         try {
             ftpClient.connect(server, port);
-            //System.out.println(ConfigFactory.load().getString("db.default.ftpPassword") + ConfigFactory.load().getString("db.default.ftpUser"));
             ftpClient.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
             ftpClient.enterLocalPassiveMode();
 
@@ -240,8 +237,8 @@ public class UploadController extends Controller {
 
             if (!accessibility) {
                 System.out.println("if statement");
-                prepared = connection.prepareStatement("INSERT INTO `useralbum` (album_id, user_id) VALUES ((SELECT id FROM `album` ORDER BY id DESC LIMIT 1),?)");
-                prepared.setInt(1, photographer_id);
+                prepared = connection.prepareStatement("INSERT INTO `useralbum` (album_id, user_email) VALUES ((SELECT id FROM `album` ORDER BY id DESC LIMIT 1),?)");
+                prepared.setString(1, session("user"));
                 result = prepared.execute();
             }
 
@@ -262,32 +259,21 @@ public class UploadController extends Controller {
 
     private boolean insertAddUsersToPrivateAlbum(int albumid, String[] userEmails) {
         PreparedStatement prepared = null;
-        List<Integer> userIds = new ArrayList<>();
-        int userId = -1;
 
         try (Connection connection = db.getConnection()) {
 
             for (String userEmail : userEmails) {
-                prepared = connection.prepareStatement("select id from user where emailadres = ?");
-                prepared.setString(1, userEmail);
-                ResultSet result = prepared.executeQuery();
 
-                while (result.next()) {
-                    userId = result.getInt("id");
-                }
-
-                if (userId > 0) {
-                    userIds.add(userId);
-                    userId = -1;
-                }
-            }
-
-            for (int userid : userIds) {
-                prepared = connection.prepareStatement("INSERT INTO useralbum (album_id, user_id) VALUES (?, ?)");
+                prepared = connection.prepareStatement("INSERT INTO useralbum (album_id, user_email) VALUES (?, ?)");
                 prepared.setInt(1, albumid);
-                prepared.setInt(2, userid);
+                prepared.setString(2, userEmail);
                 prepared.executeUpdate();
             }
+
+            prepared = connection.prepareStatement("INSERT INTO useralbum (album_id, user_email) VALUES (?, ?)");
+            prepared.setInt(1, albumid);
+            prepared.setString(2, session("user"));
+            prepared.executeUpdate();
 
             return true;
 
@@ -297,12 +283,12 @@ public class UploadController extends Controller {
         }
     }
 
-    private boolean insertFileDetails(String fileName, int photographerId, int albumId, int fileSize, String email) {
+    private boolean insertFileDetails(String fileName, String name, int photographerId, int albumId, int fileSize, String email) {
         PreparedStatement prepared = null;
 
         try (Connection connection = db.getConnection()) {
             prepared = connection.prepareStatement("INSERT INTO `picture` (`name` , photographer_id, album_id, file_size, file_location, url) VALUES (?,?,?,?,?,?)");
-            prepared.setString(1, fileName);
+            prepared.setString(1, name);
             prepared.setInt(2, photographerId);
             prepared.setInt(3, albumId);
             prepared.setInt(4, fileSize);

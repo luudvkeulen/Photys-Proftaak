@@ -15,7 +15,8 @@ libraryDependencies ++= Seq(
   "org.apache.commons" % "commons-email" % "1.4",
   "commons-net" % "commons-net" % "3.5",
   "org.apache.commons" % "commons-io" % "1.3.2",
-  "com.google.code.gson" % "gson" % "2.8.0"
+  "com.google.code.gson" % "gson" % "2.8.0",
+  "com.paypal.sdk" % "paypal-core" % "1.7.2"
 )
 
 resolvers += Resolver.url("Typesafe Ivy releases", url("https://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
