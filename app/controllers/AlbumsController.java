@@ -53,13 +53,13 @@ public class AlbumsController extends Controller {
 
 
     private boolean isPhotographer(String email) {
-        return  pgL.isPhotographer(email);
+        return pgL.isPhotographer(email);
     }
 
 
-
     public int GetAlbumIdByURL(String albumUrl, String userEmail) {
-       return aL.GetAlbumIdByURL(albumUrl, userEmail);
+        aL = new AlbumLogic(db);
+        return aL.GetAlbumIdByURL(albumUrl, userEmail);
     }
 
     public ArrayList<Photo> GetPhotosInAlbum(int albumID) {

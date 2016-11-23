@@ -56,7 +56,14 @@ public class AlbumLogic {
             }
 
             if (privateAlbum == 1) {
-                statement = connection.prepareStatement("SELECT a.*, u.emailadres FROM useralbum a join `user` u on u.id = a.user_id WHERE album_id = ?");
+
+                AdminLogic adminLogic = new AdminLogic(db);
+
+                if (adminLogic.isAdmin(userEmail)) {
+                    return albumId;
+                }
+
+                statement = connection.prepareStatement("SELECT a.*, u.emailadres FROM useralbum a join `user` u on u.emailadres = a.user_email WHERE album_id = ?");
                 statement.setInt(1, albumId);
 
                 resultSet = statement.executeQuery();
@@ -75,7 +82,6 @@ public class AlbumLogic {
                     return -1;
                 }
             }
-            //flash message toevoegen wanneer toegang gewijgerd wordt.
             return albumId;
 
         } catch (SQLException e) {
