@@ -1,4 +1,5 @@
 package models;
+
 import models.UserType;
 
 public class User {
@@ -21,6 +22,10 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return firstName + " " + lastName;
     }
 
     public String getFirstName() {
@@ -87,15 +92,17 @@ public class User {
         this.phoneNr = phoneNr;
     }
 
-    public boolean GetIsBanned(){return isBanned;}
+    public boolean GetIsBanned() {
+        return isBanned;
+    }
 
     public void setUserType(UserType userType) {
-        this.userType = userType;}
+        this.userType = userType;
+    }
 
     private models.UserType userType;
 
-    public User(int ID, String FirstName, String LastName, String EmailAdress, String ZipCode,String StreetName , String HouseNr, String PhoneNr, int userType, int isBanned)
-    {
+    public User(int ID, String FirstName, String LastName, String EmailAdress, String ZipCode, String StreetName, String HouseNr, String PhoneNr, int userType, int isBanned) {
         this.id = ID;
         this.firstName = FirstName;
         this.lastName = LastName;
@@ -120,8 +127,9 @@ public class User {
         this.password = password;
     }
 
-    public User(String email, String firstName, String lastName, String zipcode, String street, String housenr, String phonenr, int type) {
+    public User(String email, String password, String firstName, String lastName, String zipcode, String street, String housenr, String phonenr, int type) {
         this.emailAddress = email;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.zipCode = zipcode;
@@ -142,8 +150,7 @@ public class User {
         this.userType = type;
     }
 
-    public void ChangeUserBan(boolean value)
-    {
+    public void ChangeUserBan(boolean value) {
         this.isBanned = value;
     }
 }

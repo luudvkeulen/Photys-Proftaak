@@ -1,7 +1,10 @@
 package controllers;
 
 import logic.PhotographerLogic;
+import logic.UserLogic;
 import models.User;
+import play.data.DynamicForm;
+import play.data.FormFactory;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -16,63 +19,69 @@ import java.sql.SQLException;
 public class AccountController extends Controller {
 
     @Inject
+    FormFactory factory;
+
+    @Inject
     public AccountController(Database db) {
         this.db = db;
         pl = new PhotographerLogic(db);
+        ul = new UserLogic(db);
     }
 
     private Database db;
 
     private PhotographerLogic pl;
 
+    private UserLogic ul;
+
     public boolean isPhotographer() {
         return pl.isPhotographer(session("user"));
     }
 
     public Result index() {
-        User user = new User();
-
-        String email = session("user");
-
-        try (Connection connection = db.getConnection()) {
-            PreparedStatement statement;
-            statement = connection.prepareStatement("SELECT first_name, last_name, zipcode, street, housenr, phonenr FROM `user` where emailadres = ?");
-
-            statement.setString(1, email);
-
-            ResultSet rs = statement.executeQuery();
-
-            while (rs.next()) {
-                user.setEmailAdress(email);
-                user.setFirstName(rs.getString("first_name"));
-                user.setLastName(rs.getString("last_name"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return ok(account.render(user));
+        User currentUser = GetAccountInfo(session("user"));
+        return ok(account.render(currentUser));
     }
 
-    public String GetAccountInfo(String email) {
-        try (Connection connection = db.getConnection()) {
+    public User GetAccountInfo(String email) {
+        return ul.GetAccountInfo(email);
+    }
 
-            PreparedStatement statement;
+    public Result UpdateAccountInfo() {
+        DynamicForm bindedForm = factory.form().bindFromRequest();
+        String userEmail = session("user");
+        String select = bindedForm.get("infoSelect");
+        String input1 = bindedForm.get("inputSelect1");
+        String input2 = bindedForm.get("inputSelect2");
 
-            statement = connection.prepareStatement("SELECT first_name, last_name, zipcode, street, housenr, phonenr, `type` FROM `user` where emailadres = ?");
-
-            statement.setString(1, email);
-
-            ResultSet rs = statement.executeQuery();
-
-            while (rs.next()) {
-                rs.getString("");
+        if (select.equals("password")) {
+            if (!ul.checkPassword(userEmail, input1)){
+                flash("danger", "Incorrect password.");
+                User currentUser = GetAccountInfo(userEmail);
+                return ok(account.render(currentUser));
             }
-
-            return "";
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return "";
+
+        User updatedUser = ul.GetAccountInfo(userEmail);
+
+        if (select.equals("email")) {
+            updatedUser.setEmailAdress(input1);
+        } else if (select.equals("name")) {
+            updatedUser.setFirstName(input1);
+            updatedUser.setLastName(input2);
+        } else if (select.equals("password")) {
+            updatedUser.setPassword(input2);
+        } else if (select.equals("zipcode")) {
+            updatedUser.setZipCode(input1);
+        } else if (select.equals("adres")) {
+            updatedUser.setStreetName(input1);
+            updatedUser.setHouseNr(input2);
+        } else if (select.equals("phonenr")) {
+            updatedUser.setPhoneNr(input1);
+        }
+
+        ul.UpdateAccountInfo(updatedUser, userEmail);
+        User currentUser = GetAccountInfo(userEmail);
+        return ok(account.render(currentUser));
     }
 }

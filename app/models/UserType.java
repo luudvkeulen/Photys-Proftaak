@@ -5,7 +5,7 @@ package models;
  */
 public enum UserType {
 
-    User(0) , Photographer(1), requestedPhotographer(2), Admin(3);
+    Suspended(-1), User(0) , Photographer(1), requestedPhotographer(2), Admin(3);
 
     private final int id;
     UserType(int id) {this.id = id; }

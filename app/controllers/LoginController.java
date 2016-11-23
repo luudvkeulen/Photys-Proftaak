@@ -23,8 +23,10 @@ public class LoginController extends Controller {
     FormFactory factory;
 
     Database db;
+    UserLogic ul;
 
     public Result index() {
+        ul = new UserLogic(db);
         return ok(login.render());
     }
 
@@ -51,9 +53,7 @@ public class LoginController extends Controller {
     }
 
     private boolean checkCredentials(String email, String password) {
-        String hashed = getEncryptedPassword(email);
-        if(hashed.isEmpty()) return false;
-        boolean correct = BCrypt.checkpw(password, hashed);
+        boolean correct = ul.checkPassword(email, password);
         if(correct) {
             Logger.info("correct");
             session("user", email);
@@ -65,29 +65,7 @@ public class LoginController extends Controller {
         }
     }
 
-    private String getEncryptedPassword(String email) {
-        Connection connection = db.getConnection();
-        String resultString = "";
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT PASSWORD FROM `user` WHERE emailadres=?");
-            statement.setString(1, email);
-            ResultSet result = statement.executeQuery();
 
-            if (result.next()) {
-                resultString = result.getString(1);
-            }
-        } catch (SQLException e) {
-            Logger.error(e.getMessage());
-            return "";
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return resultString;
-    }
 
     @Inject
     public LoginController(Database db) {
