@@ -126,4 +126,5 @@ public class Photo implements java.io.Serializable {
         this.price = price;
         this.albumName = albumName;
     }
+
 }

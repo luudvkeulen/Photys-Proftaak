@@ -5,6 +5,7 @@ import models.Photo;
 import models.User;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import play.Logger;
 import play.db.DB;
 import play.db.Database;
 
@@ -74,6 +75,7 @@ public class PhotoLogic {
 
     public boolean DeletePhotoByID(int photoID)
     {
+        Logger.info("Delete photo method was called");
         PreparedStatement statement = null;
         Boolean ftpSucces = false;
         Boolean dbSucces = false;
@@ -93,6 +95,7 @@ public class PhotoLogic {
 
         }
         catch(IOException ex){
+            Logger.info("Couldnt connect to the ftp server");
             ex.printStackTrace();
             return false;
         }
@@ -103,14 +106,16 @@ public class PhotoLogic {
             statement.setInt(1, photoID);
             dbSucces = statement.execute();
         }catch(SQLException ex){
+            Logger.info("Something went wrong with the database");
             ex.printStackTrace();
         }
 
+        System.out.println("FTP: " + ftpSucces + " DB: " + dbSucces);
         if(dbSucces == true && ftpSucces == true) {
             return true;
         }
         else {
-            System.out.println("Something went wrong :c");
+            Logger.info("Something went wrong :c");
             return false;
         }
     }

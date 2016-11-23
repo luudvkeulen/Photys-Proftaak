@@ -45,7 +45,7 @@ public class AlbumLogic {
             int albumId = -1;
             int privateAlbum = -1;
 
-            statement = connection.prepareStatement("SELECT `id`, private FROM `album` WHERE `albumURL` = ?");
+            statement = connection.prepareStatement("SELECT `id` FROM `album` WHERE `albumURL` = ?");
             statement.setString(1, albumUrl);
 
             ResultSet resultSet = statement.executeQuery();

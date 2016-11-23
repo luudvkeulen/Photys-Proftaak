@@ -1,4 +1,5 @@
 @import java.util
+@import controllers.routes
 @(photos: util.List[Photo])
 
 @main("MyUploads") {
@@ -23,7 +24,7 @@
                                 <td>@photo.getAlbumName</td>
                                 <td>€ @photo.getPrice</td>
                                 <td>@photo.getDate</td>
-                                <td><a href="#" class="btn btn-default">Remove</a></td>
+                                <td><a href= "@routes.UploadController.deletePhoto(photo.getId().toString())" class="btn btn-default">Remove</a></td>
                             </tr>
                     }
                     </tbody>

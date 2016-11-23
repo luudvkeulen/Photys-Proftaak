@@ -1,9 +1,11 @@
 package controllers;
 
 import com.typesafe.config.ConfigFactory;
+import logic.PhotoLogic;
 import models.Photo;
 import logic.PhotographerLogic;
 import models.Album;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.DB;
@@ -65,6 +67,21 @@ public class UploadController extends Controller {
             flash("warning", "You need to be logged in as a photographer to view upload history");
             return redirect("/");
         }
+        photos = retrieveUploadHistory();
+        if (photos.size() < 1) {
+            flash("You haven't uploaded any files yet.");
+        }
+        return ok(myuploads.render(photos));
+    }
+
+    //Temporary on void for testing purposes, but should be boolean
+    public Result deletePhoto(String PhotoID) {
+        int intPhotoID = Integer.parseInt(PhotoID);
+        Logger.info("Delete photo is being called");
+        PhotoLogic pL = new PhotoLogic(db);
+        pL.DeletePhotoByID(intPhotoID);
+
+        ArrayList<Photo> photos = new ArrayList<>();
         photos = retrieveUploadHistory();
         if (photos.size() < 1) {
             flash("You haven't uploaded any files yet.");
