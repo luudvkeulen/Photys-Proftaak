@@ -60,54 +60,6 @@ public class AlbumsController extends Controller {
 
     public int GetAlbumIdByURL(String albumUrl, String userEmail) {
        return aL.GetAlbumIdByURL(albumUrl, userEmail);
-        try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = null;
-            int albumId = -1;
-            int privateAlbum = -1;
-
-            statement = connection.prepareStatement("SELECT `id`, private FROM `album` WHERE `albumURL` = ?");
-            statement.setString(1, albumUrl);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                albumId = resultSet.getInt("id");
-                privateAlbum = resultSet.getInt("private");
-            }
-
-            if (privateAlbum == 1) {
-
-                AdminLogic adminLogic = new AdminLogic(db);
-
-                if (adminLogic.isAdmin(session("user"))) {
-                    return albumId;
-                }
-
-                statement = connection.prepareStatement("SELECT a.*, u.emailadres FROM useralbum a join `user` u on u.emailadres = a.user_email WHERE album_id = ?");
-                statement.setInt(1, albumId);
-
-                resultSet = statement.executeQuery();
-
-                int results = 0;
-                while (resultSet.next()) {
-                    if (resultSet.getString("emailadres").equals(userEmail)) {
-                        return albumId;
-                    }
-                    results++;
-                }
-
-                if (results == 0) {
-                    return albumId;
-                } else {
-                    return -1;
-                }
-            }
-            return albumId;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        }
     }
 
     public ArrayList<Photo> GetPhotosInAlbum(int albumID) {

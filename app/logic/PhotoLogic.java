@@ -68,11 +68,11 @@ public class PhotoLogic {
         return photo;
     }
 
-    public boolean DeletePhotoByID(int photoID)
-    {
+    //public boolean DeletePhotoByID(int photoID)
+    //{
         //Delete photo on ftp
         //Delete photo reference on database
 
-    }
+    //}
 
 }
