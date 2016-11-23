@@ -19,13 +19,13 @@ var labelTotalPrice = document.createElement("label");
 var labelTotalPriceShow = document.createElement("label");
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-	setupInformation();
+	//setupInformation();
   	document.getElementById("itemAmount").innerHTML = " 0 - items";
 
   	// GUI componenten inladen voor het berekenen van de prijs
-  	createGuiPriceComponents();
+  	//createGuiPriceComponents();
   	// Totale kosten berekenen
-  	calculateAmount();
+  	//calculateAmount();
 
   	var size = items.length;
   	if(size > 0){
