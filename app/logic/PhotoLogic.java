@@ -1,11 +1,14 @@
 package logic;
 
+import com.typesafe.config.ConfigFactory;
 import models.Photo;
 import models.User;
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import play.db.DB;
 import play.db.Database;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,12 +72,47 @@ public class PhotoLogic {
         return photo;
     }
 
-    //public boolean DeletePhotoByID(int photoID)
-    //{
-        //Delete photo on ftp
-        //Delete photo reference on database
-        return false;
+    public boolean DeletePhotoByID(int photoID)
+    {
+        PreparedStatement statement = null;
+        Boolean ftpSucces = false;
+        Boolean dbSucces = false;
 
-    //}
+        //Delete photo on ftp
+        FTPClient client = new FTPClient();
+        try{
+            client.connect("137.74.163.54", 21);
+            client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
+            client.enterLocalPassiveMode();
+            client.setFileType(FTP.BINARY_FILE_TYPE);
+            client.setSoTimeout(10000);
+
+            Photo photo = this.GetPhotoByID(photoID);
+
+            ftpSucces =  client.deleteFile(photo.getFileLocation());
+
+        }
+        catch(IOException ex){
+            ex.printStackTrace();
+            return false;
+        }
+
+        //Delete photo reference on database
+        try(Connection connection = db.getConnection()) {
+            statement = connection.prepareStatement("DELETE FROM `picture` WHERE `id` = ?");
+            statement.setInt(1, photoID);
+            dbSucces = statement.execute();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+
+        if(dbSucces == true && ftpSucces == true) {
+            return true;
+        }
+        else {
+            System.out.println("Something went wrong :c");
+            return false;
+        }
+    }
 
 }

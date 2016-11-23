@@ -195,7 +195,6 @@ public class UploadController extends Controller {
         FTPClient ftpClient = new FTPClient();
         try {
             ftpClient.connect(server, port);
-            //System.out.println(ConfigFactory.load().getString("db.default.ftpPassword") + ConfigFactory.load().getString("db.default.ftpUser"));
             ftpClient.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
             ftpClient.enterLocalPassiveMode();
 
