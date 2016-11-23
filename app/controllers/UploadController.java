@@ -141,8 +141,6 @@ public class UploadController extends Controller {
             boolean newAlbum = (bindedForm.get("rbExisting") instanceof String);
             int albumid = -1;
 
-            System.out.print(bindedForm.get("emails"));
-
             if (fileName.substring(index + 1).toLowerCase().equals("png") || fileName.substring(index + 1).toLowerCase().equals("jpg") || fileName.substring(index + 1).toLowerCase().equals("JPEG")) {
                 if (!newAlbum) {
                     boolean privateAlbum = false;
@@ -170,7 +168,7 @@ public class UploadController extends Controller {
                 }
 
                 if (albumid > 0) {
-                    insertFileDetails(fileName, photographerLogic.findPhotographerId(email), albumid, (int) (file.getTotalSpace() / 1000000), email);
+                    insertFileDetails(fileName, bindedForm.get("tbName"), photographerLogic.findPhotographerId(email), albumid, (int) (file.getTotalSpace() / 1000000), email);
                     connectWithFTP(file, fileName);
                     flash("success", "File has been uploaded succesfullly.");
                     return ok(upload.render(GetAlbums()));
@@ -195,7 +193,6 @@ public class UploadController extends Controller {
         FTPClient ftpClient = new FTPClient();
         try {
             ftpClient.connect(server, port);
-            //System.out.println(ConfigFactory.load().getString("db.default.ftpPassword") + ConfigFactory.load().getString("db.default.ftpUser"));
             ftpClient.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
             ftpClient.enterLocalPassiveMode();
 
@@ -286,12 +283,12 @@ public class UploadController extends Controller {
         }
     }
 
-    private boolean insertFileDetails(String fileName, int photographerId, int albumId, int fileSize, String email) {
+    private boolean insertFileDetails(String fileName, String name, int photographerId, int albumId, int fileSize, String email) {
         PreparedStatement prepared = null;
 
         try (Connection connection = db.getConnection()) {
             prepared = connection.prepareStatement("INSERT INTO `picture` (`name` , photographer_id, album_id, file_size, file_location, url) VALUES (?,?,?,?,?,?)");
-            prepared.setString(1, fileName);
+            prepared.setString(1, name);
             prepared.setInt(2, photographerId);
             prepared.setInt(3, albumId);
             prepared.setInt(4, fileSize);

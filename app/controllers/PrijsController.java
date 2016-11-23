@@ -6,6 +6,7 @@ import play.db.Database;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class PrijsController extends Controller {
@@ -23,7 +24,7 @@ public class PrijsController extends Controller {
     public PrijsController()
     {}
 
-    public double CalcTotalPrice(ArrayList<Product> productsInCart)
+    public double CalcTotalPrice(List<Product> productsInCart)
     {
 
         double totalPrice = 0;

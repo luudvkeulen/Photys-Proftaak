@@ -1,75 +1,78 @@
 @(acceptedPhotohgraphers: List[User], pendingPhotohgraphers: List[User], customers: List[User], products: List[Product])
 
-@main("Admin") {
-    <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
-    <script src="@routes.Assets.versioned("javascripts/jquery.js")"></script>
-    <link href="@routes.Assets.versioned("stylesheets/admin.css")" rel="stylesheet">
-    <div class="myCart col-md-5 col-md-offset-2">
-        <div class=panel-group" id="accordion">
-            <h2>Customers</h2>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#customerList">
-                            Show customers</a>
-                    </h4>
-                </div>
-                <div id="customerList" class="panel-collapse collapse">
-                    @for(user <- customers) {
-                        <div id="pic001" class="panel-body photographer"><img src="http://vignette3.wikia.nocookie.net/stevenuniverse-fanon/images/5/56/Placeholder.gif/revision/latest?cb=20160218035533" width="100" height="100"> <b>@user.getFirstName @user.getLastName</b></div>
-                    }
-                    <button type="button" class="btnPhotographer btn btn-primary profilebutton">Check profile</button>
-                </div>
-            </div>
-            <h2>Existing photographers</h2>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#acceptedPhotographers">
-                            Show photographers</a>
-                    </h4>
-                </div>
-                <div id="acceptedPhotographers" class="panel-collapse collapse">
-                    @for(user <- acceptedPhotohgraphers) {
-                        <div id="pic001" class="panel-body photographer"><img src="http://vignette3.wikia.nocookie.net/stevenuniverse-fanon/images/5/56/Placeholder.gif/revision/latest?cb=20160218035533" width="100" height="100"> <b>@user.getFirstName @user.getLastName</b></div>
-                    }
-                    <button type="button" class="btnPhotographer btn btn-primary profilebutton">Check profile</button>
-                </div>
-            </div>
-            <h2>Applied photographers</h2>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#appliedPhotographers">
-                            Show applied photographers</a>
-                    </h4>
-                </div>
-                <div id="appliedPhotographers" class="panel-collapse collapse">
-                    <form method="POST" action="@routes.AdminController.accept()">
-                        @for(user <- pendingPhotohgraphers) {
-                            <div class="panel-body photographer"><input type="hidden" name="id" class="photographerid" disabled="disabled" value="@user.getId"/><img src="http://vignette3.wikia.nocookie.net/stevenuniverse-fanon/images/5/56/Placeholder.gif/revision/latest?cb=20160218035533" width="100" height="100"> <b>@user.getFirstName @user.getLastName</b></div>
+    @main("Admin") {
+        <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
+        <script src="@routes.Assets.versioned("javascripts/jquery.js")"></script>
+        <link href="@routes.Assets.versioned("stylesheets/admin.css")" rel="stylesheet">
+        <div class="myCart col-md-5 col-md-offset-2">
+            <div class=panel-group" id="accordion">
+                <h2>Customers</h2>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#customerList">
+                                Show customers</a>
+                        </h4>
+                    </div>
+                    <div id="customerList" class="panel-collapse collapse">
+                        @for(user <- customers) {
+                            <div id="pic001" class="panel-body photographer"><img src="http://vignette3.wikia.nocookie.net/stevenuniverse-fanon/images/5/56/Placeholder.gif/revision/latest?cb=20160218035533" width="100" height="100"> <b>@user.getFirstName @user.getLastName</b></div>
                         }
-                        <button type="button" class="btnCheckProfile btn btn-primary profilebutton">Check profile</button>
-                        <input type="submit" class="btnAcceptPhotographer btn btn-primary acceptbutton" href="@routes.AdminController.accept()" value="Accept photographer"/>
-                    </form>
+                        <button type="button" class="btnPhotographer btn btn-primary profilebutton">Check profile</button>
+                    </div>
                 </div>
-            </div>
-            <h2>Products</h2>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#productList">
-                            Show products</a>
-                    </h4>
+                <h2>Existing photographers</h2>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#acceptedPhotographers">
+                                Show photographers</a>
+                        </h4>
+                    </div>
+                    <div id="acceptedPhotographers" class="panel-collapse collapse">
+                        <form method="POST" action="@routes.AdminController.accept()">
+                            @for(user <- acceptedPhotohgraphers) {
+                                <div id="pic001" class="panel-body photographer"><img src="http://vignette3.wikia.nocookie.net/stevenuniverse-fanon/images/5/56/Placeholder.gif/revision/latest?cb=20160218035533" width="100" height="100"> <b>@user.getFirstName @user.getLastName</b></div>
+                            }
+                            <button type="button" class="btnPhotographer btn btn-primary profilebutton">Check profile</button>
+                            <input type="submit" class="btnAcceptPhotographer btn btn-primary acceptbutton" value="Ban/Unban"/>
+                        </form>
+                    </div>
                 </div>
-                <div id="productList" class="panel-collapse collapse">
-                    @for(product <- products) {
-                        <div id="pic001" class="panel-body photographer"><img src="http://downloadicons.net/sites/default/files/product-icon-27962.png" width="100" height="100"> <b>€@product.getPrice - @product.getName</b></div>
-                    }
-                    <button type="button" class="btnPhotographer btn btn-primary profilebutton">Remove product</button>
-                    <button type="button" class="btnPhotographer btn btn-primary profilebutton">Edit product</button>
+                <h2>Applied photographers</h2>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#appliedPhotographers">
+                                Show applied photographers</a>
+                        </h4>
+                    </div>
+                    <div id="appliedPhotographers" class="panel-collapse collapse">
+                        <form method="POST" action="@routes.AdminController.accept()">
+                            @for(user <- pendingPhotohgraphers) {
+                                <div class="panel-body photographer"><input type="hidden" name="id" class="photographerid" disabled="disabled" value="@user.getId"/> <img src="http://vignette3.wikia.nocookie.net/stevenuniverse-fanon/images/5/56/Placeholder.gif/revision/latest?cb=20160218035533" width="100" height="100"> <b>@user.getFirstName @user.getLastName</b></div>
+                            }
+                            <button type="button" class="btnCheckProfile btn btn-primary profilebutton">Check profile</button>
+                            <input type="submit" class="btnAcceptPhotographer btn btn-primary acceptbutton" href="@routes.AdminController.accept()" value="Accept photographer"/>
+                        </form>
+                    </div>
+                </div>
+                <h2>Products</h2>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#productList">
+                                Show products</a>
+                        </h4>
+                    </div>
+                    <div id="productList" class="panel-collapse collapse">
+                        @for(product <- products) {
+                            <div id="pic001" class="panel-body photographer"><img src="http://downloadicons.net/sites/default/files/product-icon-27962.png" width="100" height="100"> <b>€@product.getPrice - @product.getName</b></div>
+                        }
+                        <button type="button" class="btnPhotographer btn btn-primary profilebutton">Remove product</button>
+                        <button type="button" class="btnPhotographer btn btn-primary profilebutton">Edit product</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-}
+    }
