@@ -2,6 +2,7 @@ package logic;
 
 import models.Photo;
 import models.User;
+import org.apache.commons.net.ftp.FTPClient;
 import play.db.DB;
 import play.db.Database;
 
@@ -72,6 +73,7 @@ public class PhotoLogic {
     {
         //Delete photo on ftp
         //Delete photo reference on database
+        return false;
 
     }
 
