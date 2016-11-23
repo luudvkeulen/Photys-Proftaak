@@ -2,6 +2,7 @@ function controlSelection() {
     $('.ui-autocomplete-input').prop('disabled', true).val('');
     $('.tagit-choice').remove();
     $('.ui-widget-content').css('opacity','.2');
+    $('.emails-group').css('display','none');
     if (document.getElementById('rb1').checked) {
         document.getElementById("sel1").disabled = false;
         document.getElementById("tbDesc").disabled = true;
@@ -27,11 +28,11 @@ $(document).ready(function () {
 
     $('#cb1').change(function () {
         if($(this).is(':checked')){
-
+            $('.emails-group').css('display','block');
             $('.ui-widget-content').css('opacity','1');
             $('.ui-autocomplete-input').prop('disabled', false);
         }else {
-
+            $('.emails-group').css('display','none');
             $('.ui-autocomplete-input').prop('disabled', true).val('');
             $('.tagit-choice').remove();
             $('.ui-widget-content').css('opacity','.2');
