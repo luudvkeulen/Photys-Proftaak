@@ -26,7 +26,6 @@ GET     /album                      controllers.PrivateAlbumsController.RenderAl
 GET     /cart                       controllers.CartController.index
 GET     /myalbums                   controllers.AlbumsController.albums
 
-
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 

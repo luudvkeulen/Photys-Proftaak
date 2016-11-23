@@ -10,6 +10,7 @@ public class Product implements Serializable {
     private String description;
     private Double price;
     private Integer amount;
+    private double totalPrice;
 
     public Product(int ID, String name, String description, double price) {
         this.ID = ID;
@@ -43,4 +44,12 @@ public class Product implements Serializable {
     public Integer getAmount() { return amount; }
 
     public void setAmount(Integer amount) { this.amount = amount; }
+
+    public void setTotalPrice(double totalPrice){
+        this.totalPrice = totalPrice;
+    }
+
+    public double getTotalPrice(){
+        return this.totalPrice;
+    }
 }

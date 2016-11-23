@@ -10,7 +10,6 @@
             });
     </script>
 
-
         <!--CART INFORMATION-->
     <div class="cartContainer col-md-4">
         <h2>Cart</h2>
@@ -22,10 +21,35 @@
                     </h4>
                 </div>
                 <div id="collapse1" class="panel-collapse collapse">
+                        @for(cartItem <- cartItems) {
+                            @for(product <- cartItem.getProducts) {
+                                <label>Picture ID: @cartItem.getPictureId</label>
+                                <label>Product ID: @product.getID</label>
+                                <label>Product Description: @product.getDescription</label>
+                                <div><img src="https://www.yellowoctopus.com.au/media/catalog/product/cache/1/image/500x500/9df78eab33525d08d6e5fb8d27136e95/y/e/yellow-octopus-mugshot-mug.jpg"
+                                style="height: 50px;
+                                    width: 50px;"
+                                > @product.getName &#8364; @product.getPrice
+                                    <button>-</button>
+                                    <label id="label0">1</label>
+                                    <button id="0">+</button>
+                                </div>
+                            }
+                        }
                 </div>
             </div>
         </div>
         <div id="costs">
+        </div>
+        <div>
+        @for(cartItem <- cartItems){
+            @for(product <- cartItem.getProducts){
+                <label>Amount of items: </label>
+                <label>@cartItem.getProducts.size()</label>
+                <label>Total price: &#8364; </label>
+                <label>@product.getTotalPrice</label>
+            }
+        }
         </div>
         <button type="button" class="btn btn-primary btn-lg btn-block">order now</button>
     </div>

@@ -15,6 +15,8 @@ public class CartItem implements Serializable {
         return this.products;
     }
 
+    public void setProducts(List<Product> products) {this.products = products;}
+
     public CartItem(Integer pictureId, List<Product> products) {
         this.pictureId = pictureId;
         this.products = products;
