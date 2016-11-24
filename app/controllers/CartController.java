@@ -97,6 +97,10 @@ public class CartController extends Controller {
         return result;
     }
 
+    public static String countCartItems() {
+        return "test";
+    }
+
     @Inject
     public CartController(play.db.Database db) {;
         this.prc = new PrijsController(db);

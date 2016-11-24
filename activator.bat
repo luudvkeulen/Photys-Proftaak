@@ -41,7 +41,7 @@ set BIN_DIRECTORY=%~dp0
 set BIN_DIRECTORY=%BIN_DIRECTORY:~0,-1%
 for %%d in (%BIN_DIRECTORY%) do set ACTIVATOR_HOME=%%~dpd
 set ACTIVATOR_HOME=%ACTIVATOR_HOME:~0,-1%
-set ACTIVATOR_HOME=D:\Documents\Intellij projects\Photys
+set ACTIVATOR_HOME=D:\luud\Documents\Intellij projects\PTS4
 
 echo ACTIVATOR_HOME=%ACTIVATOR_HOME%
 

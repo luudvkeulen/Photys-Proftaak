@@ -62,12 +62,12 @@
                     @if(session.get("user") != null) {
                         <li><a href="/account">Account</a></li>
                         <li><a href="/privatealbums">Albums</a></li>
-                        <li><a href="/upload">Upload</a></li>
+                        <li><a href="/upload">Upload @CartController.countCartItems()</a></li>
                         <li class="dropdown">
                             <a href="/cart" class="dropdown-toggle" role="button" aria-expanded="false">
                                 <span class="glyphicon glyphicon-shopping-cart"></span>
                                 <span id="itemAmount">
-                                    0193019 items</span>
+                                    0 items</span>
                                 <span id="item"></span>
                                 </a>
                         </li>
