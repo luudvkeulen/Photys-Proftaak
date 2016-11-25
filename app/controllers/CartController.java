@@ -22,7 +22,8 @@ public class CartController extends Controller {
 
     private Database db;
     private PrijsController prc;
-    private double totalPrice;
+    private static double totalPrice;
+    private static int totalItems;
 
     public Result index() {
         if(request().cookie("cart") == null) return ok(cart.render(new ArrayList<>()));
@@ -63,6 +64,7 @@ public class CartController extends Controller {
 
                 totalPrice = prc.CalcTotalPrice(fullProducts);
                 fullProduct.setTotalPrice(totalPrice);
+                totalItems = carty.getProducts().size();
             }
 
 
@@ -97,8 +99,14 @@ public class CartController extends Controller {
         return result;
     }
 
-    public static String countCartItems() {
-        return "test";
+    // berekenen van de totaal prijs van alle producten in de winkelwagen
+    public static double countTotalPrice() {
+        return totalPrice;
+    }
+
+    // Ophalen van alle Items voor de winkelwagen
+    public static int getTotalItems(){
+        return totalItems;
     }
 
     @Inject
