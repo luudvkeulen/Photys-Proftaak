@@ -78,6 +78,29 @@ public class PhotoLogic {
         return photo;
     }
 
+    public ArrayList<Photo> getPhotosByAlbumID(int albumId) {
+        try (Connection connection = db.getConnection()) {
+
+            PreparedStatement statement;
+            ArrayList<Photo> photos = new ArrayList<>();
+
+            statement = connection.prepareStatement("SELECT * FROM `picture` WHERE `album_id` = ?");
+            statement.setInt(1, albumId);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int photoID = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String fileLocation = resultSet.getString("file_location");
+                photos.add(new Photo(photoID, name, fileLocation));
+            }
+            return photos;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean DeletePhotoByID(int photoID)
     {
         Logger.info("Delete photo method was called");
