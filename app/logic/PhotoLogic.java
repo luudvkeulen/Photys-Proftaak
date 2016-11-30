@@ -32,18 +32,21 @@ public class PhotoLogic {
 
     public Photo GetPhotoByID(int photoID)
     {
+        Logger.info("GetPhotoByID is called!");
         Photo photo = null;
         PreparedStatement statement = null;
         Connection connection = null;
 
         try{
             connection = db.getConnection();
+            Logger.info("Received DB connection");
             statement = connection.prepareStatement("SELECT * FROM `picture` WHERE `id` = ?");
             statement.setInt(1, photoID);
-
+            Logger.info("Querying");
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
+                Logger.info("Getting photo properties");
                 String photoName = resultSet.getString("name");
 
                 int photographerId = resultSet.getInt("photographer_id");
@@ -55,6 +58,7 @@ public class PhotoLogic {
                 int fileSize = resultSet.getInt("file_size");
                 Date date = resultSet.getDate("date");
                 String fileLocation = resultSet.getString("file_location");
+                Logger.info("Photo file location is: " + fileLocation);
                 Double price = resultSet.getDouble("price");
                 String url = resultSet.getString("url");
 
@@ -62,6 +66,7 @@ public class PhotoLogic {
             }
         }
         catch(SQLException ex){
+            Logger.info("Could not retrieve photo!");
             ex.printStackTrace();
             try {
                 connection.close();
@@ -112,8 +117,12 @@ public class PhotoLogic {
             client.setFileType(FTP.BINARY_FILE_TYPE);
             client.setSoTimeout(10000);
 
-            Photo photo = this.GetPhotoByID(photoID);
 
+            Logger.info("Succesfully connected to the ftp client!");
+            Logger.info("Getting photo by ID...");
+            Photo photo = this.GetPhotoByID(photoID);
+            Logger.info("Recieved photo by id!" );
+            Logger.info("Photo file location : " + photo.getFileLocation());
             ftpSucces =  client.deleteFile(photo.getFileLocation());
 
         }
