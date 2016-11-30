@@ -1,65 +1,88 @@
 @(products: List[Product], prevUrl: String, name: String, album: String, albumUrl: String, photographerName: String, price: Double, location: String, id: Integer)
-@main("Preview") {
-    <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
-    <link href="@routes.Assets.versioned("stylesheets/preview.css")" rel="stylesheet">
-    <script type="text/javascript" src="@routes.Assets.versioned("javascripts/preview.js")"></script>
+    @main("Preview") {
+        <div class="col-md-8 col-md-offset-2">
+            <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
+            <link href="@routes.Assets.versioned("stylesheets/preview.css")" rel="stylesheet">
+            <script type="text/javascript" src="@routes.Assets.versioned("javascripts/preview.js")"></script>
 
-    <div class="picturename"><h1 class="h1name">@name</h1></div>
-    <img src="@routes.PictureController.renderPhoto(location)" class="imagepreview">
-    <table class="table">
-        <thead class="thead-default">
-            <tr>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Location</td>
-                <td>Netherlands</td>
-            </tr>
-            <tr>
-                <td>Photographer</td>
-                <td>@photographerName</td>
-            </tr>
-            <tr>
-                <td>Album</td>
-                <td><a href="/album?url=@albumUrl">@album</a></td>
-            </tr>
-            <tr>
-                <td>Price</td>
-                <td>€ @price</td>
-            </tr>
-        </tbody>
-    </table>
+            <div class="picturename"><h1 class="h1name">@name</h1></div>
+            <img id="image" src="@routes.PictureController.renderPhoto(location)">
+            <table class="table">
+                <thead class="thead-default">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Location</td>
+                        <td>Netherlands</td>
+                    </tr>
+                    <tr>
+                        <td>Photographer</td>
+                        <td>@photographerName</td>
+                    </tr>
+                    <tr>
+                        <td>Album</td>
+                        <td><a href="/album?url=@albumUrl">@album</a></td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td>€ @price</td>
+                    </tr>
+                </tbody>
+            </table>
 
-    <div class="panel panel-default" id="collapsable">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#collapsable" href="#products">
-                    Order picture
-                </a><i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-            </h4>
+            <div class="panel panel-default filters" id="collapsable">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#collapsable" href="#filters">
+                            Show filters
+                        </a><i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                    </h4>
+                </div>
+                <div id="filters" class="panel-collapse collapse">
+                    <form class="filterform" action="">
+                        <input id="filter" type="radio" name="filter" value="none" checked="checked" onClick="filterSelected()"> None<br/>
+                        <input id="filter" type="radio" name="filter" value="sepia" onClick="filterSelected()"> Sepia<br/>
+                        <input id="filter" type="radio" name="filter" value="bw" onClick="filterSelected()"> Black & White<br/>
+                        <input id="filter" type="radio" name="filter" value="inverted" onClick="filterSelected()"> Inverted<br/>
+                        <input id="filter" type="radio" name="filter" value="blur" onClick="filterSelected()"> Blurred<br/>
+                        <input id="filter" type="radio" name="filter" value="dark" onClick="filterSelected()"> Darkened
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="collapsable">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#collapsable" href="#products">
+                            Order picture
+                        </a><i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+                    </h4>
+                </div>
+                <div id="products" class="panel-collapse collapse">
+                    <form action="@routes.PreviewController.addToCart()" method="POST">
+                        @for(product <- products) {
+                            @if(products.last == product) {
+                                <div class="product panel-body">
+                                    <input name="@product.getID" class="productamount" type="number" min="0" value="0"> <p class="productname">@product.getName</p> <p class="productprice">&euro; @String.format("%.2f", product.getPrice)</p>
+                                </div>
+                            } else {
+                                <div class="product panel-body divwithborder">
+                                    <input name="@product.getID" class="productamount" type="number" min="0" value="0"> <p class="productname">@product.getName</p> <p class="productprice">&euro; @String.format("%.2f", product.getPrice)</p>
+                                </div>
+                            }
+                        }
+                        <input type="text" class="hidden" name="id" value="@id"/>
+                        <input type="submit" id="submit-form" class="hidden" />
+                    </form>
+
+                    <label id="addToCart" for="submit-form" class="btn btn-primary pull-right addtocartbutton">
+                        Add to cart</label>
+
+                </div>
+            </div>
         </div>
-        <div id="products" class="panel-collapse collapse">
-            <form action="@routes.PreviewController.addToCart()" method="POST">
-                @for(product <- products) {
-                    @if(products.last == product) {
-                        <div class="product panel-body">
-                            <input name="@product.getID" class="productamount" type="number" min="0" value="0"> <p class="productname">@product.getName</p> <p class="productprice">&euro; @String.format("%.2f", product.getPrice)</p>
-                        </div>
-                    } else {
-                        <div class="product panel-body divwithborder">
-                            <input name="@product.getID" class="productamount" type="number" min="0" value="0"> <p class="productname">@product.getName</p> <p class="productprice">&euro; @String.format("%.2f", product.getPrice)</p>
-                        </div>
-                    }
-                }
-                <input type="text" class="hidden" name="id" value="@id"/>
-                <input type="submit" id="submit-form" class="hidden" />
-            </form>
-
-            <label id="addToCart" for="submit-form" class="btn btn-primary pull-right addtocartbutton">Add to cart</label>
-
-        </div>
-    </div>
-}
+    }
