@@ -108,8 +108,8 @@ public class PreviewController extends Controller {
         Logger.info(cookieText);
 
         response().setCookie(new Http.Cookie("cart", cookieText, null, "/", "", false, false));
-
-        return ok();
+        return redirect("/cart");
+        //return ok();
     }
 
     @Inject

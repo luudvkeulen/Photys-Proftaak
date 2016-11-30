@@ -1,11 +1,20 @@
 package logic;
 
+import com.typesafe.config.ConfigFactory;
+import models.Album;
+import models.Photo;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import play.Logger;
 import play.db.Database;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Thijs on 22-11-2016.
@@ -14,7 +23,9 @@ public class AlbumLogic {
 
     Database db;
 
-    public AlbumLogic(Database db) {this.db = db;}
+    public AlbumLogic(Database db) {
+        this.db = db;
+    }
 
     public String GetAlbumNameById(int albumID) {
         try (Connection connection = db.getConnection()) {
@@ -39,13 +50,44 @@ public class AlbumLogic {
         }
     }
 
+    public Album getAlbumByID(int albumId) {
+        try (Connection connection = db.getConnection()) {
+
+            PreparedStatement statement;
+            Album album = null;
+
+            statement = connection.prepareStatement("SELECT * FROM `album` WHERE `id` = ?");
+            statement.setInt(1, albumId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String albumName = resultSet.getString("name");
+                int photographerID = resultSet.getInt("photographer_id");
+                String description = resultSet.getString("description");
+                int accessibility = resultSet.getInt("private");
+                String url = resultSet.getString("albumURL");
+
+                boolean access = false;
+                if(accessibility == 1) {
+                    access = true;
+                }
+                album = new Album(albumId, albumName, photographerID, description, access, url);
+            }
+            return album;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public int GetAlbumIdByURL(String albumUrl, String userEmail) {
         try (Connection connection = db.getConnection()) {
             PreparedStatement statement = null;
             int albumId = -1;
             int privateAlbum = -1;
 
-            statement = connection.prepareStatement("SELECT `id` FROM `album` WHERE `albumURL` = ?");
+            statement = connection.prepareStatement("SELECT `id`, `private` FROM `album` WHERE `albumURL` = ?");
             statement.setString(1, albumUrl);
 
             ResultSet resultSet = statement.executeQuery();
@@ -90,5 +132,27 @@ public class AlbumLogic {
         }
     }
 
+    public boolean deleteAlbum(int albumId) {
+        Logger.info("Delete album method was called");
+        PreparedStatement statement = null;
+        Boolean dbSucces = false;
+
+        //Delete album reference on database
+        try (Connection connection = db.getConnection()) {
+            statement = connection.prepareStatement("DELETE FROM `album` WHERE `id` = ?");
+            statement.setInt(1, albumId);
+            dbSucces = statement.execute();
+        } catch (SQLException ex) {
+            Logger.info("Something went wrong while deleting album from the database");
+            ex.printStackTrace();
+        }
+
+        if (dbSucces == true) {
+            return true;
+        } else {
+            Logger.info("Something went wrong while deleting album from database");
+            return false;
+        }
+    }
 
 }
