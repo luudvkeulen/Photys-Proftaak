@@ -2,9 +2,11 @@ package controllers;
 
 import logic.AdminLogic;
 import logic.AlbumLogic;
+import logic.PhotoLogic;
 import logic.PhotographerLogic;
 import models.Album;
 import models.Photo;
+import play.Logger;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -171,5 +173,20 @@ public class AlbumsController extends Controller {
 
 
         return albums;
+    }
+
+    public Result deleteAlbum(String albumID) {
+        int albumId = Integer.parseInt(albumID);
+        Logger.info("Delete album is being called");
+        AlbumLogic aL = new AlbumLogic(db);
+        PhotoLogic pL = new PhotoLogic(db);
+        ArrayList<Photo> photos = pL.getPhotosByAlbumID(albumId);
+        for(Photo p : photos) {
+            pL.DeletePhotoByID(p.getId());
+        }
+        aL.deleteAlbum(albumId);
+
+        ArrayList<Album> albums = GetAvailableAlbums();
+        return ok(myalbums.render(albums));
     }
 }

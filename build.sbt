@@ -24,3 +24,5 @@ resolvers += Resolver.url("Typesafe Ivy releases", url("https://repo.typesafe.co
 fork in run := false
 
 JsEngineKeys.engineType := JsEngineKeys.EngineType.Node
+
+fork in run := true
