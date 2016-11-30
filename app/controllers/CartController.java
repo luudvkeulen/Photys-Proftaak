@@ -21,26 +21,46 @@ import java.util.List;
 public class CartController extends Controller {
 
     private Database db;
-    private PrijsController prc;
-    private static double totalPrice;
-    private static int totalItems;
+    private static PrijsController prc;
+    private static List<Product> fullProducts;
+
+    private static String getCartCookie() {
+        if(request().cookie("cart") == null) {
+            return "";
+        }
+        String cookie = request().cookie("cart").value();
+        if(cookie.isEmpty() || cookie == null) {
+            return "";
+        }
+        return cookie;
+    }
 
     public Result index() {
-        if(request().cookie("cart") == null) return ok(cart.render(new ArrayList<>()));
+        fullProducts = getAllCartProducts();
+        List<CartItem> cartItems = new ArrayList<>();
+        if(request().cookie("cart") == null) {
+            return ok(cart.render(new ArrayList<>()));
+        }
         String cookie = request().cookie("cart").value();
         if(cookie.isEmpty() || cookie == null) {
             return ok(cart.render(new ArrayList<>()));
         }
 
-        List<CartItem> cartItems = BinaryLogic.binaryToObject(cookie);
+        if(cookie != null){
+            cartItems = BinaryLogic.binaryToObject(cookie);
+        }else{
+            System.out.println("EMPTY COOKIE");
+        }
+
         List<Product> products = getAllCartProducts();
+        List<Product> fullProducts;
 
         for(CartItem carty : cartItems){
             // Laat het bestelde foto aantallen met ID zien.
             System.out.println("\nPRODUCT SIZE: " + carty.getProducts().size());
             System.out.println("PICTURE ID: " + carty.getPictureId());
 
-            List<Product> fullProducts = new ArrayList<>();
+            fullProducts = new ArrayList<>();
 
             // Laat de producten zien die gekoppeld zijn aan de gekozen foto
             for(Product pr : carty.getProducts()){
@@ -60,15 +80,10 @@ public class CartController extends Controller {
                 System.out.println("PRODUCT AMOUNT: " + fullProduct.getAmount());
                 System.out.println("PRODUCT DESCRIPTION: " + fullProduct.getDescription());
                 System.out.println("PRODUCT PRICE: " + fullProduct.getPrice());
-                //products = getAllCartProducts(pr.getID());
-
-                totalPrice = prc.CalcTotalPrice(fullProducts);
-                fullProduct.setTotalPrice(totalPrice);
-                totalItems = carty.getProducts().size();
             }
 
 
-            System.out.println("TOTALE PRIJS: " + totalPrice);
+            //System.out.println("TOTALE PRIJS: " + totalPrice);
             carty.setProducts(fullProducts);
         }
 
@@ -101,12 +116,36 @@ public class CartController extends Controller {
 
     // berekenen van de totaal prijs van alle producten in de winkelwagen
     public static double countTotalPrice() {
-        return totalPrice;
+        if(getCartCookie().equals("")) return 0.00;
+        List<CartItem> cartItems = BinaryLogic.binaryToObject(getCartCookie());
+        if(cartItems == null) return 0;
+        double counter = 0;
+
+        for(CartItem cartItem : cartItems) {
+            for(Product p : cartItem.getProducts()) {
+                double price = 0;
+                for(Product p2 : fullProducts) {
+                    if(p2.getID() == p.getID()) {
+                        price = p2.getPrice();
+                    }
+                }
+                counter += price;
+            }
+        }
+        return counter;
     }
 
     // Ophalen van alle Items voor de winkelwagen
     public static int getTotalItems(){
-        return totalItems;
+        if(getCartCookie().equals("")) return 0;
+        List<CartItem> cartItems = BinaryLogic.binaryToObject(getCartCookie());
+        int counter = 0;
+        for(CartItem ci : cartItems) {
+            counter += ci.getProducts().size();
+        }
+        System.out.println("TOTAL PRODUCTS: " + counter);
+        System.out.println("TOTAL CART ITEMS: " + counter);
+        return counter;
     }
 
     @Inject
