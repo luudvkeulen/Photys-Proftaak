@@ -25,7 +25,7 @@ GET     /privatealbums              controllers.PrivateAlbumsController.index
 GET     /album                      controllers.PrivateAlbumsController.RenderAlbum(url)
 GET     /cart                       controllers.CartController.index
 GET     /myalbums                   controllers.AlbumsController.albums
-GET     /myuploads                  controllers.UploadController.deletePhoto(photoID)
+GET     /myuploadsDelete                  controllers.UploadController.deletePhoto(photoID)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

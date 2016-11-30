@@ -29,7 +29,9 @@
         <link href="@routes.Assets.versioned("stylesheets/main.css")" rel="stylesheet">
 
         <script src="@routes.Assets.versioned("javascripts/jquery.js")"></script>
-        <script src="@routes.Assets.versioned("javascripts/cart.js")"></script>
+
+        <!--
+        <script src="@routes.Assets.versioned("javascripts/cart.js")"></script>-->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
@@ -67,7 +69,7 @@
                             <a href="/cart" class="dropdown-toggle" role="button" aria-expanded="false">
                                 <span class="glyphicon glyphicon-shopping-cart"></span>
                                 <span id="itemAmount">
-                                    0193019 items</span>
+                                    Items: @CartController.getTotalItems()</span>
                                 <span id="item"></span>
                                 </a>
                         </li>

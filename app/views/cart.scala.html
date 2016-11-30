@@ -30,9 +30,9 @@
                                 style="height: 50px;
                                     width: 50px;"
                                 > @product.getName &#8364; @product.getPrice
-                                    <button>-</button>
+                                    <button id="btnMin">-</button>
                                     <label id="label0">1</label>
-                                    <button id="0">+</button>
+                                    <button id="btnPlus">+</button>
                                 </div>
                             }
                         }
@@ -42,14 +42,7 @@
         <div id="costs">
         </div>
         <div>
-        @for(cartItem <- cartItems){
-            @for(product <- cartItem.getProducts){
-                <label>Amount of items: </label>
-                <label>@cartItem.getProducts.size()</label>
-                <label>Total price: &#8364; </label>
-                <label>@product.getTotalPrice</label>
-            }
-        }
+            <label>Total price: &#8364; @CartController.countTotalPrice()</label>
         </div>
         <button type="button" class="btn btn-primary btn-lg btn-block">order now</button>
     </div>

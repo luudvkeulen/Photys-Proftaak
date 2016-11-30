@@ -20,7 +20,7 @@ var labelTotalPriceShow = document.createElement("label");
 
 document.addEventListener("DOMContentLoaded", function(event) { 
 	//setupInformation();
-  	document.getElementById("itemAmount").innerHTML = " 0 - items";
+  	//document.getElementById("itemAmount").innerHTML = " 0 - items";
 
   	// GUI componenten inladen voor het berekenen van de prijs
   	//createGuiPriceComponents();
@@ -70,9 +70,9 @@ function addItems(ele){
     // Toevoegen van de hoeveelheid producten
     console.log(quantity);
     // Ophalen van de items
-    getItems();
+    //getItems();
     // Berekenen van de totale prijs
-    calculateAmount(); 
+    //calculateAmount();
 }
 
 function removeItems(ele){
