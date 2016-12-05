@@ -137,7 +137,17 @@ public class AlbumLogic {
         PreparedStatement statement = null;
         Boolean dbSucces = false;
 
-        //Delete album reference on database
+        //Delete album reference from useralbum table in database
+        try (Connection connection = db.getConnection()) {
+            statement = connection.prepareStatement("DELETE FROM `useralbum` WHERE `album_id` = ?");
+            statement.setInt(1, albumId);
+            dbSucces = statement.execute();
+        } catch (SQLException ex) {
+            Logger.info("Something went wrong while deleting album from the database");
+            ex.printStackTrace();
+        }
+
+        //Delete album reference from album table in database
         try (Connection connection = db.getConnection()) {
             statement = connection.prepareStatement("DELETE FROM `album` WHERE `id` = ?");
             statement.setInt(1, albumId);
