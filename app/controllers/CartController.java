@@ -7,6 +7,7 @@ import models.CartItem;
 import models.Product;
 import play.db.Database;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 
@@ -90,18 +91,48 @@ public class CartController extends Controller {
         return ok(cart.render(cartItems));
     }
 
-    public static int addItem(int product){
+    public static int addItem(int product, int pictureID){
         //TODO
         //Product zoeken aan de hand van id
-        //fullProducts.add(productID);
+        //
+
+
+
+        List<CartItem> cartItems;
+        cartItems = BinaryLogic.binaryToObject(request().cookie("cart").value());
+
+        for(CartItem ci : cartItems) {
+            if(ci.getPictureId() == pictureID) {
+                List<Product> products = ci.getProducts();
+                products.add(findProduct(product));
+                ci.setProducts(products);
+            }
+        }
+
+        //CartItem cartItem = new CartItem(, selectedFilter, findProduct(product));
+
+        System.out.println("NEW SIZE cartItems AFTER ADD: " + cartItems.size());
+        //BinaryLogic.addToExisting(request().cookie("cart").value(), cartItems);
+
+        response().setCookie(new Http.Cookie("cart", BinaryLogic.objectsToBinary(cartItems), null, "/", "", false, false));
+
         System.out.println("ADDED NEW PRODUCT WITH ID: " + product);
         //System.out.println("NEW SIZE PRODUCT AFTER ADD: " + fullProducts.size());
         int totalItems = getTotalItems();
         return totalItems;
     }
 
-    public Result getToCartPage(int productID){
-        addItem(productID);
+    public static Product findProduct(int productID) {
+        for(Product p : fullProducts) {
+            if(p.getID() == productID) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public Result getToCartPage(int productID, int pictureID){
+        addItem(productID, pictureID);
         return redirect("/cart");
     }
 
