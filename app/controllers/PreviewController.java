@@ -1,8 +1,8 @@
 package controllers;
 
 import logic.BinaryLogic;
-import models.CartItem;
-import models.Product;
+import models.*;
+import models.Filter;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
@@ -95,7 +95,7 @@ public class PreviewController extends Controller {
             e.printStackTrace();
         }
 
-        CartItem cartItem = new CartItem(Integer.parseInt(dynamicForm.get("id")), products);
+        CartItem cartItem = new CartItem(Integer.parseInt(dynamicForm.get("id")), Filter.NONE ,products);
         List<CartItem> cartItems = new ArrayList<>();
         cartItems.add(cartItem);
         String cookieText;
