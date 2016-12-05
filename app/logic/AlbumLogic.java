@@ -1,20 +1,12 @@
 package logic;
 
-import com.typesafe.config.ConfigFactory;
 import models.Album;
-import models.Photo;
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
 import play.Logger;
 import play.db.Database;
-
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Thijs on 22-11-2016.

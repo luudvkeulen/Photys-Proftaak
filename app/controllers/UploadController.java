@@ -41,6 +41,7 @@ public class UploadController extends Controller {
     private static int port = 21;
     private Boolean result;
     private Database db;
+    private PhotographerLogic pl;
 
     //Generates a random Album URL
     private String GeneratePictureURL() {
@@ -50,11 +51,11 @@ public class UploadController extends Controller {
     @Inject
     public UploadController(Database db) {
         this.db = db;
+        pl = new PhotographerLogic(db);
     }
 
     public Result index() {
-        PhotographerLogic photographerLogic = new PhotographerLogic(db);
-        if (!photographerLogic.isPhotographer(session("user"))) {
+        if (!pl.isPhotographer(session("user"))) {
             flash("warning", "You need to be logged in as a photographer to upload pictures.");
             return redirect("/");
         }
@@ -63,7 +64,7 @@ public class UploadController extends Controller {
 
     public Result uploads() {
         ArrayList<Photo> photos = new ArrayList<>();
-        if (!isPhotographer(session("user"))) {
+        if (!pl.isPhotographer(session("user"))) {
             flash("warning", "You need to be logged in as a photographer to view upload history");
             return redirect("/");
         }
@@ -87,30 +88,6 @@ public class UploadController extends Controller {
             flash("You haven't uploaded any files yet.");
         }
         return ok(myuploads.render(photos));
-    }
-
-    private boolean isPhotographer(String email) {
-        Boolean result = false;
-        if (email == null) return result;
-
-        try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
-            statement.setString(1, email);
-            ResultSet set = statement.executeQuery();
-            if (set.next()) {
-                if (set.getInt("type") >= 2) {
-                    result = true;
-                } else {
-                    result = false;
-                }
-            } else {
-                result = false;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return result;
     }
 
     private Integer findPhotographerId(String email) {
