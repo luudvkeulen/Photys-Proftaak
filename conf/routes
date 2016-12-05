@@ -12,7 +12,6 @@ GET     /myuploads                  controllers.UploadController.uploads
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET     /albums                     controllers.AlbumsController.index
 GET     /account                    controllers.AccountController.index
 GET     /logout                     controllers.LoginController.logout
 GET     /admin                      controllers.AdminController.index
@@ -24,9 +23,9 @@ GET     /preview                    controllers.PreviewController.index(url)
 GET     /privatealbums              controllers.PrivateAlbumsController.index
 GET     /album                      controllers.PrivateAlbumsController.RenderAlbum(url)
 GET     /cart                       controllers.CartController.index
-GET     /albums                     controllers.AlbumsController.albums
+GET     /myalbums                   controllers.AlbumsController.albums
 GET     /myuploadsDelete            controllers.UploadController.deletePhoto(photoID)
-GET     /myalbums                   controllers.AlbumsController.deleteAlbum(albumID)
+GET     /myalbumsDelete             controllers.AlbumsController.deleteAlbum(albumID)
 
 
 # Map static resources from the /public folder to the /assets URL path

@@ -19,7 +19,6 @@ function controlSelection() {
             newO1.parentNode.replaceChild(obj1, newO1)
         }, false);
         obj1.parentNode.replaceChild(newO1, obj1);
-        newO1.focus();
 
         var obj2 = document.getElementById("inputSelect2");
         var newO2 = document.createElement('input');
@@ -34,7 +33,6 @@ function controlSelection() {
             newO2.parentNode.replaceChild(obj2, newO2)
         }, false);
         obj2.parentNode.replaceChild(newO2, obj2);
-        newO2.focus();
 
     } else if (setting == "name") {
 
@@ -50,7 +48,6 @@ function controlSelection() {
             newO1.parentNode.replaceChild(obj1, newO1)
         }, false);
         obj1.parentNode.replaceChild(newO1, obj1);
-        newO1.focus();
 
         var obj2 = document.getElementById("inputSelect2");
         var newO2 = document.createElement('input');
@@ -65,7 +62,6 @@ function controlSelection() {
             newO2.parentNode.replaceChild(obj2, newO2)
         }, false);
         obj2.parentNode.replaceChild(newO2, obj2);
-        newO2.focus();
 
     } else if (setting == "password") {
 
@@ -82,7 +78,6 @@ function controlSelection() {
             newO1.parentNode.replaceChild(obj1, newO1)
         }, false);
         obj1.parentNode.replaceChild(newO1, obj1);
-        newO1.focus();
 
         var obj2 = document.getElementById("inputSelect2");
         var newO2 = document.createElement('input');
@@ -97,7 +92,6 @@ function controlSelection() {
             newO2.parentNode.replaceChild(obj2, newO2)
         }, false);
         obj2.parentNode.replaceChild(newO2, obj2);
-        newO2.focus();
 
     } else if (setting == "zipcode") {
 
@@ -113,7 +107,6 @@ function controlSelection() {
             newO1.parentNode.replaceChild(obj1, newO1)
         }, false);
         obj1.parentNode.replaceChild(newO1, obj1);
-        newO1.focus();
 
         var obj2 = document.getElementById("inputSelect2");
         var newO2 = document.createElement('input');
@@ -128,7 +121,6 @@ function controlSelection() {
             newO2.parentNode.replaceChild(obj2, newO2)
         }, false);
         obj2.parentNode.replaceChild(newO2, obj2);
-        newO2.focus();
 
     } else if (setting == "adres") {
 
@@ -144,7 +136,6 @@ function controlSelection() {
             newO1.parentNode.replaceChild(obj1, newO1)
         }, false);
         obj1.parentNode.replaceChild(newO1, obj1);
-        newO1.focus();
 
         var obj2 = document.getElementById("inputSelect2");
         var newO2 = document.createElement('input');
@@ -159,7 +150,6 @@ function controlSelection() {
             newO2.parentNode.replaceChild(obj2, newO2)
         }, false);
         obj2.parentNode.replaceChild(newO2, obj2);
-        newO2.focus();
 
     } else if (setting == "phonenr") {
 
@@ -175,7 +165,6 @@ function controlSelection() {
             newO1.parentNode.replaceChild(obj1, newO1)
         }, false);
         obj1.parentNode.replaceChild(newO1, obj1);
-        newO1.focus();
 
         var obj2 = document.getElementById("inputSelect2");
         var newO2 = document.createElement('input');
@@ -190,7 +179,6 @@ function controlSelection() {
             newO2.parentNode.replaceChild(obj2, newO2)
         }, false);
         obj2.parentNode.replaceChild(newO2, obj2);
-        newO2.focus();
         
     }
 }
