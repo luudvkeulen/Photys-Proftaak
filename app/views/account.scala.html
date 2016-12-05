@@ -24,7 +24,7 @@
                                     <a data-toggle="collapse" href="#collapse1">Show cart</a>
                                 </h4>
                             </div>
-                            <div id="collapse1" class="panel-collapse collapse">
+                            <div id="collapse1" class="panel-collapse collapse in">
                                 <div class="panel-body">Mug with picture 'mugshot'</div>
                                 <div class="panel-body">T-shirt 'do you even picture bro!'</div>
                                 <div class="panel-body">Canvas school photo 200 x 300</div>
@@ -44,7 +44,7 @@
                                     <a data-toggle="collapse" href="#collapseOrder">Show orders</a>
                                 </h4>
                             </div>
-                            <div id="collapseOrder" class="panel-collapse collapse">
+                            <div id="collapseOrder" class="panel-collapse collapse in">
                                 <div class="orderContainer#1">
                                     <div class="panel-group">
                                         <div class="panel panel-default">
@@ -78,7 +78,7 @@
                                 </h4>
                             </div>
                             <form method="POST" action="@routes.AccountController.UpdateAccountInfo()" enctype="multipart/form-data">
-                                <div id="collapsePersonalDetails" class="panel-collapse collapse">
+                                <div id="collapsePersonalDetails" class="panel-collapse collapse in">
                                     <div class="panel-body">
                                         Change your settings below <br>
                                         <select class="form-control" id="sel1" name="infoSelect" onchange="controlSelection();">
@@ -113,7 +113,7 @@
                                     <a data-toggle="collapse" href="#collapseUploadDetails">Show upload details</a>
                                 </h4>
                             </div>
-                            <div id="collapseUploadDetails" class="panel-collapse collapse">
+                            <div id="collapseUploadDetails" class="panel-collapse collapse in">
                                 <div class="panel-body"> <a href="@routes.UploadController.uploads()">
                                     View upload history</a></div>
                                 <div class="panel-body"> <a href="@routes.AlbumsController.albums()">

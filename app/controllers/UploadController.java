@@ -304,16 +304,16 @@ public class UploadController extends Controller {
         try (Connection connection = db.getConnection()) {
             uploads = new ArrayList<>();
             int photographerId = findPhotographerId(session("user"));
-            prepared = connection.prepareStatement("SELECT picture.id as pid, picture.name as pname, album.name as aname, picture.date, picture.price FROM `picture`, `album` WHERE picture.photographer_id = ? AND album.id = picture.album_id");
+            prepared = connection.prepareStatement("SELECT picture.id, picture.name as pname, album.name as aname, picture.date, picture.price FROM `picture`, `album` WHERE picture.photographer_id = ? AND album.id = picture.album_id");
             prepared.setInt(1, photographerId);
             ResultSet rs = prepared.executeQuery();
             while (rs.next()) {
+                int id = rs.getInt("id");
                 String name = rs.getString("pname");
                 String albumName = rs.getString("aname");
                 Date dt = rs.getDate("date");
                 BigDecimal dcm = rs.getBigDecimal("price");
-                int pid = rs.getInt("pid");
-                uploads.add(new Photo(pid, name, dt, dcm.doubleValue(), albumName));
+                uploads.add(new Photo(id, name, dt, dcm.doubleValue(), albumName));
             }
         } catch (SQLException e) {
             e.printStackTrace();

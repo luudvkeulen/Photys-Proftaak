@@ -3,6 +3,7 @@ package logic;
 import models.User;
 import org.mindrot.jbcrypt.BCrypt;
 import play.db.Database;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -125,8 +126,8 @@ public class UserLogic {
             User u = null;
             while (rs.next()) {
                 u = new User(rs.getString("emailadres"),
-                        rs.getString("first_name"),
                         rs.getString("password"),
+                        rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("zipcode"),
                         rs.getString("street"),
@@ -172,4 +173,24 @@ public class UserLogic {
         return status;
     }
 
+    public boolean CheckEmailAvailable(String email) {
+        boolean status = true;
+
+
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement("SELECT * FROM `user` WHERE `emailadres` = ?");
+            statement.setString(1, email);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                status = false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return status;
+    }
 }

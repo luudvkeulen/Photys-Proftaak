@@ -4,6 +4,7 @@ import models.*;
 import play.db.*;
 import play.mvc.*;
 import views.html.*;
+
 import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +18,8 @@ import java.util.ArrayList;
  */
 public class HomeController extends Controller {
 
-    private Database db;
+    private static Database db;
+
     /**
      * An action that renders an HTML page with a welcome message.
      * The configuration in the <code>routes</code> file means that
@@ -26,33 +28,49 @@ public class HomeController extends Controller {
      */
     public Result index() throws SQLException {
 
-        //CartController c = new CartController();
-        //c.AddItemToCart(new OrderProduct(FilterType.brannan,new Product(0 ,"mok", "-", 2), new Photo("fotonaam", 2.0)));
-
-        //System.out.println(c.GetCart());
-        Connection connection = db.getConnection();
-        PreparedStatement statement = connection.prepareStatement("select p.*, u.first_name, u.last_name, u.emailadres, a.name as album_name from picture p left join `user` u on p.photographer_id = u.id left join album a on a.id = p.album_id where album_id in (select id from album where private = 0) order by RAND()");
-        ResultSet result = statement.executeQuery();
-
         ArrayList<Photo> photos = new ArrayList<>();
-        while(result.next()){
-            Photo photo = new Photo(result.getInt("id"),
-                    result.getString("name"),
-                    new User(result.getInt("photographer_id"),
-                            result.getString("first_name"),
-                            result.getString("last_name"),
-                            result.getString("emailadres")),
-                            result.getInt("file_size"),
-                            result.getDate("date"),
-                            result.getString("album_name"),
-                            result.getString("file_location"),
-                            result.getDouble("price"),
-                            result.getString("url"));
-            photos.add(photo);
+
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("select p.*, u.first_name, u.last_name, u.emailadres, a.name as album_name from picture p left join `user` u on p.photographer_id = u.id left join album a on a.id = p.album_id where album_id in (select id from album where private = 0) order by RAND()");
+            ResultSet result = statement.executeQuery();
+
+
+            while (result.next()) {
+                Photo photo = new Photo(result.getInt("id"),
+                        result.getString("name"),
+                        new User(result.getInt("photographer_id"),
+                                result.getString("first_name"),
+                                result.getString("last_name"),
+                                result.getString("emailadres")),
+                        result.getInt("file_size"),
+                        result.getDate("date"),
+                        result.getString("album_name"),
+                        result.getString("file_location"),
+                        result.getDouble("price"),
+                        result.getString("url"));
+                photos.add(photo);
+            }
         }
 
-        connection.close();
         return ok(index.render(photos));
+    }
+
+    public static String GetUserName() throws SQLException {
+
+        String userName = "";
+
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT first_name, last_name FROM `user` where emailadres = ?");
+            statement.setString(1, session("user"));
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                userName = result.getString("first_name") + " " + result.getString("last_name");
+            }
+        }
+
+        return userName;
     }
 
     @Inject
