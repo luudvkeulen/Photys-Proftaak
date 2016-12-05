@@ -75,11 +75,11 @@ public class CartController extends Controller {
 
                 fullProducts.add(fullProduct);
 
-                System.out.println("\nPRODUCT ID: " + fullProduct.getID());
-                System.out.println("PRODUCT NAME: " + fullProduct.getName());
-                System.out.println("PRODUCT AMOUNT: " + fullProduct.getAmount());
-                System.out.println("PRODUCT DESCRIPTION: " + fullProduct.getDescription());
-                System.out.println("PRODUCT PRICE: " + fullProduct.getPrice());
+                //System.out.println("\nPRODUCT ID: " + fullProduct.getID());
+                //System.out.println("PRODUCT NAME: " + fullProduct.getName());
+                //System.out.println("PRODUCT AMOUNT: " + fullProduct.getAmount());
+                //System.out.println("PRODUCT DESCRIPTION: " + fullProduct.getDescription());
+                //System.out.println("PRODUCT PRICE: " + fullProduct.getPrice());
             }
 
 
@@ -88,6 +88,21 @@ public class CartController extends Controller {
         }
 
         return ok(cart.render(cartItems));
+    }
+
+    public static int addItem(int product){
+        //TODO
+        //Product zoeken aan de hand van id
+        //fullProducts.add(productID);
+        System.out.println("ADDED NEW PRODUCT WITH ID: " + product);
+        //System.out.println("NEW SIZE PRODUCT AFTER ADD: " + fullProducts.size());
+        int totalItems = getTotalItems();
+        return totalItems;
+    }
+
+    public Result getToCartPage(int productID){
+        addItem(productID);
+        return redirect("/cart");
     }
 
     public List<Product> getAllCartProducts() {
