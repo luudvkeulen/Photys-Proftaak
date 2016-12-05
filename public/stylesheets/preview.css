@@ -1,4 +1,4 @@
-.imagepreview {
+#image {
     width: 100%;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -94,4 +94,32 @@ html, body {
 #addToCart a{
     color: white;
     text-decoration: none;
+}
+
+.filters {
+    margin-bottom: 10px;
+}
+
+.filterform {
+    margin-left: 5px;
+}
+
+.sepia {
+    filter: sepia(100%);
+}
+
+.bw {
+    filter: grayscale(50%);
+}
+
+.invert {
+    filter: invert(100%);
+}
+
+.darken {
+    filter: brightness(50%);
+}
+
+.blur {
+    filter: blur(2px);
 }
