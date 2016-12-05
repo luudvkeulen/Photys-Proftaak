@@ -2,6 +2,7 @@ package controllers;
 
 import logic.PhotographerLogic;
 import logic.UserLogic;
+import models.Order;
 import models.User;
 import play.data.DynamicForm;
 import play.data.FormFactory;
@@ -15,6 +16,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountController extends Controller {
 
@@ -40,11 +43,33 @@ public class AccountController extends Controller {
 
     public Result index() {
         User currentUser = GetAccountInfo(session("user"));
-        return ok(account.render(currentUser));
+        ArrayList<Order> orders = GetAccountOrders();
+        return ok(account.render(currentUser, orders));
     }
 
     public User GetAccountInfo(String email) {
         return ul.GetAccountInfo(email);
+    }
+
+    public ArrayList<Order> GetAccountOrders() {
+        ArrayList<Order> orders = new ArrayList<>();
+
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM photys.`order` WHERE user_id = (SELECT id FROM `user` WHERE emailadres = ?)");
+            statement.setString(1, session("user"));
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                orders.add(new Order(result.getInt("id"),
+                        result.getInt("user_id"),
+                        result.getDate("date")));
+            }
+            return orders;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return orders;
+        }
     }
 
     public Result UpdateAccountInfo() {
@@ -57,8 +82,9 @@ public class AccountController extends Controller {
         if (select.equals("password")) {
             if (!ul.checkPassword(userEmail, input1)) {
                 flash("danger", "Incorrect password.");
-                User currentUser = GetAccountInfo(userEmail);
-                return ok(account.render(currentUser));
+                User currentUser = GetAccountInfo(session("user"));
+                ArrayList<Order> orders = GetAccountOrders();
+                return ok(account.render(currentUser, orders));
             }
         }
 
@@ -88,6 +114,7 @@ public class AccountController extends Controller {
         ul.UpdateAccountInfo(updatedUser, userEmail);
         User currentUser = GetAccountInfo(updatedUser.getEmailAdress());
         flash("notice", "Account information was updated");
-        return ok(account.render(currentUser));
+        ArrayList<Order> orders = GetAccountOrders();
+        return ok(account.render(currentUser, orders));
     }
 }

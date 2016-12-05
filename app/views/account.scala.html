@@ -1,127 +1,127 @@
-@(user: User)
+@(user: User, orderList: List[Order])
 
-    @main("Account") {
+@main("Account") {
 
-        <link href="@routes.Assets.versioned("stylesheets/account.css")" rel="stylesheet">
-        <script type="text/javascript" src="@routes.Assets.versioned("javascripts/account.js")"></script>
-        @*
-        * Get an `Html` object by calling the built-in Play welcome
-        * template and passing a `String` message.
-        *@
-        <div class="container">
-            <div>
-                <div class="profilePicture .col-md-6">
-                    <img src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-128.png" class="img-rounded" alt="Profile picture" width="120" height="120">
-                    <h1>@user.getName</h1>
-                </div>
+    <link href="@routes.Assets.versioned("stylesheets/account.css")" rel="stylesheet">
+    <script type="text/javascript" src="@routes.Assets.versioned("javascripts/account.js")"></script>
+    @*
+    * Get an `Html` object by calling the built-in Play welcome
+    * template and passing a `String` message.
+    *@
+    <div class="container">
+        <div>
+            <div class="profilePicture .col-md-6">
+                <img src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-128.png" class="img-rounded" alt="Profile picture" width="120" height="120">
+                <h1>@user.getName</h1>
+            </div>
 
-                <div class="cartContainer col-md-3">
-                    <h2>Cart</h2>
-                    <div class="panel-group">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapse1">Show cart</a>
-                                </h4>
-                            </div>
-                            <div id="collapse1" class="panel-collapse collapse">
-                                <div class="panel-body">Mug with picture 'mugshot'</div>
-                                <div class="panel-body">T-shirt 'do you even picture bro!'</div>
-                                <div class="panel-body">Canvas school photo 200 x 300</div>
-                                <div class="panel-body">Pocket size pictures 20 x 30</div>
-                                <button type="button" class="btn btn-primary btnaccount">Order now</button>
-                            </div>
+            <div class="cartContainer col-md-3">
+                <h2>Cart</h2>
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse1">Show cart</a>
+                            </h4>
                         </div>
-                    </div>
-                </div>
-
-                <div class="orderContainer col-md-3">
-                    <h2>Orders</h2>
-                    <div class="panel-group">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapseOrder">Show orders</a>
-                                </h4>
-                            </div>
-                            <div id="collapseOrder" class="panel-collapse collapse">
-                                <div class="orderContainer#1">
-                                    <div class="panel-group">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" href="#collapseOrder1">Order# 71238</a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseOrder1" class="panel-collapse collapse">
-                                                <div class="panel-body">Mug with picture 'mugshot'</div>
-                                                <div class="panel-body">T-shirt 'do you even picture bro!'</div>
-                                                <div class="panel-body">Canvas school photo 200 x 300</div>
-                                                <div class="panel-body">Pocket size pictures 20 x 30</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="personalDetailsContainer col-md-3">
-                    <h2>Personal details</h2>
-
-                    <div class="panel-group">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapsePersonalDetails">Show personal details</a>
-                                </h4>
-                            </div>
-                            <form method="POST" action="@routes.AccountController.UpdateAccountInfo()" enctype="multipart/form-data">
-                                <div id="collapsePersonalDetails" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        Change your settings below <br>
-                                        <select class="form-control" id="sel1" name="infoSelect" onchange="controlSelection();">
-                                            <option value="email">Email</option>
-                                            <option value="name">Display name</option>
-                                            <option value="password">Password</option>
-                                            <option value="zipcode">Zipcode</option>
-                                            <option value="adres">Adres</option>
-                                            <option value="phonenr">Phonenumber</option>
-                                        </select>
-
-                                        <input type="text" class="form-control" id="inputSelect1" name="inputSelect1">
-                                        <input type="text" class="form-control" id="inputSelect2" name="inputSelect2">
-                                    </div>
-                                        <!--CREATE BUTTON... SAVE DETAILS-->
-                                    <button type="submit" class="btn btn-primary btnaccount">Save changes</button>
-                                </div>
-                            </form>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">Mug with picture 'mugshot'</div>
+                            <div class="panel-body">T-shirt 'do you even picture bro!'</div>
+                            <div class="panel-body">Canvas school photo 200 x 300</div>
+                            <div class="panel-body">Pocket size pictures 20 x 30</div>
+                            <button type="button" class="btn btn-primary btnaccount">Order now</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <form>
-                <div class="uploadContainer col-md-3">
-                    <h2>Uploads</h2>
+            <div class="orderContainer col-md-3">
+                <h2>Orders</h2>
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapseOrder">Show orders</a>
+                            </h4>
+                        </div>
+                        <div id="collapseOrder" class="panel-collapse collapse in">
+                            <div class="orderContainer#1">
+                                <div class="panel-group">
 
-                    <div class="panel-group">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" href="#collapseUploadDetails">Show upload details</a>
-                                </h4>
-                            </div>
-                            <div id="collapseUploadDetails" class="panel-collapse collapse">
-                                <div class="panel-body"> <a href="@routes.UploadController.uploads()">
-                                    View upload history</a></div>
-                                <div class="panel-body"> <a href="@routes.AlbumsController.albums()">
-                                    View created albums</a></div>
+                                @if(orderList.size() > 0) {
+                                    @for(order <- orderList) {
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" href="#collapseOrder1">Order @order.getSimpleDate</a>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
+
+            <div class="personalDetailsContainer col-md-3">
+                <h2>Personal details</h2>
+
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapsePersonalDetails">Show personal details</a>
+                            </h4>
+                        </div>
+                        <form method="POST" action="@routes.AccountController.UpdateAccountInfo()" enctype="multipart/form-data">
+                            <div id="collapsePersonalDetails" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    Change your settings below <br>
+                                    <select class="form-control" id="sel1" name="infoSelect" onchange="controlSelection();">
+                                        <option value="email">Email</option>
+                                        <option value="name">Display name</option>
+                                        <option value="password">Password</option>
+                                        <option value="zipcode">Zipcode</option>
+                                        <option value="adres">Adres</option>
+                                        <option value="phonenr">Phonenumber</option>
+                                    </select>
+
+                                    <input type="text" class="form-control" id="inputSelect1" name="inputSelect1">
+                                    <input type="text" class="form-control" id="inputSelect2" name="inputSelect2">
+                                </div>
+                                    <!--CREATE BUTTON... SAVE DETAILS-->
+                                <button type="submit" class="btn btn-primary btnaccount">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-    }
+
+        <form>
+            <div class="uploadContainer col-md-3">
+                <h2>Uploads</h2>
+
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapseUploadDetails">Show upload details</a>
+                            </h4>
+                        </div>
+                        <div id="collapseUploadDetails" class="panel-collapse collapse in">
+                            <div class="panel-body"> <a href="@routes.UploadController.uploads()">
+                                View upload history</a></div>
+                            <div class="panel-body"> <a href="@routes.AlbumsController.albums()">
+                                View created albums</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}

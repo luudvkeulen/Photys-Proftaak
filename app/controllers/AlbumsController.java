@@ -39,11 +39,38 @@ public class AlbumsController extends Controller {
             flash("warning", "You need to be logged in as a photographer to view album history");
             return redirect("/");
         }
-        albums = GetAvailableAlbums();
+        albums = GetAlbumsCreatedBy();
         if (albums.size() < 1) {
             flash("You haven't created any albums yet.");
         }
         return ok(myalbums.render(albums));
+    }
+
+    public ArrayList<Album> GetAlbumsCreatedBy() {
+        ArrayList<Album> albums = new ArrayList<>();
+
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM photys.album WHERE photographer_id = (SELECT id FROM `user` WHERE emailadres = ?);");
+            statement.setString(1, session("user"));
+
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()) {
+                int id = result.getInt("id");
+                String name = result.getString("name");
+                int photographer_id = result.getInt("photographer_id");
+                String description = result.getString("description");
+                Boolean available = (result.getInt("private") != 1);
+                String url = result.getString("AlbumURL");
+                Album album = new Album(id, name, photographer_id, description, available, url);
+                albums.add(album);
+            }
+
+            return albums;
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return albums;
+        }
     }
 
     //Generates a random Album URL
@@ -175,6 +202,37 @@ public class AlbumsController extends Controller {
         return albums;
     }
 
+    public ArrayList<Album> getAlbumsBelongingToUser() {
+        ArrayList<Album> albums = new ArrayList<>();
+
+        PreparedStatement statement = null;
+
+        try (Connection connection = db.getConnection()) {
+            statement = connection.prepareStatement("SELECT * FROM `album` WHERE `photographer_id` = (SELECT id FROM `photographer` WHERE emailadres = ?)");
+            statement.setString(1, session("user"));
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int photographer_id = resultSet.getInt("photographer_id");
+                String description = resultSet.getString("description");
+                int accessibility = resultSet.getInt("private");
+                String url = resultSet.getString("AlbumURL");
+                boolean access = true;
+                if(accessibility == 1) {
+                    access = false;
+                }
+                albums.add(new Album(id, name, photographer_id, description, access, url));
+            }
+            return albums;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Result deleteAlbum(String albumID) {
         int albumId = Integer.parseInt(albumID);
         Logger.info("Delete album is being called");
@@ -186,7 +244,7 @@ public class AlbumsController extends Controller {
         }
         aL.deleteAlbum(albumId);
 
-        ArrayList<Album> albums = GetAvailableAlbums();
+        ArrayList<Album> albums = getAlbumsBelongingToUser();
         return ok(myalbums.render(albums));
     }
 }

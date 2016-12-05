@@ -1,20 +1,12 @@
 package logic;
 
-import com.typesafe.config.ConfigFactory;
 import models.Album;
-import models.Photo;
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
 import play.Logger;
 import play.db.Database;
-
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Thijs on 22-11-2016.
@@ -137,7 +129,17 @@ public class AlbumLogic {
         PreparedStatement statement = null;
         Boolean dbSucces = false;
 
-        //Delete album reference on database
+        //Delete album reference from useralbum table in database
+        try (Connection connection = db.getConnection()) {
+            statement = connection.prepareStatement("DELETE FROM `useralbum` WHERE `album_id` = ?");
+            statement.setInt(1, albumId);
+            dbSucces = statement.execute();
+        } catch (SQLException ex) {
+            Logger.info("Something went wrong while deleting album from the database");
+            ex.printStackTrace();
+        }
+
+        //Delete album reference from album table in database
         try (Connection connection = db.getConnection()) {
             statement = connection.prepareStatement("DELETE FROM `album` WHERE `id` = ?");
             statement.setInt(1, albumId);

@@ -76,7 +76,6 @@ public class PreviewController extends Controller {
     }
 
     public Result addToCart() {
-        Logger.info("addtocart");
         DynamicForm dynamicForm = factory.form().bindFromRequest();
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = db.getConnection()) {
@@ -95,7 +94,32 @@ public class PreviewController extends Controller {
             e.printStackTrace();
         }
 
-        CartItem cartItem = new CartItem(Integer.parseInt(dynamicForm.get("id")), Filter.NONE ,products);
+        Filter selectedFilter;
+        switch(dynamicForm.get("filter")) {
+            case "NONE":
+                selectedFilter = Filter.NONE;
+                break;
+            case "SEPIA":
+                selectedFilter = Filter.SEPIA;
+                break;
+            case "BW":
+                selectedFilter = Filter.BW;
+                break;
+            case "BLURRED":
+                selectedFilter = Filter.BLURRED;
+                break;
+            case "DARK":
+                selectedFilter = Filter.DARK;
+                break;
+            case "INVERTED":
+                selectedFilter = Filter.INVERTED;
+                break;
+            default:
+                selectedFilter = Filter.NONE;
+                break;
+        }
+
+        CartItem cartItem = new CartItem(Integer.parseInt(dynamicForm.get("id")), selectedFilter,products);
         List<CartItem> cartItems = new ArrayList<>();
         cartItems.add(cartItem);
         String cookieText;

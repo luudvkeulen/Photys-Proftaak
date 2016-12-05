@@ -44,7 +44,7 @@ public class RegisterController extends Controller {
         } else {
             String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
             String uuid = UUID.randomUUID().toString();
-            sendEmail(emailaddress, uuid);
+            //sendEmail(emailaddress, uuid);
             if(insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone, type, uuid)) {
                 flash("success", "You've been registerd");
             }else {
