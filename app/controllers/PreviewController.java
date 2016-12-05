@@ -111,6 +111,9 @@ public class PreviewController extends Controller {
             case "DARK":
                 selectedFilter = Filter.DARK;
                 break;
+            case "INVERTED":
+                selectedFilter = Filter.INVERTED;
+                break;
             default:
                 selectedFilter = Filter.NONE;
                 break;
