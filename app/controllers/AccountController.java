@@ -55,7 +55,7 @@ public class AccountController extends Controller {
         String input2 = bindedForm.get("inputSelect2");
 
         if (select.equals("password")) {
-            if (!ul.checkPassword(userEmail, input1)){
+            if (!ul.checkPassword(userEmail, input1)) {
                 flash("danger", "Incorrect password.");
                 User currentUser = GetAccountInfo(userEmail);
                 return ok(account.render(currentUser));
@@ -65,7 +65,12 @@ public class AccountController extends Controller {
         User updatedUser = ul.GetAccountInfo(userEmail);
 
         if (select.equals("email")) {
-            updatedUser.setEmailAdress(input1);
+            if (ul.CheckEmailAvailable(userEmail)) {
+                updatedUser.setEmailAdress(input1);
+                session("user", updatedUser.getEmailAdress());
+            } else {
+                flash("warning", "This email is already in use or incorrect.");
+            }
         } else if (select.equals("name")) {
             updatedUser.setFirstName(input1);
             updatedUser.setLastName(input2);
@@ -81,7 +86,8 @@ public class AccountController extends Controller {
         }
 
         ul.UpdateAccountInfo(updatedUser, userEmail);
-        User currentUser = GetAccountInfo(userEmail);
+        User currentUser = GetAccountInfo(updatedUser.getEmailAdress());
+        flash("notice", "Account information was updated");
         return ok(account.render(currentUser));
     }
 }
