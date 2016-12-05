@@ -4,9 +4,11 @@ import logic.BinaryLogic;
 import logic.PhotographerLogic;
 import logic.ProductLogic;
 import models.CartItem;
+import models.Filter;
 import models.Product;
 import play.db.Database;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 
@@ -57,8 +59,8 @@ public class CartController extends Controller {
 
         for(CartItem carty : cartItems){
             // Laat het bestelde foto aantallen met ID zien.
-            System.out.println("\nPRODUCT SIZE: " + carty.getProducts().size());
-            System.out.println("PICTURE ID: " + carty.getPictureId());
+            //System.out.println("\nPRODUCT SIZE: " + carty.getProducts().size());
+            //System.out.println("PICTURE ID: " + carty.getPictureId());
 
             fullProducts = new ArrayList<>();
 
@@ -90,18 +92,44 @@ public class CartController extends Controller {
         return ok(cart.render(cartItems));
     }
 
-    public static int addItem(int product){
+    public void addItem(int product){
         //TODO
         //Product zoeken aan de hand van id
-        //fullProducts.add(productID);
+        fullProducts = getAllCartProducts(); // Haalt alle producten op die bestaan.
+                                             // Dit moeten de producten van de shopping cart zijn.
+        System.out.println("FULLPRODUCTS SIZE BEFORE ADD: " + fullProducts.size());
+        fullProducts.add(findProduct(product));
         System.out.println("ADDED NEW PRODUCT WITH ID: " + product);
+
+        System.out.println("FULLPRODUCTS SIZE AFTER ADD: " + fullProducts.size());
+
+
+        String cart = getCartCookie();
+        CartItem cartItem = new CartItem(product, Filter.NONE, fullProducts);
+        List<CartItem> cartItems = new ArrayList<>();
+        String binary;
+        if(cart.equals("")) binary = BinaryLogic.objectsToBinary(cartItems);
+        cartItems.add(cartItem);
+        binary = BinaryLogic.addToExisting(cart, cartItems);
+        response().setCookie(new Http.Cookie("cart", binary, null, "/", "", false, false));
         //System.out.println("NEW SIZE PRODUCT AFTER ADD: " + fullProducts.size());
+
         int totalItems = getTotalItems();
-        return totalItems;
+        //return totalItems;
+    }
+
+    public static Product findProduct(int productID){
+        for(Product p : fullProducts){
+            if(p.getID() == productID){
+                return p;
+            }
+        }
+        return null;
     }
 
     public Result getToCartPage(int productID){
         addItem(productID);
+
         return redirect("/cart");
     }
 
@@ -125,7 +153,6 @@ public class CartController extends Controller {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return result;
     }
 
