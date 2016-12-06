@@ -109,7 +109,7 @@ html, body {
 }
 
 .bw {
-    filter: grayscale(50%);
+    filter: grayscale(100%);
 }
 
 .invert {
