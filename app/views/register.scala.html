@@ -8,7 +8,7 @@
     *@
     <div class="container">
         <form role="form" method="POST" class="form-signin" action="@routes.RegisterController.register()" data-toggle="validator">
-            <h4 class="form-signin-heading">Enter your personal information here to register for an account.</h4>
+            <h4 class="form-signin-heading">@Messages("reg.title")</h4>
             <div class="form-group">
                 <input type="text" id="inputFirstname" name="firstname" class="form-control" placeholder="First name" required autofocus>
             </div>

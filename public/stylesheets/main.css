@@ -163,3 +163,7 @@ a:focus, a:hover {
     background-color: #212121;
     border-color: #212121;
 }
+
+.languages {
+    padding: 15px;
+}

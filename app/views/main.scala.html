@@ -1,9 +1,9 @@
 @*
- * This template is called from the `index` template. This template
- * handles the rendering of the page header and body tags. It takes
- * two arguments, a `String` for the title of the page and an `Html`
- * object to insert into the body of the page.
- *@
+* This template is called from the `index` template. This template
+* handles the rendering of the page header and body tags. It takes
+* two arguments, a `String` for the title of the page and an `Html`
+* object to insert into the body of the page.
+*@
 @(title: String)(content: Html)
 
 <!DOCTYPE html>
@@ -30,12 +30,7 @@
 
         <script src="@routes.Assets.versioned("javascripts/jquery.js")"></script>
 
-        <!--
-        <script src="  @routes.Assets.versioned("javascripts/cart.js")
-        "></script>
-        -->
-
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -63,99 +58,96 @@
 
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
-                    @if(session.get("user") != null) {
-                        <li><a href="/privatealbums">My Albums</a></li>
-                        <li><a href="/upload">Upload</a></li>
-                        <li class="dropdown">
-                            <a href="/cart" class="dropdown-toggle" role="button" aria-expanded="false">
-                                <span class="glyphicon glyphicon-shopping-cart"></span>
-                                <span id="itemAmount">
-                                    Items: @CartController.getTotalItems()</span>
-                                <span id="item"></span>
-                                </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span> 
-                                <strong>@session.get("user")</strong>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <div class="navbar-login">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <p class="text-center">
-                                                    <span class="glyphicon glyphicon-user icon-size"></span>
-                                                </p>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <p class="text-left"><strong>@HomeController.GetUserName()</strong></p>
-                                                <p class="text-left small">@session.get("user")</p>
-                                                <p class="text-left">
-                                                    <a href="/account" class="btn btn-primary btn-block btn-sm">Account</a>
-                                                </p>
-                                            </div>
+                @if(session.get("user") != null) {
+                    <li><a href="/privatealbums">My Albums</a></li>
+                    <li><a href="/upload">Upload</a></li>
+                    <li class="dropdown">
+                        <a href="/cart" class="dropdown-toggle" role="button" aria-expanded="false">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            <span id="itemAmount">
+                                @Messages("items"): @CartController.getTotalItems()</span>
+                            <span id="item"></span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-user"></span> 
+                            <strong>@session.get("user")</strong>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="navbar-login">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <p class="text-center">
+                                                <span class="glyphicon glyphicon-user icon-size"></span>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <p class="text-left"><strong>@HomeController.GetUserName()</strong></p>
+                                            <p class="text-left small">@session.get("user")</p>
+                                            <p class="text-left">
+                                                <a href="/account" class="btn btn-primary btn-block btn-sm">Account</a>
+                                            </p>
                                         </div>
                                     </div>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <div class="navbar-login navbar-login-session">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <p>
-                                                    <a href="@routes.LoginController.logout()" class="btn btn-danger btn-block">Logout</a>
-                                                </p>
-                                            </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="navbar-login navbar-login-session">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>
+                                                <a href="@routes.LoginController.logout()" class="btn btn-danger btn-block">
+                                                    Logout</a>
+                                            </p>
                                         </div>
                                     </div>
-                                </li>
-                            </ul>
-                        </li>
-                    }else{
-                        <li><a href="/login">login</a></li>
-                        <li><a href="/register">register</a></li>
-                    }
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                } else {
+                    <li><a href="/login">@Messages("login")</a></li>
+                    <li><a href="/register">@Messages("register")</a></li>
+                }
 
                 </ul>
 
-                <div class="col-sm-3 col-md-3 pull-right nopadding-right nopadding-left">
-                    <form class="navbar-form" role="search">
-                        <div class="input-group width100">
-                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-                            <div class="input-group-btn width50px">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="pull-right">
+                    <div class="languages">
+                        <a href="@routes.LanguageController.changeLangEn()"><img src="@routes.Assets.versioned("images/en.jpg")" height="20"/></a>
+                        <a href="@routes.LanguageController.changeLangNl()"><img src="@routes.Assets.versioned("images/nl.gif")" height="20"/></a>
+                    </div>
                 </div>
 
             </div>
         </div>
 
         @* And here's where we render the `Html` object containing
-         * the page content. *@
+        * the page content. *@
 
         <script>
-                $( document ).ready(function() {
-                    console.log( "ready!" );
+                $(document).ready(function () {
+                    console.log("ready!");
                     $('.alert').delay(3000).fadeOut();
                 });
         </script>
         <div class="container">
             @if(flash.contains("info")) {
                 <div class="alert alert-info">
-                    @flash.get("info")
+                @flash.get("info")
                 </div>
             }
             @if(flash.contains("success")) {
                 <div class="alert alert-success">
-                    @flash.get("success")
+                @flash.get("success")
                 </div>
             }
             @if(flash.contains("warning")) {
                 <div class="alert alert-warning">
-                    @flash.get("warning")
+                @flash.get("warning")
                 </div>
             }
             @if(flash.contains("danger")) {

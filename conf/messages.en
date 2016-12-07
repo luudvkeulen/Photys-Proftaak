@@ -1,0 +1,11 @@
+#main bar
+register=Register
+login=Login
+items=Items
+#login page
+login.title=Please sign in
+login.signin=Sign In
+login.password=Password
+login.email=Email Address
+#register page
+reg.title=Enter your personal information here to register for an account.
