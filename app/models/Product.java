@@ -52,4 +52,10 @@ public class Product implements Serializable {
     public void addOne() {
         this.amount++;
     }
+
+    public void substractOne() {
+        if (this.amount > 0) {
+            this.amount--;
+        }
+    }
 }

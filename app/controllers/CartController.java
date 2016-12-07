@@ -42,7 +42,7 @@ public class CartController extends Controller {
         return ok(cart.render(cartItems));
     }
 
-    public Result addOneItem(int productID, int pictureID) {
+    public Result changeAmount(int productID, int pictureID, boolean add) {
         String cookie = getCartCookie();
         if (cookie.equals("")) return redirect("/cart");
 
@@ -53,7 +53,12 @@ public class CartController extends Controller {
             if (item.getPictureId() == pictureID) {
                 for (Product product : item.getProducts()) {
                     if (product.getID() == productID) {
-                        product.addOne();
+                        if (add) {
+                            product.addOne();
+                        } else {
+                            product.substractOne();
+                        }
+
                     }
                 }
             }
