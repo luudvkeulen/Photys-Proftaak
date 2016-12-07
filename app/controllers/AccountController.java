@@ -11,8 +11,7 @@ import play.data.FormFactory;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.account;
-import views.html.cart;
+import views.html.*;
 
 import javax.inject.Inject;
 import java.sql.Connection;
