@@ -43,8 +43,6 @@ public class Product implements Serializable {
 
     public Integer getAmount() { return amount; }
 
-    public void setAmount(Integer amount) { this.amount = amount; }
-
     public double getTotalPrice(){
         return (this.price * this.amount);
     }
