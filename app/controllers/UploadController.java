@@ -8,7 +8,6 @@ import models.Album;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
-import play.db.DB;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Http;

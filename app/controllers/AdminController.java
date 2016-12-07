@@ -5,23 +5,16 @@ import logic.PhotographerLogic;
 import logic.ProductLogic;
 import models.Product;
 import models.User;
-import play.Logger;
 import play.data.DynamicForm;
-import play.data.Form;
 import play.data.FormFactory;
-import play.db.DB;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
-import scala.reflect.internal.Trees;
 import views.html.*;
-
 import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdminController extends Controller {

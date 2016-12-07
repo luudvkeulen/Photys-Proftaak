@@ -10,7 +10,6 @@ public class Product implements Serializable {
     private String description;
     private Double price;
     private Integer amount;
-    private double totalPrice;
 
     public Product(int ID, String name, String description, double price) {
         this.ID = ID;
@@ -19,13 +18,14 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public Product(int ID, Integer amount) {
+    public Product(int ID, int amount, String name, double price) {
         this.ID = ID;
         this.amount = amount;
+        this.name = name;
+        this.price = price;
     }
 
     public int getID() {
-
         return ID;
     }
 
@@ -45,11 +45,11 @@ public class Product implements Serializable {
 
     public void setAmount(Integer amount) { this.amount = amount; }
 
-    public void setTotalPrice(double totalPrice){
-        this.totalPrice = totalPrice;
+    public double getTotalPrice(){
+        return (this.price * this.amount);
     }
 
-    public double getTotalPrice(){
-        return this.totalPrice;
+    public void addOne() {
+        this.amount++;
     }
 }

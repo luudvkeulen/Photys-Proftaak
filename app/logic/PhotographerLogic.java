@@ -1,9 +1,7 @@
 package logic;
 
 import models.User;
-import play.db.DB;
 import play.db.Database;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

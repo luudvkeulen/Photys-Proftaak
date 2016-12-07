@@ -23,7 +23,7 @@ GET         /cart                      controllers.CartController.index
 GET         /myalbums                  controllers.AlbumsController.albums
 GET         /myuploadsDelete           controllers.UploadController.deletePhoto(photoID)
 GET         /myalbumsDelete            controllers.AlbumsController.deleteAlbum(albumID)
-GET         /gettocartpage             controllers.CartController.getToCartPage(id: Int, pictureID: Int)
+GET         /gettocartpage             controllers.CartController.addOneItem(id: Int, pictureID: Int)
 
 POST        /account                   controllers.AccountController.UpdateAccountInfo()
 POST        /login                     controllers.LoginController.login()

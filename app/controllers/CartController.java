@@ -22,8 +22,6 @@ import java.util.List;
 public class CartController extends Controller {
 
     private Database db;
-    private static PrijsController prc;
-    private static List<Product> fullProducts;
 
     private static String getCartCookie() {
         if(request().cookie("cart") == null) {
@@ -37,127 +35,33 @@ public class CartController extends Controller {
     }
 
     public Result index() {
-        fullProducts = getAllCartProducts();
-        List<CartItem> cartItems = new ArrayList<>();
-        if(request().cookie("cart") == null) {
-            return ok(cart.render(new ArrayList<>()));
-        }
-        String cookie = request().cookie("cart").value();
-        if(cookie.isEmpty() || cookie == null) {
-            return ok(cart.render(new ArrayList<>()));
-        }
-
-        if(cookie != null){
-            cartItems = BinaryLogic.binaryToObject(cookie);
-        }else{
-            System.out.println("EMPTY COOKIE");
-        }
-
-        List<Product> products = getAllCartProducts();
-        List<Product> fullProducts;
-
-        for(CartItem carty : cartItems){
-            // Laat het bestelde foto aantallen met ID zien.
-            System.out.println("\nPRODUCT SIZE: " + carty.getProducts().size());
-            System.out.println("PICTURE ID: " + carty.getPictureId());
-
-            fullProducts = new ArrayList<>();
-
-            // Laat de producten zien die gekoppeld zijn aan de gekozen foto
-            for(Product pr : carty.getProducts()){
-                Product fullProduct = null;
-                for(Product pr2 : products) {
-                    if(pr2.getID() == pr.getID()) {
-                        fullProduct = pr2;
-                    }
-                }
-
-                if(fullProduct == null) continue;
-
-                fullProducts.add(fullProduct);
-
-                //System.out.println("\nPRODUCT ID: " + fullProduct.getID());
-                //System.out.println("PRODUCT NAME: " + fullProduct.getName());
-                //System.out.println("PRODUCT AMOUNT: " + fullProduct.getAmount());
-                //System.out.println("PRODUCT DESCRIPTION: " + fullProduct.getDescription());
-                //System.out.println("PRODUCT PRICE: " + fullProduct.getPrice());
-            }
-
-
-            //System.out.println("TOTALE PRIJS: " + totalPrice);
-            carty.setProducts(fullProducts);
-        }
-
+        String cookie = getCartCookie();
+        if (cookie.equals("")) return ok(cart.render(new ArrayList<>()));
+        //fullProducts = getAllCartProducts();
+        List<CartItem> cartItems = BinaryLogic.binaryToObject(cookie);
         return ok(cart.render(cartItems));
     }
 
-    public static int addItem(int product, int pictureID){
-        //TODO
-        //Product zoeken aan de hand van id
-        //
+    public Result addOneItem(int productID, int pictureID) {
+        String cookie = getCartCookie();
+        if (cookie.equals("")) return redirect("/cart");
 
+        List<CartItem> cartItems = BinaryLogic.binaryToObject(request().cookie("cart").value());
+        if (cartItems.size() < 1) return redirect("/cart");
 
-
-        List<CartItem> cartItems;
-        cartItems = BinaryLogic.binaryToObject(request().cookie("cart").value());
-
-        for(CartItem ci : cartItems) {
-            if(ci.getPictureId() == pictureID) {
-                List<Product> products = ci.getProducts();
-                products.add(findProduct(product));
-                ci.setProducts(products);
+        for (CartItem item : cartItems) {
+            if (item.getPictureId() == pictureID) {
+                for (Product product : item.getProducts()) {
+                    if (product.getID() == productID) {
+                        product.addOne();
+                    }
+                }
             }
         }
+        String newCookie = BinaryLogic.objectsToBinary(cartItems);
+        response().setCookie(new Http.Cookie("cart", newCookie, null, "/", "", false, false));
 
-        //CartItem cartItem = new CartItem(, selectedFilter, findProduct(product));
-
-        System.out.println("NEW SIZE cartItems AFTER ADD: " + cartItems.size());
-        //BinaryLogic.addToExisting(request().cookie("cart").value(), cartItems);
-
-        response().setCookie(new Http.Cookie("cart", BinaryLogic.objectsToBinary(cartItems), null, "/", "", false, false));
-
-        System.out.println("ADDED NEW PRODUCT WITH ID: " + product);
-        //System.out.println("NEW SIZE PRODUCT AFTER ADD: " + fullProducts.size());
-        int totalItems = getTotalItems();
-        return totalItems;
-    }
-
-    public static Product findProduct(int productID) {
-        for(Product p : fullProducts) {
-            if(p.getID() == productID) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    public Result getToCartPage(int productID, int pictureID){
-        addItem(productID, pictureID);
         return redirect("/cart");
-    }
-
-    public List<Product> getAllCartProducts() {
-        List<Product> result = new ArrayList<>();
-
-        try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("select p.* from `product` p");
-
-            ResultSet set = statement.executeQuery();
-            while(set.next()) {
-                result.add(
-                        new Product(
-                                set.getInt("id"),
-                                set.getString("name"),
-                                set.getString("description"),
-                                set.getDouble("price")
-                        )
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return result;
     }
 
     // berekenen van de totaal prijs van alle producten in de winkelwagen
@@ -169,13 +73,7 @@ public class CartController extends Controller {
 
         for(CartItem cartItem : cartItems) {
             for(Product p : cartItem.getProducts()) {
-                double price = 0;
-                for(Product p2 : fullProducts) {
-                    if(p2.getID() == p.getID()) {
-                        price = p2.getPrice();
-                    }
-                }
-                counter += price;
+                counter += p.getTotalPrice();
             }
         }
         return counter;
@@ -195,8 +93,7 @@ public class CartController extends Controller {
     }
 
     @Inject
-    public CartController(play.db.Database db) {;
-        this.prc = new PrijsController(db);
+    public CartController(play.db.Database db) {
         this.db = db;
     }
 }
