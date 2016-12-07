@@ -16,9 +16,9 @@
                             </td>
                             <td class="cartitemamount pull-right">
                                 € @product.getTotalPrice
-                                <button id="btnMin"><a href="@routes.CartController.changeAmount(product.getID(), cartItem.getPictureId(), false)">-</a></button>
+                                <a class="btn btn-default productbutton" href="@routes.CartController.changeAmount(product.getID(), cartItem.getPictureId(), false)">-</a>
                                 <label id="label0">@product.getAmount</label>
-                                <button id="btnPlus"><a href="@routes.CartController.changeAmount(product.getID(), cartItem.getPictureId(), true)">+</a></button>
+                                <a class="btn btn-default productbutton" href="@routes.CartController.changeAmount(product.getID(), cartItem.getPictureId(), true)">+</a>
                             </td>
                         </tr>
                     }

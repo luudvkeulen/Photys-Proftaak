@@ -16,3 +16,9 @@
 .carttable {
     width: 100%;
 }
+
+.productbutton {
+    padding: 3px;
+    margin: 5px;
+    width: 28px;
+}
