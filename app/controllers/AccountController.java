@@ -11,7 +11,8 @@ import play.data.FormFactory;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.*;
+import views.html.account;
+import views.html.cart;
 
 import javax.inject.Inject;
 import java.sql.Connection;
@@ -49,11 +50,11 @@ public class AccountController extends Controller {
 
         List<CartItem> cartItems = new ArrayList<>();
         if (request().cookie("cart") == null) {
-            return ok(cart.render(new ArrayList<>()));
+            return ok(account.render(currentUser, orders, new ArrayList<>()));
         }
         String cookie = request().cookie("cart").value();
         if (cookie.isEmpty() || cookie == null) {
-            return ok(cart.render(new ArrayList<>()));
+            return ok(account.render(currentUser, orders, new ArrayList<>()));
         }
 
         if (cookie != null) {

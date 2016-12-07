@@ -11,12 +11,10 @@ GET         /upload                    controllers.UploadController.index
 GET         /myuploads                 controllers.UploadController.uploads
 GET         /languageen                controllers.LanguageController.changeLangEn
 GET         /languagenl                controllers.LanguageController.changeLangNl
-GET         /account                   controllers.AccountController.index
 GET         /logout                    controllers.LoginController.logout
 GET         /admin                     controllers.AdminController.index
 GET         /albums                    controllers.AlbumsController.index
 GET         /account                   controllers.AccountController.index
-GET         /admin                     controllers.AdminController.index
 GET         /image/:location           controllers.PictureController.renderPhoto(location)
 GET         /preview                   controllers.PreviewController.index(url)
 GET         /privatealbums             controllers.PrivateAlbumsController.index
