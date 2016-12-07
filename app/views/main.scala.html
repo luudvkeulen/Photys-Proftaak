@@ -59,14 +59,14 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                     @if(session.get("user") != null) {
-                        <li><a href="/privatealbums">Albums</a></li>
-                        <li><a href="/upload">Upload</a></li>
+                        <li><a href="/privatealbums">@Messages("main.albums")</a></li>
+                        <li><a href="/upload">@Messages("main.upload")</a></li>
                     }
                     <li class="dropdown">
                         <a href="/cart" class="dropdown-toggle" role="button" aria-expanded="false">
                             <span class="glyphicon glyphicon-shopping-cart"></span>
                             <span id="itemAmount">
-                                @Messages("items"): @CartController.getTotalItems()</span>
+                                @Messages("main.items"): @CartController.getTotalItems()</span>
                             <span id="item"></span>
                         </a>
                     </li>
@@ -103,7 +103,7 @@
                                             <div class="col-lg-12">
                                                 <p>
                                                     <a href="@routes.LoginController.logout()" class="btn btn-danger btn-block">
-                                                        Logout</a>
+                                                    @Messages("main.logout")</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -113,8 +113,8 @@
                         </li>
                     }
                     @if(session.get("user") == null) {
-                        <li><a href="/login">@Messages("login")</a></li>
-                        <li><a href="/register">@Messages("register")</a></li>
+                        <li><a href="/login">@Messages("main.login")</a></li>
+                        <li><a href="/register">@Messages("main.register")</a></li>
                     }
 
                 </ul>

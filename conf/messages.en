@@ -1,11 +1,36 @@
 #main bar
-register=Register
-login=Login
-items=Items
+main.register=Register
+main.login=Login
+main.items=Items
+main.upload=Upload
+main.albums=Albums
+main.logout=Logout
 #login page
 login.title=Please sign in
 login.signin=Sign In
 login.password=Password
 login.email=Email Address
 #register page
+reg.name=Register
 reg.title=Enter your personal information here to register for an account.
+reg.firstname=First name
+reg.lastname=Last name
+reg.email=Email address
+reg.pass=Password
+reg.pass2=Password again
+reg.zip=Zip code
+reg.street=Street name
+reg.housenr=House number
+reg.phonenr=Phone number
+reg.regasphotographer=Register as Photographer
+reg.register=Register
+#account page
+account.showcart=Show cart
+account.cart=Cart
+account.fullcart=Show full cart
+account.ordernow=Order now
+account.orders=Orders
+account.showorders=Show orders
+account.details=Personal details
+account.showdetails=Show personal details
+account.changesettings=Change your settings below
