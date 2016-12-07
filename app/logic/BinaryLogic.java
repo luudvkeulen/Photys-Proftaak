@@ -5,6 +5,7 @@ import org.apache.commons.codec.binary.Base64;
 import play.Logger;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class BinaryLogic {
@@ -29,6 +30,8 @@ public class BinaryLogic {
         try {
             ByteArrayInputStream in = new ByteArrayInputStream(decoded);
             ObjectInputStream is = new ObjectInputStream(in);
+            Object obj = is.readObject();
+            if (obj instanceof List<?>) return new ArrayList<>();
             decodedItems = (List<CartItem>)is.readObject();
         } catch (Exception e) {
 

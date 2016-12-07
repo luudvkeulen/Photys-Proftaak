@@ -75,9 +75,7 @@ public class AlbumsController extends Controller {
 
     //Generates a random Album URL
     public String GenerateAlbumURL() {
-        String albumURL = UUID.randomUUID().toString();
-
-        return albumURL;
+        return UUID.randomUUID().toString();
     }
 
 

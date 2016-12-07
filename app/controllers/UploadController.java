@@ -36,8 +36,6 @@ public class UploadController extends Controller {
     @Inject
     FormFactory factory;
 
-    private static String server = "137.74.163.54";
-    private static int port = 21;
     private Boolean result;
     private Database db;
     private PhotographerLogic pl;
@@ -185,6 +183,8 @@ public class UploadController extends Controller {
 
         FTPClient ftpClient = new FTPClient();
         try {
+            int port = 21;
+            String server = "137.74.163.54";
             ftpClient.connect(server, port);
             ftpClient.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
             ftpClient.enterLocalPassiveMode();
@@ -287,9 +287,7 @@ public class UploadController extends Controller {
             prepared.setInt(4, fileSize);
             prepared.setString(5, "/Photographers/" + email + "/" + fileName);
             prepared.setString(6, GeneratePictureURL());
-            Boolean result = prepared.execute();
-
-            return result;
+            return prepared.execute();
         } catch (SQLException e) {
             play.Logger.error(e.getMessage());
             return false;

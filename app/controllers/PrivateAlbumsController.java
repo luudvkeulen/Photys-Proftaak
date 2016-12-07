@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PrivateAlbumsController extends Controller {
 
-    Database db;
+    final Database db;
 
     public Result index() {
         AlbumsController ac = new AlbumsController(db);

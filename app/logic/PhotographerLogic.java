@@ -11,7 +11,7 @@ import java.util.List;
 
 public class PhotographerLogic {
 
-    private Database db;
+    private final Database db;
 
     public boolean isPhotographer(String email) {
         Boolean result = false;
@@ -22,11 +22,7 @@ public class PhotographerLogic {
             statement.setString(1, email);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
-                if (set.getInt("type") >= 2) {
-                    result = true;
-                } else {
-                    result = false;
-                }
+                result = (set.getInt("type") >= 2);
             } else {
                 result = false;
             }
@@ -45,7 +41,7 @@ public class PhotographerLogic {
 
     public User GetPhotographerById(Integer id) {
         User user = null;
-        PreparedStatement statement = null;
+        PreparedStatement statement;
         Connection connection;
 
         try {

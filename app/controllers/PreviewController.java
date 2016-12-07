@@ -23,7 +23,7 @@ public class PreviewController extends Controller {
     @Inject
     FormFactory factory;
 
-    Database db;
+    final Database db;
 
     public Result index(String url) {
         int id = -1;

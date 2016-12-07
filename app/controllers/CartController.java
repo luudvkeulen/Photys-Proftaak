@@ -21,7 +21,7 @@ import java.util.List;
 
 public class CartController extends Controller {
 
-    private Database db;
+    private final Database db;
 
     private static String getCartCookie() {
         if(request().cookie("cart") == null) {

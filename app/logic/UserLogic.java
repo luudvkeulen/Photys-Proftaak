@@ -3,15 +3,11 @@ package logic;
 import models.User;
 import org.mindrot.jbcrypt.BCrypt;
 import play.db.Database;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by Thijs on 8-11-2016.
- */
 public class UserLogic {
 
     Database db;
@@ -39,7 +35,6 @@ public class UserLogic {
                 int userID = resultSet.getInt("id");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
-                String emailAdress = email;
                 String zipCode = resultSet.getString("zipcode");
                 String street = resultSet.getString("street");
                 String houseNr = resultSet.getString("housenr");
@@ -47,7 +42,7 @@ public class UserLogic {
                 int userType = resultSet.getInt("type");
                 int isBanned = resultSet.getInt("isBanned");
 
-                user = new User(userID, firstName, lastName, emailAdress, zipCode, street, houseNr, phoneNr, userType, isBanned);
+                user = new User(userID, firstName, lastName, email, zipCode, street, houseNr, phoneNr, userType, isBanned);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

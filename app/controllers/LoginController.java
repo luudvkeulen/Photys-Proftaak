@@ -22,7 +22,7 @@ public class LoginController extends Controller {
     @Inject
     FormFactory factory;
 
-    Database db;
+    final Database db;
     UserLogic ul;
 
     public Result index() {

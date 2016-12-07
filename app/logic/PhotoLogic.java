@@ -101,8 +101,8 @@ public class PhotoLogic {
     public boolean DeletePhotoByID(int photoID)
     {
         Logger.info("Delete photo method was called");
-        PreparedStatement statement = null;
-        Boolean ftpSucces = false;
+        PreparedStatement statement;
+        Boolean ftpSucces;
         Boolean dbSucces = false;
 
         //Delete photo on ftp
@@ -139,14 +139,7 @@ public class PhotoLogic {
             ex.printStackTrace();
         }
 
-        System.out.println("FTP: " + ftpSucces + " DB: " + dbSucces);
-        if(dbSucces == true && ftpSucces == true) {
-            return true;
-        }
-        else {
-            Logger.info("Something went wrong :c");
-            return false;
-        }
+        return (dbSucces && ftpSucces);
     }
 
 }

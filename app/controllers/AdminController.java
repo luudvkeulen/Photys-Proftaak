@@ -19,9 +19,9 @@ import java.util.List;
 
 public class AdminController extends Controller {
 
-    PhotographerLogic pl;
-    ProductLogic prl;
-    Database db;
+    final PhotographerLogic pl;
+    final ProductLogic prl;
+    final Database db;
 
     @Inject
     FormFactory factory;

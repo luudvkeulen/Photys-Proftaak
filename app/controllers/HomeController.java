@@ -75,6 +75,6 @@ public class HomeController extends Controller {
 
     @Inject
     public HomeController(Database db) {
-        this.db = db;
+        HomeController.db = db;
     }
 }
