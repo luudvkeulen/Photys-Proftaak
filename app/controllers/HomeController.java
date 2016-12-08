@@ -1,11 +1,17 @@
 package controllers;
 
+import com.typesafe.config.ConfigFactory;
 import models.*;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 import play.db.*;
 import play.mvc.*;
 import views.html.*;
 
 import javax.inject.Inject;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +25,7 @@ import java.util.ArrayList;
 public class HomeController extends Controller {
 
     private static Database db;
-
+    private static ArrayList<RenderPhoto> renderPhotos;
     /**
      * An action that renders an HTML page with a welcome message.
      * The configuration in the <code>routes</code> file means that
@@ -27,7 +33,7 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() throws SQLException {
-
+        renderPhotos = new ArrayList<>();
         ArrayList<Photo> photos = new ArrayList<>();
 
         try (Connection connection = db.getConnection()) {
@@ -52,6 +58,8 @@ public class HomeController extends Controller {
             }
         }
 
+        getBytePhotos(photos);
+
         return ok(index.render(photos));
     }
 
@@ -71,6 +79,40 @@ public class HomeController extends Controller {
         }
 
         return userName;
+    }
+
+    public void getBytePhotos(ArrayList<Photo> photos) {
+        byte[] result;
+        FTPClient client = new FTPClient();
+        try {
+            client.connect("137.74.163.54", 21);
+            client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
+            client.setFileType(FTP.BINARY_FILE_TYPE);
+            InputStream stream;
+            RenderPhoto rp;
+            for (Photo p : photos) {
+                stream = client.retrieveFileStream(p.getFileLocation());
+                result = IOUtils.toByteArray(stream);
+                stream.close();
+                while (!client.completePendingCommand()) ;
+                rp = new RenderPhoto(p.getId(), result);
+                renderPhotos.add(rp);
+            }
+            client.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Result getRenderPhoto(int id) {
+        byte[] result = new byte[0];
+        for (RenderPhoto rp : renderPhotos) {
+            if (rp.getPhotoId() == id) {
+                result = rp.getPhotobytes();
+            }
+        }
+        if (result.length < 1) return ok().as("image");
+        return ok(result).as("image");
     }
 
     @Inject

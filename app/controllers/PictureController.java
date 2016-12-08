@@ -6,7 +6,6 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import play.mvc.Controller;
 import play.mvc.Result;
-
 import java.io.IOException;
 import java.io.InputStream;
 
