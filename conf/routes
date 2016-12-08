@@ -4,20 +4,21 @@
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file              controllers.Assets.versioned(path="/public", file: Asset)
 
-GET         /                          controllers.HomeController.index
-GET         /login                     controllers.LoginController.index
-GET         /register                  controllers.RegisterController.index
-GET         /upload                    controllers.UploadController.index
-GET         /myuploads                 controllers.UploadController.uploads
-GET         /languageen                controllers.LanguageController.changeLangEn
-GET         /languagenl                controllers.LanguageController.changeLangNl
-GET         /logout                    controllers.LoginController.logout
-GET         /admin                     controllers.AdminController.index
-GET         /albums                    controllers.AlbumsController.index
-GET         /account                   controllers.AccountController.index
-GET         /image/:location           controllers.PictureController.renderPhoto(location)
-GET         /preview                   controllers.PreviewController.index(url)
-GET         /privatealbums             controllers.PrivateAlbumsController.index
+GET        /                       controllers.HomeController.index
+GET        /login                  controllers.LoginController.index
+GET        /register               controllers.RegisterController.index
+GET        /upload                 controllers.UploadController.index
+GET        /myuploads              controllers.UploadController.uploads
+GET        /languageen             controllers.LanguageController.changeLangEn
+GET        /languagenl             controllers.LanguageController.changeLangNl
+GET        /languagede             controllers.LanguageController.changeLangDe
+GET        /logout                 controllers.LoginController.logout
+GET        /admin                  controllers.AdminController.index
+GET        /albums                 controllers.AlbumsController.index
+GET        /account                controllers.AccountController.index
+GET        /image/:location        controllers.PictureController.renderPhoto(location)
+GET        /preview                controllers.PreviewController.index(url)
+GET        /privatealbums          controllers.PrivateAlbumsController.index
 GET         /album                     controllers.PrivateAlbumsController.RenderAlbum(url)
 GET         /cart                      controllers.CartController.index
 GET         /myalbums                  controllers.AlbumsController.albums

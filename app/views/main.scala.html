@@ -54,7 +54,7 @@
                     <span class="icon-bar"></span>
                 </button>
                     <!--<a class="navbar-brand" rel="home" href="/" title="Phontys" onclick="getItems()">Photys</a>!-->
-                <img class="logo" src="@routes.Assets.versioned("images/photys.png")" height="50px"/>
+                <a href="/"><img class="logo" src="@routes.Assets.versioned("images/photys.png")" height="50px"/></a>
             </div>
 
             <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -122,8 +122,9 @@
 
                 <div class="pull-right">
                     <div class="languages">
-                        <a href="@routes.LanguageController.changeLangEn()"><img src="@routes.Assets.versioned("images/en.jpg")" height="20"/></a>
                         <a href="@routes.LanguageController.changeLangNl()"><img src="@routes.Assets.versioned("images/nl.gif")" height="20"/></a>
+                        <a href="@routes.LanguageController.changeLangEn()"><img src="@routes.Assets.versioned("images/en.jpg")" height="20"/></a>
+                        <a href="@routes.LanguageController.changeLangDe()"><img src="@routes.Assets.versioned("images/german.png")" height="20"/></a>
                     </div>
                 </div>
 

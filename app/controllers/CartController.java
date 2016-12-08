@@ -88,12 +88,12 @@ public class CartController extends Controller {
     public static int getTotalItems(){
         if(getCartCookie().equals("")) return 0;
         List<CartItem> cartItems = BinaryLogic.binaryToObject(getCartCookie());
+
         int counter = 0;
         for(CartItem ci : cartItems) {
             counter += ci.getProducts().size();
         }
-        System.out.println("TOTAL PRODUCTS: " + counter);
-        System.out.println("TOTAL CART ITEMS: " + counter);
+
         return counter;
     }
 
