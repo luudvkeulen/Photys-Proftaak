@@ -34,3 +34,5 @@ account.showorders=Bestellingen tonen
 account.details=Persoonlijke gegevens
 account.showdetails=Toon persoonlijke gegevens
 account.changesettings=Verander je gegevens hieronder
+#cart
+cart.empty=Je winkelmandje is leeg

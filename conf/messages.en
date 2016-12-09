@@ -34,3 +34,5 @@ account.showorders=Show orders
 account.details=Personal details
 account.showdetails=Show personal details
 account.changesettings=Change your settings below
+#cart
+cart.empty=Your cart is empty

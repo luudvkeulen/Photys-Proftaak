@@ -55,12 +55,9 @@ public class LoginController extends Controller {
     private boolean checkCredentials(String email, String password) {
         boolean correct = ul.checkPassword(email, password);
         if(correct) {
-            Logger.info("correct");
             session("user", email);
-            Logger.info(session("user"));
             return true;
         } else {
-            Logger.info("false");
             return false;
         }
     }

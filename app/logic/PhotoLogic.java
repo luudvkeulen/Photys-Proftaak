@@ -100,7 +100,6 @@ public class PhotoLogic {
 
     public boolean DeletePhotoByID(int photoID)
     {
-        Logger.info("Delete photo method was called");
         PreparedStatement statement;
         Boolean ftpSucces;
         Boolean dbSucces = false;

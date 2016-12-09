@@ -75,12 +75,10 @@ public class UploadController extends Controller {
     //Temporary on void for testing purposes, but should be boolean
     public Result deletePhoto(String PhotoID) {
         int intPhotoID = Integer.parseInt(PhotoID);
-        Logger.info("Delete photo is being called");
         PhotoLogic pL = new PhotoLogic(db);
         pL.DeletePhotoByID(intPhotoID);
 
-        ArrayList<Photo> photos = new ArrayList<>();
-        photos = retrieveUploadHistory();
+        ArrayList<Photo> photos = retrieveUploadHistory();
         if (photos.size() < 1) {
             flash("You haven't uploaded any files yet.");
         }

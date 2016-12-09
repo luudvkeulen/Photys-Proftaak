@@ -28,7 +28,9 @@ GET         /myalbumsDelete            controllers.AlbumsController.deleteAlbum(
 GET         /gettocartpage             controllers.CartController.changeAmount(id: Int, pictureID: Int, add: Boolean)
 GET         /pay                       controllers.PaymentController.createPayment
 GET         /paymentcanceled           controllers.PaymentController.paymentCancelled
-GET         /paymentsuccess            controllers.PaymentController.paymentAccepted(PayerID, paymentId)
+GET         /paymentsuccess            controllers.PaymentController.paymentAccepted(payerID, paymentId)
+GET         /ordercart                 controllers.CartController.orderCart
+GET         /order                     controllers.OrderController.index
 
 POST        /account                   controllers.AccountController.UpdateAccountInfo()
 POST        /login                     controllers.LoginController.login()

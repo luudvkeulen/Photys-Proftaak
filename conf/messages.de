@@ -34,3 +34,5 @@ account.showorders=Aufträge anzeigen
 account.details=Persönliche Details
 account.showdetails=Persönliche Daten anzeigen
 account.changesettings=Ändern Sie Ihre Einstellungen unten
+#cart
+cart.empty=Ihr Warenkorb ist leer

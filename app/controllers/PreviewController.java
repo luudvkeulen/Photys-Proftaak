@@ -123,7 +123,8 @@ public class PreviewController extends Controller {
                 break;
         }
 
-        CartItem cartItem = new CartItem(Integer.parseInt(dynamicForm.get("id")), dynamicForm.get("picturename"), selectedFilter, products);
+        Photo photo = new Photo(Integer.parseInt(dynamicForm.get("id")), dynamicForm.get("picturename"));
+        CartItem cartItem = new CartItem(photo, selectedFilter, products);
         List<CartItem> cartItems = new ArrayList<>();
         cartItems.add(cartItem);
         String cookieText;
@@ -132,8 +133,6 @@ public class PreviewController extends Controller {
         } else {
             cookieText = BinaryLogic.objectsToBinary(cartItems);
         }
-
-        Logger.info(cookieText);
 
         response().setCookie(new Http.Cookie("cart", cookieText, null, "/", "", false, false));
         return redirect("/cart");

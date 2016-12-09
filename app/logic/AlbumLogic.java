@@ -122,7 +122,6 @@ public class AlbumLogic {
     }
 
     public boolean deleteAlbum(int albumId) {
-        Logger.info("Delete album method was called");
         PreparedStatement statement = null;
         Boolean dbSucces = false;
 

@@ -5,20 +5,20 @@
         <div class="col-md-6 col-md-offset-3">
             <h2>Cart</h2>
             @if(cartItems.size() < 1) {
-                Your cart is empty
+                @Messages("cart.empty")
             } else {
                 <table class="carttable">
                 @for(cartItem <- cartItems) {
                     @for(product <- cartItem.getProducts) {
                         <tr class="cartitemrow">
                             <td class="cartitemname">
-                                <b>@cartItem.getName:</b> @product.getName
+                                <b>@cartItem.getPhoto.getName:</b> @product.getName
                             </td>
                             <td class="cartitemamount pull-right">
                                 € @product.getTotalPrice
-                                <a class="btn btn-default productbutton" href="@routes.CartController.changeAmount(product.getID(), cartItem.getPictureId(), false)">-</a>
+                                <a class="btn btn-default productbutton" href="@routes.CartController.changeAmount(product.getID(), cartItem.getPhoto.getId, false)">-</a>
                                 <label id="label0">@product.getAmount</label>
-                                <a class="btn btn-default productbutton" href="@routes.CartController.changeAmount(product.getID(), cartItem.getPictureId(), true)">+</a>
+                                <a class="btn btn-default productbutton" href="@routes.CartController.changeAmount(product.getID(), cartItem.getPhoto.getId, true)">+</a>
                             </td>
                         </tr>
                     }
@@ -30,10 +30,6 @@
             <div>
                 <label>Total price: &#8364; @CartController.countTotalPrice()</label>
             </div>
-            <button type="button" class="btn btn-primary btn-lg btn-block">order now</button>
+            <a href="@routes.CartController.orderCart()" class="btn btn-primary btn-lg btn-block">Order now</a>
         </div>
-
-            <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="@routes.Assets.versioned("javascripts/ie10-viewport-bug-workaround.js")"></script>
-
     }

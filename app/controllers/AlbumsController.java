@@ -233,7 +233,6 @@ public class AlbumsController extends Controller {
 
     public Result deleteAlbum(String albumID) {
         int albumId = Integer.parseInt(albumID);
-        Logger.info("Delete album is being called");
         AlbumLogic aL = new AlbumLogic(db);
         PhotoLogic pL = new PhotoLogic(db);
         ArrayList<Photo> photos = pL.getPhotosByAlbumID(albumId);

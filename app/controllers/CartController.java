@@ -1,6 +1,7 @@
 package controllers;
 
 import logic.BinaryLogic;
+import logic.OrderLogic;
 import logic.PhotographerLogic;
 import logic.ProductLogic;
 import models.CartItem;
@@ -50,7 +51,7 @@ public class CartController extends Controller {
         if (cartItems.size() < 1) return redirect("/cart");
 
         for (CartItem item : cartItems) {
-            if (item.getPictureId() == pictureID) {
+            if (item.getPhoto().getId() == pictureID) {
                 for (Product product : item.getProducts()) {
                     if (product.getID() == productID) {
                         if (add) {
@@ -67,6 +68,15 @@ public class CartController extends Controller {
         response().setCookie(new Http.Cookie("cart", newCookie, null, "/", "", false, false));
 
         return redirect("/cart");
+    }
+
+    public Result orderCart() {
+        String cart = getCartCookie();
+        if (cart.equals("")) return badRequest("Cookie is no longer valid");
+        List<CartItem> cartItems = BinaryLogic.binaryToObject(cart);
+        OrderLogic ol = new OrderLogic(db);
+        ol.createOrder(cartItems, session("user"));
+        return redirect("/order");
     }
 
     // berekenen van de totaal prijs van alle producten in de winkelwagen

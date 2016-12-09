@@ -27,7 +27,7 @@
                         <div id="collapse1" class="panel-collapse collapse in">
                             @for(cartItem <- cartList) {
                                 @for(product <- cartItem.getProducts) {
-                                    <div class="panel-body"><b>@cartItem.getName:</b> @product.getName
+                                    <div class="panel-body"><b>@cartItem.getPhoto.getName:</b> @product.getName
                                         x@product.getAmount</div>
                                 }
                             }
