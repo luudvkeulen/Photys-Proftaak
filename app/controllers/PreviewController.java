@@ -23,7 +23,7 @@ public class PreviewController extends Controller {
     @Inject
     FormFactory factory;
 
-    Database db;
+    final Database db;
 
     public Result index(String url) {
         int id = -1;
@@ -82,11 +82,15 @@ public class PreviewController extends Controller {
             ResultSet result = connection.prepareStatement("SELECT * FROM product").executeQuery();
             while(result.next()) {
                 Integer id = result.getInt("id");
+                String name = result.getString("name");
+                Double price = result.getDouble("price");
                 Integer amount = Integer.valueOf(dynamicForm.get(id.toString()));
                 if(amount < 1) continue;
                 Product product = new Product(
                         id,
-                        amount
+                        amount,
+                        name,
+                        price
                 );
                 products.add(product);
             }
@@ -119,7 +123,8 @@ public class PreviewController extends Controller {
                 break;
         }
 
-        CartItem cartItem = new CartItem(Integer.parseInt(dynamicForm.get("id")), selectedFilter,products);
+        Photo photo = new Photo(Integer.parseInt(dynamicForm.get("id")), dynamicForm.get("picturename"));
+        CartItem cartItem = new CartItem(photo, selectedFilter, products);
         List<CartItem> cartItems = new ArrayList<>();
         cartItems.add(cartItem);
         String cookieText;
@@ -129,11 +134,8 @@ public class PreviewController extends Controller {
             cookieText = BinaryLogic.objectsToBinary(cartItems);
         }
 
-        Logger.info(cookieText);
-
         response().setCookie(new Http.Cookie("cart", cookieText, null, "/", "", false, false));
         return redirect("/cart");
-        //return ok();
     }
 
     @Inject

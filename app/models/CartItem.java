@@ -4,13 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 public class CartItem implements Serializable {
-    private Integer pictureId;
+    private Photo photo;
     private Filter filter;
     private List<Product> products;
-
-    public Integer getPictureId() {
-        return this.pictureId;
-    }
 
     public List<Product> getProducts() {
         return this.products;
@@ -18,8 +14,12 @@ public class CartItem implements Serializable {
 
     public void setProducts(List<Product> products) {this.products = products;}
 
-    public CartItem(Integer pictureId, Filter filter, List<Product> products) {
-        this.pictureId = pictureId;
+    public Photo getPhoto() {
+        return this.photo;
+    }
+
+    public CartItem(Photo photo, Filter filter, List<Product> products) {
+        this.photo = photo;
         this.products = products;
         this.filter = filter;
     }

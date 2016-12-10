@@ -127,6 +127,11 @@ public class Photo implements java.io.Serializable {
         this.albumName = albumName;
     }
 
+    public Photo(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Photo(int id, String name, String fileLocation) {
         this.id = id;
         this.name = name;

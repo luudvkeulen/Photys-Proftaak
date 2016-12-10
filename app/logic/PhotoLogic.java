@@ -6,9 +6,7 @@ import models.User;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import play.Logger;
-import play.db.DB;
 import play.db.Database;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class PhotoLogic {
 
@@ -103,9 +100,8 @@ public class PhotoLogic {
 
     public boolean DeletePhotoByID(int photoID)
     {
-        Logger.info("Delete photo method was called");
-        PreparedStatement statement = null;
-        Boolean ftpSucces = false;
+        PreparedStatement statement;
+        Boolean ftpSucces;
         Boolean dbSucces = false;
 
         //Delete photo on ftp
@@ -142,14 +138,7 @@ public class PhotoLogic {
             ex.printStackTrace();
         }
 
-        System.out.println("FTP: " + ftpSucces + " DB: " + dbSucces);
-        if(dbSucces == true && ftpSucces == true) {
-            return true;
-        }
-        else {
-            Logger.info("Something went wrong :c");
-            return false;
-        }
+        return (dbSucces && ftpSucces);
     }
 
 }

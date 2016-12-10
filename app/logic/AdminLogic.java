@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AdminLogic {
-    Database db;
+    final Database db;
 
     public AdminLogic(Database db) {
         this.db = db;

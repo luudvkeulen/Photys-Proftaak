@@ -75,9 +75,7 @@ public class AlbumsController extends Controller {
 
     //Generates a random Album URL
     public String GenerateAlbumURL() {
-        String albumURL = UUID.randomUUID().toString();
-
-        return albumURL;
+        return UUID.randomUUID().toString();
     }
 
 
@@ -235,7 +233,6 @@ public class AlbumsController extends Controller {
 
     public Result deleteAlbum(String albumID) {
         int albumId = Integer.parseInt(albumID);
-        Logger.info("Delete album is being called");
         AlbumLogic aL = new AlbumLogic(db);
         PhotoLogic pL = new PhotoLogic(db);
         ArrayList<Photo> photos = pL.getPhotosByAlbumID(albumId);

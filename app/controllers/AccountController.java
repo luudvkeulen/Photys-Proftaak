@@ -1,7 +1,9 @@
 package controllers;
 
+import logic.BinaryLogic;
 import logic.PhotographerLogic;
 import logic.UserLogic;
+import models.CartItem;
 import models.Order;
 import models.User;
 import play.data.DynamicForm;
@@ -31,11 +33,11 @@ public class AccountController extends Controller {
         ul = new UserLogic(db);
     }
 
-    private Database db;
+    private final Database db;
 
-    private PhotographerLogic pl;
+    private final PhotographerLogic pl;
 
-    private UserLogic ul;
+    private final UserLogic ul;
 
     public boolean isPhotographer() {
         return pl.isPhotographer(session("user"));
@@ -44,7 +46,24 @@ public class AccountController extends Controller {
     public Result index() {
         User currentUser = GetAccountInfo(session("user"));
         ArrayList<Order> orders = GetAccountOrders();
-        return ok(account.render(currentUser, orders));
+
+        List<CartItem> cartItems = new ArrayList<>();
+        if (request().cookie("cart") == null) {
+            return ok(account.render(currentUser, orders, new ArrayList<>()));
+        }
+        String cookie = request().cookie("cart").value();
+        if (cookie.isEmpty() || cookie == null) {
+            return ok(account.render(currentUser, orders, new ArrayList<>()));
+        }
+
+        if (cookie != null) {
+            cartItems = BinaryLogic.binaryToObject(cookie);
+        } else {
+            System.out.println("EMPTY COOKIE");
+        }
+
+        //return ok(account.render(currentUser, orders));
+        return ok(account.render(currentUser, orders, cartItems));
     }
 
     public User GetAccountInfo(String email) {
@@ -84,7 +103,23 @@ public class AccountController extends Controller {
                 flash("danger", "Incorrect password.");
                 User currentUser = GetAccountInfo(session("user"));
                 ArrayList<Order> orders = GetAccountOrders();
-                return ok(account.render(currentUser, orders));
+
+                List<CartItem> cartItems = new ArrayList<>();
+                if (request().cookie("cart") == null) {
+                    return ok(cart.render(new ArrayList<>()));
+                }
+                String cookie = request().cookie("cart").value();
+                if (cookie.isEmpty() || cookie == null) {
+                    return ok(cart.render(new ArrayList<>()));
+                }
+
+                if (cookie != null) {
+                    cartItems = BinaryLogic.binaryToObject(cookie);
+                } else {
+                    System.out.println("EMPTY COOKIE");
+                }
+
+                return ok(account.render(currentUser, orders, cartItems));
             }
         }
 
@@ -115,6 +150,22 @@ public class AccountController extends Controller {
         User currentUser = GetAccountInfo(updatedUser.getEmailAdress());
         flash("notice", "Account information was updated");
         ArrayList<Order> orders = GetAccountOrders();
-        return ok(account.render(currentUser, orders));
+
+        List<CartItem> cartItems = new ArrayList<>();
+        if (request().cookie("cart") == null) {
+            return ok(cart.render(new ArrayList<>()));
+        }
+        String cookie = request().cookie("cart").value();
+        if (cookie.isEmpty() || cookie == null) {
+            return ok(cart.render(new ArrayList<>()));
+        }
+
+        if (cookie != null) {
+            cartItems = BinaryLogic.binaryToObject(cookie);
+        } else {
+            System.out.println("EMPTY COOKIE");
+        }
+
+        return ok(account.render(currentUser, orders, cartItems));
     }
 }

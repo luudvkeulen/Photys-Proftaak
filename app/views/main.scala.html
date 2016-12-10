@@ -1,9 +1,9 @@
 @*
- * This template is called from the `index` template. This template
- * handles the rendering of the page header and body tags. It takes
- * two arguments, a `String` for the title of the page and an `Html`
- * object to insert into the body of the page.
- *@
+* This template is called from the `index` template. This template
+* handles the rendering of the page header and body tags. It takes
+* two arguments, a `String` for the title of the page and an `Html`
+* object to insert into the body of the page.
+*@
 @(title: String)(content: Html)
 
 <!DOCTYPE html>
@@ -11,39 +11,34 @@
     <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
     <head>
         @* Here's where we render the page title `String`. *@
-        <title>@title</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-            <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-            <!--<link rel="icon" href="../../favicon.ico">!-->
-            <!-- Bootstrap core CSS -->
-        <link href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")" rel="stylesheet">
+    <title>@title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <!--<link rel="icon" href="../../favicon.ico">!-->
+        <!-- Bootstrap core CSS -->
+    <link href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")" rel="stylesheet">
 
-            <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <link href="@routes.Assets.versioned("stylesheets/ie10-viewport-bug-workaround.css")" rel="stylesheet">
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="@routes.Assets.versioned("stylesheets/ie10-viewport-bug-workaround.css")" rel="stylesheet">
 
-            <!-- Custom styles for this template -->
-        <link href="@routes.Assets.versioned("stylesheets/signin.css")" rel="stylesheet">
-        <link href="@routes.Assets.versioned("stylesheets/signin-custom.css")" rel="stylesheet">
-        <link href="@routes.Assets.versioned("stylesheets/main.css")" rel="stylesheet">
+        <!-- Custom styles for this template -->
+    <link href="@routes.Assets.versioned("stylesheets/signin.css")" rel="stylesheet">
+    <link href="@routes.Assets.versioned("stylesheets/signin-custom.css")" rel="stylesheet">
+    <link href="@routes.Assets.versioned("stylesheets/main.css")" rel="stylesheet">
 
-        <script src="@routes.Assets.versioned("javascripts/jquery.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/jquery.js")"></script>
 
-        <!--
-        <script src="  @routes.Assets.versioned("javascripts/cart.js")
-        "></script>
-        -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="@routes.Assets.versioned("javascripts/masonry.pkgd.min.js")"></script>
 
-        <script src="@routes.Assets.versioned("javascripts/masonry.pkgd.min.js")"></script>
-
-        <script src="@routes.Assets.versioned("javascripts/validator.js")"></script>
-            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-            <!--[if lt IE 9]>
+    <script src="@routes.Assets.versioned("javascripts/validator.js")"></script>
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
             <![endif]-->
@@ -58,22 +53,25 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" rel="home" href="/" title="Phontys" onclick="getItems()">Photys</a>
+                    <!--<a class="navbar-brand" rel="home" href="/" title="Phontys" onclick="getItems()">Photys</a>!-->
+                <a href="/"><img class="logo" src="@routes.Assets.versioned("images/photys.png")" height="50px"/></a>
             </div>
 
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                     @if(session.get("user") != null) {
-                        <li><a href="/privatealbums">My Albums</a></li>
-                        <li><a href="/upload">Upload</a></li>
-                        <li class="dropdown">
-                            <a href="/cart" class="dropdown-toggle" role="button" aria-expanded="false">
-                                <span class="glyphicon glyphicon-shopping-cart"></span>
-                                <span id="itemAmount">
-                                    Items: @CartController.getTotalItems()</span>
-                                <span id="item"></span>
-                                </a>
-                        </li>
+                        <li><a href="/privatealbums">@Messages("main.albums")</a></li>
+                        <li><a href="/upload">@Messages("main.upload")</a></li>
+                    }
+                    <li class="dropdown">
+                        <a href="/cart" class="dropdown-toggle" role="button" aria-expanded="false">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            <span id="itemAmount">
+                                @Messages("main.items"): @CartController.getTotalItems()</span>
+                            <span id="item"></span>
+                        </a>
+                    </li>
+                    @if(session.get("user") != null) {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-user"></span> 
@@ -92,7 +90,8 @@
                                                 <p class="text-left"><strong>@HomeController.GetUserName()</strong></p>
                                                 <p class="text-left small">@session.get("user")</p>
                                                 <p class="text-left">
-                                                    <a href="/account" class="btn btn-primary btn-block btn-sm">Account</a>
+                                                    <a href="/account" class="btn btn-primary btn-block btn-sm">
+                                                        Account</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -104,7 +103,8 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <p>
-                                                    <a href="@routes.LoginController.logout()" class="btn btn-danger btn-block">Logout</a>
+                                                    <a href="@routes.LoginController.logout()" class="btn btn-danger btn-block">
+                                                    @Messages("main.logout")</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -112,50 +112,46 @@
                                 </li>
                             </ul>
                         </li>
-                    }else{
-                        <li><a href="/login">login</a></li>
-                        <li><a href="/register">register</a></li>
+                    }
+                    @if(session.get("user") == null) {
+                        <li><a href="/login">@Messages("main.login")</a></li>
+                        <li><a href="/register">@Messages("main.register")</a></li>
                     }
 
                 </ul>
 
-                <div class="col-sm-3 col-md-3 pull-right nopadding-right nopadding-left">
-                    <form class="navbar-form" role="search">
-                        <div class="input-group width100">
-                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-                            <div class="input-group-btn width50px">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="pull-right">
+                    <div class="languages">
+                        <a href="@routes.LanguageController.changeLangNl()"><img src="@routes.Assets.versioned("images/nl.gif")" height="20"/></a>
+                        <a href="@routes.LanguageController.changeLangEn()"><img src="@routes.Assets.versioned("images/en.jpg")" height="20"/></a>
+                        <a href="@routes.LanguageController.changeLangDe()"><img src="@routes.Assets.versioned("images/german.png")" height="20"/></a>
+                    </div>
                 </div>
 
             </div>
         </div>
-
         @* And here's where we render the `Html` object containing
-         * the page content. *@
-
+        * the page content. *@
         <script>
-                $( document ).ready(function() {
-                    console.log( "ready!" );
+                $(document).ready(function () {
+                    console.log("ready!");
                     $('.alert').delay(3000).fadeOut();
                 });
         </script>
         <div class="container">
             @if(flash.contains("info")) {
                 <div class="alert alert-info">
-                    @flash.get("info")
+                @flash.get("info")
                 </div>
             }
             @if(flash.contains("success")) {
                 <div class="alert alert-success">
-                    @flash.get("success")
+                @flash.get("success")
                 </div>
             }
             @if(flash.contains("warning")) {
                 <div class="alert alert-warning">
-                    @flash.get("warning")
+                @flash.get("warning")
                 </div>
             }
             @if(flash.contains("danger")) {

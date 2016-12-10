@@ -1,9 +1,9 @@
 .nopadding-right{
-    padding-right: 0px;
+    padding-right: 0;
 }
 
 .nopadding-left{
-    padding-left: 0px;
+    padding-left: 0;
 }
 
 .width100{
@@ -95,14 +95,11 @@ ul.dropdown-cart li .item-right button{
 
 .navbar-login {
     width: 305px;
-    padding: 10px;
-    padding-bottom: 0px;
+    padding: 10px 10px 0;
 }
 
 .navbar-login-session {
-    padding: 10px;
-    padding-bottom: 0px;
-    padding-top: 0px;
+    padding: 0 10px;
 }
 
 .icon-size {
@@ -162,4 +159,12 @@ a:focus, a:hover {
 .navbar-inverse {
     background-color: #212121;
     border-color: #212121;
+}
+
+.languages {
+    padding: 15px;
+}
+
+.logo {
+    margin-right: 25px;
 }

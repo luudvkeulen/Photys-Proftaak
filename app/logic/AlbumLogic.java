@@ -8,12 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by Thijs on 22-11-2016.
- */
 public class AlbumLogic {
 
-    Database db;
+    final Database db;
 
     public AlbumLogic(Database db) {
         this.db = db;
@@ -125,7 +122,6 @@ public class AlbumLogic {
     }
 
     public boolean deleteAlbum(int albumId) {
-        Logger.info("Delete album method was called");
         PreparedStatement statement = null;
         Boolean dbSucces = false;
 
@@ -149,12 +145,7 @@ public class AlbumLogic {
             ex.printStackTrace();
         }
 
-        if (dbSucces == true) {
-            return true;
-        } else {
-            Logger.info("Something went wrong while deleting album from database");
-            return false;
-        }
+        return dbSucces;
     }
 
 }

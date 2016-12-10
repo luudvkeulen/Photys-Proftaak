@@ -1,51 +1,35 @@
 @(cartItems: List[CartItem])
 
-@main("Cart") {
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
-            $(document).ready(function () {
-                console.log("ready!");
-                $('.alert').delay(3000).fadeOut();
-            });
-    </script>
-
-        <!--CART INFORMATION-->
-    <div class="cartContainer col-md-4">
-        <h2>Cart</h2>
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#collapse1">SHOW CART</a>
-                    </h4>
-                </div>
-                <div id="collapse1" class="panel-collapse">
-                        @for(cartItem <- cartItems) {
-                            @for(product <- cartItem.getProducts) {
-                                <label>Picture ID: @cartItem.getPictureId</label>
-                                <label>Product ID: @product.getID</label>
-                                <label>Product Description: @product.getDescription</label>
-                                <div><img src="http://www.horecaservies.com/wp-content/uploads/2015/09/Palmer-Robusta-mok-wit-2.jpg" style="">
-                                    @product.getName &#8364; @product.getPrice
-                                    <button id="btnMin">-</button>
-                                    <label id="label0">1</label>
-                                    <button id="btnPlus"><a href="@routes.CartController.getToCartPage(product.getID(), cartItem.getPictureId())">+</a></button>
-                                </div>
-                            }
-                        }
-                </div>
+    @main("Cart") {
+        <link href="@routes.Assets.versioned("stylesheets/cart.css")" rel="stylesheet">
+        <div class="col-md-6 col-md-offset-3">
+            <h2>Cart</h2>
+            @if(cartItems.size() < 1) {
+                @Messages("cart.empty")
+            } else {
+                <table class="carttable">
+                @for(cartItem <- cartItems) {
+                    @for(product <- cartItem.getProducts) {
+                        <tr class="cartitemrow">
+                            <td class="cartitemname">
+                                <b>@cartItem.getPhoto.getName:</b> @product.getName
+                            </td>
+                            <td class="cartitemamount pull-right">
+                                € @product.getTotalPrice
+                                <a class="btn btn-default productbutton" href="@routes.CartController.changeAmount(product.getID(), cartItem.getPhoto.getId, false)">-</a>
+                                <label id="label0">@product.getAmount</label>
+                                <a class="btn btn-default productbutton" href="@routes.CartController.changeAmount(product.getID(), cartItem.getPhoto.getId, true)">+</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                </table>
+            }
+            <div id="costs">
             </div>
+            <div>
+                <label>Total price: &#8364; @CartController.countTotalPrice()</label>
+            </div>
+            <a href="@routes.CartController.orderCart()" class="btn btn-primary btn-lg btn-block">Order now</a>
         </div>
-        <div id="costs">
-        </div>
-        <div>
-            <label>Total price: &#8364; @CartController.countTotalPrice()</label>
-        </div>
-        <button type="button" class="btn btn-primary btn-lg btn-block">order now</button>
-    </div>
-
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="@routes.Assets.versioned("javascripts/ie10-viewport-bug-workaround.js")"></script>
-
-}
+    }

@@ -1,0 +1,38 @@
+#main bar
+main.register=Registrieren
+main.login=Einloggen
+main.items=Produkte
+main.upload=Hochladen
+main.albums=Alben
+main.logout=Ausloggen
+#login page
+login.title=Bitte einloggen
+login.signin=Einloggen
+login.password=Passwort
+login.email=E-Mail-Addresse
+#register page
+reg.name=Registrieren
+reg.title=Geben Sie hier Ihre persönlichen Daten ein, um sich für ein Konto anzumelden.
+reg.firstname=Vorname
+reg.lastname=Nachname
+reg.email=E-Mail-Addresse
+reg.pass=Passwort
+reg.pass2=Passwort erneut
+reg.zip=Postleitzahl
+reg.street=Straßenname
+reg.housenr=Hausnummer
+reg.phonenr=Telefonnummer
+reg.regasphotographer=Registrieren Sie sich als Fotograf
+reg.register=Registrieren
+#account page
+account.showcart=Warenkorb anzeigen
+account.cart=Warenkorb
+account.fullcart=Gesamten Warenkorb anzeigen
+account.ordernow=Jetzt bestellen
+account.orders=Aufträge
+account.showorders=Aufträge anzeigen
+account.details=Persönliche Details
+account.showdetails=Persönliche Daten anzeigen
+account.changesettings=Ändern Sie Ihre Einstellungen unten
+#cart
+cart.empty=Ihr Warenkorb ist leer

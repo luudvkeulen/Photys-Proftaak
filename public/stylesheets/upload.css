@@ -4,7 +4,7 @@
 .image-preview-input {
     position: relative;
 	overflow: hidden;
-	margin: 0px;    
+    margin: 0;
     color: #333;
     background-color: #fff;
     border-color: #ccc;    
@@ -30,7 +30,7 @@
 }
 
 .browsebutton {
-	border-radius: 0px;
+    border-radius: 0;
 }
 .ui-helper-hidden-accessible{
 	display: none;
