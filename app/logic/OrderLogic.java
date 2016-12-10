@@ -2,6 +2,7 @@ package logic;
 
 import models.CartItem;
 import models.OrderItem;
+import models.OrderProduct;
 import models.Product;
 import play.db.Database;
 import java.sql.*;
@@ -55,7 +56,7 @@ public class OrderLogic {
 
     public List<OrderItem> getOrderItems(String order_id) {
         List<OrderItem> orderItems = new ArrayList<>();
-        String sql = "SELECT o.*, oi.*, pr.name as productname, pi.name as picturename \n" +
+        String sql = "SELECT o.*, oi.*, pr.name as productname,pr.description as productdescription, pi.name as picturename \n" +
                 "FROM `order` o, orderitem oi, product pr, picture pi \n" +
                 "WHERE o.id = oi.order_id \n" +
                 "AND pr.id = oi.product_id \n" +
@@ -66,14 +67,35 @@ public class OrderLogic {
             statement.setString(1, order_id);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                OrderItem orderItem = new OrderItem(
-                        result.getString("picturename"),
-                        result.getString("productname"),
-                        result.getDouble("productprice"),
-                        result.getInt("amount"),
-                        result.getDouble("pictureprice")
-                );
-                orderItems.add(orderItem);
+                OrderItem orderItem = null;
+                for (OrderItem oi : orderItems) {
+                    if (oi.getId() == result.getInt("picture_id")) {
+                        orderItem = oi;
+                        break;
+                    }
+                }
+
+                if (orderItem != null) {
+                    orderItem.addOrderProduct(new OrderProduct(
+                            result.getString("productname"),
+                            result.getString("productdescription"),
+                            result.getInt("amount"),
+                            result.getDouble("productprice")
+                    ));
+                } else {
+                    orderItem = new OrderItem(
+                            result.getInt("picture_id"),
+                            result.getString("picturename"),
+                            result.getDouble("pictureprice")
+                    );
+                    orderItem.addOrderProduct(new OrderProduct(
+                            result.getString("productname"),
+                            result.getString("productdescription"),
+                            result.getInt("amount"),
+                            result.getDouble("productprice")
+                    ));
+                    orderItems.add(orderItem);
+                }
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());

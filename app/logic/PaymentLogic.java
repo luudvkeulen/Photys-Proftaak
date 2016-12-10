@@ -5,6 +5,7 @@ import com.paypal.base.Constants;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import models.OrderItem;
+import models.OrderProduct;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,16 +34,29 @@ public class PaymentLogic {
         List<Item> items = new ArrayList<>();
         Item item;
         Double totalprice = 0.00;
+        Long roundedPrice;
         for (OrderItem oi : orderItems) {
             item = new Item();
-            item.setName(oi.getPictureName() + ": " + oi.getProductName());
-            item.setDescription("");
-            item.setPrice(String.valueOf(oi.getProductPrice()));
+            item.setName(oi.getPictureName());
+            item.setPrice(String.valueOf(oi.getPicturePrice()));
             item.setCurrency(CURRENCY);
-            item.setQuantity(String.valueOf(oi.getProductAmount()));
+            item.setQuantity("1");
             items.add(item);
             totalprice += oi.getTotalPrice();
+            for (OrderProduct op : oi.getProducts()) {
+                item = new Item();
+                item.setName(oi.getPictureName() + ": " + op.getName());
+                item.setDescription(op.getDescription());
+                item.setCurrency(CURRENCY);
+                item.setPrice(String.valueOf(op.getPrice()));
+                item.setQuantity(String.valueOf(op.getAmount()));
+                items.add(item);
+            }
         }
+
+        totalprice = totalprice * 100;
+        roundedPrice = Math.round(totalprice);
+        totalprice = ((double) roundedPrice) / 100;
 
         amount = new Amount(CURRENCY, totalprice.toString());
 

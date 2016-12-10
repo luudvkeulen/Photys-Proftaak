@@ -9,14 +9,16 @@
         } else {
             <table class="carttable">
             @for(orderItem <- orderItems) {
-                <tr class="cartitemrow">
-                    <td class="cartitemname">
-                        <b>@orderItem.getPictureName:</b> @orderItem.getProductName
+                @for(orderProduct <- orderItem.getProducts) {
+                    <tr class="cartitemrow">
+                        <td class="cartitemname">
+                            <b>@orderItem.getPictureName:</b> @orderProduct.getName
+                        </td>
+                        <td class="cartitemamount pull-right">
+                        € @orderItem.getPicturePrice + @orderProduct.getPrice x € @orderProduct.getAmount = € @orderProduct.getTotalPrice
                     </td>
-                    <td class="cartitemamount pull-right">
-                        € @orderItem.getPicturePrice + @orderItem.getProductAmount x € @orderItem.getProductPrice = € @orderItem.getTotalPrice
-                    </td>
-                </tr>
+                    </tr>
+                }
             }
             </table>
         }
