@@ -11,10 +11,31 @@ import java.util.List;
 
 public class PaymentLogic {
 
+    private static final boolean LIVE = false;
+    private static final String BASE_URL = "http://localhost:9000";
+    private static final String CANCEL_URL = BASE_URL + "/paymentcanceled";
+    private static final String RETURN_URL = BASE_URL + "/paymentsuccess";
+    private static final String CURRENCY = "EUR";
+    private static final RedirectUrls REDIRECT_URLS = new RedirectUrls();
+    private Transaction transaction;
+    private Amount amount;
+    private Payer payer;
+
+    public PaymentLogic() {
+        REDIRECT_URLS.setCancelUrl(CANCEL_URL);
+        REDIRECT_URLS.setReturnUrl(RETURN_URL);
+        payer = new Payer();
+        payer.setPaymentMethod("paypal");
+    }
+
     public String pay() {
-        Amount amount = new Amount().setCurrency("EUR").setTotal("10");
-        Transaction transaction = new Transaction();
+        amount = new Amount();
+        amount.setCurrency(CURRENCY);
+        amount.setTotal("10");
+
+        transaction = new Transaction();
         transaction.setAmount(amount);
+
         Item item = new Item();
         item.setName("testproduct");
         item.setDescription("mooi product");
@@ -30,27 +51,23 @@ public class PaymentLogic {
         List<Transaction> transactions = new ArrayList<>();
         transactions.add(transaction);
 
-        Payer payer = new Payer();
-        payer.setPaymentMethod("paypal");
         Payment payment = new Payment();
         payment.setIntent("sale");
         payment.setPayer(payer);
         payment.setTransactions(transactions);
 
-        RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:9000/paymentcanceled");
-        redirectUrls.setReturnUrl("http://localhost:9000/paymentsuccess");
-        payment.setRedirectUrls(redirectUrls);
+        payment.setRedirectUrls(REDIRECT_URLS);
 
-        //Live
-        //String mode = Constants.LIVE;
-        //Demo
-        String mode = Constants.SANDBOX;
+        String mode;
+        APIContext apiContext;
+        if (LIVE) {
+            mode = Constants.LIVE;
+            apiContext = new APIContext("AZz7hRLiaFPzLeMgwSchKgG_mBHKCGf5ojbMqLp8qDE61nt9O4FkNkbxHKLv36HKrnut1uQOn39s3__E", "EOPVPxZ0wdosfPbK2Lj458ESqvcQoZpjjPXwReha9SrYFhl8FHi-xkY5x-pBX7IlPMLEjPDxpi2mGSxc", mode);
 
-        //Live
-        //APIContext apiContext = new APIContext("AZz7hRLiaFPzLeMgwSchKgG_mBHKCGf5ojbMqLp8qDE61nt9O4FkNkbxHKLv36HKrnut1uQOn39s3__E", "EOPVPxZ0wdosfPbK2Lj458ESqvcQoZpjjPXwReha9SrYFhl8FHi-xkY5x-pBX7IlPMLEjPDxpi2mGSxc", mode);
-        //Demo
-        APIContext apiContext = new APIContext("AUh2gdHH_RDb6Stask5jhJFM2iLOGP8-lvqbHzr1hhMkygP4qesPqXalMID3mXqQIrwsOM2uzFG-qFdR", "EGFd-qDDumwbDqnaOm_xdZvmZi-DhBLVlXfPdyAHf4-qxGT7f64TSMmZKq949-8oJyIGYwvjIQZ_0pMq", mode);
+        } else {
+            mode = Constants.SANDBOX;
+            apiContext = new APIContext("AUh2gdHH_RDb6Stask5jhJFM2iLOGP8-lvqbHzr1hhMkygP4qesPqXalMID3mXqQIrwsOM2uzFG-qFdR", "EGFd-qDDumwbDqnaOm_xdZvmZi-DhBLVlXfPdyAHf4-qxGT7f64TSMmZKq949-8oJyIGYwvjIQZ_0pMq", mode);
+        }
 
         try {
             Payment createdPayment = payment.create(apiContext);
