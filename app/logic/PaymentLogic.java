@@ -4,6 +4,7 @@ import com.paypal.api.payments.*;
 import com.paypal.base.Constants;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import models.OrderItem;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,34 +29,35 @@ public class PaymentLogic {
         payer.setPaymentMethod("paypal");
     }
 
-    public String pay() {
-        amount = new Amount();
-        amount.setCurrency(CURRENCY);
-        amount.setTotal("10");
+    public String pay(List<OrderItem> orderItems) {
+        List<Item> items = new ArrayList<>();
+        Item item;
+        Double totalprice = 0.00;
+        for (OrderItem oi : orderItems) {
+            item = new Item();
+            item.setName(oi.getPictureName() + ": " + oi.getProductName());
+            item.setDescription("");
+            item.setPrice(String.valueOf(oi.getProductPrice()));
+            item.setCurrency(CURRENCY);
+            item.setQuantity(String.valueOf(oi.getProductAmount()));
+            items.add(item);
+            totalprice += oi.getTotalPrice();
+        }
+
+        amount = new Amount(CURRENCY, totalprice.toString());
 
         transaction = new Transaction();
         transaction.setAmount(amount);
 
-        Item item = new Item();
-        item.setName("testproduct");
-        item.setDescription("mooi product");
-        item.setPrice("10");
-        item.setCurrency("EUR");
-        item.setQuantity("1");
         ItemList itemList = new ItemList();
-        List<Item> items = new ArrayList<>();
-        items.add(item);
         itemList.setItems(items);
         transaction.setItemList(itemList);
 
         List<Transaction> transactions = new ArrayList<>();
         transactions.add(transaction);
 
-        Payment payment = new Payment();
-        payment.setIntent("sale");
-        payment.setPayer(payer);
+        Payment payment = new Payment("sale", payer);
         payment.setTransactions(transactions);
-
         payment.setRedirectUrls(REDIRECT_URLS);
 
         String mode;

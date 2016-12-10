@@ -75,8 +75,8 @@ public class CartController extends Controller {
         if (cart.equals("")) return badRequest("Cookie is no longer valid");
         List<CartItem> cartItems = BinaryLogic.binaryToObject(cart);
         OrderLogic ol = new OrderLogic(db);
-        ol.createOrder(cartItems, session("user"));
-        return redirect("/order");
+        int order_id = ol.createOrder(cartItems, session("user"));
+        return redirect("/order?order_id=" + order_id);
     }
 
     // berekenen van de totaal prijs van alle producten in de winkelwagen
