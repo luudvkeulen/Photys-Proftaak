@@ -8,6 +8,7 @@ import models.OrderItem;
 import models.OrderProduct;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,29 +35,20 @@ public class PaymentLogic {
         List<Item> items = new ArrayList<>();
         Item item;
         Double totalprice = 0.00;
-        Long roundedPrice;
         for (OrderItem oi : orderItems) {
-            item = new Item();
-            item.setName(oi.getPictureName());
-            item.setPrice(String.valueOf(oi.getPicturePrice()));
-            item.setCurrency(CURRENCY);
-            item.setQuantity("1");
+            item = new Item(oi.getPictureName(), "1", String.valueOf(oi.getPicturePrice()), CURRENCY);
             items.add(item);
             totalprice += oi.getTotalPrice();
+
             for (OrderProduct op : oi.getProducts()) {
-                item = new Item();
-                item.setName(oi.getPictureName() + ": " + op.getName());
+                String itemname = oi.getPictureName() + ": " + op.getName();
+                item = new Item(itemname, String.valueOf(op.getAmount()), String.valueOf(op.getPrice()), CURRENCY);
                 item.setDescription(op.getDescription());
-                item.setCurrency(CURRENCY);
-                item.setPrice(String.valueOf(op.getPrice()));
-                item.setQuantity(String.valueOf(op.getAmount()));
                 items.add(item);
             }
         }
 
-        totalprice = totalprice * 100;
-        roundedPrice = Math.round(totalprice);
-        totalprice = ((double) roundedPrice) / 100;
+        totalprice = roundDouble(totalprice);
 
         amount = new Amount(CURRENCY, totalprice.toString());
 
@@ -67,8 +59,7 @@ public class PaymentLogic {
         itemList.setItems(items);
         transaction.setItemList(itemList);
 
-        List<Transaction> transactions = new ArrayList<>();
-        transactions.add(transaction);
+        List<Transaction> transactions = new ArrayList<>(Arrays.asList(transaction));
 
         Payment payment = new Payment("sale", payer);
         payment.setTransactions(transactions);
@@ -99,5 +90,11 @@ public class PaymentLogic {
             System.err.println(e.getDetails());
         }
         return "/";
+    }
+
+    private Double roundDouble(Double d) {
+        Double result = d * 100;
+        Long roundedLong = Math.round(result);
+        return ((double) roundedLong) / 100;
     }
 }
