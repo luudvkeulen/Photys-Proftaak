@@ -90,7 +90,6 @@ public class AlbumsController extends Controller {
     }
 
     public ArrayList<Photo> GetPhotosInAlbum(int albumID) {
-        PhotographerLogic photographerLogic = new PhotographerLogic(db);
 
         ArrayList<Photo> photosInAlbum = new ArrayList<>();
 
