@@ -213,7 +213,7 @@ public class UploadController extends Controller {
 
     private int insertAlbumDetails(String name, int photographer_id, String description, boolean accessibility, String albumURL) {
 
-        PreparedStatement prepared = null;
+        PreparedStatement prepared;
         try (Connection connection = db.getConnection()) {
             prepared = connection.prepareStatement("INSERT INTO `album` (`name`, photographer_id, description, private, albumURL) VALUES (?,?,?,?,?)");
             prepared.setString(1, name);
@@ -249,7 +249,7 @@ public class UploadController extends Controller {
     }
 
     private boolean insertAddUsersToPrivateAlbum(int albumid, String[] userEmails) {
-        PreparedStatement prepared = null;
+        PreparedStatement prepared;
 
         try (Connection connection = db.getConnection()) {
 
@@ -295,7 +295,7 @@ public class UploadController extends Controller {
     public ArrayList<Photo> retrieveUploadHistory() {
         ArrayList<Photo> uploads = null;
 
-        PreparedStatement prepared = null;
+        PreparedStatement prepared;
         try (Connection connection = db.getConnection()) {
             uploads = new ArrayList<>();
             int photographerId = findPhotographerId(session("user"));
@@ -318,7 +318,7 @@ public class UploadController extends Controller {
     }
 
     private ArrayList<Album> GetAlbums() {
-        PreparedStatement statement = null;
+        PreparedStatement statement;
 
         ArrayList<Album> albums = new ArrayList<>();
 
