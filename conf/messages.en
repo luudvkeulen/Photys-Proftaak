@@ -41,6 +41,9 @@ account.createdalbums=View created albums
 account.uploaddetails=Show upload details
 #cart
 cart.empty=Your cart is empty
+cart.ordernow=Order now
+cart.totalprice=Total price
+cart.name=Cart
 #album preview
 albumpreview.nopictures=No pictures in this album
 #flash

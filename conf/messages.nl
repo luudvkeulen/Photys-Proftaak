@@ -41,6 +41,9 @@ account.createdalbums=Bekijk gemaakte albums
 account.uploaddetails=Show upload details
 #cart
 cart.empty=Je winkelmandje is leeg
+cart.ordernow=Nu bestellen
+cart.totalprice=Totaal bedrag
+cart.name=Winkelmandje
 #album preview
 albumpreview.nopictures=No pictures in this album
 #flash
