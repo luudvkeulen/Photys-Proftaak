@@ -6,13 +6,6 @@ public class OrderProduct {
     private int amount;
     private double price;
 
-    public OrderProduct(String name, String description, int amount, double price) {
-        this.name = name;
-        this.description = description;
-        this.amount = amount;
-        this.price = price;
-    }
-
     public String getName() {
         return name;
     }
@@ -31,5 +24,12 @@ public class OrderProduct {
 
     public double getTotalPrice() {
         return price * amount;
+    }
+
+    public OrderProduct(String name, String description, int amount, double price) {
+        this.name = name;
+        this.description = description;
+        this.amount = amount;
+        this.price = price;
     }
 }

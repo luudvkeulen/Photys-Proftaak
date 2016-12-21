@@ -75,4 +75,19 @@ public class AdminController extends Controller {
         this.prl = new ProductLogic(db);
         this.db = db;
     }
+
+    public Result UpdateProduct(){
+        DynamicForm dynamicForm = factory.form().bindFromRequest();
+        String id = dynamicForm.get("id");
+
+        try (Connection connection = db.getConnection()) {
+            PreparedStatement prepared = connection.prepareStatement("UPDATE `user` SET `type`='2' WHERE `id`=?");
+            prepared.setString(1, id);
+            prepared.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return redirect("/admin");
+    }
 }

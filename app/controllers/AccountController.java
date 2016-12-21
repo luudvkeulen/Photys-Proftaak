@@ -39,10 +39,6 @@ public class AccountController extends Controller {
 
     private final UserLogic ul;
 
-    public boolean isPhotographer() {
-        return pl.isPhotographer(session("user"));
-    }
-
     public Result index() {
         User currentUser = GetAccountInfo(session("user"));
         ArrayList<Order> orders = GetAccountOrders();
@@ -71,6 +67,7 @@ public class AccountController extends Controller {
     }
 
     public ArrayList<Order> GetAccountOrders() {
+
         ArrayList<Order> orders = new ArrayList<>();
 
         try (Connection connection = db.getConnection()) {

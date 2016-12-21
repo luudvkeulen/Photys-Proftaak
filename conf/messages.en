@@ -34,5 +34,24 @@ account.showorders=Show orders
 account.details=Personal details
 account.showdetails=Show personal details
 account.changesettings=Change your settings below
+account.savechanges=Save changes
+account.uploads=Uploads
+account.uploadhistory=View upload history
+account.createdalbums=View created albums
+account.uploaddetails=Show upload details
 #cart
 cart.empty=Your cart is empty
+cart.ordernow=Order now
+cart.totalprice=Total price
+cart.name=Cart
+#album preview
+albumpreview.nopictures=No pictures in this album
+#myalbums
+myalbums.name=Name
+myalbums.accessibility=Accessibility
+myalbums.private=private
+myalbums.public=public
+myalbums.remove=Remove
+#flash
+flash.emailinuse=Email address is already in use
+flash.registered=You've been successfully registered
