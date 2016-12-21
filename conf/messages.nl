@@ -51,6 +51,7 @@ myalbums.name=Naam
 myalbums.accessibility=Toegankelijkheid
 myalbums.private=prive
 myalbums.public=publiek
+myalbums.remove=Verwijderen
 #flash
 flash.emailinuse=Email-adres is al in gebruik
 flash.registered=U bent succesvol geregistreerd

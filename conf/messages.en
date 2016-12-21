@@ -51,6 +51,7 @@ myalbums.name=Name
 myalbums.accessibility=Accessibility
 myalbums.private=private
 myalbums.public=public
+myalbums.remove=Remove
 #flash
 flash.emailinuse=Email address is already in use
 flash.registered=You've been successfully registered
