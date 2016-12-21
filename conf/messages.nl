@@ -52,6 +52,11 @@ myalbums.accessibility=Toegankelijkheid
 myalbums.private=prive
 myalbums.public=publiek
 myalbums.remove=Verwijderen
+#myuplaods
+myuploads.name=Naam
+myuploads.albumname=Albumnaam
+myuploads.price=Prijs
+myuploads.date=Datum
 #flash
 flash.emailinuse=Email-adres is al in gebruik
 flash.registered=U bent succesvol geregistreerd

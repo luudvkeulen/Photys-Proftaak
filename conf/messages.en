@@ -52,6 +52,11 @@ myalbums.accessibility=Accessibility
 myalbums.private=private
 myalbums.public=public
 myalbums.remove=Remove
+#myuplaods
+myuploads.name=Name
+myuploads.albumname=Albumname
+myuploads.price=Price
+myuploads.date=Date
 #flash
 flash.emailinuse=Email address is already in use
 flash.registered=You've been successfully registered
