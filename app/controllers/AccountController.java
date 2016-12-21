@@ -1,10 +1,12 @@
 package controllers;
 
 import logic.BinaryLogic;
+import logic.OrderLogic;
 import logic.PhotographerLogic;
 import logic.UserLogic;
 import models.CartItem;
 import models.Order;
+import models.OrderItem;
 import models.User;
 import play.data.DynamicForm;
 import play.data.FormFactory;
@@ -20,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 public class AccountController extends Controller {
 
@@ -31,6 +34,7 @@ public class AccountController extends Controller {
         this.db = db;
         pl = new PhotographerLogic(db);
         ul = new UserLogic(db);
+        ol = new OrderLogic(db);
     }
 
     private final Database db;
@@ -38,6 +42,8 @@ public class AccountController extends Controller {
     private final PhotographerLogic pl;
 
     private final UserLogic ul;
+
+    private final OrderLogic ol;
 
     public boolean isPhotographer() {
         return pl.isPhotographer(session("user"));
@@ -47,13 +53,19 @@ public class AccountController extends Controller {
         User currentUser = GetAccountInfo(session("user"));
         ArrayList<Order> orders = GetAccountOrders();
 
+        ArrayList<OrderItem> orderItems = new ArrayList<>();
+
+        for (Order o : orders) {
+            orderItems.addAll(GetOrderItems(o.getId() + ""));
+        }
+
         List<CartItem> cartItems = new ArrayList<>();
         if (request().cookie("cart") == null) {
-            return ok(account.render(currentUser, orders, new ArrayList<>()));
+            return ok(account.render(currentUser, orders, orderItems, new ArrayList<>()));
         }
         String cookie = request().cookie("cart").value();
         if (cookie.isEmpty() || cookie == null) {
-            return ok(account.render(currentUser, orders, new ArrayList<>()));
+            return ok(account.render(currentUser, orders, orderItems, new ArrayList<>()));
         }
 
         if (cookie != null) {
@@ -63,11 +75,15 @@ public class AccountController extends Controller {
         }
 
         //return ok(account.render(currentUser, orders));
-        return ok(account.render(currentUser, orders, cartItems));
+        return ok(account.render(currentUser, orders, orderItems, cartItems));
     }
 
     public User GetAccountInfo(String email) {
         return ul.GetAccountInfo(email);
+    }
+
+    public List<OrderItem> GetOrderItems(String orderid) {
+        return ol.getOrderItems(orderid);
     }
 
     public ArrayList<Order> GetAccountOrders() {
@@ -84,6 +100,7 @@ public class AccountController extends Controller {
                         result.getInt("user_id"),
                         result.getDate("date")));
             }
+
             return orders;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,6 +121,12 @@ public class AccountController extends Controller {
                 User currentUser = GetAccountInfo(session("user"));
                 ArrayList<Order> orders = GetAccountOrders();
 
+                ArrayList<OrderItem> orderItems = new ArrayList<>();
+
+                for (Order o : orders) {
+                    orderItems.addAll(GetOrderItems(o.getId() + ""));
+                }
+
                 List<CartItem> cartItems = new ArrayList<>();
                 if (request().cookie("cart") == null) {
                     return ok(cart.render(new ArrayList<>()));
@@ -119,7 +142,7 @@ public class AccountController extends Controller {
                     System.out.println("EMPTY COOKIE");
                 }
 
-                return ok(account.render(currentUser, orders, cartItems));
+                return ok(account.render(currentUser, orders, orderItems, cartItems));
             }
         }
 
@@ -151,6 +174,12 @@ public class AccountController extends Controller {
         flash("notice", "Account information was updated");
         ArrayList<Order> orders = GetAccountOrders();
 
+        ArrayList<OrderItem> orderItems = new ArrayList<>();
+
+        for (Order o : orders) {
+            orderItems.addAll(GetOrderItems(o.getId() + ""));
+        }
+
         List<CartItem> cartItems = new ArrayList<>();
         if (request().cookie("cart") == null) {
             return ok(cart.render(new ArrayList<>()));
@@ -166,6 +195,6 @@ public class AccountController extends Controller {
             System.out.println("EMPTY COOKIE");
         }
 
-        return ok(account.render(currentUser, orders, cartItems));
+        return ok(account.render(currentUser, orders, orderItems, cartItems));
     }
 }
