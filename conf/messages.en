@@ -73,6 +73,20 @@ preview.addtocart=Add to cart
 #private albums
 privatealbum.below=Available albums will be displayed below
 privatealbum.nopictures=No pictures in this album
+#upload
+upload.uploadhere=Upload your picture here
+upload.addtoalbum=Add this photo to an existing album
+upload.selectalbum=Select an album to add this picture to
+upload.newalbum=Create new album to add this photo to
+upload.albumname=Album name
+upload.description=Description
+upload.privatealbum=Private album
+upload.emails=Emails (if you want to share to certain emails only)
+upload.name=Name
+upload.price=Price
+upload.clear=Clear
+upload.browse=Browse
+upload.upload=Upload
 #flash
 flash.emailinuse=Email address is already in use
 flash.registered=You've been successfully registered

@@ -74,6 +74,20 @@ preview.addtocart=Toevoegen aan winkelwagen
 #private albums
 privatealbum.below=Beschikbare albums worden hieronder weergegeven
 privatealbum.nopictures=No pictures in this album
+#upload
+upload.uploadhere=Upload hier uw foto
+upload.addtoalbum=Voeg deze foto toe aan een bestaand album
+upload.selectalbum=Selecteer een album waaraan je deze foto wil toevoegen
+upload.newalbum=Maak een nieuw album aan 
+upload.albumname=Album naam
+upload.description=Omschrijving
+upload.privatealbum=Prive album
+upload.emails=Emails (alleen als je met bepaalde email-adressen wil delen)
+upload.name=Naam
+upload.price=Prijs
+upload.clear=Leegmaken
+upload.browse=Bladeren
+upload.upload=Uploaden
 #flash
 flash.emailinuse=Email-adres is al in gebruik
 flash.registered=U bent succesvol geregistreerd

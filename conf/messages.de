@@ -73,6 +73,20 @@ preview.addtocart=In den Warenkorb legen
 #private albums
 privatealbum.below=Die verfügbaren Alben werden unten angezeigt
 privatealbum.nopictures=Geen foto's in dit album
+#upload
+upload.uploadhere=Laden Sie hier Ihr Bild hoch
+upload.addtoalbum=Dieses Foto einem vorhandenen Album hinzufügen
+upload.selectalbum=Wählen Sie ein Album aus, dem dieses Bild hinzugefügt werden soll
+upload.newalbum=Erstellen Sie ein neues Album, um dieses Foto hinzuzufügen
+upload.albumname=Album name
+upload.description=Beschreibung
+upload.privatealbum=Privates Album
+upload.emails=Emails (Wenn Sie nur bestimmte E-Mails freigeben möchten)
+upload.name=Name
+upload.price=Preis
+upload.clear=Leer
+upload.browse=Durchsuchen
+upload.upload=Hochladen
 #flash
 flash.emailinuse=Die E-Mail-Adresse wird bereits verwendet
 flash.registered=Sie wurden erfolgreich registriert
