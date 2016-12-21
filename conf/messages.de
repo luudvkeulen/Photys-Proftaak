@@ -35,8 +35,28 @@ account.details=Persönliche Details
 account.showdetails=Persönliche Daten anzeigen
 account.changesettings=Ändern Sie Ihre Einstellungen unten
 account.savechanges=Änderungen speichern
+account.uploads=Hochladen
+account.uploadhistory=Uploadverlauf anzeigen
+account.createdalbums=Angezeigte Alben anzeigen
+account.uploaddetails=Uploaddetails anzeigen
 #cart
 cart.empty=Ihr Warenkorb ist leer
+cart.ordernow=Jetzt bestellen
+cart.totalprice=Gesamtpreis
+cart.name=Warenkorb
+#album preview
+albumpreview.nopictures=No pictures in this album
+#myalbums
+myalbums.name=Name
+myalbums.accessibility=Zugänglichkeit
+myalbums.private=Privatgelände
+myalbums.public=Öffentlichkeit
+myalbums.remove=Entfernen
+#myuplaods
+myuploads.name=Name
+myuploads.albumname=Albumname
+myuploads.price=Preis
+myuploads.date=Datum
 #flash
 flash.emailinuse=Die E-Mail-Adresse wird bereits verwendet
 flash.registered=Sie wurden erfolgreich registriert

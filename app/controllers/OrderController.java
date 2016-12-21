@@ -18,6 +18,6 @@ public class OrderController extends Controller {
 
     public Result index(String order_id) {
         OrderLogic ol = new OrderLogic(db);
-        return ok(order.render(ol.getOrderItems(order_id)));
+        return ok(order.render(ol.getOrderItems(order_id), ol.getTotalOrderPrice(order_id), ol.getPictureCosts(order_id), order_id));
     }
 }

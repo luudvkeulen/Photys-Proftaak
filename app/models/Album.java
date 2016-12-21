@@ -40,15 +40,6 @@ public class Album {
         return name;
     }
 
-    @Override
-    public String toString() {
-        if (isAccessible()){
-            return name;
-        } else {
-            return name + " (Private album)";
-        }
-    }
-
     public Album(int ID, String name, int photographer_id, String photographer_name, String description, boolean accessibility, String albumURL) {
         this.ID = ID;
         this.name = name;
@@ -66,5 +57,14 @@ public class Album {
         this.description = description;
         this.accessibility = accessibility;
         this.albumURL = albumURL;
+    }
+
+    @Override
+    public String toString() {
+        if (isAccessible()){
+            return name;
+        } else {
+            return name + " (Private album)";
+        }
     }
 }

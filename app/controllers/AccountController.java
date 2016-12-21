@@ -100,7 +100,6 @@ public class AccountController extends Controller {
                         result.getInt("user_id"),
                         result.getDate("date")));
             }
-
             return orders;
         } catch (SQLException e) {
             e.printStackTrace();

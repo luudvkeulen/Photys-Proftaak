@@ -1,26 +1,53 @@
-@(orderItems: List[OrderItem])
+@(orderItems: List[OrderItem], totalPrice: Double, pictureCosts : Double, order_id: String)
 
 @main("Order") {
-    <link href="@routes.Assets.versioned("stylesheets/cart.css")" rel="stylesheet">
+    <link href="@routes.Assets.versioned("stylesheets/orderOverview.css")" rel="stylesheet">
     <div class="col-md-6 col-md-offset-3">
         <h2>Order</h2>
         @if(orderItems.size() < 1) {
             @Messages("cart.empty")
         } else {
-            <table class="carttable">
-            @for(orderItem <- orderItems) {
-                @for(orderProduct <- orderItem.getProducts) {
-                    <tr class="cartitemrow">
-                        <td class="cartitemname">
-                            <b>@orderItem.getPictureName:</b> @orderProduct.getName
-                        </td>
-                        <td class="cartitemamount pull-right">
-                        € @orderItem.getPicturePrice + @orderProduct.getPrice x € @orderProduct.getAmount = € @orderProduct.getTotalPrice
-                    </td>
+            <table class="ordertable">
+                <thead>
+                    <tr>
+                        <th class="orderpicturename">Fotonaam</th>
+                        <th>Productnaam</th>
+                        <th>Productprijs</th>
+                        <th>Aantal</th>
+                        <th>Totaal</th>
                     </tr>
+                </thead>
+                @for(orderItem <- orderItems) {
+                    @for(orderProduct <- orderItem.getProducts) {
+                        <tr class="orderitemrow">
+                            <td class="orderitemname">
+                                <b>@orderItem.getPictureName</b>
+                            </td>
+                            <td>@orderProduct.getName</td>
+                            <td>€ @orderProduct.getPrice</td>
+                            <td>@orderProduct.getAmount</td>
+                            <td>€ @orderProduct.getTotalPrice</td>
+                        </tr>
+                    }
                 }
-            }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="ordercosts"><b>Fotokosten</b></td>
+                    <td class="ordercosts"><b>€ @pictureCosts</b></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="ordertotal"><b>Totaalprijs</b></td>
+                    <td class="ordertotal"><b>€ @totalPrice</b></td>
+                </tr>
             </table>
+            <div class="btnPay">
+                <a href="@routes.PaymentController.createPayment(order_id)" class="btn btn-primary btn-lg btn-block">Ga naar betalen</a>
+            </div>
         }
     </div>
 }
