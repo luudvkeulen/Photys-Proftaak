@@ -1,6 +1,26 @@
+@(orderItems: List[OrderItem])
+
 @main("Order") {
     <link href="@routes.Assets.versioned("stylesheets/cart.css")" rel="stylesheet">
     <div class="col-md-6 col-md-offset-3">
         <h2>Order</h2>
+        @if(orderItems.size() < 1) {
+            @Messages("cart.empty")
+        } else {
+            <table class="carttable">
+            @for(orderItem <- orderItems) {
+                @for(orderProduct <- orderItem.getProducts) {
+                    <tr class="cartitemrow">
+                        <td class="cartitemname">
+                            <b>@orderItem.getPictureName:</b> @orderProduct.getName
+                        </td>
+                        <td class="cartitemamount pull-right">
+                        € @orderItem.getPicturePrice + @orderProduct.getPrice x € @orderProduct.getAmount = € @orderProduct.getTotalPrice
+                    </td>
+                    </tr>
+                }
+            }
+            </table>
+        }
     </div>
 }

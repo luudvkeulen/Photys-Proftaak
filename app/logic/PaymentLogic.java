@@ -4,53 +4,83 @@ import com.paypal.api.payments.*;
 import com.paypal.base.Constants;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import models.OrderItem;
+import models.OrderProduct;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 public class PaymentLogic {
 
-    public String pay() {
-        Amount amount = new Amount().setCurrency("EUR").setTotal("10");
-        Transaction transaction = new Transaction();
-        transaction.setAmount(amount);
-        Item item = new Item();
-        item.setName("testproduct");
-        item.setDescription("mooi product");
-        item.setPrice("10");
-        item.setCurrency("EUR");
-        item.setQuantity("1");
-        ItemList itemList = new ItemList();
+    private static final boolean LIVE = false;
+    private static final String BASE_URL = "http://localhost:9000";
+    private static final String CANCEL_URL = BASE_URL + "/paymentcanceled";
+    private static final String RETURN_URL = BASE_URL + "/paymentsuccess";
+    private static final String CURRENCY = "EUR";
+    private static final RedirectUrls REDIRECT_URLS = new RedirectUrls();
+    private Transaction transaction;
+    private Amount amount;
+    private Payer payer;
+
+    public PaymentLogic() {
+        REDIRECT_URLS.setCancelUrl(CANCEL_URL);
+        REDIRECT_URLS.setReturnUrl(RETURN_URL);
+        payer = new Payer();
+        payer.setPaymentMethod("paypal");
+    }
+
+    public String pay(List<OrderItem> orderItems) {
         List<Item> items = new ArrayList<>();
-        items.add(item);
+        Item item;
+        Double totalprice = 0.00;
+        for (OrderItem oi : orderItems) {
+            item = new Item(oi.getPictureName(), "1", String.valueOf(oi.getPicturePrice()), CURRENCY);
+            items.add(item);
+            totalprice += oi.getTotalPrice();
+
+            for (OrderProduct op : oi.getProducts()) {
+                String itemname = oi.getPictureName() + ": " + op.getName();
+                item = new Item(itemname, String.valueOf(op.getAmount()), String.valueOf(op.getPrice()), CURRENCY);
+                item.setDescription(op.getDescription());
+                items.add(item);
+            }
+        }
+
+        totalprice = roundDouble(totalprice);
+
+        amount = new Amount(CURRENCY, totalprice.toString());
+
+        transaction = new Transaction();
+        transaction.setAmount(amount);
+
+        ItemList itemList = new ItemList();
         itemList.setItems(items);
         transaction.setItemList(itemList);
 
-        List<Transaction> transactions = new ArrayList<>();
-        transactions.add(transaction);
+        List<Transaction> transactions = new ArrayList<>(Arrays.asList(transaction));
 
-        Payer payer = new Payer();
-        payer.setPaymentMethod("paypal");
-        Payment payment = new Payment();
-        payment.setIntent("sale");
-        payment.setPayer(payer);
+        Payment payment = new Payment("sale", payer);
         payment.setTransactions(transactions);
+        payment.setRedirectUrls(REDIRECT_URLS);
 
-        RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:9000/paymentcanceled");
-        redirectUrls.setReturnUrl("http://localhost:9000/paymentsuccess");
-        payment.setRedirectUrls(redirectUrls);
+        String mode;
+        String clientId;
+        String clientSecret;
 
-        //Live
-        //String mode = Constants.LIVE;
-        //Demo
-        String mode = Constants.SANDBOX;
+        if (LIVE) {
+            mode = Constants.LIVE;
+            clientId = "AZz7hRLiaFPzLeMgwSchKgG_mBHKCGf5ojbMqLp8qDE61nt9O4FkNkbxHKLv36HKrnut1uQOn39s3__E";
+            clientSecret = "EOPVPxZ0wdosfPbK2Lj458ESqvcQoZpjjPXwReha9SrYFhl8FHi-xkY5x-pBX7IlPMLEjPDxpi2mGSxc";
 
-        //Live
-        //APIContext apiContext = new APIContext("AZz7hRLiaFPzLeMgwSchKgG_mBHKCGf5ojbMqLp8qDE61nt9O4FkNkbxHKLv36HKrnut1uQOn39s3__E", "EOPVPxZ0wdosfPbK2Lj458ESqvcQoZpjjPXwReha9SrYFhl8FHi-xkY5x-pBX7IlPMLEjPDxpi2mGSxc", mode);
-        //Demo
-        APIContext apiContext = new APIContext("AUh2gdHH_RDb6Stask5jhJFM2iLOGP8-lvqbHzr1hhMkygP4qesPqXalMID3mXqQIrwsOM2uzFG-qFdR", "EGFd-qDDumwbDqnaOm_xdZvmZi-DhBLVlXfPdyAHf4-qxGT7f64TSMmZKq949-8oJyIGYwvjIQZ_0pMq", mode);
+        } else {
+            mode = Constants.SANDBOX;
+            clientId = "AUh2gdHH_RDb6Stask5jhJFM2iLOGP8-lvqbHzr1hhMkygP4qesPqXalMID3mXqQIrwsOM2uzFG-qFdR";
+            clientSecret = "EGFd-qDDumwbDqnaOm_xdZvmZi-DhBLVlXfPdyAHf4-qxGT7f64TSMmZKq949-8oJyIGYwvjIQZ_0pMq";
+        }
+
+        APIContext apiContext = new APIContext(clientId, clientSecret, mode);
 
         try {
             Payment createdPayment = payment.create(apiContext);
@@ -66,5 +96,11 @@ public class PaymentLogic {
             System.err.println(e.getDetails());
         }
         return "/";
+    }
+
+    private Double roundDouble(Double d) {
+        Double result = d * 100;
+        Long roundedLong = Math.round(result);
+        return ((double) roundedLong) / 100;
     }
 }

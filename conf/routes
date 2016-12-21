@@ -26,11 +26,11 @@ GET         /myalbums                  controllers.AlbumsController.albums
 GET         /myuploadsDelete           controllers.UploadController.deletePhoto(photoID)
 GET         /myalbumsDelete            controllers.AlbumsController.deleteAlbum(albumID)
 GET         /gettocartpage             controllers.CartController.changeAmount(id: Int, pictureID: Int, add: Boolean)
-GET         /pay                       controllers.PaymentController.createPayment
+GET         /pay                       controllers.PaymentController.createPayment(order_id)
 GET         /paymentcanceled           controllers.PaymentController.paymentCancelled
 GET         /paymentsuccess            controllers.PaymentController.paymentAccepted(payerID, paymentId)
 GET         /ordercart                 controllers.CartController.orderCart
-GET         /order                     controllers.OrderController.index
+GET         /order                     controllers.OrderController.index(order_id)
 
 POST        /account                   controllers.AccountController.UpdateAccountInfo()
 POST        /login                     controllers.LoginController.login()

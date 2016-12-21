@@ -4,9 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by hp on 5-12-2016.
- */
 public class Order {
 
     private int id;

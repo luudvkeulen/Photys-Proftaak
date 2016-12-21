@@ -1,8 +1,5 @@
 package models;
 
-/**
- * Created by Thijs on 14-9-2016.
- */
 public enum UserType {
 
     Suspended(-1), User(0) , Photographer(1), requestedPhotographer(2), Admin(3);
