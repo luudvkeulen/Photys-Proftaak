@@ -11,8 +11,8 @@
                 <table id="t01" class="sortable">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Accessibility</th>
+                            <th>@Messages("myalbums.name") </th>
+                            <th>@Messages("myalbums.accessibility") </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -20,9 +20,9 @@
                             <tr>
                                 <td><a href="/album?url=@album.getAlbumURL">@album.getName</a> </td>
                                 <td>@if(album.isAccessible == true) {
-                                        public
+        @Messages("myalbums.public")
                                     } else {
-                                        private
+        @Messages("myalbums.private")
                                 } </td>
                                 <td><a href="@routes.AlbumsController.deleteAlbum(album.getID.toString)" class="btn btn-default">Remove</a></td>
                             </tr>

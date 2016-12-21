@@ -46,6 +46,11 @@ cart.totalprice=Totaal bedrag
 cart.name=Winkelmandje
 #album preview
 albumpreview.nopictures=No pictures in this album
+#myalbums
+myalbums.name=Naam
+myalbums.accessibility=Toegankelijkheid
+myalbums.private=prive
+myalbums.public=publiek
 #flash
 flash.emailinuse=Email-adres is al in gebruik
 flash.registered=U bent succesvol geregistreerd

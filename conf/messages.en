@@ -46,6 +46,11 @@ cart.totalprice=Total price
 cart.name=Cart
 #album preview
 albumpreview.nopictures=No pictures in this album
+#myalbums
+myalbums.name=Name
+myalbums.accessibility=Accessibility
+myalbums.private=private
+myalbums.public=public
 #flash
 flash.emailinuse=Email address is already in use
 flash.registered=You've been successfully registered
