@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Photo implements java.io.Serializable {
+
     private int id;
     private String name;
     private User photographer;
@@ -17,74 +18,67 @@ public class Photo implements java.io.Serializable {
     private String url;
     private String albumDescription;
 
+    //Album description
     public String getAlbumDescription() {
         return albumDescription;
     }
-
     public void setAlbumDescription(String albumDescription) {
         this.albumDescription = albumDescription;
     }
-
+    //Url
     public String getUrl() {
         return url;
     }
-
+    //Id
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
+    //Date
     public Date getDate() {
         return date;
     }
-
     public void setDate(Date date) {
         this.date = date;
     }
-
+    //Photographer
     public User getPhotographer() {
         return photographer;
     }
-
     public void setPhotographer(User photographer) {
         this.photographer = photographer;
     }
-
+    //FileSize
     public int getFileSize() {
         return fileSize;
     }
-
     public void setFileSize(int fileSize) {
         this.fileSize = fileSize;
     }
-
+    //Photo name
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
+    //Album name
     public String getAlbumName() {
         return albumName;
     }
-
     public void setAlbumName(String albumName) {
         this.albumName = albumName;
     }
-
+    //File location
     public String getFileLocation() {
         return fileLocation;
     }
-
     public void setFileLocation(String fileLocation) {
         this.fileLocation = fileLocation;
     }
-
+    //Price
     public Double getPrice() {
         return this.price;
     }

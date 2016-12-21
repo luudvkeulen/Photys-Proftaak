@@ -97,7 +97,7 @@
                                     <input type="text" class="form-control" id="inputSelect2" name="inputSelect2">
                                 </div>
                                     <!--CREATE BUTTON... SAVE DETAILS-->
-                                <button type="submit" class="btn btn-primary btnaccount">Save changes</button>
+                                <button type="submit" class="btn btn-primary btnaccount">@Messages("account.savechanges")</button>
                             </div>
                         </form>
                     </div>
@@ -107,20 +107,20 @@
 
         <form>
             <div class="uploadContainer col-md-3">
-                <h2>Uploads</h2>
+                <h2>@Messages("account.uploads")</h2>
 
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapseUploadDetails">Show upload details</a>
+                                <a data-toggle="collapse" href="#collapseUploadDetails">@Messages("account.uploaddetails")</a>
                             </h4>
                         </div>
                         <div id="collapseUploadDetails" class="panel-collapse collapse in">
                             <div class="panel-body"> <a href="@routes.UploadController.uploads()">
-                                View upload history</a></div>
+                            @Messages("account.uploadhistory")</a></div>
                             <div class="panel-body"> <a href="@routes.AlbumsController.albums()">
-                                View created albums</a></div>
+                            @Messages("account.createdalbums")</a></div>
                         </div>
                     </div>
                 </div>
