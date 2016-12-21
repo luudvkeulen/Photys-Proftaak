@@ -7,14 +7,8 @@ import java.util.Date;
 public class Order {
 
     private int id;
-    private int userid;
+    private int userId;
     private Date date;
-
-    public Order(int id, int userid, Date date) {
-        this.id = id;
-        this.userid = userid;
-        this.date = date;
-    }
 
     public Date getDate() {
         return date;
@@ -26,12 +20,16 @@ public class Order {
     }
 
     public int getUserid() {
-
-        return userid;
+        return userId;
     }
 
     public int getId() {
-
         return id;
+    }
+
+    public Order(int id, int userId, Date date) {
+        this.id = id;
+        this.userId = userId;
+        this.date = date;
     }
 }

@@ -3,7 +3,7 @@
     @main("Cart") {
         <link href="@routes.Assets.versioned("stylesheets/cart.css")" rel="stylesheet">
         <div class="col-md-6 col-md-offset-3">
-            <h2>Cart</h2>
+            <h2>@Messages("cart.name")</h2>
             @if(cartItems.size() < 1) {
                 @Messages("cart.empty")
             } else {
@@ -28,8 +28,8 @@
             <div id="costs">
             </div>
             <div>
-                <label>Total price: &#8364; @CartController.countTotalPrice()</label>
+                <label>@Messages("cart.totalprice"): &#8364; @CartController.countTotalPrice()</label>
             </div>
-            <a href="@routes.CartController.orderCart()" class="btn btn-primary btn-lg btn-block">Order now</a>
+            <a href="@routes.CartController.orderCart()" class="btn btn-primary btn-lg btn-block">@Messages("cart.ordernow")</a>
         </div>
     }

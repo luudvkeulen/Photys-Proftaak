@@ -1,20 +1,14 @@
 package controllers;
 
-import logic.AdminLogic;
 import logic.UserLogic;
-import org.mindrot.jbcrypt.BCrypt;
-import play.Logger;
+
 import play.data.FormFactory;
 import play.db.*;
 import play.data.DynamicForm;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
-import play.data.Form;
 import javax.inject.Inject;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginController extends Controller {

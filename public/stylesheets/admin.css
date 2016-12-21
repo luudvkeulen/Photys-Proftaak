@@ -7,3 +7,16 @@
     margin-bottom: 10px;
     margin-left: 5px;
 }
+
+.productimg{
+    margin-right: 7%;
+}
+
+.productinput{
+    width: 70%;
+    float: right;
+}
+
+.productbutton{
+    float: right;
+}

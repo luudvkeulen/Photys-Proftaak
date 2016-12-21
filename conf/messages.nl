@@ -34,5 +34,24 @@ account.showorders=Bestellingen tonen
 account.details=Persoonlijke gegevens
 account.showdetails=Toon persoonlijke gegevens
 account.changesettings=Verander je gegevens hieronder
+account.savechanges=Wijzigingen opslaan
+account.uploads=Uploads
+account.uploadhistory=Bekijk uploadgeschiedenis
+account.createdalbums=Bekijk gemaakte albums
+account.uploaddetails=Show upload details
 #cart
 cart.empty=Je winkelmandje is leeg
+cart.ordernow=Nu bestellen
+cart.totalprice=Totaal bedrag
+cart.name=Winkelmandje
+#album preview
+albumpreview.nopictures=No pictures in this album
+#myalbums
+myalbums.name=Naam
+myalbums.accessibility=Toegankelijkheid
+myalbums.private=prive
+myalbums.public=publiek
+myalbums.remove=Verwijderen
+#flash
+flash.emailinuse=Email-adres is al in gebruik
+flash.registered=U bent succesvol geregistreerd

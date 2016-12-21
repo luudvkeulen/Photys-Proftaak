@@ -27,7 +27,7 @@ public class AlbumsController extends Controller {
     private AlbumLogic aL;
 
     public Result index() {
-        return ok(albums.render());
+        return ok();
     }
 
     public Result albums() {
@@ -90,7 +90,6 @@ public class AlbumsController extends Controller {
     }
 
     public ArrayList<Photo> GetPhotosInAlbum(int albumID) {
-        PhotographerLogic photographerLogic = new PhotographerLogic(db);
 
         ArrayList<Photo> photosInAlbum = new ArrayList<>();
 
