@@ -20,7 +20,7 @@ public class ProductLogic {
         List<Product> result = new ArrayList<>();
 
         try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM product");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM product WHERE active=1");
             ResultSet set = statement.executeQuery();
             while(set.next()) {
                 result.add(
