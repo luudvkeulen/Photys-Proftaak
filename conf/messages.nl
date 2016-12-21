@@ -34,7 +34,11 @@ account.showorders=Bestellingen tonen
 account.details=Persoonlijke gegevens
 account.showdetails=Toon persoonlijke gegevens
 account.changesettings=Verander je gegevens hieronder
-account.savechangen=Wijzigingen opslaan
+account.savechanges=Wijzigingen opslaan
+account.uploads=Uploads
+account.uploadhistory=Bekijk uploadgeschiedenis
+account.createdalbums=Bekijk gemaakte albums
+account.uploaddetails=Show upload details
 #cart
 cart.empty=Je winkelmandje is leeg
 #flash
