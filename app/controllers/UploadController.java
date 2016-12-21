@@ -8,7 +8,6 @@ import models.Album;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
-import play.db.DB;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -37,8 +36,6 @@ public class UploadController extends Controller {
     @Inject
     FormFactory factory;
 
-    private static String server = "137.74.163.54";
-    private static int port = 21;
     private Boolean result;
     private Database db;
     private PhotographerLogic pl;
@@ -78,12 +75,10 @@ public class UploadController extends Controller {
     //Temporary on void for testing purposes, but should be boolean
     public Result deletePhoto(String PhotoID) {
         int intPhotoID = Integer.parseInt(PhotoID);
-        Logger.info("Delete photo is being called");
         PhotoLogic pL = new PhotoLogic(db);
         pL.DeletePhotoByID(intPhotoID);
 
-        ArrayList<Photo> photos = new ArrayList<>();
-        photos = retrieveUploadHistory();
+        ArrayList<Photo> photos = retrieveUploadHistory();
         if (photos.size() < 1) {
             flash("You haven't uploaded any files yet.");
         }
@@ -186,6 +181,8 @@ public class UploadController extends Controller {
 
         FTPClient ftpClient = new FTPClient();
         try {
+            int port = 21;
+            String server = "137.74.163.54";
             ftpClient.connect(server, port);
             ftpClient.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
             ftpClient.enterLocalPassiveMode();
@@ -288,9 +285,7 @@ public class UploadController extends Controller {
             prepared.setInt(4, fileSize);
             prepared.setString(5, "/Photographers/" + email + "/" + fileName);
             prepared.setString(6, GeneratePictureURL());
-            Boolean result = prepared.execute();
-
-            return result;
+            return prepared.execute();
         } catch (SQLException e) {
             play.Logger.error(e.getMessage());
             return false;

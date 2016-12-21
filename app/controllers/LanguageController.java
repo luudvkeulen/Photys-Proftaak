@@ -13,4 +13,9 @@ public class LanguageController extends Controller {
         Controller.changeLang("nl");
         return redirect(request().getHeader("referer"));
     }
+
+    public Result changeLangDe() {
+        Controller.changeLang("de");
+        return redirect(request().getHeader("referer"));
+    }
 }

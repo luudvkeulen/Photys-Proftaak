@@ -33,11 +33,11 @@ public class AccountController extends Controller {
         ul = new UserLogic(db);
     }
 
-    private Database db;
+    private final Database db;
 
-    private PhotographerLogic pl;
+    private final PhotographerLogic pl;
 
-    private UserLogic ul;
+    private final UserLogic ul;
 
     public boolean isPhotographer() {
         return pl.isPhotographer(session("user"));

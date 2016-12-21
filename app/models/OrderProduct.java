@@ -1,31 +1,35 @@
 package models;
 
-import java.io.Serializable;
+public class OrderProduct {
+    private String name;
+    private String description;
+    private int amount;
+    private double price;
 
-public class OrderProduct implements Serializable {
-    private Photo photo;
-    private Product product;
-    private FilterType filterType;
-
-    public Photo getPhoto() {
-        return photo;
+    public OrderProduct(String name, String description, int amount, double price) {
+        this.name = name;
+        this.description = description;
+        this.amount = amount;
+        this.price = price;
     }
 
-    public Product getProduct() {
-        return product;
+    public String getName() {
+        return name;
     }
 
-    public FilterType getFilterType() {
-        return filterType;
+    public String getDescription() {
+        return description;
     }
 
-    public OrderProduct(FilterType filterType, Product product, Photo photo) {
-        this.filterType = filterType;
-        this.product = product;
-        this.photo = photo;
+    public int getAmount() {
+        return amount;
     }
 
-    public OrderProduct() {
+    public double getPrice() {
+        return price;
     }
 
+    public double getTotalPrice() {
+        return price * amount;
+    }
 }

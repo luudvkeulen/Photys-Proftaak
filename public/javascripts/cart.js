@@ -150,7 +150,7 @@ function createGuiPriceComponents(){
 
 	element.appendChild(labelAmountOfItems);
 	element.appendChild(labelAmountOfItemsShow);
-	element.appendChild(labelTotalPrice)
+    element.appendChild(labelTotalPrice);
 	element.appendChild(labelTotalPriceShow);
 	document.getElementById("costs").appendChild(element);
 }

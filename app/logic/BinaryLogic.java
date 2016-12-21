@@ -18,7 +18,6 @@ public class BinaryLogic {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Logger.info("Result:" + result);
 
         return result;
     }

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class PrijsController extends Controller {
 
+    @SuppressWarnings("FieldCanBeLocal")
     private  Database db;
 
 

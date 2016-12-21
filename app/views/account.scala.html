@@ -16,32 +16,35 @@
             </div>
 
             <div class="cartContainer col-md-3">
-                <h2>Cart</h2>
+                <h2>@Messages("account.cart")</h2>
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse1">Show cart</a>
+                                <a data-toggle="collapse" href="#collapse1">@Messages("account.showcart")</a>
                             </h4>
                         </div>
                         <div id="collapse1" class="panel-collapse collapse in">
-                            <div class="panel-body">Mug with picture 'mugshot'</div>
-                            <div class="panel-body">T-shirt 'do you even picture bro!'</div>
-                            <div class="panel-body">Canvas school photo 200 x 300</div>
-                            <div class="panel-body">Pocket size pictures 20 x 30</div>
-                            <button type="button" class="btn btn-primary btnaccount">Order now</button>
+                            @for(cartItem <- cartList) {
+                                @for(product <- cartItem.getProducts) {
+                                    <div class="panel-body"><b>@cartItem.getPhoto.getName:</b> @product.getName
+                                        x@product.getAmount</div>
+                                }
+                            }
+                            <a href="/cart">@Messages("account.fullcart")</a>
+                            <button type="button" class="btn btn-primary btnaccount">@Messages("account.ordernow")</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="orderContainer col-md-3">
-                <h2>Orders</h2>
+                <h2>@Messages("account.orders")</h2>
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapseOrder">Show orders</a>
+                                <a data-toggle="collapse" href="#collapseOrder">@Messages("account.showorders")</a>
                             </h4>
                         </div>
                         <div id="collapseOrder" class="panel-collapse collapse in">
@@ -68,19 +71,19 @@
             </div>
 
             <div class="personalDetailsContainer col-md-3">
-                <h2>Personal details</h2>
+                <h2>@Messages("account.details")</h2>
 
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapsePersonalDetails">Show personal details</a>
+                                <a data-toggle="collapse" href="#collapsePersonalDetails">@Messages("account.showdetails")</a>
                             </h4>
                         </div>
                         <form method="POST" action="@routes.AccountController.UpdateAccountInfo()" enctype="multipart/form-data">
                             <div id="collapsePersonalDetails" class="panel-collapse collapse in">
                                 <div class="panel-body">
-                                    Change your settings below <br>
+                                    @Messages("account.changesettings") <br>
                                     <select class="form-control" id="sel1" name="infoSelect" onchange="controlSelection();">
                                         <option value="email">Email</option>
                                         <option value="name">Display name</option>
@@ -94,7 +97,7 @@
                                     <input type="text" class="form-control" id="inputSelect2" name="inputSelect2">
                                 </div>
                                     <!--CREATE BUTTON... SAVE DETAILS-->
-                                <button type="submit" class="btn btn-primary btnaccount">Save changes</button>
+                                <button type="submit" class="btn btn-primary btnaccount">@Messages("account.savechanges")</button>
                             </div>
                         </form>
                     </div>
