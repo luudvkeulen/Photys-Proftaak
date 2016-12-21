@@ -3,6 +3,7 @@
     @main("Admin") {
         <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
         <script src="@routes.Assets.versioned("javascripts/jquery.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/AddProduct.js")"></script>
         <link href="@routes.Assets.versioned("stylesheets/admin.css")" rel="stylesheet">
         <div class="myCart col-md-5 col-md-offset-2">
             <div class=panel-group" id="accordion">
@@ -71,6 +72,12 @@
                         }
                         <button type="button" class="btnPhotographer btn btn-primary profilebutton">Remove product</button>
                         <button type="button" class="btnPhotographer btn btn-primary profilebutton">Edit product</button>
+                        <button type="button" class="btnAddProduct btn btn-primary profilebutton">Add product</button>
+                        <form method="POST" id="product" class="form-signin" action="@routes.AdminController.addProduct()">
+
+                        </form>
+
+
                     </div>
                 </div>
             </div>

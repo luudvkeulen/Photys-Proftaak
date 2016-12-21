@@ -5,10 +5,13 @@ import logic.PhotographerLogic;
 import logic.ProductLogic;
 import models.Product;
 import models.User;
+import org.mindrot.jbcrypt.BCrypt;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 import javax.inject.Inject;
@@ -16,6 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 public class AdminController extends Controller {
 
@@ -71,17 +75,27 @@ public class AdminController extends Controller {
 
     public Result addProduct() {
         DynamicForm dynamicForm = factory.form().bindFromRequest();
-        String id = dynamicForm.get("id");
+        String productname = dynamicForm.get("productName");
+        String productdescription = dynamicForm.get("productDescription");
+        String productprice = dynamicForm.get("productPrice");
 
-        try (Connection connection = db.getConnection()) {
-            PreparedStatement prepared = connection.prepareStatement("UPDATE `user` SET `type`='2' WHERE `id`=?");
-            prepared.setString(1, id);
-            prepared.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        insertProduct(productname, productdescription, productprice);
         return redirect("/admin");
+    }
+
+    private boolean insertProduct(String productName, String productDescription, String productPrice) {
+        PreparedStatement prepared = null;
+        try (Connection connection = db.getConnection()) {
+            prepared = connection.prepareStatement("INSERT INTO `product` (`name`, description, price) VALUES (?, ?, ?)");
+            prepared.setString(1, productName);
+            prepared.setString(2, productDescription);
+            prepared.setString(3, productPrice);
+            prepared.execute();
+        } catch (SQLException e) {
+            Logger.error(e.getMessage());
+            return false;
+        }
+        return true;
     }
 
     @Inject
