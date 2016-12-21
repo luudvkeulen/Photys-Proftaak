@@ -117,7 +117,7 @@ public class PhotoLogic {
             Logger.info("Succesfully connected to the ftp client!");
             Logger.info("Getting photo by ID...");
             Photo photo = this.GetPhotoByID(photoID);
-            Logger.info("Recieved photo by id!" );
+            Logger.info("Recieved photo by id! id:" + photoID);
             Logger.info("Photo file location : " + photo.getFileLocation());
             ftpSucces =  client.deleteFile(photo.getFileLocation());
 

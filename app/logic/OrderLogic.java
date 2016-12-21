@@ -5,6 +5,8 @@ import models.OrderItem;
 import models.OrderProduct;
 import models.Product;
 import play.db.Database;
+import scala.Int;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +56,54 @@ public class OrderLogic {
         return orderid;
     }
 
+    public double getTotalOrderPrice(String order_id) {
+        double totalPrice = 0;
+        String sql = "SELECT o.picture_id, o.amount, o.pictureprice, o.productprice FROM orderitem o WHERE o.order_id = ?";
+        try(Connection connection = db.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, order_id);
+            ResultSet result = statement.executeQuery();
+            ArrayList<Integer> pictureIdList = new ArrayList<>();
+            while(result.next()){
+                int picture_id = result.getInt("picture_id");
+                int amount = result.getInt("amount");
+                double productPrice = result.getDouble("productprice");
+                double picturePrice = result.getDouble("pictureprice");
+                double price = (productPrice * amount);
+                totalPrice += price;
+                if(!pictureIdList.contains(picture_id)) {
+                    totalPrice += picturePrice;
+                    pictureIdList.add(picture_id);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return totalPrice;
+    }
+
+    public double getPictureCosts(String order_id) {
+        double pictureCosts = 0;
+        String sql = "SELECT o.picture_id, o.amount, o.pictureprice, o.productprice FROM orderitem o WHERE o.order_id = ?";
+        try(Connection connection = db.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, order_id);
+            ResultSet result = statement.executeQuery();
+            ArrayList<Integer> pictureIdList = new ArrayList<>();
+            while(result.next()){
+                int picture_id = result.getInt("picture_id");
+                double picturePrice = result.getDouble("pictureprice");
+                if(!pictureIdList.contains(picture_id)) {
+                    pictureCosts += picturePrice;
+                    pictureIdList.add(picture_id);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return pictureCosts;
+    }
+
     public List<OrderItem> getOrderItems(String order_id) {
         List<OrderItem> orderItems = new ArrayList<>();
         String sql = "SELECT o.*, oi.*, pr.name as productname,pr.description as productdescription, pi.name as picturename \n" +
@@ -85,6 +135,7 @@ public class OrderLogic {
                 } else {
                     orderItem = new OrderItem(
                             result.getInt("picture_id"),
+                            result.getInt("order_id"),
                             result.getString("picturename"),
                             result.getDouble("pictureprice")
                     );
