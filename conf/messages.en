@@ -41,6 +41,8 @@ account.createdalbums=View created albums
 account.uploaddetails=Show upload details
 #cart
 cart.empty=Your cart is empty
+#album preview
+albumpreview.nopictures=No pictures in this album
 #flash
 flash.emailinuse=Email address is already in use
 flash.registered=You've been successfully registered

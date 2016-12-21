@@ -41,6 +41,8 @@ account.createdalbums=Angezeigte Alben anzeigen
 account.uploaddetails=Uploaddetails anzeigen
 #cart
 cart.empty=Ihr Warenkorb ist leer
+#album preview
+albumpreview.nopictures=No pictures in this album
 #flash
 flash.emailinuse=Die E-Mail-Adresse wird bereits verwendet
 flash.registered=Sie wurden erfolgreich registriert

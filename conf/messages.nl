@@ -41,6 +41,8 @@ account.createdalbums=Bekijk gemaakte albums
 account.uploaddetails=Show upload details
 #cart
 cart.empty=Je winkelmandje is leeg
+#album preview
+albumpreview.nopictures=No pictures in this album
 #flash
 flash.emailinuse=Email-adres is al in gebruik
 flash.registered=U bent succesvol geregistreerd
