@@ -6,11 +6,13 @@ import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
+import play.i18n.Messages;
+import play.i18n.MessagesApi;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 import org.apache.commons.mail.*;
-
 import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +24,7 @@ public class RegisterController extends Controller {
     @Inject
     FormFactory factory;
     private Database db;
+    private final MessagesApi messagesApi;
 
     public Result index() {
         return ok(register.render());
@@ -45,19 +48,19 @@ public class RegisterController extends Controller {
             String hashedPw = BCrypt.hashpw(password, BCrypt.gensalt());
             String uuid = UUID.randomUUID().toString();
             //sendEmail(emailaddress, uuid);
+            play.i18n.Lang lang = Http.Context.current().lang();
             if(insertRegisterDetails(firstname, lastname, emailaddress, hashedPw, zipcode, street, housenumber, phone, type, uuid)) {
-                flash("success", "You've been registerd");
+                flash("success", messagesApi.get(lang, "flash.registered"));
             }else {
-                flash("danger", "Email address is already in use");
+                flash("danger", messagesApi.get(lang, "flash.emailinuse"));
             }
             return redirect("/");
         }
     }
 
     private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone, int type, String uuid) {
-        Connection connection = db.getConnection();
         PreparedStatement prepared = null;
-        try {
+        try (Connection connection = db.getConnection()) {
             prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)");
             prepared.setString(1, firstname);
             prepared.setString(2, lastname);
@@ -70,7 +73,7 @@ public class RegisterController extends Controller {
             prepared.setInt(9, type);
             prepared.setString(10, uuid);
             prepared.execute();
-            connection.close();
+            session("user", email);
         } catch (SQLException e) {
             Logger.error(e.getMessage());
             return false;
@@ -99,7 +102,8 @@ public class RegisterController extends Controller {
     }
 
     @Inject
-    public RegisterController(Database db) {
+    public RegisterController(Database db, MessagesApi messagesApi) {
         this.db = db;
+        this.messagesApi = messagesApi;
     }
 }
