@@ -135,6 +135,7 @@ public class OrderLogic {
                 } else {
                     orderItem = new OrderItem(
                             result.getInt("picture_id"),
+                            result.getInt("order_id"),
                             result.getString("picturename"),
                             result.getDouble("pictureprice")
                     );

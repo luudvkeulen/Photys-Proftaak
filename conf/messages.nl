@@ -35,6 +35,7 @@ account.details=Persoonlijke gegevens
 account.showdetails=Toon persoonlijke gegevens
 account.changesettings=Verander je gegevens hieronder
 account.savechanges=Wijzigingen opslaan
+account.savechanges=Wijzigingen opslaan
 account.uploads=Uploads
 account.uploadhistory=Bekijk uploadgeschiedenis
 account.createdalbums=Bekijk gemaakte albums
