@@ -34,5 +34,9 @@ account.showorders=Show orders
 account.details=Personal details
 account.showdetails=Show personal details
 account.changesettings=Change your settings below
+account.savechanges=Save changes
 #cart
 cart.empty=Your cart is empty
+#flash
+flash.emailinuse=Email address is already in use
+flash.registered=You've been successfully registered

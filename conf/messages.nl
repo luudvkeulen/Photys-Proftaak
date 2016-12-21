@@ -34,5 +34,9 @@ account.showorders=Bestellingen tonen
 account.details=Persoonlijke gegevens
 account.showdetails=Toon persoonlijke gegevens
 account.changesettings=Verander je gegevens hieronder
+account.savechangen=Wijzigingen opslaan
 #cart
 cart.empty=Je winkelmandje is leeg
+#flash
+flash.emailinuse=Email-adres is al in gebruik
+flash.registered=U bent succesvol geregistreerd
