@@ -59,9 +59,8 @@ public class RegisterController extends Controller {
     }
 
     private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone, int type, String uuid) {
-        Connection connection = db.getConnection();
         PreparedStatement prepared = null;
-        try {
+        try (Connection connection = db.getConnection()) {
             prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)");
             prepared.setString(1, firstname);
             prepared.setString(2, lastname);
@@ -74,7 +73,7 @@ public class RegisterController extends Controller {
             prepared.setInt(9, type);
             prepared.setString(10, uuid);
             prepared.execute();
-            connection.close();
+            session("user", email);
         } catch (SQLException e) {
             Logger.error(e.getMessage());
             return false;
