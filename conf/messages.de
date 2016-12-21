@@ -57,6 +57,19 @@ myuploads.name=Name
 myuploads.albumname=Albumname
 myuploads.price=Preis
 myuploads.date=Datum
+#preview
+preview.location=Ort
+preview.location.nl=Niederlande
+preview.photographer=Fotograf
+preview.album=Album
+preview.price=Preis
+preview.filter.none=Keiner
+preview.filter.sepia=Sepia
+preview.filter.bw=Schwarz-Weiss
+preview.filter.inverted=Umgekehrt
+preview.filter.blurred=Verschwommen
+preview.filter.darkened=Verdunkelt
+preview.addtocart=In den Warenkorb legen
 #flash
 flash.emailinuse=Die E-Mail-Adresse wird bereits verwendet
 flash.registered=Sie wurden erfolgreich registriert

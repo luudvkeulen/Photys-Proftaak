@@ -16,19 +16,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Location</td>
-                        <td>Netherlands</td>
+                        <td>@Messages("preview.location")</td>
+                        <td>@Messages("preview.location.nl")</td>
                     </tr>
                     <tr>
-                        <td>Photographer</td>
+                        <td>@Messages("preview.photographer")</td>
                         <td>@photographerName</td>
                     </tr>
                     <tr>
-                        <td>Album</td>
+                        <td>@Messages("preview.album")</td>
                         <td><a href="/album?url=@albumUrl">@album</a></td>
                     </tr>
                     <tr>
-                        <td>Price</td>
+                        <td>@Messages("preview.price")</td>
                         <td>€ @price</td>
                     </tr>
                 </tbody>
@@ -44,12 +44,12 @@
                 </div>
                 <div id="filters" class="panel-collapse collapse">
                     <form class="filterform" action="">
-                        <input id="filter" type="radio" name="filter" value="none" checked="checked" onClick="filterSelected()"> None<br/>
-                        <input id="filter" type="radio" name="filter" value="sepia" onClick="filterSelected()"> Sepia<br/>
-                        <input id="filter" type="radio" name="filter" value="bw" onClick="filterSelected()"> Black & White<br/>
-                        <input id="filter" type="radio" name="filter" value="inverted" onClick="filterSelected()"> Inverted<br/>
-                        <input id="filter" type="radio" name="filter" value="blur" onClick="filterSelected()"> Blurred<br/>
-                        <input id="filter" type="radio" name="filter" value="dark" onClick="filterSelected()"> Darkened
+                        <input id="filter" type="radio" name="filter" value="none" checked="checked" onClick="filterSelected()"> @Messages("preview.filter.none")<br/>
+                        <input id="filter" type="radio" name="filter" value="sepia" onClick="filterSelected()"> @Messages("preview.filter.sepia")<br/>
+                        <input id="filter" type="radio" name="filter" value="bw" onClick="filterSelected()"> @Messages("preview.filter.bw")<br/>
+                        <input id="filter" type="radio" name="filter" value="inverted" onClick="filterSelected()"> @Messages("preview.filter.inverted")<br/>
+                        <input id="filter" type="radio" name="filter" value="blur" onClick="filterSelected()"> @Messages("preview.filter.blurred")<br/>
+                        <input id="filter" type="radio" name="filter" value="dark" onClick="filterSelected()"> @Messages("preview.filter.darkened")
                     </form>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                     </form>
 
                     <label id="addToCart" for="submit-form" class="btn btn-primary pull-right addtocartbutton">
-                        Add to cart</label>
+                    @Messages("preview.addtocart")</label>
 
                 </div>
             </div>

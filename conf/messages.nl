@@ -57,6 +57,19 @@ myuploads.name=Naam
 myuploads.albumname=Albumnaam
 myuploads.price=Prijs
 myuploads.date=Datum
+#preview
+preview.location=Locatie
+preview.location.nl=Nederland
+preview.photographer=Fotograaf
+preview.album=Album
+preview.price=Prijs
+preview.filter.none=Geen
+preview.filter.sepia=Sepia
+preview.filter.bw=Zwart wit
+preview.filter.inverted=Omgekeerd
+preview.filter.blurred=Wazig
+preview.filter.darkened=Verduisterd
+preview.addtocart=Toevoegen aan winkelwagen
 #flash
 flash.emailinuse=Email-adres is al in gebruik
 flash.registered=U bent succesvol geregistreerd
