@@ -70,6 +70,9 @@ preview.filter.inverted=Umgekehrt
 preview.filter.blurred=Verschwommen
 preview.filter.darkened=Verdunkelt
 preview.addtocart=In den Warenkorb legen
+#private albums
+privatealbum.below=Die verfügbaren Alben werden unten angezeigt
+privatealbum.nopictures=Geen foto's in dit album
 #flash
 flash.emailinuse=Die E-Mail-Adresse wird bereits verwendet
 flash.registered=Sie wurden erfolgreich registriert

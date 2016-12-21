@@ -71,6 +71,9 @@ preview.filter.inverted=Omgekeerd
 preview.filter.blurred=Wazig
 preview.filter.darkened=Verduisterd
 preview.addtocart=Toevoegen aan winkelwagen
+#private albums
+privatealbum.below=Beschikbare albums worden hieronder weergegeven
+privatealbum.nopictures=No pictures in this album
 #flash
 flash.emailinuse=Email-adres is al in gebruik
 flash.registered=U bent succesvol geregistreerd

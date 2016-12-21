@@ -15,7 +15,7 @@
 @main("Albums") {
     <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
     <link href="@routes.Assets.versioned("stylesheets/privatealbum.css")" rel="stylesheet">
-    <h2 align="center">Available albums will be displayed below</h2>
+    <h2 align="center">@Messages("privatealbum.below")</h2>
     <div class="row">
         @if(albums.size > 0) {
             @for(album <- albums) {
@@ -40,7 +40,7 @@
                 </div>
             }
         } else {
-        <h1 align="center">No pictures in this album</h1>
+            <h1 align="center">@Messages("privatealbum.nopictures")</h1>
         }
     </div>
 }
