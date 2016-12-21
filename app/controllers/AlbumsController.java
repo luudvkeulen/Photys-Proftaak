@@ -27,7 +27,7 @@ public class AlbumsController extends Controller {
     private AlbumLogic aL;
 
     public Result index() {
-        return ok(albums.render());
+        return ok();
     }
 
     public Result albums() {
