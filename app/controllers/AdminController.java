@@ -68,6 +68,7 @@ public class AdminController extends Controller {
             prepared.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            flash("error", "Something went wrong!");
         }
 
         return redirect("/admin");
@@ -103,5 +104,39 @@ public class AdminController extends Controller {
         this.pl = new PhotographerLogic(db);
         this.prl = new ProductLogic(db);
         this.db = db;
+    }
+
+    public Result UpdateProduct(){
+        DynamicForm dynamicForm = factory.form().bindFromRequest();
+        String id = dynamicForm.get("productid");
+        String action = dynamicForm.get("action");
+
+
+        if (action.equals("remove")){
+            try (Connection connection = db.getConnection()) {
+                PreparedStatement prepared = connection.prepareStatement("UPDATE `product` SET `active`=0 WHERE `id`=?");
+                prepared.setString(1, id);
+                prepared.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else if(action.equals("save")){
+            String name = dynamicForm.get("tbname");
+            String price = dynamicForm.get("tbprice");
+            
+            try (Connection connection = db.getConnection()) {
+                PreparedStatement prepared = connection.prepareStatement("UPDATE `product` SET `name`=?, price=? WHERE `id`=?");
+                prepared.setString(1, name);
+                prepared.setString(2, price);
+                prepared.setString(3, id);
+                prepared.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                flash("error", "Something went wrong!");
+            }
+        }
+
+
+        return redirect("/admin");
     }
 }
