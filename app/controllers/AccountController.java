@@ -74,7 +74,7 @@ public class AccountController extends Controller {
     }
 
     private User GetAccountInfo(String email) {
-        return userLogic.GetAccountInfo(email);
+        return userLogic.getAccountInfo(email);
     }
 
     private List<OrderItem> GetOrderItems(String orderId) {
@@ -140,10 +140,10 @@ public class AccountController extends Controller {
             }
         }
 
-        User updatedUser = userLogic.GetAccountInfo(userEmail);
+        User updatedUser = userLogic.getAccountInfo(userEmail);
 
         if (select.equals("email")) {
-            if (userLogic.CheckEmailAvailable(userEmail)) {
+            if (userLogic.checkEmailAvailable(userEmail)) {
                 updatedUser.setEmailAdress(input1);
                 session("user", updatedUser.getEmailAdress());
             } else {
@@ -163,7 +163,7 @@ public class AccountController extends Controller {
             updatedUser.setPhoneNr(input1);
         }
 
-        userLogic.UpdateAccountInfo(updatedUser, userEmail);
+        userLogic.updateAccountInfo(updatedUser, userEmail);
         User currentUser = GetAccountInfo(updatedUser.getEmailAdress());
         flash("notice", "Account information was updated");
         ArrayList<Order> orders = GetAccountOrders();

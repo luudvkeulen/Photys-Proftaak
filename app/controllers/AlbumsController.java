@@ -84,7 +84,7 @@ public class AlbumsController extends Controller {
     }
 
     public int getAlbumIdByURL(String albumUrl, String userEmail) {
-        return albumLogic.GetAlbumIdByURL(albumUrl, userEmail);
+        return albumLogic.getAlbumIdByURL(albumUrl, userEmail);
     }
 
     public ArrayList<Photo> getPhotosInAlbum(int albumID) {
@@ -227,7 +227,7 @@ public class AlbumsController extends Controller {
         PhotoLogic photoLogic = new PhotoLogic(db);
         ArrayList<Photo> photos = photoLogic.getPhotosByAlbumID(albumId);
         for(Photo p : photos) {
-            photoLogic.DeletePhotoByID(p.getId());
+            photoLogic.deletePhotoById(p.getId());
         }
         albumLogic.deleteAlbum(albumId);
 

@@ -5,19 +5,19 @@ import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
-
 import javax.inject.Inject;
 
 public class OrderController extends Controller {
     private final Database db;
+    private final OrderLogic orderLogic;
 
     @Inject
     public OrderController(Database db) {
         this.db = db;
+        orderLogic = new OrderLogic(db);
     }
 
-    public Result index(String order_id) {
-        OrderLogic ol = new OrderLogic(db);
-        return ok(order.render(ol.getOrderItems(order_id), ol.getTotalOrderPrice(order_id), ol.getPictureCosts(order_id), order_id));
+    public Result index(String orderId) {
+        return ok(order.render(orderLogic.getOrderItems(orderId), orderLogic.getTotalOrderPrice(orderId), orderLogic.getPictureCosts(orderId), orderId));
     }
 }

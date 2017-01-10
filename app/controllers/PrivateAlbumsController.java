@@ -14,13 +14,18 @@ public class PrivateAlbumsController extends Controller {
 
     private final Database db;
 
+    @Inject
+    public PrivateAlbumsController(Database db) {
+        this.db = db;
+    }
+
     public Result index() {
         AlbumsController ac = new AlbumsController(db);
         List<Album> albums = ac.GetAvailableAlbums();
         return ok(privatealbums.render(albums));
     }
 
-    public Result RenderAlbum(String albumUrl) {
+    public Result renderAlbum(String albumUrl) {
         AlbumsController ac = new AlbumsController(db);
         int albumId = ac.getAlbumIdByURL(albumUrl, session("user"));
         if (albumId > 0) {
@@ -30,10 +35,5 @@ public class PrivateAlbumsController extends Controller {
             flash("danger", "You do not have permission to access this album as it is set to private.");
             return index();
         }
-    }
-
-    @Inject
-    public PrivateAlbumsController(Database db) {
-        this.db = db;
     }
 }

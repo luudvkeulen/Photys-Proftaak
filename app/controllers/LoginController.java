@@ -9,7 +9,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 import javax.inject.Inject;
-import java.sql.SQLException;
 
 public class LoginController extends Controller {
 
@@ -32,7 +31,7 @@ public class LoginController extends Controller {
         DynamicForm dynamicForm = factory.form().bindFromRequest();
         if(checkCredentials(dynamicForm.get("email"),dynamicForm.get("password"))) {
             //Check if the user is banned
-            userLogic.CheckBanStatus(dynamicForm.get("email"));
+            userLogic.checkBanStatus(dynamicForm.get("email"));
             flash("success", "You've been logged in");
             return redirect(routes.HomeController.index());
         } else {

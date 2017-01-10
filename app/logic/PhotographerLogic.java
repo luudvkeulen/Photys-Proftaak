@@ -16,9 +16,10 @@ public class PhotographerLogic {
     public boolean isPhotographer(String email) {
         Boolean result = false;
         if (email == null) return result;
-        Connection connection = db.getConnection();
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
+
+        try (Connection connection = db.getConnection()) {
+            String sql = "SELECT `type` FROM `user` WHERE emailadres = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, email);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
@@ -28,25 +29,18 @@ public class PhotographerLogic {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
         return result;
     }
 
-    public User GetPhotographerById(Integer id) {
+    public User getPhotographerById(Integer id) {
         User user = null;
         PreparedStatement statement;
-        Connection connection;
 
-        try {
-            connection = db.getConnection();
-            statement = connection.prepareStatement("SELECT `first_name`, `last_name`, `emailadres` FROM `user` WHERE ID = ?");
+        try (Connection connection = db.getConnection()) {
+            String sql = "SELECT `first_name`, `last_name`, `emailadres` FROM `user` WHERE ID = ?";
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
 
             ResultSet result = statement.executeQuery();
@@ -70,9 +64,9 @@ public class PhotographerLogic {
     public Integer findPhotographerId(String email) {
         Integer result = -1;
         if (email == null) return result;
-        Connection connection = db.getConnection();
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT `id` FROM `user` WHERE emailadres = ?");
+        try (Connection connection = db.getConnection()) {
+            String sql = "SELECT `id` FROM `user` WHERE emailadres = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, email);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
@@ -82,12 +76,6 @@ public class PhotographerLogic {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
         return result;
@@ -98,11 +86,13 @@ public class PhotographerLogic {
 
         PreparedStatement statement;
         try (Connection connection = db.getConnection()) {
+            String sql;
             if(accepted) {
-                statement = connection.prepareStatement("SELECT id, first_name, last_name, emailadres FROM `user` WHERE `type`=2");
+                sql = "SELECT id, first_name, last_name, emailadres FROM `user` WHERE `type`=2";
             } else {
-                statement = connection.prepareStatement("SELECT id, first_name, last_name, emailadres FROM `user` WHERE `type`=1");
+                sql = "SELECT id, first_name, last_name, emailadres FROM `user` WHERE `type`=1";
             }
+            statement = connection.prepareStatement(sql);
             ResultSet result = statement.executeQuery();
 
             users = resultSetToList(result, users);
@@ -117,7 +107,8 @@ public class PhotographerLogic {
 
         PreparedStatement statement;
         try (Connection connection = db.getConnection()) {
-            statement = connection.prepareStatement("SELECT id, first_name, last_name, emailadres FROM `user` WHERE `type`=0");
+            String sql = "SELECT id, first_name, last_name, emailadres FROM `user` WHERE `type`=0";
+            statement = connection.prepareStatement(sql);
             ResultSet result = statement.executeQuery();
 
             users = resultSetToList(result, users);

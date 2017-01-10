@@ -31,7 +31,7 @@ public class ApplicationTest {
         Product product4 = new Product(4, "Product4", "-", 12.25);
         products.add(product4);
 
-        double actual = prijsController.CalcTotalPrice(products);
+        double actual = prijsController.calcTotalPrice(products);
 
         assertEquals(17.95, actual, 0);
     }
@@ -51,7 +51,7 @@ public class ApplicationTest {
         Product product4 = new Product(4, "Product4", "-", 12.25);
         products.add(product4);
 
-        double actual = prijsController.CalcTotalPrice(products);
+        double actual = prijsController.calcTotalPrice(products);
 
         assertEquals(15.45, actual, 0);
     }
