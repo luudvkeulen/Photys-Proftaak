@@ -7,7 +7,6 @@ import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
-import play.mvc.Controller;
 import play.mvc.*;
 import views.html.*;
 import javax.inject.Inject;
@@ -20,9 +19,9 @@ import java.util.List;
 
 public class PreviewController extends Controller {
 
-    final FormFactory factory;
+    private final FormFactory factory;
 
-    final Database db;
+    private final Database db;
 
     public Result index(String url) {
         int id = -1;

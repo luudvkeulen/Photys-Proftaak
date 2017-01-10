@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class AlbumLogic {
 
-    final Database db;
+    private final Database db;
 
     public AlbumLogic(Database db) {
         this.db = db;

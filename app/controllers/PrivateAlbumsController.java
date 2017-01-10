@@ -4,7 +4,6 @@ import models.Album;
 import models.Photo;
 import play.db.Database;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 
@@ -13,7 +12,7 @@ import java.util.List;
 
 public class PrivateAlbumsController extends Controller {
 
-    final Database db;
+    private final Database db;
 
     public Result index() {
         AlbumsController ac = new AlbumsController(db);

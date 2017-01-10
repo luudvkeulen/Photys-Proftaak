@@ -5,7 +5,6 @@ import logic.PhotoLogic;
 import models.Photo;
 import logic.PhotographerLogic;
 import models.Album;
-import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
@@ -20,11 +19,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.net.ftp.*;
@@ -33,11 +27,11 @@ import javax.inject.Inject;
 
 public class UploadController extends Controller {
 
-    final FormFactory factory;
+    private final FormFactory factory;
 
     private Boolean result;
-    private Database db;
-    private PhotographerLogic pl;
+    private final Database db;
+    private final PhotographerLogic pl;
 
     //Generates a random Album URL
     private String GeneratePictureURL() {
@@ -176,7 +170,7 @@ public class UploadController extends Controller {
     }
 
 
-    public Result connectWithFTP(File file, String fileName) {
+    private Result connectWithFTP(File file, String fileName) {
         String userEmail = session("user");
 
         FTPClient ftpClient = new FTPClient();
@@ -292,7 +286,7 @@ public class UploadController extends Controller {
         }
     }
 
-    public ArrayList<Photo> retrieveUploadHistory() {
+    private ArrayList<Photo> retrieveUploadHistory() {
         ArrayList<Photo> uploads = null;
 
         PreparedStatement prepared;

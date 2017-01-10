@@ -5,13 +5,11 @@ import logic.PhotographerLogic;
 import logic.ProductLogic;
 import models.Product;
 import models.User;
-import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 import javax.inject.Inject;
@@ -19,15 +17,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.UUID;
 
 public class AdminController extends Controller {
 
-    final PhotographerLogic pl;
-    final ProductLogic prl;
-    final Database db;
+    private final PhotographerLogic pl;
+    private final ProductLogic prl;
+    private final Database db;
 
-    final FormFactory factory;
+    private final FormFactory factory;
 
     public Result index() {
         AdminLogic adminLogic = new AdminLogic(db);

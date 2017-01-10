@@ -17,7 +17,7 @@ import java.util.List;
 
 public class PaymentController extends Controller {
     private final PaymentLogic pl = new PaymentLogic();
-    private Database db;
+    private final Database db;
 
     @Inject
     public PaymentController(Database db) {

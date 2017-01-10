@@ -22,11 +22,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 
 public class AccountController extends Controller {
 
-    final FormFactory factory;
+    private final FormFactory factory;
 
     @Inject
     public AccountController(Database db, FormFactory factory) {
@@ -78,15 +77,15 @@ public class AccountController extends Controller {
         return ok(account.render(currentUser, orders, orderItems, cartItems));
     }
 
-    public User GetAccountInfo(String email) {
+    private User GetAccountInfo(String email) {
         return ul.GetAccountInfo(email);
     }
 
-    public List<OrderItem> GetOrderItems(String orderid) {
+    private List<OrderItem> GetOrderItems(String orderid) {
         return ol.getOrderItems(orderid);
     }
 
-    public ArrayList<Order> GetAccountOrders() {
+    private ArrayList<Order> GetAccountOrders() {
         ArrayList<Order> orders = new ArrayList<>();
 
         try (Connection connection = db.getConnection()) {

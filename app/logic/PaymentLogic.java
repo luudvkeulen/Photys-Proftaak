@@ -20,7 +20,7 @@ public class PaymentLogic {
     private static final String RETURN_URL = BASE_URL + "/paymentsuccess";
     private static final String CURRENCY = "EUR";
     private static final RedirectUrls REDIRECT_URLS = new RedirectUrls();
-    private Payer payer;
+    private final Payer payer;
 
     public PaymentLogic() {
         REDIRECT_URLS.setCancelUrl(CANCEL_URL);

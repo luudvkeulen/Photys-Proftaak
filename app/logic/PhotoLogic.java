@@ -17,9 +17,9 @@ import java.util.Date;
 
 public class PhotoLogic {
 
-    private Database db;
-    private PhotographerLogic pgL;
-    private AlbumLogic aL;
+    private final Database db;
+    private final PhotographerLogic pgL;
+    private final AlbumLogic aL;
 
     public PhotoLogic(Database db){
         this.db = db;
@@ -27,7 +27,7 @@ public class PhotoLogic {
         aL = new AlbumLogic(db);
         }
 
-    public Photo GetPhotoByID(int photoID)
+    private Photo GetPhotoByID(int photoID)
     {
         Logger.info("GetPhotoByID is called!");
         Photo photo = null;

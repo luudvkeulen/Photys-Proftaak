@@ -1,12 +1,10 @@
 package controllers;
 
-import logic.AdminLogic;
 import logic.AlbumLogic;
 import logic.PhotoLogic;
 import logic.PhotographerLogic;
 import models.Album;
 import models.Photo;
-import play.Logger;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -18,11 +16,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 
 public class AlbumsController extends Controller {
 
-    private Database db;
+    private final Database db;
     private PhotographerLogic pgL;
     private AlbumLogic aL;
 
@@ -46,7 +43,7 @@ public class AlbumsController extends Controller {
         return ok(myalbums.render(albums));
     }
 
-    public ArrayList<Album> GetAlbumsCreatedBy() {
+    private ArrayList<Album> GetAlbumsCreatedBy() {
         ArrayList<Album> albums = new ArrayList<>();
 
         try (Connection connection = db.getConnection()) {
@@ -133,7 +130,7 @@ public class AlbumsController extends Controller {
     }
 
     //Gets all albums that the user with userID is allowed to look at
-    public ArrayList<Album> GetAllAlbums(int userID) {
+    private ArrayList<Album> GetAllAlbums(int userID) {
         ArrayList<Album> albums = new ArrayList<>();
 
         PreparedStatement statement = null;
@@ -199,7 +196,7 @@ public class AlbumsController extends Controller {
         return albums;
     }
 
-    public ArrayList<Album> getAlbumsBelongingToUser() {
+    private ArrayList<Album> getAlbumsBelongingToUser() {
         ArrayList<Album> albums = new ArrayList<>();
 
         PreparedStatement statement = null;

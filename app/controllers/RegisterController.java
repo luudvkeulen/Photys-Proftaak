@@ -6,7 +6,6 @@ import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
-import play.i18n.Messages;
 import play.i18n.MessagesApi;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -21,8 +20,8 @@ import java.util.UUID;
 
 public class RegisterController extends Controller {
 
-    final FormFactory factory;
-    private Database db;
+    private final FormFactory factory;
+    private final Database db;
     private final MessagesApi messagesApi;
 
     public Result index() {

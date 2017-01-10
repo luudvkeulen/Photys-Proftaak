@@ -2,8 +2,6 @@ package controllers;
 
 import logic.BinaryLogic;
 import logic.OrderLogic;
-import logic.PhotographerLogic;
-import logic.ProductLogic;
 import models.CartItem;
 import models.Product;
 import play.db.Database;
@@ -13,10 +11,6 @@ import play.mvc.Result;
 import views.html.*;
 
 import javax.inject.Inject;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -13,10 +13,10 @@ import java.sql.SQLException;
 
 public class LoginController extends Controller {
 
-    final FormFactory factory;
+    private final FormFactory factory;
 
-    final Database db;
-    UserLogic ul;
+    private final Database db;
+    private UserLogic ul;
 
     public Result index() {
         ul = new UserLogic(db);

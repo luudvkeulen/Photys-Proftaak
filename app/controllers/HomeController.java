@@ -81,7 +81,7 @@ public class HomeController extends Controller {
         return userName;
     }
 
-    public void getBytePhotos(ArrayList<Photo> photos) {
+    private void getBytePhotos(ArrayList<Photo> photos) {
         byte[] result;
         FTPClient client = new FTPClient();
         try {

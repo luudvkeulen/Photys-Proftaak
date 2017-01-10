@@ -10,8 +10,8 @@ import java.sql.SQLException;
 
 public class UserLogic {
 
-    Database db;
-    Connection connection;
+    private final Database db;
+    private Connection connection;
 
     public UserLogic(Database db) {
         this.db = db;
@@ -80,7 +80,7 @@ public class UserLogic {
         }
     }
 
-    public String getEncryptedPassword(String email) {
+    private String getEncryptedPassword(String email) {
         String resultString = "";
 
         try (Connection connection = db.getConnection()) {

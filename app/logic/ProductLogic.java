@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductLogic {
-    private Database db;
+    private final Database db;
     public ProductLogic(Database db) {
         this.db = db;
     }

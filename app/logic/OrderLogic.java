@@ -5,14 +5,13 @@ import models.OrderItem;
 import models.OrderProduct;
 import models.Product;
 import play.db.Database;
-import scala.Int;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderLogic {
-    private Database db;
+    private final Database db;
     private final PhotographerLogic pl;
 
     public OrderLogic(Database db) {
