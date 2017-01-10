@@ -21,8 +21,7 @@ import java.util.UUID;
 
 public class RegisterController extends Controller {
 
-    @Inject
-    FormFactory factory;
+    final FormFactory factory;
     private Database db;
     private final MessagesApi messagesApi;
 
@@ -102,8 +101,9 @@ public class RegisterController extends Controller {
     }
 
     @Inject
-    public RegisterController(Database db, MessagesApi messagesApi) {
+    public RegisterController(Database db, MessagesApi messagesApi, FormFactory factory) {
         this.db = db;
         this.messagesApi = messagesApi;
+        this.factory = factory;
     }
 }

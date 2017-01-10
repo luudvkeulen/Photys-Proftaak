@@ -26,15 +26,15 @@ import java.util.Date;
 
 public class AccountController extends Controller {
 
-    @Inject
-    FormFactory factory;
+    final FormFactory factory;
 
     @Inject
-    public AccountController(Database db) {
+    public AccountController(Database db, FormFactory factory) {
         this.db = db;
         pl = new PhotographerLogic(db);
         ul = new UserLogic(db);
         ol = new OrderLogic(db);
+        this.factory = factory;
     }
 
     private final Database db;

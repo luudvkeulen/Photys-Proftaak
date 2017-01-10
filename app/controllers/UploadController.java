@@ -33,8 +33,7 @@ import javax.inject.Inject;
 
 public class UploadController extends Controller {
 
-    @Inject
-    FormFactory factory;
+    final FormFactory factory;
 
     private Boolean result;
     private Database db;
@@ -46,9 +45,10 @@ public class UploadController extends Controller {
     }
 
     @Inject
-    public UploadController(Database db) {
+    public UploadController(Database db, FormFactory factory) {
         this.db = db;
         pl = new PhotographerLogic(db);
+        this.factory = factory;
     }
 
     public Result index() {

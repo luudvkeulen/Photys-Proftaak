@@ -13,8 +13,7 @@ import java.sql.SQLException;
 
 public class LoginController extends Controller {
 
-    @Inject
-    FormFactory factory;
+    final FormFactory factory;
 
     final Database db;
     UserLogic ul;
@@ -59,7 +58,8 @@ public class LoginController extends Controller {
 
 
     @Inject
-    public LoginController(Database db) {
+    public LoginController(Database db, FormFactory factory) {
         this.db = db;
+        this.factory = factory;
     }
 }

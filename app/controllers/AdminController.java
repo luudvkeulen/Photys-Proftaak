@@ -27,8 +27,7 @@ public class AdminController extends Controller {
     final ProductLogic prl;
     final Database db;
 
-    @Inject
-    FormFactory factory;
+    final FormFactory factory;
 
     public Result index() {
         AdminLogic adminLogic = new AdminLogic(db);
@@ -100,10 +99,11 @@ public class AdminController extends Controller {
     }
 
     @Inject
-    public AdminController(play.db.Database db) {
+    public AdminController(play.db.Database db, FormFactory factory) {
         this.pl = new PhotographerLogic(db);
         this.prl = new ProductLogic(db);
         this.db = db;
+        this.factory = factory;
     }
 
     public Result UpdateProduct(){

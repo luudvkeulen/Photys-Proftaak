@@ -20,8 +20,6 @@ public class PaymentLogic {
     private static final String RETURN_URL = BASE_URL + "/paymentsuccess";
     private static final String CURRENCY = "EUR";
     private static final RedirectUrls REDIRECT_URLS = new RedirectUrls();
-    private Transaction transaction;
-    private Amount amount;
     private Payer payer;
 
     public PaymentLogic() {
@@ -50,9 +48,9 @@ public class PaymentLogic {
 
         totalprice = roundDouble(totalprice);
 
-        amount = new Amount(CURRENCY, totalprice.toString());
+        Amount amount = new Amount(CURRENCY, totalprice.toString());
 
-        transaction = new Transaction();
+        Transaction transaction = new Transaction();
         transaction.setAmount(amount);
 
         ItemList itemList = new ItemList();

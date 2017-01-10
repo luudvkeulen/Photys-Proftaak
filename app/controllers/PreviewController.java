@@ -20,8 +20,7 @@ import java.util.List;
 
 public class PreviewController extends Controller {
 
-    @Inject
-    FormFactory factory;
+    final FormFactory factory;
 
     final Database db;
 
@@ -139,7 +138,8 @@ public class PreviewController extends Controller {
     }
 
     @Inject
-    public PreviewController(Database db) {
+    public PreviewController(Database db, FormFactory factory) {
         this.db = db;
+        this.factory = factory;
     }
 }
