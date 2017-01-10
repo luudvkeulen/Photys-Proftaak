@@ -32,11 +32,11 @@ GET         /paymentsuccess            controllers.PaymentController.paymentAcce
 GET         /ordercart                 controllers.CartController.orderCart
 GET         /order                     controllers.OrderController.index(order_id)
 
-POST        /account                   controllers.AccountController.UpdateAccountInfo()
+POST        /account                   controllers.AccountController.updateAccountInfo()
 POST        /login                     controllers.LoginController.login()
 POST        /register                  controllers.RegisterController.register()
 POST        /upload                    controllers.UploadController.upload()
 POST        /acceptphotographer        controllers.AdminController.accept()
 POST        /preview                   controllers.PreviewController.addToCart()
 POST        /adminAddProduct           controllers.AdminController.addProduct()
-POST        /updateproduct             controllers.AdminController.UpdateProduct()
+POST        /updateproduct             controllers.AdminController.updateProduct()

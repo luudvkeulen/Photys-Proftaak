@@ -14,7 +14,6 @@ import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
-
 import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,26 +25,23 @@ import java.util.List;
 public class AccountController extends Controller {
 
     private final FormFactory factory;
+    private final Database db;
+    private final PhotographerLogic photographerLogic;
+    private final UserLogic userLogic;
+    private final OrderLogic orderLogic;
 
     @Inject
     public AccountController(Database db, FormFactory factory) {
         this.db = db;
-        pl = new PhotographerLogic(db);
-        ul = new UserLogic(db);
-        ol = new OrderLogic(db);
         this.factory = factory;
+
+        photographerLogic = new PhotographerLogic(db);
+        userLogic = new UserLogic(db);
+        orderLogic = new OrderLogic(db);
     }
 
-    private final Database db;
-
-    private final PhotographerLogic pl;
-
-    private final UserLogic ul;
-
-    private final OrderLogic ol;
-
     public boolean isPhotographer() {
-        return pl.isPhotographer(session("user"));
+        return photographerLogic.isPhotographer(session("user"));
     }
 
     public Result index() {
@@ -78,18 +74,19 @@ public class AccountController extends Controller {
     }
 
     private User GetAccountInfo(String email) {
-        return ul.GetAccountInfo(email);
+        return userLogic.GetAccountInfo(email);
     }
 
-    private List<OrderItem> GetOrderItems(String orderid) {
-        return ol.getOrderItems(orderid);
+    private List<OrderItem> GetOrderItems(String orderId) {
+        return orderLogic.getOrderItems(orderId);
     }
 
     private ArrayList<Order> GetAccountOrders() {
         ArrayList<Order> orders = new ArrayList<>();
+        String sql = "SELECT * FROM photys.`order` WHERE user_id = (SELECT id FROM `user` WHERE emailadres = ?)";
 
         try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM photys.`order` WHERE user_id = (SELECT id FROM `user` WHERE emailadres = ?)");
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, session("user"));
 
             ResultSet result = statement.executeQuery();
@@ -99,14 +96,13 @@ public class AccountController extends Controller {
                         result.getInt("user_id"),
                         result.getDate("date")));
             }
-            return orders;
         } catch (SQLException e) {
             e.printStackTrace();
-            return orders;
         }
+        return orders;
     }
 
-    public Result UpdateAccountInfo() {
+    public Result updateAccountInfo() {
         DynamicForm bindedForm = factory.form().bindFromRequest();
         String userEmail = session("user");
         String select = bindedForm.get("infoSelect");
@@ -114,7 +110,7 @@ public class AccountController extends Controller {
         String input2 = bindedForm.get("inputSelect2");
 
         if (select.equals("password")) {
-            if (!ul.checkPassword(userEmail, input1)) {
+            if (!userLogic.checkPassword(userEmail, input1)) {
                 flash("danger", "Incorrect password.");
                 User currentUser = GetAccountInfo(session("user"));
                 ArrayList<Order> orders = GetAccountOrders();
@@ -144,10 +140,10 @@ public class AccountController extends Controller {
             }
         }
 
-        User updatedUser = ul.GetAccountInfo(userEmail);
+        User updatedUser = userLogic.GetAccountInfo(userEmail);
 
         if (select.equals("email")) {
-            if (ul.CheckEmailAvailable(userEmail)) {
+            if (userLogic.CheckEmailAvailable(userEmail)) {
                 updatedUser.setEmailAdress(input1);
                 session("user", updatedUser.getEmailAdress());
             } else {
@@ -167,7 +163,7 @@ public class AccountController extends Controller {
             updatedUser.setPhoneNr(input1);
         }
 
-        ul.UpdateAccountInfo(updatedUser, userEmail);
+        userLogic.UpdateAccountInfo(updatedUser, userEmail);
         User currentUser = GetAccountInfo(updatedUser.getEmailAdress());
         flash("notice", "Account information was updated");
         ArrayList<Order> orders = GetAccountOrders();
