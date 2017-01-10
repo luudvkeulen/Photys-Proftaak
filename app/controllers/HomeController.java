@@ -8,7 +8,6 @@ import org.apache.commons.net.ftp.FTPClient;
 import play.db.*;
 import play.mvc.*;
 import views.html.*;
-
 import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,26 +17,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- * This controller contains an action to handle HTTP requests
- * to the application's home page.
- */
 public class HomeController extends Controller {
 
     private static Database db;
     private static ArrayList<RenderPhoto> renderPhotos;
-    /**
-     * An action that renders an HTML page with a welcome message.
-     * The configuration in the <code>routes</code> file means that
-     * this method will be called when the application receives a
-     * <code>GET</code> request with a path of <code>/</code>.
-     */
+
+    @Inject
+    public HomeController(Database db) {
+        HomeController.db = db;
+    }
+
     public Result index() throws SQLException {
         renderPhotos = new ArrayList<>();
         ArrayList<Photo> photos = new ArrayList<>();
 
         try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("select p.*, u.first_name, u.last_name, u.emailadres, a.name as album_name from picture p left join `user` u on p.photographer_id = u.id left join album a on a.id = p.album_id where album_id in (select id from album where private = 0) order by RAND()");
+            String sql = "SELECT p.*, u.first_name, u.last_name, u.emailadres, a.name AS album_name FROM picture p LEFT JOIN `user` u ON p.photographer_id = u.id LEFT JOIN album a ON a.id = p.album_id WHERE album_id IN (SELECT id FROM album WHERE private = 0) ORDER BY RAND()";
+            PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet result = statement.executeQuery();
 
 
@@ -63,40 +59,44 @@ public class HomeController extends Controller {
         return ok(index.render(photos));
     }
 
-    public static String GetUserName() throws SQLException {
+    public static String getUsername() {
 
-        String userName = "";
+        String username = "";
 
         try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT first_name, last_name FROM `user` where emailadres = ?");
+            String sql = "SELECT first_name, last_name FROM `user` where emailadres = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, session("user"));
 
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                userName = result.getString("first_name") + " " + result.getString("last_name");
+                username = result.getString("first_name") + " " + result.getString("last_name");
             }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
         }
 
-        return userName;
+        return username;
     }
 
     private void getBytePhotos(ArrayList<Photo> photos) {
         byte[] result;
         FTPClient client = new FTPClient();
         try {
-            client.connect("137.74.163.54", 21);
+            client.connect(ConfigFactory.load().getString("ftp.ip"), ConfigFactory.load().getInt("ftp.port"));
             client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
             client.setFileType(FTP.BINARY_FILE_TYPE);
             InputStream stream;
-            RenderPhoto rp;
+            RenderPhoto renderPhoto;
             for (Photo p : photos) {
                 stream = client.retrieveFileStream(p.getFileLocation());
                 result = IOUtils.toByteArray(stream);
                 stream.close();
                 while (!client.completePendingCommand()) ;
-                rp = new RenderPhoto(p.getId(), result);
-                renderPhotos.add(rp);
+                renderPhoto = new RenderPhoto(p.getId(), result);
+                renderPhotos.add(renderPhoto);
             }
             client.disconnect();
         } catch (IOException e) {
@@ -113,10 +113,5 @@ public class HomeController extends Controller {
         }
         if (result.length < 1) return ok().as("image");
         return ok(result).as("image");
-    }
-
-    @Inject
-    public HomeController(Database db) {
-        HomeController.db = db;
     }
 }

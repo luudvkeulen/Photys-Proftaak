@@ -137,7 +137,7 @@ public class UploadController extends Controller {
                             photographerID,
                             bindedForm.get("albumDescr"),
                             privateAlbum,
-                    AC.GenerateAlbumURL());
+                            AC.generateAlbumURL());
 
                     String emails = bindedForm.get("emails");
                     if (!emails.isEmpty()){

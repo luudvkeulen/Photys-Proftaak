@@ -18,12 +18,17 @@ public class CartController extends Controller {
 
     private final Database db;
 
+    @Inject
+    public CartController(play.db.Database db) {
+        this.db = db;
+    }
+
     private static String getCartCookie() {
-        if(request().cookie("cart") == null) {
+        if (request().cookie("cart") == null) {
             return "";
         }
         String cookie = request().cookie("cart").value();
-        if(cookie.isEmpty() || cookie == null) {
+        if (cookie.isEmpty() || cookie == null) {
             return "";
         }
         return cookie;
@@ -32,12 +37,11 @@ public class CartController extends Controller {
     public Result index() {
         String cookie = getCartCookie();
         if (cookie.equals("")) return ok(cart.render(new ArrayList<>()));
-        //fullProducts = getAllCartProducts();
         List<CartItem> cartItems = BinaryLogic.binaryToObject(cookie);
         return ok(cart.render(cartItems));
     }
 
-    public Result changeAmount(int productID, int pictureID, boolean add) {
+    public Result changeAmount(int productId, int pictureId, boolean add) {
         String cookie = getCartCookie();
         if (cookie.equals("")) return redirect("/cart");
 
@@ -45,15 +49,14 @@ public class CartController extends Controller {
         if (cartItems.size() < 1) return redirect("/cart");
 
         for (CartItem item : cartItems) {
-            if (item.getPhoto().getId() == pictureID) {
+            if (item.getPhoto().getId() == pictureId) {
                 for (Product product : item.getProducts()) {
-                    if (product.getID() == productID) {
+                    if (product.getID() == productId) {
                         if (add) {
                             product.addOne();
                         } else {
                             product.substractOne();
                         }
-
                     }
                 }
             }
@@ -68,41 +71,37 @@ public class CartController extends Controller {
         String cart = getCartCookie();
         if (cart.equals("")) return badRequest("Cookie is no longer valid");
         List<CartItem> cartItems = BinaryLogic.binaryToObject(cart);
-        OrderLogic ol = new OrderLogic(db);
-        int order_id = ol.createOrder(cartItems, session("user"));
-        return redirect("/order?order_id=" + order_id);
+        OrderLogic orderLogic = new OrderLogic(db);
+        int orderId = orderLogic.createOrder(cartItems, session("user"));
+        return redirect("/order?order_id=" + orderId);
     }
 
     // berekenen van de totaal prijs van alle producten in de winkelwagen
     public static double countTotalPrice() {
-        if(getCartCookie().equals("")) return 0.00;
+        if (getCartCookie().equals("")) return 0.00;
         List<CartItem> cartItems = BinaryLogic.binaryToObject(getCartCookie());
-        if(cartItems == null) return 0;
+        if (cartItems == null) return 0;
         double counter = 0;
 
-        for(CartItem cartItem : cartItems) {
-            for(Product p : cartItem.getProducts()) {
+        for (CartItem cartItem : cartItems) {
+            for (Product p : cartItem.getProducts()) {
                 counter += p.getTotalPrice();
             }
         }
+
         return counter;
     }
 
     // Ophalen van alle Items voor de winkelwagen
-    public static int getTotalItems(){
-        if(getCartCookie().equals("")) return 0;
+    public static int getTotalItems() {
+        if (getCartCookie().equals("")) return 0;
         List<CartItem> cartItems = BinaryLogic.binaryToObject(getCartCookie());
 
         int counter = 0;
-        for(CartItem ci : cartItems) {
+        for (CartItem ci : cartItems) {
             counter += ci.getProducts().size();
         }
 
         return counter;
-    }
-
-    @Inject
-    public CartController(play.db.Database db) {
-        this.db = db;
     }
 }

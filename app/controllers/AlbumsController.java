@@ -9,7 +9,6 @@ import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
-
 import javax.inject.Inject;
 import java.util.*;
 import java.sql.Connection;
@@ -20,8 +19,15 @@ import java.sql.SQLException;
 public class AlbumsController extends Controller {
 
     private final Database db;
-    private PhotographerLogic pgL;
-    private AlbumLogic aL;
+    private PhotographerLogic photographerLogic;
+    private AlbumLogic albumLogic;
+
+    @Inject
+    public AlbumsController(Database db) {
+        this.db = db;
+        photographerLogic = new PhotographerLogic(db);
+        albumLogic = new AlbumLogic(db);
+    }
 
     public Result index() {
         return ok();
@@ -29,25 +35,24 @@ public class AlbumsController extends Controller {
 
     public Result albums() {
         ArrayList<Album> albums;
-        pgL = new PhotographerLogic(db);
-        aL = new AlbumLogic(db);
 
         if (!isPhotographer(session("user"))) {
             flash("warning", "You need to be logged in as a photographer to view album history");
             return redirect("/");
         }
-        albums = GetAlbumsCreatedBy();
+        albums = getAlbumsCreatedBy();
         if (albums.size() < 1) {
             flash("You haven't created any albums yet.");
         }
         return ok(myalbums.render(albums));
     }
 
-    private ArrayList<Album> GetAlbumsCreatedBy() {
+    private ArrayList<Album> getAlbumsCreatedBy() {
         ArrayList<Album> albums = new ArrayList<>();
 
         try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM photys.album WHERE photographer_id = (SELECT id FROM `user` WHERE emailadres = ?);");
+            String sql = "SELECT * FROM photys.album WHERE photographer_id = (SELECT id FROM `user` WHERE emailadres = ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, session("user"));
 
             ResultSet result = statement.executeQuery();
@@ -62,31 +67,27 @@ public class AlbumsController extends Controller {
                 Album album = new Album(id, name, photographer_id, description, available, url);
                 albums.add(album);
             }
-
-            return albums;
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            return albums;
         }
+
+        return albums;
     }
 
     //Generates a random Album URL
-    public String GenerateAlbumURL() {
+    public String generateAlbumURL() {
         return UUID.randomUUID().toString();
     }
 
-
     private boolean isPhotographer(String email) {
-        return pgL.isPhotographer(email);
+        return photographerLogic.isPhotographer(email);
     }
 
-
-    public int GetAlbumIdByURL(String albumUrl, String userEmail) {
-        aL = new AlbumLogic(db);
-        return aL.GetAlbumIdByURL(albumUrl, userEmail);
+    public int getAlbumIdByURL(String albumUrl, String userEmail) {
+        return albumLogic.GetAlbumIdByURL(albumUrl, userEmail);
     }
 
-    public ArrayList<Photo> GetPhotosInAlbum(int albumID) {
+    public ArrayList<Photo> getPhotosInAlbum(int albumID) {
 
         ArrayList<Photo> photosInAlbum = new ArrayList<>();
 
@@ -121,12 +122,6 @@ public class AlbumsController extends Controller {
             photosInAlbum = new ArrayList<>();
             return photosInAlbum;
         }
-    }
-
-
-    @Inject
-    public AlbumsController(Database db) {
-        this.db = db;
     }
 
     //Gets all albums that the user with userID is allowed to look at
@@ -186,12 +181,11 @@ public class AlbumsController extends Controller {
     }
 
     public ArrayList<Album> GetAvailableAlbums() {
-        ArrayList<Album> albums = new ArrayList<>();
+        ArrayList<Album> albums;
         //Get the user id
         int userID = GetUserID(session("user"));
         //Get all album id's that are available for the user with user id
         albums = GetAllAlbums(userID);
-
 
         return albums;
     }
@@ -199,10 +193,11 @@ public class AlbumsController extends Controller {
     private ArrayList<Album> getAlbumsBelongingToUser() {
         ArrayList<Album> albums = new ArrayList<>();
 
-        PreparedStatement statement = null;
+        PreparedStatement statement;
 
         try (Connection connection = db.getConnection()) {
-            statement = connection.prepareStatement("SELECT * FROM `album` WHERE `photographer_id` = (SELECT id FROM `photographer` WHERE emailadres = ?)");
+            String sql = "SELECT * FROM `album` WHERE `photographer_id` = (SELECT id FROM `photographer` WHERE emailadres = ?)";
+            statement = connection.prepareStatement(sql);
             statement.setString(1, session("user"));
 
             ResultSet resultSet = statement.executeQuery();
@@ -229,13 +224,12 @@ public class AlbumsController extends Controller {
 
     public Result deleteAlbum(String albumID) {
         int albumId = Integer.parseInt(albumID);
-        AlbumLogic aL = new AlbumLogic(db);
-        PhotoLogic pL = new PhotoLogic(db);
-        ArrayList<Photo> photos = pL.getPhotosByAlbumID(albumId);
+        PhotoLogic photoLogic = new PhotoLogic(db);
+        ArrayList<Photo> photos = photoLogic.getPhotosByAlbumID(albumId);
         for(Photo p : photos) {
-            pL.DeletePhotoByID(p.getId());
+            photoLogic.DeletePhotoByID(p.getId());
         }
-        aL.deleteAlbum(albumId);
+        albumLogic.deleteAlbum(albumId);
 
         ArrayList<Album> albums = getAlbumsBelongingToUser();
         return ok(myalbums.render(albums));
