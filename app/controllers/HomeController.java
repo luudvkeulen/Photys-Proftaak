@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class HomeController extends Controller {
 
     private static Database db;
-    private static ArrayList<RenderPhoto> renderPhotos;
 
     @Inject
     public HomeController(Database db) {
@@ -54,8 +53,6 @@ public class HomeController extends Controller {
             }
         }
 
-        getBytePhotos(photos);
-
         return ok(index.render(photos));
     }
 
@@ -79,39 +76,5 @@ public class HomeController extends Controller {
         }
 
         return username;
-    }
-
-    private void getBytePhotos(ArrayList<Photo> photos) {
-        byte[] result;
-        FTPClient client = new FTPClient();
-        try {
-            client.connect(ConfigFactory.load().getString("ftp.ip"), ConfigFactory.load().getInt("ftp.port"));
-            client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
-            client.setFileType(FTP.BINARY_FILE_TYPE);
-            InputStream stream;
-            RenderPhoto renderPhoto;
-            for (Photo p : photos) {
-                stream = client.retrieveFileStream(p.getFileLocation());
-                result = IOUtils.toByteArray(stream);
-                stream.close();
-                while (!client.completePendingCommand()) ;
-                renderPhoto = new RenderPhoto(p.getId(), result);
-                renderPhotos.add(renderPhoto);
-            }
-            client.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Result getRenderPhoto(int id) {
-        byte[] result = new byte[0];
-        for (RenderPhoto rp : renderPhotos) {
-            if (rp.getPhotoId() == id) {
-                result = rp.getPhotobytes();
-            }
-        }
-        if (result.length < 1) return ok().as("image");
-        return ok(result).as("image");
     }
 }
