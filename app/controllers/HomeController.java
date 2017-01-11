@@ -27,7 +27,6 @@ public class HomeController extends Controller {
     }
 
     public Result index() throws SQLException {
-        renderPhotos = new ArrayList<>();
         ArrayList<Photo> photos = new ArrayList<>();
 
         try (Connection connection = db.getConnection()) {
