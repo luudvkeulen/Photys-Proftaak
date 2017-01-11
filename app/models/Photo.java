@@ -1,8 +1,5 @@
 package models;
 
-import org.joda.time.DateTime;
-
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class Photo implements java.io.Serializable {

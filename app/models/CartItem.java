@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 public class CartItem implements Serializable {
-    
-    private Photo photo;
-    private Filter filter;
+
+    private final Photo photo;
+    private final Filter filter;
     private List<Product> products;
 
     public List<Product> getProducts() {

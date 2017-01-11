@@ -10,20 +10,21 @@ import java.sql.SQLException;
 
 public class AlbumLogic {
 
-    final Database db;
+    private final Database db;
 
     public AlbumLogic(Database db) {
         this.db = db;
     }
 
-    public String GetAlbumNameById(int albumID) {
+    public String getAlbumNameById(int albumId) {
         try (Connection connection = db.getConnection()) {
 
             PreparedStatement statement;
             String albumName = null;
 
-            statement = connection.prepareStatement("SELECT `name` FROM `album` WHERE `id` = ?");
-            statement.setInt(1, albumID);
+            String sql = "SELECT `name` FROM `album` WHERE `id` = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, albumId);
 
             ResultSet resultSet = statement.executeQuery();
 
@@ -39,20 +40,21 @@ public class AlbumLogic {
         }
     }
 
-    public Album getAlbumByID(int albumId) {
+    public Album getAlbumById(int albumId) {
         try (Connection connection = db.getConnection()) {
 
             PreparedStatement statement;
             Album album = null;
 
-            statement = connection.prepareStatement("SELECT * FROM `album` WHERE `id` = ?");
+            String sql = "SELECT * FROM `album` WHERE `id` = ?";
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, albumId);
 
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 String albumName = resultSet.getString("name");
-                int photographerID = resultSet.getInt("photographer_id");
+                int photographerId = resultSet.getInt("photographer_id");
                 String description = resultSet.getString("description");
                 int accessibility = resultSet.getInt("private");
                 String url = resultSet.getString("albumURL");
@@ -61,7 +63,7 @@ public class AlbumLogic {
                 if(accessibility == 1) {
                     access = true;
                 }
-                album = new Album(albumId, albumName, photographerID, description, access, url);
+                album = new Album(albumId, albumName, photographerId, description, access, url);
             }
             return album;
         } catch (SQLException e) {
@@ -70,13 +72,14 @@ public class AlbumLogic {
         }
     }
 
-    public int GetAlbumIdByURL(String albumUrl, String userEmail) {
+    public int getAlbumIdByURL(String albumUrl, String userEmail) {
         try (Connection connection = db.getConnection()) {
             PreparedStatement statement = null;
             int albumId = -1;
             int privateAlbum = -1;
 
-            statement = connection.prepareStatement("SELECT `id`, `private` FROM `album` WHERE `albumURL` = ?");
+            String sql = "SELECT `id`, `private` FROM `album` WHERE `albumURL` = ?";
+            statement = connection.prepareStatement(sql);
             statement.setString(1, albumUrl);
 
             ResultSet resultSet = statement.executeQuery();
@@ -94,7 +97,8 @@ public class AlbumLogic {
                     return albumId;
                 }
 
-                statement = connection.prepareStatement("SELECT a.*, u.emailadres FROM useralbum a join `user` u on u.emailadres = a.user_email WHERE album_id = ?");
+                String sql2 = "SELECT a.*, u.emailadres FROM useralbum a join `user` u on u.emailadres = a.user_email WHERE album_id = ?";
+                statement = connection.prepareStatement(sql2);
                 statement.setInt(1, albumId);
 
                 resultSet = statement.executeQuery();
@@ -127,7 +131,8 @@ public class AlbumLogic {
 
         //Delete album reference from useralbum table in database
         try (Connection connection = db.getConnection()) {
-            statement = connection.prepareStatement("DELETE FROM `useralbum` WHERE `album_id` = ?");
+            String sql = "DELETE FROM `useralbum` WHERE `album_id` = ?";
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, albumId);
             dbSucces = statement.execute();
         } catch (SQLException ex) {
@@ -137,7 +142,8 @@ public class AlbumLogic {
 
         //Delete album reference from album table in database
         try (Connection connection = db.getConnection()) {
-            statement = connection.prepareStatement("DELETE FROM `album` WHERE `id` = ?");
+            String sql = "DELETE FROM `album` WHERE `id` = ?";
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, albumId);
             dbSucces = statement.execute();
         } catch (SQLException ex) {

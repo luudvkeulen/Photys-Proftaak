@@ -5,33 +5,32 @@ import models.OrderItem;
 import models.OrderProduct;
 import models.Product;
 import play.db.Database;
-import scala.Int;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderLogic {
-    private Database db;
-    private final PhotographerLogic pl;
+    private final Database db;
+    private final PhotographerLogic photographerLogic;
 
     public OrderLogic(Database db) {
         this.db = db;
-        this.pl = new PhotographerLogic(db);
+        this.photographerLogic = new PhotographerLogic(db);
     }
 
     public int createOrder(List<CartItem> cartItems, String email) {
         if (email == null || email.equals("")) return 0;
-        int orderid = 0;
+        int orderId = 0;
         try (Connection connection = db.getConnection()) {
             String sql = "INSERT INTO `order` (`user_id`) VALUES (?)";
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, pl.findPhotographerId(email).toString());
+            statement.setString(1, photographerLogic.findPhotographerId(email).toString());
             statement.execute();
             //Get the id of last inserted order
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) {
-                orderid = rs.getInt(1);
+                orderId = rs.getInt(1);
             }
             statement.clearParameters();
             //sql = "INSERT INTO orderitem (`order_id`,`product_id`,`picture_id`,`amount`) VALUES (?, ?, ?, ?)";
@@ -40,7 +39,7 @@ public class OrderLogic {
             for (CartItem ci : cartItems) {
                 statement = connection.prepareStatement(sql);
                 statement.setInt(3, ci.getPhoto().getId());
-                statement.setInt(1, orderid);
+                statement.setInt(1, orderId);
                 statement.setInt(5, ci.getPhoto().getId());
                 for (Product p : ci.getProducts()) {
                     statement.setInt(2, p.getID());
@@ -53,27 +52,27 @@ public class OrderLogic {
             e.printStackTrace();
             System.err.println(e.getMessage());
         }
-        return orderid;
+        return orderId;
     }
 
-    public double getTotalOrderPrice(String order_id) {
+    public double getTotalOrderPrice(String orderId) {
         double totalPrice = 0;
         String sql = "SELECT o.picture_id, o.amount, o.pictureprice, o.productprice FROM orderitem o WHERE o.order_id = ?";
         try(Connection connection = db.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, order_id);
+            statement.setString(1, orderId);
             ResultSet result = statement.executeQuery();
             ArrayList<Integer> pictureIdList = new ArrayList<>();
             while(result.next()){
-                int picture_id = result.getInt("picture_id");
+                int pictureId = result.getInt("picture_id");
                 int amount = result.getInt("amount");
                 double productPrice = result.getDouble("productprice");
                 double picturePrice = result.getDouble("pictureprice");
                 double price = (productPrice * amount);
                 totalPrice += price;
-                if(!pictureIdList.contains(picture_id)) {
+                if (!pictureIdList.contains(pictureId)) {
                     totalPrice += picturePrice;
-                    pictureIdList.add(picture_id);
+                    pictureIdList.add(pictureId);
                 }
             }
         } catch (SQLException e) {
@@ -82,20 +81,20 @@ public class OrderLogic {
         return totalPrice;
     }
 
-    public double getPictureCosts(String order_id) {
+    public double getPictureCosts(String orderId) {
         double pictureCosts = 0;
         String sql = "SELECT o.picture_id, o.amount, o.pictureprice, o.productprice FROM orderitem o WHERE o.order_id = ?";
         try(Connection connection = db.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, order_id);
+            statement.setString(1, orderId);
             ResultSet result = statement.executeQuery();
             ArrayList<Integer> pictureIdList = new ArrayList<>();
             while(result.next()){
-                int picture_id = result.getInt("picture_id");
+                int pictureId = result.getInt("picture_id");
                 double picturePrice = result.getDouble("pictureprice");
-                if(!pictureIdList.contains(picture_id)) {
+                if (!pictureIdList.contains(pictureId)) {
                     pictureCosts += picturePrice;
-                    pictureIdList.add(picture_id);
+                    pictureIdList.add(pictureId);
                 }
             }
         } catch (SQLException e) {
@@ -104,7 +103,7 @@ public class OrderLogic {
         return pictureCosts;
     }
 
-    public List<OrderItem> getOrderItems(String order_id) {
+    public List<OrderItem> getOrderItems(String orderId) {
         List<OrderItem> orderItems = new ArrayList<>();
         String sql = "SELECT o.*, oi.*, pr.name as productname,pr.description as productdescription, pi.name as picturename \n" +
                 "FROM `order` o, orderitem oi, product pr, picture pi \n" +
@@ -114,7 +113,7 @@ public class OrderLogic {
                 "AND oi.order_id = ?";
         try (Connection connection = db.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, order_id);
+            statement.setString(1, orderId);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 OrderItem orderItem = null;
@@ -135,6 +134,7 @@ public class OrderLogic {
                 } else {
                     orderItem = new OrderItem(
                             result.getInt("picture_id"),
+                            result.getInt("order_id"),
                             result.getString("picturename"),
                             result.getDouble("pictureprice")
                     );

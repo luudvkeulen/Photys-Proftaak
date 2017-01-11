@@ -5,10 +5,10 @@ import java.io.Serializable;
 
 public class Product implements Serializable {
 
-    private int ID;
-    private String name;
+    private final int ID;
+    private final String name;
     private String description;
-    private Double price;
+    private final Double price;
     private Integer amount;
 
     public Product(int ID, String name, String description, double price) {

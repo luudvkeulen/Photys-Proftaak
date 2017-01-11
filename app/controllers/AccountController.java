@@ -1,26 +1,20 @@
 package controllers;
 
-import com.typesafe.config.ConfigFactory;
 import logic.BinaryLogic;
+import logic.OrderLogic;
 import logic.PhotographerLogic;
 import logic.UserLogic;
 import models.CartItem;
 import models.Order;
-import models.RenderPhoto;
+import models.OrderItem;
 import models.User;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
-
 import javax.inject.Inject;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,33 +24,43 @@ import java.util.List;
 
 public class AccountController extends Controller {
 
-    @Inject
-    FormFactory factory;
+    private final FormFactory factory;
+    private final Database db;
+    private final PhotographerLogic photographerLogic;
+    private final UserLogic userLogic;
+    private final OrderLogic orderLogic;
 
     @Inject
-    public AccountController(Database db) {
+    public AccountController(Database db, FormFactory factory) {
         this.db = db;
-        pl = new PhotographerLogic(db);
-        ul = new UserLogic(db);
+        this.factory = factory;
+
+        photographerLogic = new PhotographerLogic(db);
+        userLogic = new UserLogic(db);
+        orderLogic = new OrderLogic(db);
     }
 
-    private final Database db;
-
-    private final PhotographerLogic pl;
-
-    private final UserLogic ul;
+    public boolean isPhotographer() {
+        return photographerLogic.isPhotographer(session("user"));
+    }
 
     public Result index() {
         User currentUser = GetAccountInfo(session("user"));
         ArrayList<Order> orders = GetAccountOrders();
 
+        ArrayList<OrderItem> orderItems = new ArrayList<>();
+
+        for (Order o : orders) {
+            orderItems.addAll(GetOrderItems(o.getId() + ""));
+        }
+
         List<CartItem> cartItems = new ArrayList<>();
         if (request().cookie("cart") == null) {
-            return ok(account.render(currentUser, orders, new ArrayList<>()));
+            return ok(account.render(currentUser, orders, orderItems, new ArrayList<>()));
         }
         String cookie = request().cookie("cart").value();
         if (cookie.isEmpty() || cookie == null) {
-            return ok(account.render(currentUser, orders, new ArrayList<>()));
+            return ok(account.render(currentUser, orders, orderItems, new ArrayList<>()));
         }
 
         if (cookie != null) {
@@ -66,19 +70,23 @@ public class AccountController extends Controller {
         }
 
         //return ok(account.render(currentUser, orders));
-        return ok(account.render(currentUser, orders, cartItems));
+        return ok(account.render(currentUser, orders, orderItems, cartItems));
     }
 
-    public User GetAccountInfo(String email) {
-        return ul.GetAccountInfo(email);
+    private User GetAccountInfo(String email) {
+        return userLogic.getAccountInfo(email);
     }
 
-    public ArrayList<Order> GetAccountOrders() {
+    private List<OrderItem> GetOrderItems(String orderId) {
+        return orderLogic.getOrderItems(orderId);
+    }
 
+    private ArrayList<Order> GetAccountOrders() {
         ArrayList<Order> orders = new ArrayList<>();
+        String sql = "SELECT * FROM photys.`order` WHERE user_id = (SELECT id FROM `user` WHERE emailadres = ?)";
 
         try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM photys.`order` WHERE user_id = (SELECT id FROM `user` WHERE emailadres = ?)");
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, session("user"));
 
             ResultSet result = statement.executeQuery();
@@ -88,14 +96,13 @@ public class AccountController extends Controller {
                         result.getInt("user_id"),
                         result.getDate("date")));
             }
-            return orders;
         } catch (SQLException e) {
             e.printStackTrace();
-            return orders;
         }
+        return orders;
     }
 
-    public Result UpdateAccountInfo() {
+    public Result updateAccountInfo() {
         DynamicForm bindedForm = factory.form().bindFromRequest();
         String userEmail = session("user");
         String select = bindedForm.get("infoSelect");
@@ -103,10 +110,16 @@ public class AccountController extends Controller {
         String input2 = bindedForm.get("inputSelect2");
 
         if (select.equals("password")) {
-            if (!ul.checkPassword(userEmail, input1)) {
+            if (!userLogic.checkPassword(userEmail, input1)) {
                 flash("danger", "Incorrect password.");
                 User currentUser = GetAccountInfo(session("user"));
                 ArrayList<Order> orders = GetAccountOrders();
+
+                ArrayList<OrderItem> orderItems = new ArrayList<>();
+
+                for (Order o : orders) {
+                    orderItems.addAll(GetOrderItems(o.getId() + ""));
+                }
 
                 List<CartItem> cartItems = new ArrayList<>();
                 if (request().cookie("cart") == null) {
@@ -123,14 +136,14 @@ public class AccountController extends Controller {
                     System.out.println("EMPTY COOKIE");
                 }
 
-                return ok(account.render(currentUser, orders, cartItems));
+                return ok(account.render(currentUser, orders, orderItems, cartItems));
             }
         }
 
-        User updatedUser = ul.GetAccountInfo(userEmail);
+        User updatedUser = userLogic.getAccountInfo(userEmail);
 
         if (select.equals("email")) {
-            if (ul.CheckEmailAvailable(userEmail)) {
+            if (userLogic.checkEmailAvailable(userEmail)) {
                 updatedUser.setEmailAdress(input1);
                 session("user", updatedUser.getEmailAdress());
             } else {
@@ -150,10 +163,16 @@ public class AccountController extends Controller {
             updatedUser.setPhoneNr(input1);
         }
 
-        ul.UpdateAccountInfo(updatedUser, userEmail);
+        userLogic.updateAccountInfo(updatedUser, userEmail);
         User currentUser = GetAccountInfo(updatedUser.getEmailAdress());
         flash("notice", "Account information was updated");
         ArrayList<Order> orders = GetAccountOrders();
+
+        ArrayList<OrderItem> orderItems = new ArrayList<>();
+
+        for (Order o : orders) {
+            orderItems.addAll(GetOrderItems(o.getId() + ""));
+        }
 
         List<CartItem> cartItems = new ArrayList<>();
         if (request().cookie("cart") == null) {
@@ -170,32 +189,6 @@ public class AccountController extends Controller {
             System.out.println("EMPTY COOKIE");
         }
 
-        return ok(account.render(currentUser, orders, cartItems));
-    }
-
-    public Result GetRenderProfilePicture(String email)
-    {
-        byte[] result = null;
-        User user = GetAccountInfo(email);
-
-        FTPClient ftpClient = new FTPClient();
-        try{
-            ftpClient.connect("137.74.163.54", 21);
-            ftpClient.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
-            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-            InputStream stream;
-            RenderPhoto rp;
-
-            stream = ftpClient.retrieveFileStream(user.getProfilePictureFileLocation());
-            result = IOUtils.toByteArray(stream);
-            stream.close();
-            while (!ftpClient.completePendingCommand());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (result.length < 1) return ok().as("image");
-        return ok(result).as("image");
+        return ok(account.render(currentUser, orders, orderItems, cartItems));
     }
 }

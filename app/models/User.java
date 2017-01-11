@@ -140,7 +140,7 @@ public class User {
         this.streetName = street;
         this.houseNr = housenr;
         this.phoneNr = phonenr;
-        this.userType = UserType.values()[type];
+        this.userType = UserType.values()[type + 1];
     }
 
     public User() {

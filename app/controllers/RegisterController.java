@@ -6,7 +6,6 @@ import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
-import play.i18n.Messages;
 import play.i18n.MessagesApi;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -21,10 +20,16 @@ import java.util.UUID;
 
 public class RegisterController extends Controller {
 
-    @Inject
-    FormFactory factory;
-    private Database db;
+    private final FormFactory factory;
+    private final Database db;
     private final MessagesApi messagesApi;
+
+    @Inject
+    public RegisterController(Database db, MessagesApi messagesApi, FormFactory factory) {
+        this.db = db;
+        this.messagesApi = messagesApi;
+        this.factory = factory;
+    }
 
     public Result index() {
         return ok(register.render());
@@ -61,7 +66,8 @@ public class RegisterController extends Controller {
     private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone, int type, String uuid) {
         PreparedStatement prepared = null;
         try (Connection connection = db.getConnection()) {
-            prepared = connection.prepareStatement("INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)");
+            String sql = "INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)";
+            prepared = connection.prepareStatement(sql);
             prepared.setString(1, firstname);
             prepared.setString(2, lastname);
             prepared.setString(3, email);
@@ -91,7 +97,7 @@ public class RegisterController extends Controller {
             mail.setMsg("Test");
             mail.setSocketConnectionTimeout(3000);
             mail.setSocketTimeout(3000);
-            mail.setFrom("photys2016@gmail.com");
+            mail.setFrom(ConfigFactory.load().getString("mail.sender"));
             mail.addTo(email);
             mail.setSubject("Photys - Activate your email");
             mail.setMsg("To activate your email go to: photys.nl/activate?id=" + uuid);
@@ -99,11 +105,5 @@ public class RegisterController extends Controller {
         } catch (EmailException e) {
             Logger.error(e.getMessage());
         }
-    }
-
-    @Inject
-    public RegisterController(Database db, MessagesApi messagesApi) {
-        this.db = db;
-        this.messagesApi = messagesApi;
     }
 }

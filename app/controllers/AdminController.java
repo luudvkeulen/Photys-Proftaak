@@ -5,6 +5,7 @@ import logic.PhotographerLogic;
 import logic.ProductLogic;
 import models.Product;
 import models.User;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
@@ -19,12 +20,19 @@ import java.util.List;
 
 public class AdminController extends Controller {
 
-    final PhotographerLogic pl;
-    final ProductLogic prl;
-    final Database db;
+    private final PhotographerLogic photographerLogic;
+    private final ProductLogic productLogic;
+    private final Database db;
+    private final FormFactory factory;
 
     @Inject
-    FormFactory factory;
+    public AdminController(play.db.Database db, FormFactory factory) {
+        photographerLogic = new PhotographerLogic(db);
+        productLogic = new ProductLogic(db);
+
+        this.db = db;
+        this.factory = factory;
+    }
 
     public Result index() {
         AdminLogic adminLogic = new AdminLogic(db);
@@ -32,19 +40,20 @@ public class AdminController extends Controller {
             flash("error", "You are not an admin!");
             return redirect("/");
         }
-        List<User> acceptedUsers = pl.getAllPhotographers(true);
-        List<User> pendingUsers = pl.getAllPhotographers(false);
-        List<User> customers = pl.getAllCustomers();
-        List<Product> products = prl.getAllProducts();
+        List<User> acceptedUsers = photographerLogic.getAllPhotographers(true);
+        List<User> pendingUsers = photographerLogic.getAllPhotographers(false);
+        List<User> customers = photographerLogic.getAllCustomers();
+        List<Product> products = productLogic.getAllProducts();
         return ok(admin.render(acceptedUsers, pendingUsers, customers, products));
     }
 
     public Result accept() {
         DynamicForm dynamicForm = factory.form().bindFromRequest();
         String id = dynamicForm.get("id");
+        String sql = "UPDATE `user` SET `type`='2' WHERE `id`=?";
 
         try (Connection connection = db.getConnection()) {
-            PreparedStatement prepared = connection.prepareStatement("UPDATE `user` SET `type`='2' WHERE `id`=?");
+            PreparedStatement prepared = connection.prepareStatement(sql);
             prepared.setString(1, id);
             prepared.executeUpdate();
         } catch (SQLException e) {
@@ -57,35 +66,77 @@ public class AdminController extends Controller {
     public Result suspend() {
         DynamicForm dynamicForm = factory.form().bindFromRequest();
         String id = dynamicForm.get("id");
+        String sql = "UPDATE `user` SET `type`='-1' WHERE `id`=?";
 
         try (Connection connection = db.getConnection()) {
-            PreparedStatement prepared = connection.prepareStatement("UPDATE `user` SET `type`='-1' WHERE `id`=?");
+            PreparedStatement prepared = connection.prepareStatement(sql);
             prepared.setString(1, id);
             prepared.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            flash("error", "Something went wrong!");
         }
 
         return redirect("/admin");
     }
 
-    @Inject
-    public AdminController(play.db.Database db) {
-        this.pl = new PhotographerLogic(db);
-        this.prl = new ProductLogic(db);
-        this.db = db;
+    public Result addProduct() {
+        DynamicForm dynamicForm = factory.form().bindFromRequest();
+        String productname = dynamicForm.get("productName");
+        String productdescription = dynamicForm.get("productDescription");
+        String productprice = dynamicForm.get("productPrice");
+
+        insertProduct(productname, productdescription, productprice);
+        return redirect("/admin");
     }
 
-    public Result UpdateProduct(){
-        DynamicForm dynamicForm = factory.form().bindFromRequest();
-        String id = dynamicForm.get("id");
+    private boolean insertProduct(String productName, String productDescription, String productPrice) {
+        PreparedStatement prepared = null;
+        String sql = "INSERT INTO `product` (`name`, description, price) VALUES (?, ?, ?)";
 
         try (Connection connection = db.getConnection()) {
-            PreparedStatement prepared = connection.prepareStatement("UPDATE `user` SET `type`='2' WHERE `id`=?");
-            prepared.setString(1, id);
-            prepared.executeUpdate();
+            prepared = connection.prepareStatement(sql);
+            prepared.setString(1, productName);
+            prepared.setString(2, productDescription);
+            prepared.setString(3, productPrice);
+            prepared.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public Result updateProduct() {
+        DynamicForm dynamicForm = factory.form().bindFromRequest();
+        String id = dynamicForm.get("productid");
+        String action = dynamicForm.get("action");
+
+
+        if (action.equals("remove")) {
+            try (Connection connection = db.getConnection()) {
+                String sql = "UPDATE `product` SET `active`=0 WHERE `id`=?";
+                PreparedStatement prepared = connection.prepareStatement(sql);
+                prepared.setString(1, id);
+                prepared.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else if (action.equals("save")) {
+            String name = dynamicForm.get("tbname");
+            String price = dynamicForm.get("tbprice");
+            
+            try (Connection connection = db.getConnection()) {
+                String sql = "UPDATE `product` SET `name`=?, price=? WHERE `id`=?";
+                PreparedStatement prepared = connection.prepareStatement(sql);
+                prepared.setString(1, name);
+                prepared.setString(2, price);
+                prepared.setString(3, id);
+                prepared.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                flash("error", "Something went wrong!");
+            }
         }
 
         return redirect("/admin");

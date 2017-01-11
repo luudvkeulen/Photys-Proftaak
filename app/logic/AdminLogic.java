@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AdminLogic {
-    final Database db;
+    private final Database db;
 
     public AdminLogic(Database db) {
         this.db = db;
@@ -17,9 +17,9 @@ public class AdminLogic {
         Boolean result = false;
         if(email == null) return result;
 
-
         try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT `type` FROM `user` WHERE emailadres = ?");
+            String sql = "SELECT `type` FROM `user` WHERE emailadres = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, email);
             ResultSet set = statement.executeQuery();
             if(set.next() && set.getInt("type") >= 3) {

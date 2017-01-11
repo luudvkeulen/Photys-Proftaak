@@ -4,13 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderItem {
-    private int id;
-    private String pictureName;
-    private double picturePrice;
-    private List<OrderProduct> products;
+    private final int id;
+    private int order_id;
+    private final String pictureName;
+    private final double picturePrice;
+    private final List<OrderProduct> products;
 
     public OrderItem(int id, String pictureName, double picturePrice) {
         this.id = id;
+        this.pictureName = pictureName;
+        this.picturePrice = picturePrice;
+        this.products = new ArrayList<>();
+    }
+
+    public int getOrderid() {
+        return order_id;
+    }
+
+    public OrderItem(int id, int order_id, String pictureName, double picturePrice) {
+        this.id = id;
+        this.order_id = order_id;
         this.pictureName = pictureName;
         this.picturePrice = picturePrice;
         this.products = new ArrayList<>();

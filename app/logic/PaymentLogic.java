@@ -6,7 +6,6 @@ import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import models.OrderItem;
 import models.OrderProduct;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -20,9 +19,7 @@ public class PaymentLogic {
     private static final String RETURN_URL = BASE_URL + "/paymentsuccess";
     private static final String CURRENCY = "EUR";
     private static final RedirectUrls REDIRECT_URLS = new RedirectUrls();
-    private Transaction transaction;
-    private Amount amount;
-    private Payer payer;
+    private final Payer payer;
 
     public PaymentLogic() {
         REDIRECT_URLS.setCancelUrl(CANCEL_URL);
@@ -34,25 +31,25 @@ public class PaymentLogic {
     public String pay(List<OrderItem> orderItems) {
         List<Item> items = new ArrayList<>();
         Item item;
-        Double totalprice = 0.00;
+        Double totalPrice = 0.00;
         for (OrderItem oi : orderItems) {
             item = new Item(oi.getPictureName(), "1", String.valueOf(oi.getPicturePrice()), CURRENCY);
             items.add(item);
-            totalprice += oi.getTotalPrice();
+            totalPrice += oi.getTotalPrice();
 
             for (OrderProduct op : oi.getProducts()) {
-                String itemname = oi.getPictureName() + ": " + op.getName();
-                item = new Item(itemname, String.valueOf(op.getAmount()), String.valueOf(op.getPrice()), CURRENCY);
+                String itemName = oi.getPictureName() + ": " + op.getName();
+                item = new Item(itemName, String.valueOf(op.getAmount()), String.valueOf(op.getPrice()), CURRENCY);
                 item.setDescription(op.getDescription());
                 items.add(item);
             }
         }
 
-        totalprice = roundDouble(totalprice);
+        totalPrice = roundDouble(totalPrice);
 
-        amount = new Amount(CURRENCY, totalprice.toString());
+        Amount amount = new Amount(CURRENCY, totalPrice.toString());
 
-        transaction = new Transaction();
+        Transaction transaction = new Transaction();
         transaction.setAmount(amount);
 
         ItemList itemList = new ItemList();

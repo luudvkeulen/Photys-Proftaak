@@ -17,9 +17,9 @@ import java.util.Date;
 
 public class PhotoLogic {
 
-    private Database db;
-    private PhotographerLogic pgL;
-    private AlbumLogic aL;
+    private final Database db;
+    private final PhotographerLogic pgL;
+    private final AlbumLogic aL;
 
     public PhotoLogic(Database db){
         this.db = db;
@@ -27,7 +27,7 @@ public class PhotoLogic {
         aL = new AlbumLogic(db);
         }
 
-    public Photo GetPhotoByID(int photoID)
+    private Photo GetPhotoByID(int photoID)
     {
         Logger.info("GetPhotoByID is called!");
         Photo photo = null;
@@ -47,10 +47,10 @@ public class PhotoLogic {
                 String photoName = resultSet.getString("name");
 
                 int photographerId = resultSet.getInt("photographer_id");
-                User photographer = pgL.GetPhotographerById(photographerId);
+                User photographer = pgL.getPhotographerById(photographerId);
 
                 int albumId = resultSet.getInt("album_id");
-                String albumName = aL.GetAlbumNameById(albumId);
+                String albumName = aL.getAlbumNameById(albumId);
 
                 int fileSize = resultSet.getInt("file_size");
                 Date date = resultSet.getDate("date");
@@ -98,7 +98,7 @@ public class PhotoLogic {
         }
     }
 
-    public boolean DeletePhotoByID(int photoID)
+    public boolean deletePhotoById(int photoId)
     {
         PreparedStatement statement;
         Boolean ftpSucces;
@@ -107,7 +107,7 @@ public class PhotoLogic {
         //Delete photo on ftp
         FTPClient client = new FTPClient();
         try{
-            client.connect("137.74.163.54", 21);
+            client.connect(ConfigFactory.load().getString("ftp.ip"), ConfigFactory.load().getInt("ftp.port"));
             client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
             client.enterLocalPassiveMode();
             client.setFileType(FTP.BINARY_FILE_TYPE);
@@ -116,8 +116,8 @@ public class PhotoLogic {
 
             Logger.info("Succesfully connected to the ftp client!");
             Logger.info("Getting photo by ID...");
-            Photo photo = this.GetPhotoByID(photoID);
-            Logger.info("Recieved photo by id!" );
+            Photo photo = this.GetPhotoByID(photoId);
+            Logger.info("Recieved photo by id! id:" + photoId);
             Logger.info("Photo file location : " + photo.getFileLocation());
             ftpSucces =  client.deleteFile(photo.getFileLocation());
 
@@ -130,8 +130,9 @@ public class PhotoLogic {
 
         //Delete photo reference on database
         try(Connection connection = db.getConnection()) {
-            statement = connection.prepareStatement("DELETE FROM `picture` WHERE `id` = ?");
-            statement.setInt(1, photoID);
+            String sql = "DELETE FROM `picture` WHERE `id` = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, photoId);
             dbSucces = statement.execute();
         }catch(SQLException ex){
             Logger.info("Something went wrong with the database");

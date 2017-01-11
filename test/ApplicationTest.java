@@ -1,26 +1,10 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import controllers.AdminController;
 import controllers.PrijsController;
 import models.Product;
 import models.User;
 import org.junit.*;
 
-import play.mvc.*;
-import play.test.*;
-import play.data.DynamicForm;
-import play.data.validation.ValidationError;
-import play.data.validation.Constraints.RequiredValidator;
-import play.i18n.Lang;
-import play.libs.F;
-import play.libs.F.*;
-import play.twirl.api.Content;
-
-import static play.test.Helpers.*;
 import static org.junit.Assert.*;
 
 
@@ -47,7 +31,7 @@ public class ApplicationTest {
         Product product4 = new Product(4, "Product4", "-", 12.25);
         products.add(product4);
 
-        double actual = prijsController.CalcTotalPrice(products);
+        double actual = prijsController.calcTotalPrice(products);
 
         assertEquals(17.95, actual, 0);
     }
@@ -67,7 +51,7 @@ public class ApplicationTest {
         Product product4 = new Product(4, "Product4", "-", 12.25);
         products.add(product4);
 
-        double actual = prijsController.CalcTotalPrice(products);
+        double actual = prijsController.calcTotalPrice(products);
 
         assertEquals(15.45, actual, 0);
     }
