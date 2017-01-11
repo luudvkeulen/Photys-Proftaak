@@ -64,7 +64,7 @@ public class PreviewController extends Controller {
         String prevUrl = request().getHeader("referer");
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = db.getConnection()) {
-            String sql = "SELECT * FROM product ORDER BY id DESC";
+            String sql = "SELECT * FROM product WHERE active = 1 ORDER BY id DESC";
             ResultSet result = connection.prepareStatement(sql).executeQuery();
             while (result.next()) {
                 Product product = new Product(
