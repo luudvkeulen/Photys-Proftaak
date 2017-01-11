@@ -9,27 +9,29 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 import javax.inject.Inject;
-import java.sql.SQLException;
 
 public class LoginController extends Controller {
 
-    @Inject
-    FormFactory factory;
+    private final FormFactory factory;
+    private final Database db;
+    private final UserLogic userLogic;
 
-    final Database db;
-    UserLogic ul;
+    @Inject
+    public LoginController(Database db, FormFactory factory) {
+        this.db = db;
+        this.factory = factory;
+        userLogic = new UserLogic(db);
+    }
 
     public Result index() {
-        ul = new UserLogic(db);
         return ok(login.render());
     }
 
-    public Result login() throws SQLException {
-        UserLogic ul = new UserLogic(db);
+    public Result login() {
         DynamicForm dynamicForm = factory.form().bindFromRequest();
         if(checkCredentials(dynamicForm.get("email"),dynamicForm.get("password"))) {
             //Check if the user is banned
-            ul.CheckBanStatus(dynamicForm.get("email"));
+            userLogic.checkBanStatus(dynamicForm.get("email"));
             flash("success", "You've been logged in");
             return redirect(routes.HomeController.index());
         } else {
@@ -41,25 +43,16 @@ public class LoginController extends Controller {
     public Result logout() {
         session().clear();
         flash("info", "You've been logged out");
-        return redirect(
-                routes.HomeController.index()
-        );
+        return redirect(routes.HomeController.index());
     }
 
     private boolean checkCredentials(String email, String password) {
-        boolean correct = ul.checkPassword(email, password);
+        boolean correct = userLogic.checkPassword(email, password);
         if(correct) {
             session("user", email);
             return true;
         } else {
             return false;
         }
-    }
-
-
-
-    @Inject
-    public LoginController(Database db) {
-        this.db = db;
     }
 }

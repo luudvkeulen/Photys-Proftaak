@@ -1,17 +1,15 @@
 package models;
 
 
-import logic.PhotographerLogic;
-
 public class Album {
 
-    private int ID;
-    private String name;
-    private int photographer_id;
+    private final int ID;
+    private final String name;
+    private final int photographer_id;
     private String photographer_name;
-    private String description;
-    private boolean accessibility;
-    private String albumURL;
+    private final String description;
+    private final boolean accessibility;
+    private final String albumURL;
 
 
     public String getPhotographer_name() { return photographer_name; }

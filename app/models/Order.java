@@ -6,9 +6,9 @@ import java.util.Date;
 
 public class Order {
 
-    private int id;
-    private int userId;
-    private Date date;
+    private final int id;
+    private final int userId;
+    private final Date date;
 
     public Date getDate() {
         return date;

@@ -1,4 +1,4 @@
-@(user: User, orderList: List[Order], cartList: List[CartItem])
+@(user: User, orderList: List[Order], itemList: List[OrderItem], cartList: List[CartItem])
 
 @main("Account") {
 
@@ -15,31 +15,8 @@
                 <h1>@user.getName</h1>
             </div>
 
-            <div class="cartContainer col-md-3">
-                <h2>@Messages("account.cart")</h2>
-                <div class="panel-group">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse1">@Messages("account.showcart")</a>
-                            </h4>
-                        </div>
-                        <div id="collapse1" class="panel-collapse collapse in">
-                            @for(cartItem <- cartList) {
-                                @for(product <- cartItem.getProducts) {
-                                    <div class="panel-body"><b>@cartItem.getPhoto.getName:</b> @product.getName
-                                        x@product.getAmount</div>
-                                }
-                            }
-                            <a href="/cart">@Messages("account.fullcart")</a>
-                            <button type="button" class="btn btn-primary btnaccount">@Messages("account.ordernow")</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="orderContainer col-md-3">
-                <h2>@Messages("account.orders")</h2>
+            <div class="orderContainer col-md-4">
+                <h3>@Messages("account.orders")</h3>
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -49,65 +26,76 @@
                         </div>
                         <div id="collapseOrder" class="panel-collapse collapse in">
                             <div class="orderContainer#1">
-                                <div class="panel-group">
 
-                                @if(orderList.size() > 0) {
-                                    @for(order <- orderList) {
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" href="#collapseOrder1">Order @order.getSimpleDate</a>
-                                                </h4>
-                                            </div>
+                            @if(orderList.size() > 0) {
+                                @for(order <- orderList) {
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#collapseOrder@order.getId">Order @order.getSimpleDate</a>
+                                            </h4>
                                         </div>
+                                    </div>
+                                    <div id="collapseOrder@order.getId" class="panel-collapse collapse">
+                                    @if(itemList.size() > 0) {
+                                        @for(orderItem <- itemList) {
+                                            @if(orderItem.getOrderid == order.getId) {
+                                                <div class="panel-body">Picture: @orderItem.getPictureName <br>
+                                                    @for(oproduct <- orderItem.getProducts) {
+                                                        Product: @oproduct.getName (Amount: @oproduct.getAmount)<br>
+                                                    }
+                                                    Price: €@orderItem.getTotalPrice</div>
+                                            }
+                                        }
                                     }
+                                    </div>
                                 }
-
-                                </div>
+                            }
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="personalDetailsContainer col-md-3">
-                <h2>@Messages("account.details")</h2>
-
-                <div class="panel-group">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapsePersonalDetails">@Messages("account.showdetails")</a>
-                            </h4>
-                        </div>
-                        <form method="POST" action="@routes.AccountController.UpdateAccountInfo()" enctype="multipart/form-data">
-                            <div id="collapsePersonalDetails" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    @Messages("account.changesettings") <br>
-                                    <select class="form-control" id="sel1" name="infoSelect" onchange="controlSelection();">
-                                        <option value="email">Email</option>
-                                        <option value="name">Display name</option>
-                                        <option value="password">Password</option>
-                                        <option value="zipcode">Zipcode</option>
-                                        <option value="adres">Adres</option>
-                                        <option value="phonenr">Phonenumber</option>
-                                    </select>
-
-                                    <input type="text" class="form-control" id="inputSelect1" name="inputSelect1">
-                                    <input type="text" class="form-control" id="inputSelect2" name="inputSelect2">
-                                </div>
-                                    <!--CREATE BUTTON... SAVE DETAILS-->
-                                <button type="submit" class="btn btn-primary btnaccount">@Messages("account.savechanges")</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="personalDetailsContainer col-md-4">
+            <h3>@Messages("account.details")</h3>
+
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapsePersonalDetails">@Messages("account.showdetails")</a>
+                        </h4>
+                    </div>
+                    <form method="POST" action="@routes.AccountController.updateAccountInfo()" enctype="multipart/form-data">
+                        <div id="collapsePersonalDetails" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                @Messages("account.changesettings") <br>
+                                <select class="form-control" id="sel1" name="infoSelect" onchange="controlSelection();">
+                                    <option value="email">Email</option>
+                                    <option value="name">Display name</option>
+                                    <option value="password">Password</option>
+                                    <option value="zipcode">Zipcode</option>
+                                    <option value="adres">Adres</option>
+                                    <option value="phonenr">Phonenumber</option>
+                                </select>
+
+                                <input type="text" class="form-control" id="inputSelect1" name="inputSelect1">
+                                <input type="text" class="form-control" id="inputSelect2" name="inputSelect2">
+                            </div>
+                            <button type="submit" class="btn btn-primary btnaccount">@Messages("account.savechanges")</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
         <form>
-            <div class="uploadContainer col-md-3">
-                <h2>@Messages("account.uploads")</h2>
+        @if(user.getUserType.getValue >= 2) {
+            <div class="uploadContainer col-md-4">
+                <h3>@Messages("account.uploads")</h3>
 
                 <div class="panel-group">
                     <div class="panel panel-default">
@@ -125,6 +113,7 @@
                     </div>
                 </div>
             </div>
+        }
         </form>
     </div>
 }

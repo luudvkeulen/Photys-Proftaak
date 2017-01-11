@@ -1,10 +1,10 @@
 package models;
 
 public class OrderProduct {
-    private String name;
-    private String description;
-    private int amount;
-    private double price;
+    private final String name;
+    private final String description;
+    private final int amount;
+    private final double price;
 
     public String getName() {
         return name;

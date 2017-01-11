@@ -5,7 +5,6 @@ import logic.PhotoLogic;
 import models.Photo;
 import logic.PhotographerLogic;
 import models.Album;
-import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
@@ -13,55 +12,46 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.UUID;
-
 import org.apache.commons.net.ftp.*;
-
 import javax.inject.Inject;
 
 public class UploadController extends Controller {
 
-    @Inject
-    FormFactory factory;
+    private final FormFactory factory;
+    //private Boolean result;
+    private final Database db;
+    private final PhotographerLogic photographerLogic;
 
-    private Boolean result;
-    private Database db;
-    private PhotographerLogic pl;
+    @Inject
+    public UploadController(Database db, FormFactory factory) {
+        this.db = db;
+        this.factory = factory;
+        photographerLogic = new PhotographerLogic(db);
+    }
 
     //Generates a random Album URL
-    private String GeneratePictureURL() {
+    private String generatePictureURL() {
         return UUID.randomUUID().toString();
     }
 
-    @Inject
-    public UploadController(Database db) {
-        this.db = db;
-        pl = new PhotographerLogic(db);
-    }
-
     public Result index() {
-        if (!pl.isPhotographer(session("user"))) {
+        if (!photographerLogic.isPhotographer(session("user"))) {
             flash("warning", "You need to be logged in as a photographer to upload pictures.");
             return redirect("/");
         }
-        return ok(upload.render(GetAlbums()));
+        return ok(upload.render(getAlbums()));
     }
 
     public Result uploads() {
-        ArrayList<Photo> photos = new ArrayList<>();
-        if (!pl.isPhotographer(session("user"))) {
+        ArrayList<Photo> photos;
+        if (!photographerLogic.isPhotographer(session("user"))) {
             flash("warning", "You need to be logged in as a photographer to view upload history");
             return redirect("/");
         }
@@ -76,7 +66,7 @@ public class UploadController extends Controller {
     public Result deletePhoto(String PhotoID) {
         int intPhotoID = Integer.parseInt(PhotoID);
         PhotoLogic pL = new PhotoLogic(db);
-        pL.DeletePhotoByID(intPhotoID);
+        pL.deletePhotoById(intPhotoID);
 
         ArrayList<Photo> photos = retrieveUploadHistory();
         if (photos.size() < 1) {
@@ -121,7 +111,7 @@ public class UploadController extends Controller {
 
             if (file.length() > 10000000) {
                 flash("danger", "This file is too big to upload!");
-                return ok(upload.render(GetAlbums()));
+                return ok(upload.render(getAlbums()));
             }
 
             String email = session("user");
@@ -143,14 +133,14 @@ public class UploadController extends Controller {
                             photographerID,
                             bindedForm.get("albumDescr"),
                             privateAlbum,
-                    AC.GenerateAlbumURL());
+                            AC.generateAlbumURL());
 
                     String emails = bindedForm.get("emails");
-                    if (!emails.isEmpty()){
-                        emails.substring(0,emails.length()-1);
+                    if (!emails.isEmpty()) {
+                        emails.substring(0, emails.length() - 1);
                         String[] arr = emails.split(",");
                         System.out.print(arr);
-                        insertAddUsersToPrivateAlbum(albumid,arr);
+                        insertAddUsersToPrivateAlbum(albumid, arr);
                     }
                 } else {
                     albumid = Integer.parseInt(bindedForm.get("albumSelect"));
@@ -160,14 +150,14 @@ public class UploadController extends Controller {
                     insertFileDetails(fileName, bindedForm.get("tbName"), photographerLogic.findPhotographerId(email), albumid, (int) (file.getTotalSpace() / 1000000), email);
                     connectWithFTP(file, fileName);
                     flash("success", "File has been uploaded succesfullly.");
-                    return ok(upload.render(GetAlbums()));
+                    return ok(upload.render(getAlbums()));
                 } else {
                     flash("danger", "Album details not filled in correctly.");
-                    return ok(upload.render(GetAlbums()));
+                    return ok(upload.render(getAlbums()));
                 }
             } else {
                 flash("danger", "Please upload a legit file type.");
-                return ok(upload.render(GetAlbums()));
+                return ok(upload.render(getAlbums()));
             }
         } else {
             flash("error", "Missing file.");
@@ -176,14 +166,13 @@ public class UploadController extends Controller {
     }
 
 
-    public Result connectWithFTP(File file, String fileName) {
+    private Result connectWithFTP(File file, String fileName) {
         String userEmail = session("user");
+        Boolean result = false;
 
         FTPClient ftpClient = new FTPClient();
         try {
-            int port = 21;
-            String server = "137.74.163.54";
-            ftpClient.connect(server, port);
+            ftpClient.connect(ConfigFactory.load().getString("ftp.ip"), ConfigFactory.load().getInt("ftp.port"));
             ftpClient.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
             ftpClient.enterLocalPassiveMode();
 
@@ -211,37 +200,36 @@ public class UploadController extends Controller {
         return ok("File uploaded" + fileName + " " + result);
     }
 
-    private int insertAlbumDetails(String name, int photographer_id, String description, boolean accessibility, String albumURL) {
+    private int insertAlbumDetails(String name, int photographerId, String description, boolean accessibility, String albumURL) {
 
         PreparedStatement prepared;
         try (Connection connection = db.getConnection()) {
-            prepared = connection.prepareStatement("INSERT INTO `album` (`name`, photographer_id, description, private, albumURL) VALUES (?,?,?,?,?)");
+            String sql = "INSERT INTO `album` (`name`, photographer_id, description, private, albumURL) VALUES (?,?,?,?,?)";
+            prepared = connection.prepareStatement(sql);
             prepared.setString(1, name);
-            prepared.setInt(2, photographer_id);
+            prepared.setInt(2, photographerId);
             prepared.setString(3, description);
             prepared.setInt(4, (accessibility) ? 1 : 0);
             prepared.setString(5, albumURL);
-            Boolean result;
-            result = prepared.execute();
-
-            prepared = null;
+            prepared.execute();
 
             if (!accessibility) {
-                System.out.println("if statement");
-                prepared = connection.prepareStatement("INSERT INTO `useralbum` (album_id, user_email) VALUES ((SELECT id FROM `album` ORDER BY id DESC LIMIT 1),?)");
+                String sql2 = "INSERT INTO `useralbum` (album_id, user_email) VALUES ((SELECT id FROM `album` ORDER BY id DESC LIMIT 1),?)";
+                prepared = connection.prepareStatement(sql2);
                 prepared.setString(1, session("user"));
-                result = prepared.execute();
+                prepared.execute();
             }
 
-            prepared = connection.prepareStatement("SELECT id FROM `album` ORDER BY id DESC LIMIT 1");
+            String sql3 = "SELECT id FROM `album` ORDER BY id DESC LIMIT 1";
+            prepared = connection.prepareStatement(sql3);
             ResultSet resultSet = prepared.executeQuery();
-            int albumid = -1;
+            int albumId = -1;
 
             while (resultSet.next()) {
-                albumid = resultSet.getInt("id");
+                albumId = resultSet.getInt("id");
             }
 
-            return albumid;
+            return albumId;
         } catch (SQLException e) {
             play.Logger.error(e.getMessage());
             return -1;
@@ -284,7 +272,7 @@ public class UploadController extends Controller {
             prepared.setInt(3, albumId);
             prepared.setInt(4, fileSize);
             prepared.setString(5, "/Photographers/" + email + "/" + fileName);
-            prepared.setString(6, GeneratePictureURL());
+            prepared.setString(6, generatePictureURL());
             return prepared.execute();
         } catch (SQLException e) {
             play.Logger.error(e.getMessage());
@@ -292,7 +280,7 @@ public class UploadController extends Controller {
         }
     }
 
-    public ArrayList<Photo> retrieveUploadHistory() {
+    private ArrayList<Photo> retrieveUploadHistory() {
         ArrayList<Photo> uploads = null;
 
         PreparedStatement prepared;
@@ -317,7 +305,7 @@ public class UploadController extends Controller {
         return uploads;
     }
 
-    private ArrayList<Album> GetAlbums() {
+    private ArrayList<Album> getAlbums() {
         PreparedStatement statement;
 
         ArrayList<Album> albums = new ArrayList<>();

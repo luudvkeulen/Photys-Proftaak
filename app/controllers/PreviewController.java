@@ -7,9 +7,9 @@ import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
-import play.mvc.Controller;
 import play.mvc.*;
 import views.html.*;
+
 import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,10 +20,14 @@ import java.util.List;
 
 public class PreviewController extends Controller {
 
-    @Inject
-    FormFactory factory;
+    private final FormFactory factory;
+    private final Database db;
 
-    final Database db;
+    @Inject
+    public PreviewController(Database db, FormFactory factory) {
+        this.db = db;
+        this.factory = factory;
+    }
 
     public Result index(String url) {
         int id = -1;
@@ -35,7 +39,8 @@ public class PreviewController extends Controller {
         double price = 0.00;
         String photographerName = "";
         try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT p.*, a.name as album_name, a.albumURL as album_url, u.first_name, u.last_name FROM picture p join album a on p.album_id = a.id join `user` u on u.id = p.photographer_id WHERE p.url = ?");
+            String sql = "SELECT p.*, a.name as album_name, a.albumURL as album_url, u.first_name, u.last_name FROM picture p join album a on p.album_id = a.id join `user` u on u.id = p.photographer_id WHERE p.url = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, url);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
@@ -59,7 +64,8 @@ public class PreviewController extends Controller {
         String prevUrl = request().getHeader("referer");
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = db.getConnection()) {
-            ResultSet result = connection.prepareStatement("SELECT * FROM product ORDER BY id DESC").executeQuery();
+            String sql = "SELECT * FROM product ORDER BY id DESC";
+            ResultSet result = connection.prepareStatement(sql).executeQuery();
             while (result.next()) {
                 Product product = new Product(
                         result.getInt("id"),
@@ -79,13 +85,14 @@ public class PreviewController extends Controller {
         DynamicForm dynamicForm = factory.form().bindFromRequest();
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = db.getConnection()) {
-            ResultSet result = connection.prepareStatement("SELECT * FROM product").executeQuery();
-            while(result.next()) {
+            String sql = "SELECT * FROM product";
+            ResultSet result = connection.prepareStatement(sql).executeQuery();
+            while (result.next()) {
                 Integer id = result.getInt("id");
                 String name = result.getString("name");
                 Double price = result.getDouble("price");
                 Integer amount = Integer.valueOf(dynamicForm.get(id.toString()));
-                if(amount < 1) continue;
+                if (amount < 1) continue;
                 Product product = new Product(
                         id,
                         amount,
@@ -99,7 +106,7 @@ public class PreviewController extends Controller {
         }
 
         Filter selectedFilter;
-        switch(dynamicForm.get("filter")) {
+        switch (dynamicForm.get("filter")) {
             case "NONE":
                 selectedFilter = Filter.NONE;
                 break;
@@ -136,10 +143,5 @@ public class PreviewController extends Controller {
 
         response().setCookie(new Http.Cookie("cart", cookieText, null, "/", "", false, false));
         return redirect("/cart");
-    }
-
-    @Inject
-    public PreviewController(Database db) {
-        this.db = db;
     }
 }

@@ -4,7 +4,6 @@ import models.Album;
 import models.Photo;
 import play.db.Database;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 
@@ -13,7 +12,12 @@ import java.util.List;
 
 public class PrivateAlbumsController extends Controller {
 
-    final Database db;
+    private final Database db;
+
+    @Inject
+    public PrivateAlbumsController(Database db) {
+        this.db = db;
+    }
 
     public Result index() {
         AlbumsController ac = new AlbumsController(db);
@@ -21,20 +25,15 @@ public class PrivateAlbumsController extends Controller {
         return ok(privatealbums.render(albums));
     }
 
-    public Result RenderAlbum(String albumUrl) {
+    public Result renderAlbum(String albumUrl) {
         AlbumsController ac = new AlbumsController(db);
-        int albumId = ac.GetAlbumIdByURL(albumUrl, session("user"));
+        int albumId = ac.getAlbumIdByURL(albumUrl, session("user"));
         if (albumId > 0) {
-            List<Photo> pictures = ac.GetPhotosInAlbum(albumId);
+            List<Photo> pictures = ac.getPhotosInAlbum(albumId);
             return ok(albumpreview.render(pictures));
         } else {
             flash("danger", "You do not have permission to access this album as it is set to private.");
             return index();
         }
-    }
-
-    @Inject
-    public PrivateAlbumsController(Database db) {
-        this.db = db;
     }
 }

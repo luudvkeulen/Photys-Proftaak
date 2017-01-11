@@ -2,7 +2,7 @@ package logic;
 
 import models.CartItem;
 import org.apache.commons.codec.binary.Base64;
-import play.Logger;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,12 @@ public class BinaryLogic {
         try {
             ByteArrayInputStream in = new ByteArrayInputStream(decoded);
             ObjectInputStream is = new ObjectInputStream(in);
-            decodedItems = (List<CartItem>)is.readObject();
+            Object o = is.readObject();
+            if (o instanceof List<?>) {
+                decodedItems = (List<CartItem>) o;
+            }
         } catch (Exception e) {
-
+            System.err.println(e.getMessage());
         }
         return decodedItems;
     }

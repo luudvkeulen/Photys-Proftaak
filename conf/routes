@@ -13,29 +13,30 @@ GET         /languageen                controllers.LanguageController.changeLang
 GET         /languagenl                controllers.LanguageController.changeLangNl
 GET         /languagede                controllers.LanguageController.changeLangDe
 GET         /logout                    controllers.LoginController.logout
-GET         /admin                     controllers.AdminController.index
-GET         /albums                    controllers.AlbumsController.index
-GET         /account                   controllers.AccountController.index
-GET         /image/:location           controllers.PictureController.renderPhoto(location)
-GET         /image2/:id                controllers.HomeController.getRenderPhoto(id: Int)
-GET         /preview                   controllers.PreviewController.index(url)
-GET         /privatealbums             controllers.PrivateAlbumsController.index
-GET         /album                     controllers.PrivateAlbumsController.RenderAlbum(url)
-GET         /cart                      controllers.CartController.index
-GET         /myalbums                  controllers.AlbumsController.albums
-GET         /myuploadsDelete           controllers.UploadController.deletePhoto(photoID)
-GET         /myalbumsDelete            controllers.AlbumsController.deleteAlbum(albumID)
-GET         /gettocartpage             controllers.CartController.changeAmount(id: Int, pictureID: Int, add: Boolean)
-GET         /pay                       controllers.PaymentController.createPayment(order_id)
+GET        /admin                  controllers.AdminController.index
+GET        /albums                 controllers.AlbumsController.index
+GET        /account                controllers.AccountController.index
+GET        /image/:location        controllers.PictureController.renderPhoto(location)
+GET        /image2/:id             controllers.HomeController.getRenderPhoto(id: Int)
+GET        /preview                controllers.PreviewController.index(url)
+GET        /privatealbums          controllers.PrivateAlbumsController.index
+GET        /album                  controllers.PrivateAlbumsController.renderAlbum(url)
+GET        /cart                   controllers.CartController.index
+GET        /myalbums               controllers.AlbumsController.albums
+GET        /myuploadsDelete        controllers.UploadController.deletePhoto(photoID)
+GET        /myalbumsDelete         controllers.AlbumsController.deleteAlbum(albumID)
+GET        /gettocartpage          controllers.CartController.changeAmount(id: Int, pictureID: Int, add: Boolean)
+GET        /pay                    controllers.PaymentController.createPayment(order_id)
 GET         /paymentcanceled           controllers.PaymentController.paymentCancelled
 GET         /paymentsuccess            controllers.PaymentController.paymentAccepted(payerID, paymentId)
 GET         /ordercart                 controllers.CartController.orderCart
 GET         /order                     controllers.OrderController.index(order_id)
 
-POST        /account                   controllers.AccountController.UpdateAccountInfo()
+POST        /account                   controllers.AccountController.updateAccountInfo()
 POST        /login                     controllers.LoginController.login()
 POST        /register                  controllers.RegisterController.register()
 POST        /upload                    controllers.UploadController.upload()
 POST        /acceptphotographer        controllers.AdminController.accept()
 POST        /preview                   controllers.PreviewController.addToCart()
-POST        /updateproduct             controllers.AdminController.UpdateProduct()
+POST        /adminAddProduct           controllers.AdminController.addProduct()
+POST        /updateproduct             controllers.AdminController.updateProduct()

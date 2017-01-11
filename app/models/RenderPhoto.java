@@ -1,8 +1,8 @@
 package models;
 
 public class RenderPhoto {
-    private byte[] photobytes;
-    private int photoId;
+    private final byte[] photobytes;
+    private final int photoId;
 
     public byte[] getPhotobytes() {
         return photobytes;

@@ -3,6 +3,7 @@
     @main("Admin") {
         <link rel="shortcut icon" href="@routes.Assets.versioned("images/camera_logo.png")">
         <script src="@routes.Assets.versioned("javascripts/jquery.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/AddProduct.js")"></script>
         <link href="@routes.Assets.versioned("stylesheets/admin.css")" rel="stylesheet">
         <div class="myCart col-md-5 col-md-offset-2">
             <div class=panel-group" id="accordion">
@@ -67,15 +68,24 @@
                     </div>
                     <div id="productList" class="panel-collapse collapse">
                         @for(product <- products) {
-                            <form method="POST" action="@routes.AdminController.UpdateProduct()" enctype="multipart/form-data">
+                            <form method="POST" action="@routes.AdminController.updateProduct()" enctype="multipart/form-data">@product.getID
+                                <input type="hidden" name="productid" value="@product.getID"/>
                                 <div id="pic001" class="panel-body photographer"><img src="http://downloadicons.net/sites/default/files/product-icon-27962.png" class="productimg" style="float: left" width="75" height="75">
-                                    <input type="number" id="tbprice" name="tbprice" class="form-control productinput" placeholder="Price" value="@product.getPrice">
+                                    <input type="text" id="tbprice" name="tbprice" class="form-control productinput" placeholder="Price" value="@product.getPrice">
                                     <input type="text" id="tbname" name="tbname" class="form-control productinput" placeholder="name" value="@product.getName">
-                                    <div class="productbutton"><button type="submit" name="btremove" class="btnPhotographer btn btn-primary">remove</button>
-                                    <button type="submit" name="btsave" class="btnPhotographer btn btn-primary">Save</button></div>
+                                    <div class="productbutton"><button type="submit" name="action" class="btnPhotographer btn btn-primary" value="remove">remove</button>
+                                    <button type="submit" name="action" class="btnPhotographer btn btn-primary" value="save">Save</button></div>
                                 </div>
                             </form>
                         }
+                        <button type="button" class="btnPhotographer btn btn-primary profilebutton">Remove product</button>
+                        <button type="button" class="btnPhotographer btn btn-primary profilebutton">Edit product</button>
+                        <button type="button" class="btnAddProduct btn btn-primary profilebutton">Add product</button>
+                        <form method="POST" id="product" class="form-signin" action="@routes.AdminController.addProduct()">
+
+                        </form>
+
+
                     </div>
                 </div>
             </div>

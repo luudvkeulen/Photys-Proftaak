@@ -10,14 +10,14 @@ import java.sql.SQLException;
 
 public class UserLogic {
 
-    Database db;
-    Connection connection;
+    private final Database db;
+    private Connection connection;
 
     public UserLogic(Database db) {
         this.db = db;
     }
 
-    public User GetUserByEmail(String email) {
+    public User getUserByEmail(String email) {
         User user = null;
         PreparedStatement statement;
         try {
@@ -27,22 +27,23 @@ public class UserLogic {
         }
 
         try {
-            statement = connection.prepareStatement("SELECT * FROM `user` WHERE `emailadres` = ?");
+            String sql = "SELECT * FROM `user` WHERE `emailadres` = ?";
+            statement = connection.prepareStatement(sql);
             statement.setString(1, email);
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                int userID = resultSet.getInt("id");
+                int userId = resultSet.getInt("id");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
-                String zipCode = resultSet.getString("zipcode");
+                String zipcode = resultSet.getString("zipcode");
                 String street = resultSet.getString("street");
                 String houseNr = resultSet.getString("housenr");
                 String phoneNr = resultSet.getString("phonenr");
                 int userType = resultSet.getInt("type");
                 int isBanned = resultSet.getInt("isBanned");
 
-                user = new User(userID, firstName, lastName, email, zipCode, street, houseNr, phoneNr, userType, isBanned);
+                user = new User(userId, firstName, lastName, email, zipcode, street, houseNr, phoneNr, userType, isBanned);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -57,12 +58,13 @@ public class UserLogic {
         return user;
     }
 
-    public Boolean UpdateAccountInfo(User user, String email) {
+    public Boolean updateAccountInfo(User user, String email) {
         try (Connection connection = db.getConnection()) {
 
             PreparedStatement statement;
 
-            statement = connection.prepareStatement("UPDATE `user` SET emailadres=?,first_name=?,last_name=?,`password`=?,zipcode=?,street=?,housenr=?,phonenr=? WHERE emailadres=?");
+            String sql = "UPDATE `user` SET emailadres=?,first_name=?,last_name=?,`password`=?,zipcode=?,street=?,housenr=?,phonenr=? WHERE emailadres=?";
+            statement = connection.prepareStatement(sql);
             statement.setString(1, user.getEmailAdress());
             statement.setString(2, user.getFirstName());
             statement.setString(3, user.getLastName());
@@ -80,11 +82,12 @@ public class UserLogic {
         }
     }
 
-    public String getEncryptedPassword(String email) {
+    private String getEncryptedPassword(String email) {
         String resultString = "";
 
         try (Connection connection = db.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT PASSWORD FROM `user` WHERE emailadres=?");
+            String sql = "SELECT PASSWORD FROM `user` WHERE emailadres=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, email);
             ResultSet result = statement.executeQuery();
 
@@ -107,20 +110,21 @@ public class UserLogic {
         }
     }
 
-    public User GetAccountInfo(String email) {
+    public User getAccountInfo(String email) {
         try (Connection connection = db.getConnection()) {
 
             PreparedStatement statement;
 
-            statement = connection.prepareStatement("SELECT first_name, last_name, emailadres, `password`, zipcode, street, housenr, phonenr, `type` FROM `user` where emailadres = ?");
+            String sql = "SELECT first_name, last_name, emailadres, `password`, zipcode, street, housenr, phonenr, `type` FROM `user` where emailadres = ?";
+            statement = connection.prepareStatement(sql);
 
             statement.setString(1, email);
 
             ResultSet rs = statement.executeQuery();
 
-            User u = null;
+            User user = null;
             while (rs.next()) {
-                u = new User(rs.getString("emailadres"),
+                user = new User(rs.getString("emailadres"),
                         rs.getString("password"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
@@ -131,14 +135,14 @@ public class UserLogic {
                         rs.getInt("type"));
             }
 
-            return u;
+            return user;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public boolean CheckBanStatus(String email) {
+    public boolean checkBanStatus(String email) {
         boolean status = true;
         PreparedStatement statement;
         try {
@@ -148,7 +152,8 @@ public class UserLogic {
         }
 
         try {
-            statement = connection.prepareStatement("SELECT `isBanned` FROM `user` WHERE `emailadres` = ?");
+            String sql = "SELECT `isBanned` FROM `user` WHERE `emailadres` = ?";
+            statement = connection.prepareStatement(sql);
             statement.setString(1, email);
 
             ResultSet resultSet = statement.executeQuery();
@@ -168,14 +173,15 @@ public class UserLogic {
         return status;
     }
 
-    public boolean CheckEmailAvailable(String email) {
+    public boolean checkEmailAvailable(String email) {
         boolean status = true;
 
 
         try (Connection connection = db.getConnection()) {
             PreparedStatement statement;
 
-            statement = connection.prepareStatement("SELECT * FROM `user` WHERE `emailadres` = ?");
+            String sql = "SELECT * FROM `user` WHERE `emailadres` = ?";
+            statement = connection.prepareStatement(sql);
             statement.setString(1, email);
 
             ResultSet resultSet = statement.executeQuery();
