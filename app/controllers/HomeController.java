@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class HomeController extends Controller {
 
     private static Database db;
-    private static ArrayList<RenderPhoto> renderPhotos;
 
     @Inject
     public HomeController(Database db) {
@@ -28,7 +27,6 @@ public class HomeController extends Controller {
     }
 
     public Result index() throws SQLException {
-        renderPhotos = new ArrayList<>();
         ArrayList<Photo> photos = new ArrayList<>();
 
         try (Connection connection = db.getConnection()) {
@@ -53,8 +51,6 @@ public class HomeController extends Controller {
                 photos.add(photo);
             }
         }
-
-        getBytePhotos(photos);
 
         return ok(index.render(photos));
     }
@@ -81,37 +77,38 @@ public class HomeController extends Controller {
         return username;
     }
 
-    private void getBytePhotos(ArrayList<Photo> photos) {
-        byte[] result;
-        FTPClient client = new FTPClient();
-        try {
-            client.connect(ConfigFactory.load().getString("ftp.ip"), ConfigFactory.load().getInt("ftp.port"));
-            client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
-            client.setFileType(FTP.BINARY_FILE_TYPE);
-            InputStream stream;
-            RenderPhoto renderPhoto;
-            for (Photo p : photos) {
-                stream = client.retrieveFileStream(p.getFileLocation());
-                result = IOUtils.toByteArray(stream);
-                stream.close();
-                while (!client.completePendingCommand()) ;
-                renderPhoto = new RenderPhoto(p.getId(), result);
-                renderPhotos.add(renderPhoto);
-            }
-            client.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    public static String getUserType() {
 
-    public Result getRenderPhoto(int id) {
-        byte[] result = new byte[0];
-        for (RenderPhoto rp : renderPhotos) {
-            if (rp.getPhotoId() == id) {
-                result = rp.getPhotobytes();
+        String userType = "";
+
+        try (Connection connection = db.getConnection()) {
+            String sql = "SELECT `type` FROM `user` where emailadres = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, session("user"));
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                switch (result.getInt("type")){
+                    case 0:
+                        userType = "Customer";
+                        break;
+                    case 1:
+                        userType = "Pending photographer";
+                        break;
+                    case 2:
+                        userType = "Photographer";
+                        break;
+                    case 3:
+                        userType = "Admin";
+                        break;
+                }
             }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
         }
-        if (result.length < 1) return ok().as("image");
-        return ok(result).as("image");
+
+        return userType;
     }
 }

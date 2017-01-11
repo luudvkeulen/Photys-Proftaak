@@ -85,13 +85,13 @@ public class PreviewController extends Controller {
         DynamicForm dynamicForm = factory.form().bindFromRequest();
         ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = db.getConnection()) {
-            String sql = "SELECT * FROM product";
+            String sql = "SELECT * FROM product WHERE active = 1";
             ResultSet result = connection.prepareStatement(sql).executeQuery();
             while (result.next()) {
                 Integer id = result.getInt("id");
                 String name = result.getString("name");
                 Double price = result.getDouble("price");
-                Integer amount = Integer.valueOf(dynamicForm.get(id.toString()));
+                int amount = Integer.valueOf(dynamicForm.get(id.toString()));
                 if (amount < 1) continue;
                 Product product = new Product(
                         id,

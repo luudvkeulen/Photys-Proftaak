@@ -22,7 +22,7 @@
                 <a href="/preview?url=@photo.getUrl" class="thumbnail-click">
                     <div class="thumbnail">
                         <div class="imagecontainer">
-                            <img src="@routes.HomeController.getRenderPhoto(photo.getId)"
+                            <img src="@routes.PictureController.renderPhoto(photo.getFileLocation)"
                             alt="@photo.getName">
                         </div>
                         <div class="caption">
