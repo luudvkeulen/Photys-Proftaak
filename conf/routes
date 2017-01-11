@@ -32,6 +32,7 @@ GET         /paymentsuccess            controllers.PaymentController.paymentAcce
 GET         /ordercart                 controllers.CartController.orderCart
 GET         /order                     controllers.OrderController.index(order_id)
 
+
 POST        /account                   controllers.AccountController.UpdateAccountInfo()
 POST        /login                     controllers.LoginController.login()
 POST        /register                  controllers.RegisterController.register()

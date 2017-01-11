@@ -41,8 +41,9 @@ public class UserLogic {
                 String phoneNr = resultSet.getString("phonenr");
                 int userType = resultSet.getInt("type");
                 int isBanned = resultSet.getInt("isBanned");
+                String pp_fileLocation = resultSet.getString("profile_picture");
 
-                user = new User(userID, firstName, lastName, email, zipCode, street, houseNr, phoneNr, userType, isBanned);
+                user = new User(userID, firstName, lastName, email, zipCode, street, houseNr, phoneNr, userType, isBanned, pp_fileLocation);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
