@@ -195,10 +195,12 @@ public class AccountController extends Controller {
         return ok(account.render(currentUser, orders, orderItems, cartItems));
     }
 
-    public Result loadProfilePicture(User user){
+    public Result loadProfilePicture(){
         byte[] result = null;
         FTPClient client = new FTPClient();
+        UserLogic userLogic = new UserLogic(this.db);
 
+        User user = userLogic.getUserByEmail(session("user"));
         String fileLocation = user.getProfilePictureFileLocation();
 
 
