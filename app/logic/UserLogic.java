@@ -40,10 +40,11 @@ public class UserLogic {
                 String street = resultSet.getString("street");
                 String houseNr = resultSet.getString("housenr");
                 String phoneNr = resultSet.getString("phonenr");
+                String profilePicture = resultSet.getString("profile_picture");
                 int userType = resultSet.getInt("type");
                 int isBanned = resultSet.getInt("isBanned");
 
-                user = new User(userId, firstName, lastName, email, zipcode, street, houseNr, phoneNr, userType, isBanned);
+                user = new User(userId, firstName, lastName, email, zipcode, street, houseNr, phoneNr, userType, isBanned, profilePicture);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
