@@ -76,4 +76,39 @@ public class HomeController extends Controller {
 
         return username;
     }
+
+    public static String getUserType() {
+
+        String userType = "";
+
+        try (Connection connection = db.getConnection()) {
+            String sql = "SELECT `type` FROM `user` where emailadres = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, session("user"));
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                switch (result.getInt("type")){
+                    case 0:
+                        userType = "Customer";
+                        break;
+                    case 1:
+                        userType = "Pending photographer";
+                        break;
+                    case 2:
+                        userType = "Photographer";
+                        break;
+                    case 3:
+                        userType = "Admin";
+                        break;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return userType;
+    }
 }
