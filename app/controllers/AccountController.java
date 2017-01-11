@@ -1,13 +1,14 @@
 package controllers;
 
+import com.typesafe.config.ConfigFactory;
 import logic.BinaryLogic;
 import logic.OrderLogic;
 import logic.PhotographerLogic;
 import logic.UserLogic;
-import models.CartItem;
-import models.Order;
-import models.OrderItem;
-import models.User;
+import models.*;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
@@ -15,6 +16,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 import javax.inject.Inject;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -190,5 +193,30 @@ public class AccountController extends Controller {
         }
 
         return ok(account.render(currentUser, orders, orderItems, cartItems));
+    }
+
+    public Result loadProfilePicture(User user){
+        byte[] result = null;
+        FTPClient client = new FTPClient();
+
+        String fileLocation = user.getProfilePictureFileLocation();
+
+
+            try {
+                client.connect(ConfigFactory.load().getString("ftp.ip"), ConfigFactory.load().getInt("ftp.port"));
+                client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
+                client.setFileType(FTP.BINARY_FILE_TYPE);
+                InputStream stream;
+                RenderPhoto renderPhoto;
+
+                stream = client.retrieveFileStream(fileLocation);
+                result = IOUtils.toByteArray(stream);
+                stream.close();
+                while (!client.completePendingCommand()) ;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return ok(result).as("image");
     }
 }
