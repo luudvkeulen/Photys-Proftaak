@@ -39,6 +39,12 @@ account.uploads=Uploads
 account.uploadhistory=View upload history
 account.createdalbums=View created albums
 account.uploaddetails=Show upload details
+account.email=Email
+account.displayname=Display name
+account.password=Password
+account.zipcode=Zipcode
+account.address=Address
+account.phonenumber=Phone number
 #cart
 cart.empty=Your cart is empty
 cart.ordernow=Order now

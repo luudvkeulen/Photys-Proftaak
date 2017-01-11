@@ -35,11 +35,16 @@ account.details=Persoonlijke gegevens
 account.showdetails=Toon persoonlijke gegevens
 account.changesettings=Verander je gegevens hieronder
 account.savechanges=Wijzigingen opslaan
-account.savechanges=Wijzigingen opslaan
 account.uploads=Uploads
 account.uploadhistory=Bekijk uploadgeschiedenis
 account.createdalbums=Bekijk gemaakte albums
 account.uploaddetails=Show upload details
+account.email=Email
+account.displayname=Gebruikersnaam
+account.password=Wachtwoord
+account.zipcode=Postcode
+account.address=Adres
+account.phonenumber=Telefoonnummer
 #cart
 cart.empty=Je winkelmandje is leeg
 cart.ordernow=Nu bestellen
