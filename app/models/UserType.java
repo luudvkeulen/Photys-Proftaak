@@ -9,3 +9,4 @@ public enum UserType {
     public int getValue() {return id; }
 
 }
+

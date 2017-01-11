@@ -45,13 +45,13 @@ public class AccountController extends Controller {
     }
 
     public Result index() {
-        User currentUser = GetAccountInfo(session("user"));
-        ArrayList<Order> orders = GetAccountOrders();
+        User currentUser = getAccountInfo(session("user"));
+        ArrayList<Order> orders = getAccountOrders();
 
         ArrayList<OrderItem> orderItems = new ArrayList<>();
 
         for (Order o : orders) {
-            orderItems.addAll(GetOrderItems(o.getId() + ""));
+            orderItems.addAll(getOrderItems(o.getId() + ""));
         }
 
         List<CartItem> cartItems = new ArrayList<>();
@@ -73,15 +73,15 @@ public class AccountController extends Controller {
         return ok(account.render(currentUser, orders, orderItems, cartItems));
     }
 
-    private User GetAccountInfo(String email) {
+    private User getAccountInfo(String email) {
         return userLogic.getAccountInfo(email);
     }
 
-    private List<OrderItem> GetOrderItems(String orderId) {
+    private List<OrderItem> getOrderItems(String orderId) {
         return orderLogic.getOrderItems(orderId);
     }
 
-    private ArrayList<Order> GetAccountOrders() {
+    private ArrayList<Order> getAccountOrders() {
         ArrayList<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM photys.`order` WHERE user_id = (SELECT id FROM `user` WHERE emailadres = ?)";
 
@@ -112,13 +112,13 @@ public class AccountController extends Controller {
         if (select.equals("password")) {
             if (!userLogic.checkPassword(userEmail, input1)) {
                 flash("danger", "Incorrect password.");
-                User currentUser = GetAccountInfo(session("user"));
-                ArrayList<Order> orders = GetAccountOrders();
+                User currentUser = getAccountInfo(session("user"));
+                ArrayList<Order> orders = getAccountOrders();
 
                 ArrayList<OrderItem> orderItems = new ArrayList<>();
 
                 for (Order o : orders) {
-                    orderItems.addAll(GetOrderItems(o.getId() + ""));
+                    orderItems.addAll(getOrderItems(o.getId() + ""));
                 }
 
                 List<CartItem> cartItems = new ArrayList<>();
@@ -164,14 +164,14 @@ public class AccountController extends Controller {
         }
 
         userLogic.updateAccountInfo(updatedUser, userEmail);
-        User currentUser = GetAccountInfo(updatedUser.getEmailAdress());
+        User currentUser = getAccountInfo(updatedUser.getEmailAdress());
         flash("notice", "Account information was updated");
-        ArrayList<Order> orders = GetAccountOrders();
+        ArrayList<Order> orders = getAccountOrders();
 
         ArrayList<OrderItem> orderItems = new ArrayList<>();
 
         for (Order o : orders) {
-            orderItems.addAll(GetOrderItems(o.getId() + ""));
+            orderItems.addAll(getOrderItems(o.getId() + ""));
         }
 
         List<CartItem> cartItems = new ArrayList<>();

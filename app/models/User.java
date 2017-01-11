@@ -14,6 +14,7 @@ public class User {
     private String houseNr;
     private String phoneNr;
     private boolean isBanned;
+    private String profilePic_fileLocation;
 
 
     public int getId() {
@@ -102,7 +103,9 @@ public class User {
 
     private models.UserType userType;
 
-    public User(int ID, String FirstName, String LastName, String EmailAdress, String ZipCode, String StreetName, String HouseNr, String PhoneNr, int userType, int isBanned) {
+    public String getProfilePictureFileLocation(){return this.profilePic_fileLocation;}
+
+    public User(int ID, String FirstName, String LastName, String EmailAdress, String ZipCode, String StreetName, String HouseNr, String PhoneNr, int userType, int isBanned, String profilePic_fileLocation) {
         this.id = ID;
         this.firstName = FirstName;
         this.lastName = LastName;
@@ -113,6 +116,7 @@ public class User {
         this.phoneNr = PhoneNr;
         this.userType = UserType.values()[userType];
         this.isBanned = (isBanned != 0);
+        this.profilePic_fileLocation = profilePic_fileLocation;
     }
 
     public User(int id, String firstName, String lastName, String emailAddress) {
