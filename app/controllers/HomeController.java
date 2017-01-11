@@ -1,6 +1,7 @@
 package controllers;
 
 import com.typesafe.config.ConfigFactory;
+import logic.UserLogic;
 import models.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTP;
@@ -8,6 +9,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import play.db.*;
 import play.mvc.*;
 import views.html.*;
+
 import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,10 +22,12 @@ import java.util.ArrayList;
 public class HomeController extends Controller {
 
     private static Database db;
+    private static UserLogic userLogic;
 
     @Inject
     public HomeController(Database db) {
-        HomeController.db = db;
+        this.db = db;
+        userLogic = new UserLogic(db);
     }
 
     public Result index() throws SQLException {
@@ -77,6 +81,10 @@ public class HomeController extends Controller {
         return username;
     }
 
+    public Result loadProfilePicture() {
+        return ok(userLogic.getUserProfilePicture(session("user"))).as("image");
+    }
+
     public static String getUserType() {
 
         String userType = "";
@@ -89,7 +97,7 @@ public class HomeController extends Controller {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                switch (result.getInt("type")){
+                switch (result.getInt("type")) {
                     case 0:
                         userType = "Customer";
                         break;

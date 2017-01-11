@@ -196,29 +196,6 @@ public class AccountController extends Controller {
     }
 
     public Result loadProfilePicture(){
-        byte[] result = null;
-        FTPClient client = new FTPClient();
-        UserLogic userLogic = new UserLogic(this.db);
-
-        User user = userLogic.getUserByEmail(session("user"));
-        String fileLocation = user.getProfilePictureFileLocation();
-
-
-            try {
-                client.connect(ConfigFactory.load().getString("ftp.ip"), ConfigFactory.load().getInt("ftp.port"));
-                client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
-                client.setFileType(FTP.BINARY_FILE_TYPE);
-                InputStream stream;
-                RenderPhoto renderPhoto;
-
-                stream = client.retrieveFileStream(fileLocation);
-                result = IOUtils.toByteArray(stream);
-                stream.close();
-                while (!client.completePendingCommand()) ;
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return ok(result).as("image");
+        return ok(userLogic.getUserProfilePicture(session("user"))).as("image");
     }
 }

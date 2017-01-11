@@ -1,8 +1,16 @@
 package logic;
 
+import com.typesafe.config.ConfigFactory;
+import models.RenderPhoto;
 import models.User;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 import org.mindrot.jbcrypt.BCrypt;
 import play.db.Database;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,6 +65,34 @@ public class UserLogic {
         }
 
         return user;
+    }
+
+    public byte[] getUserProfilePicture(String userEmail) {
+        byte[] result = null;
+        FTPClient client = new FTPClient();
+        UserLogic userLogic = new UserLogic(this.db);
+
+        User user = userLogic.getUserByEmail(userEmail);
+        String fileLocation = user.getProfilePictureFileLocation();
+
+
+        try {
+            client.connect(ConfigFactory.load().getString("ftp.ip"), ConfigFactory.load().getInt("ftp.port"));
+            client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
+            client.setFileType(FTP.BINARY_FILE_TYPE);
+            InputStream stream;
+            RenderPhoto renderPhoto;
+
+            stream = client.retrieveFileStream(fileLocation);
+            result = IOUtils.toByteArray(stream);
+            stream.close();
+            while (!client.completePendingCommand()) ;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     public Boolean updateAccountInfo(User user, String email) {
