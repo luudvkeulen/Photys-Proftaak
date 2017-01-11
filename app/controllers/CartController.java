@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class CartController extends Controller {
@@ -50,6 +51,7 @@ public class CartController extends Controller {
         List<CartItem> cartItems = BinaryLogic.binaryToObject(request().cookie("cart").value());
         if (cartItems.size() < 1) return redirect("/cart");
 
+        ArrayList<CartItem> toRemove = new ArrayList<>();
         for (CartItem item : cartItems) {
             if (item.getPhoto().getId() == pictureID) {
                 for (Product product : item.getProducts()) {
@@ -57,12 +59,18 @@ public class CartController extends Controller {
                         if (add) {
                             product.addOne();
                         } else {
-                            product.substractOne();
+                            if(product.getAmount() <= 1) {
+                                toRemove.add(item);
+                            } else{
+                                product.substractOne();
+                            }
                         }
-
                     }
                 }
             }
+        }
+        if(toRemove.size() >= 1) {
+            cartItems.removeAll(toRemove);
         }
         String newCookie = BinaryLogic.objectsToBinary(cartItems);
         response().setCookie(new Http.Cookie("cart", newCookie, null, "/", "", false, false));
