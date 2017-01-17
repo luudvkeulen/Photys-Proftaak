@@ -10,7 +10,7 @@ public class CartItem implements Serializable {
     private final Filter filter;
     private List<Product> products;
 
-    public void removeProduct(ArrayList<Product> product){
+    public void removeProduct(ArrayList<Product> product) {
         products.removeAll(product);
     }
 
