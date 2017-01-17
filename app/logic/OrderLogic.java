@@ -78,7 +78,7 @@ public class OrderLogic {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return Math.round(totalPrice * 100) / 100;
+        return Math.round(totalPrice * 100.0) / 100.0;
     }
 
     public double getPictureCosts(String orderId) {

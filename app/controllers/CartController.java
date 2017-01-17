@@ -93,15 +93,20 @@ public class CartController extends Controller {
     public static double countTotalPrice() {
             if (getCartCookie().equals("")) return 0.00;
             List<CartItem> cartItems = BinaryLogic.binaryToObject(getCartCookie());
+        List<Integer> picturePriceAdded = new ArrayList<>();
             if (cartItems == null) return 0;
             double counter = 0.0;
-            double photoPrice = 0.0;
+        double photoPrice = 0.00;
             for (CartItem cartItem : cartItems) {
                 for (Product p : cartItem.getProducts()) {
-                    photoPrice = cartItem.getPhoto().getPrice();
-                    photoPrice += p.getPrice();
-                    p.setTotalPrice(photoPrice);
+                    if (!picturePriceAdded.contains(cartItem.getPhoto().getId())) {
+                        picturePriceAdded.add(cartItem.getPhoto().getId());
+                        photoPrice = cartItem.getPhoto().getPrice();
+                    } else {
+                        photoPrice = 0.00;
+                    }
                     counter += p.getTotalPrice();
+                    counter += photoPrice;
                 }
         }
 
