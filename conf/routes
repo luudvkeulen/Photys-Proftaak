@@ -30,6 +30,8 @@ GET         /paymentcanceled        controllers.PaymentController.paymentCancell
 GET         /paymentsuccess         controllers.PaymentController.paymentAccepted(payerID, paymentId)
 GET         /ordercart              controllers.CartController.orderCart
 GET         /order                  controllers.OrderController.index(order_id)
+GET         /myavatar               controllers.AccountController.changeAvatar
+GET         /loadavatar             controllers.AccountController.loadProfilePicture
 
 POST        /account                controllers.AccountController.updateAccountInfo()
 POST        /login                  controllers.LoginController.login()
