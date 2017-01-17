@@ -8,7 +8,7 @@ public class Product implements Serializable {
     private final int ID;
     private final String name;
     private String description;
-    private final Double price;
+    private Double price;
     private Integer amount;
 
     public Product(int ID, String name, String description, double price) {
@@ -42,6 +42,10 @@ public class Product implements Serializable {
     }
 
     public Integer getAmount() { return amount; }
+
+    public void setTotalPrice(double price){
+        this.price = price;
+    }
 
     public double getTotalPrice(){
         return (this.price * this.amount);

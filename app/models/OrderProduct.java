@@ -5,6 +5,7 @@ public class OrderProduct {
     private final String description;
     private final int amount;
     private final double price;
+    private final double picturePrice;
 
     public String getName() {
         return name;
@@ -23,13 +24,14 @@ public class OrderProduct {
     }
 
     public double getTotalPrice() {
-        return price * amount;
+        return (price + picturePrice) * amount;
     }
 
-    public OrderProduct(String name, String description, int amount, double price) {
+    public OrderProduct(String name, String description, int amount, double price, double picturePrice) {
         this.name = name;
         this.description = description;
         this.amount = amount;
         this.price = price;
+        this.picturePrice = picturePrice;
     }
 }

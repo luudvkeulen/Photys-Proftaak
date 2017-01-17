@@ -131,6 +131,7 @@ public class PreviewController extends Controller {
         }
 
         Photo photo = new Photo(Integer.parseInt(dynamicForm.get("id")), dynamicForm.get("picturename"));
+        photo.setPrice(Double.parseDouble(dynamicForm.get("pictureprice")));
         CartItem cartItem = new CartItem(photo, selectedFilter, products);
         List<CartItem> cartItems = new ArrayList<>();
         cartItems.add(cartItem);
