@@ -70,15 +70,15 @@ public class OrderLogic {
                 double picturePrice = result.getDouble("pictureprice");
                 double price = (productPrice * amount);
                 totalPrice += price;
-                totalPrice += picturePrice;
                 if (!pictureIdList.contains(pictureId)) {
+                    totalPrice += picturePrice;
                     pictureIdList.add(pictureId);
                 }
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return (double)Math.round(totalPrice*100.0)/100.0;
+        return Math.round(totalPrice * 100) / 100;
     }
 
     public double getPictureCosts(String orderId) {
@@ -123,14 +123,13 @@ public class OrderLogic {
                         break;
                     }
                 }
-
                 if (orderItem != null) {
                     orderItem.addOrderProduct(new OrderProduct(
                             result.getString("productname"),
                             result.getString("productdescription"),
                             result.getInt("amount"),
-                            result.getDouble("productprice"),
-                            result.getDouble("pictureprice")));
+                            result.getDouble("productprice")
+                    ));
                 } else {
                     orderItem = new OrderItem(
                             result.getInt("picture_id"),
@@ -142,8 +141,8 @@ public class OrderLogic {
                             result.getString("productname"),
                             result.getString("productdescription"),
                             result.getInt("amount"),
-                            result.getDouble("productprice"),
-                            result.getDouble("pictureprice")));
+                            result.getDouble("productprice")
+                    ));
                     orderItems.add(orderItem);
                 }
             }
