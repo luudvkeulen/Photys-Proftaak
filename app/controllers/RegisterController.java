@@ -66,7 +66,7 @@ public class RegisterController extends Controller {
     private boolean insertRegisterDetails(String firstname, String lastname, String email, String password, String zipcode, String street, String housenumber, String phone, int type, String uuid) {
         PreparedStatement prepared = null;
         try (Connection connection = db.getConnection()) {
-            String sql = "INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)";
+            String sql = "INSERT INTO `user` (`first_name`, last_name, emailadres, password, zipcode, street, housenr, phonenr, `type`, email_verified, verify_code, profile_picture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?)";
             prepared = connection.prepareStatement(sql);
             prepared.setString(1, firstname);
             prepared.setString(2, lastname);
@@ -78,6 +78,7 @@ public class RegisterController extends Controller {
             prepared.setString(8, phone);
             prepared.setInt(9, type);
             prepared.setString(10, uuid);
+            prepared.setString(11, "/ProfilePictures/Old_Guy.jpg");
             prepared.execute();
             session("user", email);
         } catch (SQLException e) {
