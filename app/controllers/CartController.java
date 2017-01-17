@@ -86,7 +86,6 @@ public class CartController extends Controller {
         }else{
             flash("info", "You have to be logged in to place an order.");
             return redirect("/login");
-            
         }
     }
 
@@ -121,7 +120,9 @@ public class CartController extends Controller {
 
         int counter = 0;
         for (CartItem ci : cartItems) {
-            counter += ci.getProducts().size();
+            for (Product p : ci.getProducts()) {
+                counter += p.getAmount();
+            }
         }
 
         return counter;
