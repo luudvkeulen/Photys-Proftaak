@@ -87,6 +87,7 @@ public class CartController extends Controller {
         }else{
             flash("info", "You have to be logged in to place an order.");
             return redirect("/login");
+            
         }
     }
 
