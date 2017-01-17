@@ -111,7 +111,6 @@ public class AccountController extends Controller {
     public void changeProfilePicture() {
         DynamicForm bindedForm = factory.form().bindFromRequest();
         String picName = bindedForm.get("profilepic");
-        System.out.println("picname: " + picName);
         if(picName != null) {
             userLogic.setProfilePicture(picName, session("user"));
         }

@@ -1,0 +1,16 @@
+.btnSubmit {
+	padding-top: 10px;
+	width: 40%;
+	margin-left: 60%;
+}
+
+.avatarContainer {
+	padding-top: 10px;
+	width:25%;
+	height:50%;
+}
+
+.profilePicture {
+	width:50%;
+	height:50%;
+}
