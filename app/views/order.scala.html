@@ -1,4 +1,4 @@
-@(orderItems: List[OrderItem], totalPrice: Double, pictureCosts : Double, order_id: String)
+@(orderItems: List[OrderItem], totalPrice: Double, order_id: String)
 
 @main("Order") {
     <link href="@routes.Assets.versioned("stylesheets/orderOverview.css")" rel="stylesheet">
@@ -14,7 +14,7 @@
                         <th>Productnaam</th>
                         <th>Productprijs</th>
                         <th>Aantal</th>
-                        <th>Totaal</th>
+                        <th>Totaal incl. print</th>
                     </tr>
                 </thead>
                 @for(orderItem <- orderItems) {
@@ -30,13 +30,6 @@
                         </tr>
                     }
                 }
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="ordercosts"><b>Fotokosten</b></td>
-                    <td class="ordercosts"><b>€ @pictureCosts</b></td>
-                </tr>
                 <tr>
                     <td></td>
                     <td></td>

@@ -22,3 +22,7 @@
     margin: 5px;
     width: 28px;
 }
+
+#totalprice{
+    text-align: right;
+}

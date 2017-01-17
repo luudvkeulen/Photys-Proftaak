@@ -16,6 +16,10 @@ public class Photo implements java.io.Serializable {
     private String albumDescription;
 
     //Album description
+    public void setPrice(double price){
+        this.price = price;
+    }
+
     public String getAlbumDescription() {
         return albumDescription;
     }

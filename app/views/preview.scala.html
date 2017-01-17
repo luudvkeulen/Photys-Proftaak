@@ -68,19 +68,20 @@
                             @if(products.last == product) {
                                 <div class="product panel-body">
                                     @defining(product.getPrice + price) { totalPrice =>
-                                    <input name="@product.getID" class="productamount" type="number" min="0" value="0"> <p class="productname">@product.getName &euro; @product.getPrice </p> <p class="productprice">Total: &euro; @("%.2f".format(totalPrice))</p>
+                                    <input name="@product.getID" class="productamount" type="number" min="0" value="0"> <p class="productname">@product.getName &euro; @product.getPrice </p> <p class="productprice">incl. print: &euro; @("%.2f".format(totalPrice))</p>
                                     }
                                 </div>
                             } else {
                                 <div class="product panel-body divwithborder">
                                     @defining(product.getPrice + price) { totalPrice =>
-                                        <input name="@product.getID" class="productamount" type="number" min="0" value="0"> <p class="productname">@product.getName &euro; @product.getPrice </p> <p class="productprice">Total: &euro; @("%.2f".format(totalPrice))</p>
+                                        <input name="@product.getID" class="productamount" type="number" min="0" value="0"> <p class="productname">@product.getName &euro; @product.getPrice </p> <p class="productprice">incl. print: &euro; @("%.2f".format(totalPrice))</p>
                                     }
                                     </div>
                             }
                         }
                         <input type="text" class="hidden" name="id" value="@id"/>
                         <input type="text" class="hidden" name="picturename" value="@name"/>
+                        <input type="text" class="hidden" name="pictureprice" value="@price"/>
                         <input id="inputfilter" type="hidden" class="hidden" name="filter" value="NONE"/>
                         <input type="submit" id="submit-form" class="hidden" />
                     </form>
