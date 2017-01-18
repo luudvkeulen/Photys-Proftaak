@@ -1,0 +1,40 @@
+@main("MyAvatar") {
+
+    <link href="@routes.Assets.versioned("stylesheets/myavatar.css")" rel="stylesheet">
+    <div class="container">
+        <div class="profilePicture">
+            <img src="@routes.AccountController.loadProfilePicture" class="img-rounded" alt="Profile picture" width=50% height=50%>
+        </div>
+        <form method="GET" action="@routes.AccountController.changeAvatar" enctype="multipart/form-data">
+            <div class="avatarContainer">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-body">
+                                <h4 class="panel-title">
+                                    <input type="radio" name="profilepic" value="Woman_1.jpg">Vrouw<br>
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <h4 class="panel-title">
+                                    <input type="radio" name="profilepic" value="Old_Guy.jpg">Oude man<br>
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <h4 class="panel-title">
+                                    <input type="radio" name="profilepic" value="Cool_Guy.jpg">Jonge man<br>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btnSubmit">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">
+                            <span class="glyphicon glyphicon-avatar"></span>
+                            <span>@Messages("Submit")</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}

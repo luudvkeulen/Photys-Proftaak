@@ -1,14 +1,10 @@
 package controllers;
 
-import com.typesafe.config.ConfigFactory;
 import logic.BinaryLogic;
 import logic.OrderLogic;
 import logic.PhotographerLogic;
 import logic.UserLogic;
 import models.*;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.Database;
@@ -16,8 +12,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 import javax.inject.Inject;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,6 +39,15 @@ public class AccountController extends Controller {
 
     public boolean isPhotographer() {
         return photographerLogic.isPhotographer(session("user"));
+    }
+
+    public Result loadProfilePicture(){
+        return ok(userLogic.getUserProfilePicture(session("user"))).as("image");
+    }
+
+    public Result changeAvatar() {
+        changeProfilePicture();
+        return ok(myavatar.render());
     }
 
     public Result index() {
@@ -103,6 +106,15 @@ public class AccountController extends Controller {
             e.printStackTrace();
         }
         return orders;
+    }
+
+    public void changeProfilePicture() {
+        DynamicForm bindedForm = factory.form().bindFromRequest();
+        String picName = bindedForm.get("profilepic");
+        if(picName != null) {
+            userLogic.setProfilePicture(picName, session("user"));
+        }
+
     }
 
     public Result updateAccountInfo() {
@@ -193,9 +205,5 @@ public class AccountController extends Controller {
         }
 
         return ok(account.render(currentUser, orders, orderItems, cartItems));
-    }
-
-    public Result loadProfilePicture(){
-        return ok(userLogic.getUserProfilePicture(session("user"))).as("image");
     }
 }

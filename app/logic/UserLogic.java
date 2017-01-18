@@ -67,6 +67,43 @@ public class UserLogic {
         return user;
     }
 
+    public byte[] getProfilePicture(String pictureName) {
+        byte[] result = null;
+        FTPClient client = new FTPClient();
+        String fileLocation = "/ProfilePictures/" + pictureName;
+
+        try {
+            client.connect(ConfigFactory.load().getString("ftp.ip"), ConfigFactory.load().getInt("ftp.port"));
+            client.login(ConfigFactory.load().getString("ftp.user"), ConfigFactory.load().getString("ftp.password"));
+            client.setFileType(FTP.BINARY_FILE_TYPE);
+            InputStream stream;
+
+            stream = client.retrieveFileStream(fileLocation);
+            result = IOUtils.toByteArray(stream);
+            stream.close();
+            while (!client.completePendingCommand()) ;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public void setProfilePicture(String picName, String email) {
+        PreparedStatement statement;
+        try (Connection connection = db.getConnection()){
+            String sql = "UPDATE user SET profile_picture = ? WHERE emailadres = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, "/ProfilePictures/" + picName);
+            statement.setString(2, email);
+
+            statement.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public byte[] getUserProfilePicture(String userEmail) {
         byte[] result = null;
         FTPClient client = new FTPClient();
