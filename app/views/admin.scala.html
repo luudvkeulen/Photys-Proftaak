@@ -68,7 +68,7 @@
                     </div>
                     <div id="productList" class="panel-collapse collapse">
                         @for(product <- products) {
-                            <form method="POST" action="@routes.AdminController.updateProduct()" enctype="multipart/form-data">@product.getID
+                            <form method="POST" action="@routes.AdminController.updateProduct()" enctype="multipart/form-data">
                                 <input type="hidden" name="productid" value="@product.getID"/>
                                 <div id="pic001" class="panel-body photographer"><img src="http://downloadicons.net/sites/default/files/product-icon-27962.png" class="productimg" style="float: left" width="75" height="75">
                                     <input type="text" id="tbprice" name="tbprice" class="form-control productinput" placeholder="Price" value="@product.getPrice">
@@ -78,9 +78,9 @@
                                 </div>
                             </form>
                         }
-                        <button type="button" class="btnPhotographer btn btn-primary profilebutton">Remove product</button>
+                        <!--Remove product</button>
                         <button type="button" class="btnPhotographer btn btn-primary profilebutton">Edit product</button>
-                        <button type="button" class="btnAddProduct btn btn-primary profilebutton">Add product</button>
+                        <button type="button" class="btnAddProduct btn btn-primary profilebutton">Add product</button>-->
                         <form method="POST" id="product" class="form-signin" action="@routes.AdminController.addProduct()">
 
                         </form>

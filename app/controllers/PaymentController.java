@@ -35,12 +35,12 @@ public class PaymentController extends Controller {
         return ok("Payment was cancelled");
     }
 
-    public Result paymentAccepted(String payerId, String paymentId) {
+    public Result paymentAccepted(String PayerId, String paymentId) {
         Payment payment = new Payment();
         payment.setId(paymentId);
 
         PaymentExecution paymentExecution = new PaymentExecution();
-        paymentExecution.setPayerId(payerId);
+        paymentExecution.setPayerId(PayerId);
         String mode = Constants.SANDBOX;
         APIContext apiContext = new APIContext("AUh2gdHH_RDb6Stask5jhJFM2iLOGP8-lvqbHzr1hhMkygP4qesPqXalMID3mXqQIrwsOM2uzFG-qFdR", "EGFd-qDDumwbDqnaOm_xdZvmZi-DhBLVlXfPdyAHf4-qxGT7f64TSMmZKq949-8oJyIGYwvjIQZ_0pMq", mode);
 

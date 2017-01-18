@@ -9,10 +9,9 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
-
 import javax.inject.Inject;
+import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class CartController extends Controller {
@@ -49,27 +48,27 @@ public class CartController extends Controller {
         List<CartItem> cartItems = BinaryLogic.binaryToObject(request().cookie("cart").value());
         if (cartItems.size() < 1) return redirect("/cart");
 
-        ArrayList<CartItem> toRemove = new ArrayList<>();
+        ArrayList<Product> toRemove = new ArrayList<>();
         for (CartItem item : cartItems) {
-            if (item.getPhoto().getId() == pictureId) {
-                for (Product product : item.getProducts()) {
-                    if (product.getID() == productId) {
-                        if (add) {
-                            product.addOne();
-                        } else {
-                            if(product.getAmount() <= 1) {
-                                toRemove.add(item);
-                            } else{
-                                product.substractOne();
-                            }
+            for (Product product : item.getProducts()) {
+                if (product.getID() == productId && item.getPhoto().getId() == pictureId) {
+                    if (add) {
+                        product.addOne();
+                    } else {
+                        if(product.getAmount() <= 1) {
+                            toRemove.add(product);
+                        } else{
+                            product.substractOne();
                         }
                     }
                 }
             }
+            if(toRemove.size() >= 1) {
+
+                item.removeProduct(toRemove);
+            }
         }
-        if(toRemove.size() >= 1) {
-            cartItems.removeAll(toRemove);
-        }
+
         String newCookie = BinaryLogic.objectsToBinary(cartItems);
         response().setCookie(new Http.Cookie("cart", newCookie, null, "/", "", false, false));
 
@@ -77,28 +76,41 @@ public class CartController extends Controller {
     }
 
     public Result orderCart() {
-        String cart = getCartCookie();
-        if (cart.equals("")) return badRequest("Cookie is no longer valid");
-        List<CartItem> cartItems = BinaryLogic.binaryToObject(cart);
-        OrderLogic orderLogic = new OrderLogic(db);
-        int orderId = orderLogic.createOrder(cartItems, session("user"));
-        return redirect("/order?order_id=" + orderId);
+        if (session("user") != null){
+            String cart = getCartCookie();
+            if (cart.equals("")) return badRequest("Cookie is no longer valid");
+            List<CartItem> cartItems = BinaryLogic.binaryToObject(cart);
+            OrderLogic orderLogic = new OrderLogic(db);
+            int orderId = orderLogic.createOrder(cartItems, session("user"));
+            return redirect("/order?order_id=" + orderId);
+        }else{
+            flash("info", "You have to be logged in to place an order.");
+            return redirect("/login");
+        }
     }
 
     // berekenen van de totaal prijs van alle producten in de winkelwagen
     public static double countTotalPrice() {
-        if (getCartCookie().equals("")) return 0.00;
-        List<CartItem> cartItems = BinaryLogic.binaryToObject(getCartCookie());
-        if (cartItems == null) return 0;
-        double counter = 0;
-
-        for (CartItem cartItem : cartItems) {
-            for (Product p : cartItem.getProducts()) {
-                counter += p.getTotalPrice();
-            }
+            if (getCartCookie().equals("")) return 0.00;
+            List<CartItem> cartItems = BinaryLogic.binaryToObject(getCartCookie());
+        List<Integer> picturePriceAdded = new ArrayList<>();
+            if (cartItems == null) return 0;
+            double counter = 0.0;
+        double photoPrice = 0.00;
+            for (CartItem cartItem : cartItems) {
+                for (Product p : cartItem.getProducts()) {
+                    if (!picturePriceAdded.contains(cartItem.getPhoto().getId())) {
+                        picturePriceAdded.add(cartItem.getPhoto().getId());
+                        photoPrice = cartItem.getPhoto().getPrice();
+                    } else {
+                        photoPrice = 0.00;
+                    }
+                    counter += p.getTotalPrice();
+                    counter += photoPrice;
+                }
         }
 
-        return counter;
+        return (double)Math.round(counter*100.0)/100.0;
     }
 
     // Ophalen van alle Items voor de winkelwagen
@@ -108,7 +120,9 @@ public class CartController extends Controller {
 
         int counter = 0;
         for (CartItem ci : cartItems) {
-            counter += ci.getProducts().size();
+            for (Product p : ci.getProducts()) {
+                counter += p.getAmount();
+            }
         }
 
         return counter;

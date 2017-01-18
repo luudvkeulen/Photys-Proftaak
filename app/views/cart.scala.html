@@ -13,9 +13,15 @@
                         <tr class="cartitemrow">
                             <td class="cartitemname">
                                 <b>@cartItem.getPhoto.getName:</b> @product.getName
+
+                                @defining(product.getPrice() + cartItem.getPhoto.getPrice) { totalPrice =>
+                                    &euro; @totalPrice
+                                }
                             </td>
                             <td class="cartitemamount pull-right">
-                                € @product.getTotalPrice
+                                <!--@product.getTotalPrice()
+                                € @product.getPrice() + @cartItem.getPhoto.getPrice -->
+
                                 <a class="btn btn-default productbutton" href="@routes.CartController.changeAmount(product.getID(), cartItem.getPhoto.getId, false)">-</a>
                                 <label id="label0">@product.getAmount</label>
                                 <a class="btn btn-default productbutton" href="@routes.CartController.changeAmount(product.getID(), cartItem.getPhoto.getId, true)">+</a>
@@ -27,8 +33,10 @@
             }
             <div id="costs">
             </div>
-            <div>
-                <label>@Messages("cart.totalprice"): &#8364; @CartController.countTotalPrice()</label>
+            <div id="totalprice">
+                <br>
+                <h3>@Messages("cart.totalprice"): &#8364; @CartController.countTotalPrice()</h3>
+                <br>
             </div>
             <a href="@routes.CartController.orderCart()" class="btn btn-primary btn-lg btn-block">@Messages("cart.ordernow")</a>
         </div>

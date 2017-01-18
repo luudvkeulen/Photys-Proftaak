@@ -18,6 +18,6 @@ public class OrderController extends Controller {
     }
 
     public Result index(String orderId) {
-        return ok(order.render(orderLogic.getOrderItems(orderId), orderLogic.getTotalOrderPrice(orderId), orderLogic.getPictureCosts(orderId), orderId));
+        return ok(order.render(orderLogic.getOrderItems(orderId), orderLogic.getTotalOrderPrice(orderId), orderId));
     }
 }
