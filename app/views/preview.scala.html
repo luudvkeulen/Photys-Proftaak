@@ -68,13 +68,13 @@
                             @if(products.last == product) {
                                 <div class="product panel-body">
                                     @defining(product.getPrice + price) { totalPrice =>
-                                    <input name="@product.getID" class="productamount" type="number" min="0" value="0"> <p class="productname">@product.getName &euro; @product.getPrice </p> <p class="productprice">incl. print: &euro; @("%.2f".format(totalPrice))</p>
+                                    <input name="@product.getID" class="productamount" type="number" min="0" value="0"> <p class="productname">@product.getName</p> <p class="productprice">&euro; @product.getPrice  &nbsp;&nbsp;&nbsp; incl. print: &euro; @("%.2f".format(totalPrice))</p>
                                     }
                                 </div>
                             } else {
                                 <div class="product panel-body divwithborder">
                                     @defining(product.getPrice + price) { totalPrice =>
-                                        <input name="@product.getID" class="productamount" type="number" min="0" value="0"> <p class="productname">@product.getName &euro; @product.getPrice </p> <p class="productprice">incl. print: &euro; @("%.2f".format(totalPrice))</p>
+                                        <input name="@product.getID" class="productamount" type="number" min="0" value="0"> <p class="productname">@product.getName </p> <p class="productprice">&euro; @product.getPrice  &nbsp;&nbsp;&nbsp; incl. print: &euro; @("%.2f".format(totalPrice))</p>
                                     }
                                     </div>
                             }
